@@ -1,0 +1,14 @@
+User-agent: Googlebot-Image
+User-agent: Googlebot-News
+User-agent: Googlebot-Video
+Disallow: /
+
+User-agent: Baiduspider
+User-agent: Bingbot
+User-agent: Facebot
+User-agent: Twitterbot
+Disallow: /*.jpg$
+Disallow: /*.png$
+Disallow: /*.gif$
+
+Sitemap: https://jckling.github.io/sitemap.xml

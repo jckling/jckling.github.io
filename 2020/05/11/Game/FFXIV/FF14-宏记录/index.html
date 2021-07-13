@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FF14 宏记录 | Jckling's Blog</title><meta name="keywords" content="FFXIV"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="仅包含职业切换之类的简单宏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FF14 宏记录">
+<meta property="og:url" content="https://jckling.github.io/2020/05/11/Game/FFXIV/FF14-%E5%AE%8F%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="仅包含职业切换之类的简单宏">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/SZXtIyRYzjqoh6D.jpg">
+<meta property="article:published_time" content="2020-05-11T03:07:01.000Z">
+<meta property="article:modified_time" content="2021-07-13T12:46:49.589Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="FFXIV">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/SZXtIyRYzjqoh6D.jpg"><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2020/05/11/Game/FFXIV/FF14-%E5%AE%8F%E8%AE%B0%E5%BD%95/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'FF14 宏记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-13 20:46:49'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jckling/avatar.jpg" onerror="onerror=null;src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">94</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/SZXtIyRYzjqoh6D.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">FF14 宏记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-05-11T03:07:01.000Z" title="undefined 2020-05-11 11:07:01">2020-05-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Game/">Game</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="FF14 宏记录"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2020/05/11/Game/FFXIV/FF14-%E5%AE%8F%E8%AE%B0%E5%BD%95/#post-comment"><span class="waline-comment-count" id="/2020/05/11/Game/FFXIV/FF14-%E5%AE%8F%E8%AE%B0%E5%BD%95/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>新玩家没有亲友.jpg 先打广告👇</p>
+<ul>
+<li>留个言加个好友吧！</li>
+</ul>
+<blockquote>
+<p>招待码【0295-a3be-vax6-04fv】，登陆<a href="ff.sdo.com/entertain">页面</a>点击【被招待者】，在页面上输入招待码，马上结成招待关系！</p>
+</blockquote>
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="热键栏"><a href="#热键栏" class="headerlink" title="热键栏"></a>热键栏</h2><p>【系统】-【角色设置】-【热键栏设置】（快捷键 K）</p>
+<p>热键栏包含 6 种排列方式，可以显示编号和拖动，隐藏没有设置的空格子</p>
+<ul>
+<li>无论哪种排列方式都是从上到下从左往右的顺序</li>
+</ul>
+<p>这里设置显示 1~4 号热键栏</p>
+<img src="https://i.loli.net/2021/06/06/E9F6TRiKsJrQGbn.png" width="65%">
+
+<h2 id="共用"><a href="#共用" class="headerlink" title="共用"></a>共用</h2><p>共通热键栏就是全职业共享的（左上角写了！），职业切换不改动热键栏中放置的快捷键；</p>
+<p>我个人技能就放 3 个热键栏，所以从第 4 个热键栏开始共享</p>
+<img src="https://i.loli.net/2021/06/06/AVTKc3XohfunO4S.png" width="65%">
+
+<h1 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h1><p>将需要使用的宏放在（不用的）职业的热键栏中（不是公用的！）</p>
+<ul>
+<li>基础职业转职后就不会再拿出来玩，比如拿掉水晶后的枪术师</li>
+</ul>
+<p>这里摆放了切换职业的快捷指令</p>
+<ul>
+<li>【角色】-【套装列表】（快捷键 C）</li>
+<li>热键栏 1：DPS</li>
+<li>热键栏 2：T + N</li>
+<li>热键栏 3：采集 + 生产</li>
+</ul>
+<img src="https://i.loli.net/2021/06/06/xBqjdHCwmZvplEu.jpg" width="95%">
+
+<p>拿掉水晶的剑术师，放了情感动作和坐骑</p>
+<ul>
+<li>由于 4 号热键栏是共用的，因此切换职业后不会变动</li>
+</ul>
+<img src="https://i.loli.net/2021/06/06/1JuP4fEmRT5zkvi.jpg" width="95%">
+
+<h2 id="用户宏定义"><a href="#用户宏定义" class="headerlink" title="用户宏定义"></a>用户宏定义</h2><p>显示 5 号热键栏</p>
+<ul>
+<li><code>/hotbar</code> 热键栏</li>
+<li><code>display</code> 是否显示</li>
+<li><code>on</code> 开启显示</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;hotbar display 5 on</span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2021/06/06/eQjw4UhfuSMAgZy.png" width="75%">
+
+<p>关闭 5~7 号热键栏</p>
+<ul>
+<li><code>off</code> 关闭显示</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;hotbar display 5 off</span><br><span class="line">&#x2F;hotbar display 6 off</span><br><span class="line">&#x2F;hotbar display 7 off</span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2021/06/06/p8DLCPfwAxV7GXT.png" width="75%">
+
+<p>切换战斗精英/魔法导师职业</p>
+<ul>
+<li><code>copy 枪术师 1</code> 复制枪术师的 1 号热键栏</li>
+<li><code>share 6</code> 共享给 6 号热键栏</li>
+<li>即 6 号热键栏显示枪术师的 1 号热键栏</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;hotbar display 6 on</span><br><span class="line">&#x2F;hotbar display 7 on</span><br><span class="line">&#x2F;hotbar copy 枪术师 1 share 6</span><br><span class="line">&#x2F;hotbar copy 枪术师 2 share 7</span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2021/06/06/sYnNOV9H4ySfBx8.png" width="75%">
+
+<p>切换大地使者/能工巧匠职业</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;hotbar display 6 on</span><br><span class="line">&#x2F;hotbar display 7 off</span><br><span class="line">&#x2F;hotbar copy 枪术师 3 share 6</span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2021/06/06/ZbcsmkfYAdi15M7.png" width="75%">
+
+<p>坐骑</p>
+<ul>
+<li><code>/micon</code> 绑定图标专属陆行鸟</li>
+<li><code>mount</code> 坐骑<ul>
+<li>召唤兽图标 <code>pet</code> ，详见 <a target="_blank" rel="noopener" href="https://ff14.huijiwiki.com/wiki/%E6%96%87%E6%9C%AC%E6%8C%87%E4%BB%A4">文本指令</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;micon 专属陆行鸟 mount</span><br><span class="line">&#x2F;hotbar display 6 on</span><br><span class="line">&#x2F;hotbar display 7 off</span><br><span class="line">&#x2F;hotbar copy 剑术师 3 share 6</span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2021/06/06/odjA4BwI71Rkxvi.png" width="75%">
+
+<p>情感动作</p>
+<ul>
+<li><code>emote</code> 情感动作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;micon 大小 emote</span><br><span class="line">&#x2F;hotbar display 6 on</span><br><span class="line">&#x2F;hotbar display 7 off</span><br><span class="line">&#x2F;hotbar copy 剑术师 3 share 6</span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2021/06/06/K6OLDXr4MRtJyCk.png" width="75%">
+
+<p>特效全开</p>
+<ul>
+<li><code>/battleeffect</code> 战斗特效</li>
+<li><code>self</code> 自己</li>
+<li><code>party</code> 小队</li>
+<li><code>other</code> 他人</li>
+<li><code>all</code> 完全显示</li>
+<li>贴贴的时候请开全特效</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;battleeffect self all</span><br><span class="line">&#x2F;battleeffect party all</span><br><span class="line">&#x2F;battleeffect other all</span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2021/06/06/xEWXbKryLZivTVa.png" width="75%">
+
+<p>简化特效</p>
+<ul>
+<li><code>simple</code> 简化显示</li>
+<li><code>off</code> 不显示</li>
+<li>虽然有看到建议全部简单显示，但我就想欣赏自己的身姿🧐</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;battleeffect self all</span><br><span class="line">&#x2F;battleeffect party simple</span><br><span class="line">&#x2F;battleeffect other simple</span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2021/06/06/gXNSKUY2raGBJfe.png" width="75%">
+
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>定义宏的时候点击图标可以进行修改</p>
+<ul>
+<li>也可以使用 <code>/micon</code> 绑定图标</li>
+</ul>
+<img src="https://i.loli.net/2021/06/06/mWMHoBpJTcutdvL.png" width="75%">
+
+<p>以上所有的宏展示</p>
+<p><img src="https://s1.ax1x.com/2020/05/15/Yr8ZwQ.gif"></p>
+<h1 id="参阅"><a href="#参阅" class="headerlink" title="参阅"></a>参阅</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://ff14.huijiwiki.com/wiki/%E6%96%87%E6%9C%AC%E6%8C%87%E4%BB%A4">最终幻想XIV中文维基 - 文本指令</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1rb411172i?from=search&seid=9992865721138353251">最终幻想14 折叠菜单栏宏制作讲解</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2020/05/11/Game/FFXIV/FF14-%E5%AE%8F%E8%AE%B0%E5%BD%95/">https://jckling.github.io/2020/05/11/Game/FFXIV/FF14-宏记录/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/FFXIV/">FFXIV</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/SZXtIyRYzjqoh6D.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/08/23/Blockchain/Frabic/Frabic-CA-%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/"><img class="prev-cover" src="https://i.loli.net/2021/06/14/uYIL1tjaQinr4My.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Frabic CA 部署流程</div></div></a></div><div class="next-post pull-right"><a href="/2020/05/09/Security/PentesterLab/CVE-2014-6271/"><img class="next-cover" src="https://i.loli.net/2021/06/14/lpk1XZFrfGboA9P.png" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Shellshock (CVE-2014-6271)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/26/Game/FFXIV/FF14-CMTool 使用教程/" title="FF14 CMTool 使用教程"><img class="cover" src="https://i.loli.net/2021/06/06/Yurzqd2CsQviTt6.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-26</div><div class="title">FF14 CMTool 使用教程</div></div></a></div><div><a href="/2021/05/02/Game/FFXIV/FF14-GShade 使用教程/" title="FF14 GShade 使用教程"><img class="cover" src="https://i.loli.net/2021/06/06/dgfbjE4oxIcRBDt.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-02</div><div class="title">FF14 GShade 使用教程</div></div></a></div><div><a href="/2021/04/29/Game/FFXIV/FF14-TexTool 使用教程/" title="FF14 TexTools 使用教程"><img class="cover" src="https://i.loli.net/2021/06/14/fEgCTaVKJX6eN3L.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-29</div><div class="title">FF14 TexTools 使用教程</div></div></a></div><div><a href="/2021/06/24/Game/FFXIV/FF14-光之摄影师养成计划/" title="FF14 光之摄影师养成计划✨"><img class="cover" src="https://i.loli.net/2021/06/24/kzGsZ3T8wWDReE5.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-24</div><div class="title">FF14 光之摄影师养成计划✨</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">94</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 >_<</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E9%94%AE%E6%A0%8F"><span class="toc-text">热键栏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B1%E7%94%A8"><span class="toc-text">共用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%8F"><span class="toc-text">宏</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E5%AE%8F%E5%AE%9A%E4%B9%89"><span class="toc-text">用户宏定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%88%E6%9E%9C"><span class="toc-text">效果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E9%98%85"><span class="toc-text">参阅</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程"><img src="https://i.loli.net/2021/07/08/mXj4AlCkFwEbSdR.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Pyre 污点分析工具 Pysa 使用教程"/></a><div class="content"><a class="title" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程">Pyre 污点分析工具 Pysa 使用教程</a><time datetime="2021-07-07T03:39:19.000Z" title="发表于 2021-07-07 11:39:19">2021-07-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读"><img src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="OpenStack 组件源码阅读"/></a><div class="content"><a class="title" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读">OpenStack 组件源码阅读</a><time datetime="2021-07-02T12:22:24.000Z" title="发表于 2021-07-02 20:22:24">2021-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨"><img src="https://i.loli.net/2021/06/24/kzGsZ3T8wWDReE5.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="FF14 光之摄影师养成计划✨"/></a><div class="content"><a class="title" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨">FF14 光之摄影师养成计划✨</a><time datetime="2021-06-24T08:11:35.000Z" title="发表于 2021-06-24 16:11:35">2021-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/14/OpenStack/Kolla-Ansible%20%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E9%83%A8%E7%BD%B2/" title="Kolla-Ansible 本地仓库部署"><img src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Kolla-Ansible 本地仓库部署"/></a><div class="content"><a class="title" href="/2021/06/14/OpenStack/Kolla-Ansible%20%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E9%83%A8%E7%BD%B2/" title="Kolla-Ansible 本地仓库部署">Kolla-Ansible 本地仓库部署</a><time datetime="2021-06-14T13:17:43.000Z" title="发表于 2021-06-14 21:17:43">2021-06-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/31/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20Kolla-Ansible/" title="OpenStack 单机部署 —— Kolla-Ansible"><img src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="OpenStack 单机部署 —— Kolla-Ansible"/></a><div class="content"><a class="title" href="/2021/05/31/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20Kolla-Ansible/" title="OpenStack 单机部署 —— Kolla-Ansible">OpenStack 单机部署 —— Kolla-Ansible</a><time datetime="2021-05-31T11:02:50.000Z" title="发表于 2021-05-31 19:02:50">2021-05-31</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/SZXtIyRYzjqoh6D.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      avatar: 'retro',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline() 
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
