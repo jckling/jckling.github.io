@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OpenStack 单机部署 —— PackStack | Jckling's Blog</title><meta name="keywords" content="Python"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="CentOS7 + OpenStack(Train&#x2F;Stein)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenStack 单机部署 —— PackStack">
+<meta property="og:url" content="https://jckling.github.io/2021/02/02/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20PackStack/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="CentOS7 + OpenStack(Train&#x2F;Stein)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg">
+<meta property="article:published_time" content="2021-02-02T02:10:51.000Z">
+<meta property="article:modified_time" content="2021-07-22T12:08:34.477Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg"><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2021/02/02/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20PackStack/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenStack 单机部署 —— PackStack',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-22 20:08:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jckling/avatar.jpg" onerror="onerror=null;src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OpenStack 单机部署 —— PackStack</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-02-02T02:10:51.000Z" title="undefined 2021-02-02 10:10:51">2021-02-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/OpenStack/">OpenStack</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OpenStack 单机部署 —— PackStack"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/02/02/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20PackStack/#post-comment"><span class="waline-comment-count" id="/2021/02/02/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20PackStack/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先前总结了 <a href="https://jckling.github.io/2021/01/20/OpenStack/OpenStack%20%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F%E6%80%BB%E7%BB%93/">OpenStack 部署方式</a>，然后就开始上手进行实验，使用 Packstack 可以说是其中最简单的安装方式了，虽然也折腾了很久，但遇到的错误是相对最少的。</p>
+<p>由于在 VirtualBox 上安装 CentOS 8 失败，于是就用 CentOS 7 作为实验环境，测试安装了两个版本的 OpenStack（Train/Stein）都没有问题，以下总结了使用 Packstack 部署 OpenStack 的流程。</p>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p>使用 VirtualBox 安装 CentOS 7 Minimal ，配置如下：</p>
+<ul>
+<li>CPU：4 Cores</li>
+<li>内存：8 GB</li>
+<li>硬盘：80 GB</li>
+<li>网卡：NAT</li>
+</ul>
+<p>配置端口转发</p>
+<img src="https://i.loli.net/2021/06/06/6NrZzYTaSJ5I7QV.png" width="80%">
+
+<h2 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a>ssh</h2><p>修改配置文件，允许 root 用户使用密码远程登录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改配置文件</span></span><br><span class="line">vi /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 激活以下两个配置</span></span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启 ssh 服务器</span></span><br><span class="line">sudo systemctl restart sshd.service</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装-pip-并更换-pip-源"><a href="#安装-pip-并更换-pip-源" class="headerlink" title="安装 pip 并更换 pip 源"></a>安装 pip 并更换 pip 源</h2><p>CentOS 7 自带 Python 2.7.5 ，但 pip 需要额外安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加 epel 仓库</span></span><br><span class="line">sudo yum install epel-release</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 pip</span></span><br><span class="line">sudo yum install python-pip</span><br></pre></td></tr></table></figure>
+
+<p>pip 21.0 不支持 Python 2.7 ，所以得安装一个版本低一点的，否则无法使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 升级 pip</span></span><br><span class="line">pip install --upgrade <span class="string">&quot;pip &lt; 21.0&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># pip 镜像源</span></span><br><span class="line">pip config <span class="built_in">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+
+<h2 id="更换-yum-源"><a href="#更换-yum-源" class="headerlink" title="更换 yum 源"></a>更换 yum 源</h2><p>配置阿里云 yum 源加速</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份原始文件</span></span><br><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bk</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加阿里云 yum 镜像源</span></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理缓存</span></span><br><span class="line">yum clean all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成缓存</span></span><br><span class="line">yum makecache</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新</span></span><br><span class="line">yum update -y</span><br></pre></td></tr></table></figure>
+
+<h2 id="防火墙与网络配置"><a href="#防火墙与网络配置" class="headerlink" title="防火墙与网络配置"></a>防火墙与网络配置</h2><p>关闭 firewalld、NetworkManager、SELinux，启用 network</p>
+<ul>
+<li>禁止开机自启</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line">sudo systemctl stop firewalld</span><br><span class="line"></span><br><span class="line">sudo systemctl <span class="built_in">disable</span> NetworkManager</span><br><span class="line">sudo systemctl stop NetworkManager</span><br><span class="line"></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> network</span><br><span class="line">sudo systemctl start network</span><br><span class="line"></span><br><span class="line">sudo setenforce 0</span><br><span class="line">sudo sed -i <span class="string">&#x27;s/^SELINUX=.*/SELINUX=permissive/g&#x27;</span> /etc/selinux/config</span><br></pre></td></tr></table></figure>
+
+<h1 id="Packstack-安装"><a href="#Packstack-安装" class="headerlink" title="Packstack 安装"></a>Packstack 安装</h1><p>添加相应的 OpenStack 仓库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加仓库</span></span><br><span class="line">sudo yum update -y</span><br><span class="line">sudo yum install -y centos-release-openstack-train</span><br><span class="line"><span class="comment"># sudo yum install -y centos-release-openstack-stein</span></span><br></pre></td></tr></table></figure>
+
+<p>安装 Packstack</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 Packstack</span></span><br><span class="line">sudo yum update -y</span><br><span class="line">sudo yum install -y openstack-packstack</span><br></pre></td></tr></table></figure>
+
+<p>单机部署</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 OpenStack</span></span><br><span class="line">sudo packstack --allinone</span><br></pre></td></tr></table></figure>
+
+<h1 id="访问服务"><a href="#访问服务" class="headerlink" title="访问服务"></a>访问服务</h1><p>安装完毕后，使用浏览器访问 horizon</p>
+<img src="https://i.loli.net/2021/06/06/GEmLQxcTVHj7h2u.png">
+
+<p>命令行查看已安装服务（<a target="_blank" rel="noopener" href="https://asciinema.org/">asciinema</a>）</p>
+<script id="asciicast-gojjRxrysYlUyLDkBP0vYYiKt" src="https://asciinema.org/a/gojjRxrysYlUyLDkBP0vYYiKt.js" async></script>
+
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><h2 id="error-while-loading-shared-libraries-leatherman-curl-so-1-3-0"><a href="#error-while-loading-shared-libraries-leatherman-curl-so-1-3-0" class="headerlink" title="error while loading shared libraries: leatherman_curl.so.1.3.0"></a>error while loading shared libraries: leatherman_curl.so.1.3.0</h2><p>安装 OpenStack 的过程中报错，原因是使用的 leatherman 版本不兼容，降级后再次执行安装即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 降级 leatherman</span></span><br><span class="line">sudo yum downgrade -y leatherman</span><br></pre></td></tr></table></figure>
+
+<h2 id="主机上无法访问-Horizon"><a href="#主机上无法访问-Horizon" class="headerlink" title="主机上无法访问 Horizon"></a>主机上无法访问 Horizon</h2><p>直接在浏览器输入 <code>http://127.0.0.1:8899/dashboard</code> 返回 302 错误，原因是访问该路径时会进行一次重定向，而 <code>127.0.0.1</code> 不是服务器的有效别名，修改配置添加别名即可。</p>
+<p><em>PS：因为这个我还重装了好几次，没想到后来添加一个别名就好了xddd</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑配置文件</span></span><br><span class="line">vi /etc/httpd/conf.d/15-horizon_vhost.conf</span><br><span class="line"><span class="comment"># 添加别名</span></span><br><span class="line">ServerAlias 127.0.0.1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启 http 服务</span></span><br><span class="line">service httpd restart</span><br></pre></td></tr></table></figure>
+
+<h1 id="参阅"><a href="#参阅" class="headerlink" title="参阅"></a>参阅</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/65896334/python-pip-broken-wiith-sys-stderr-writeferror-exc">Python Pip broken wiith sys.stderr.write(f“ERROR: {exc}”)</a></li>
+<li><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/pypi/">pypi 镜像使用帮助</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/704987">CentOS 7- 配置阿里镜像源</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.rdoproject.org/install/packstack/">Packstack —— RDO</a></li>
+<li><a target="_blank" rel="noopener" href="https://computingforgeeks.com/deploy-openstack-cloud-on-centos-rhel-with-packstack-rdo/">OpenStack Deployment on CentOS 7 With Packstack</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43905458/article/details/104898789">Packstack安装OpenStack问题：facter: error while loading shared libraries: leatherman_curl.so.1.3.0</a></li>
+<li><a target="_blank" rel="noopener" href="https://ask.openstack.org/en/question/44151/red-hat-rdo-horizon-dashboard-will-not-load-from-internet/">Red Hat RDO: Horizon ‘/dashboard’ will not load from Internet</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2021/02/02/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20PackStack/">https://jckling.github.io/2021/02/02/OpenStack/OpenStack 单机部署 —— PackStack/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/07/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20DevStack/"><img class="prev-cover" src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">OpenStack 单机部署 —— DevStack</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/27/Other/Chrome%20%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90/"><img class="next-cover" src="https://i.loli.net/2021/06/14/SKJsWtXpRB6lrCE.png" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Chrome 插件推荐</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/05/10/Jaeger/Jaeger + Elasticsearch + Kibana/" title="使用 Docker 部署 Jaeger + Elasticsearch + Kibana"><img class="cover" src="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-10</div><div class="title">使用 Docker 部署 Jaeger + Elasticsearch + Kibana</div></div></a></div><div><a href="/2020/12/25/OpenStack/CentOS7+OpenStack(Rocky)-0/" title="CentOS 7 安装 Openstack Rocky 版本 - 环境搭建"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-25</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 环境搭建</div></div></a></div><div><a href="/2020/12/26/OpenStack/CentOS7+OpenStack(Rocky)-1/" title="CentOS 7 安装 Openstack Rocky 版本 - 身份认证服务（Keystone）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-26</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 身份认证服务（Keystone）</div></div></a></div><div><a href="/2020/12/26/OpenStack/CentOS7+OpenStack(Rocky)-2/" title="CentOS 7 安装 Openstack Rocky 版本 - 镜像服务（Glance）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-26</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 镜像服务（Glance）</div></div></a></div><div><a href="/2020/12/27/OpenStack/CentOS7+OpenStack(Rocky)-4/" title="CentOS 7 安装 Openstack Rocky 版本 - 网络服务（Neutron）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-27</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 网络服务（Neutron）</div></div></a></div><div><a href="/2020/12/28/OpenStack/CentOS7+OpenStack(Rocky)-6/" title="CentOS 7 安装 Openstack Rocky 版本 - 块存储服务（Cinder）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-28</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 块存储服务（Cinder）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 >_<</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ssh"><span class="toc-number">2.1.</span> <span class="toc-text">ssh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-pip-%E5%B9%B6%E6%9B%B4%E6%8D%A2-pip-%E6%BA%90"><span class="toc-number">2.2.</span> <span class="toc-text">安装 pip 并更换 pip 源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2-yum-%E6%BA%90"><span class="toc-number">2.3.</span> <span class="toc-text">更换 yum 源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E4%B8%8E%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="toc-number">2.4.</span> <span class="toc-text">防火墙与网络配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Packstack-%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">Packstack 安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.</span> <span class="toc-text">访问服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number">5.</span> <span class="toc-text">问题解决</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#error-while-loading-shared-libraries-leatherman-curl-so-1-3-0"><span class="toc-number">5.1.</span> <span class="toc-text">error while loading shared libraries: leatherman_curl.so.1.3.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E4%B8%8A%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE-Horizon"><span class="toc-number">5.2.</span> <span class="toc-text">主机上无法访问 Horizon</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E9%98%85"><span class="toc-number">6.</span> <span class="toc-text">参阅</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览"><img src="https://i.loli.net/2021/06/14/2NXqsznriG8blc7.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Butterfly 主题预览"/></a><div class="content"><a class="title" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览">Butterfly 主题预览</a><time datetime="2021-07-22T09:02:46.000Z" title="发表于 2021-07-22 17:02:46">2021-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python ast 模块使用"/></a><div class="content"><a class="title" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用">Python ast 模块使用</a><time datetime="2021-07-14T06:30:05.000Z" title="发表于 2021-07-14 14:30:05">2021-07-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程"><img src="https://i.loli.net/2021/07/08/mXj4AlCkFwEbSdR.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Pyre 污点分析工具 Pysa 使用教程"/></a><div class="content"><a class="title" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程">Pyre 污点分析工具 Pysa 使用教程</a><time datetime="2021-07-07T03:39:19.000Z" title="发表于 2021-07-07 11:39:19">2021-07-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读"><img src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="OpenStack 组件源码阅读"/></a><div class="content"><a class="title" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读">OpenStack 组件源码阅读</a><time datetime="2021-07-02T12:22:24.000Z" title="发表于 2021-07-02 20:22:24">2021-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨"><img src="https://i.loli.net/2021/06/24/kzGsZ3T8wWDReE5.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="FF14 光之摄影师养成计划✨"/></a><div class="content"><a class="title" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨">FF14 光之摄影师养成计划✨</a><time datetime="2021-06-24T08:11:35.000Z" title="发表于 2021-06-24 16:11:35">2021-06-24</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      avatar: 'retro',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline() 
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

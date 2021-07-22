@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OpenStack 单机部署 —— DevStack | Jckling's Blog</title><meta name="keywords" content="Python"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Ubuntu 18.04 + OpenStack (Ussuri)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenStack 单机部署 —— DevStack">
+<meta property="og:url" content="https://jckling.github.io/2021/02/07/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20DevStack/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="Ubuntu 18.04 + OpenStack (Ussuri)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg">
+<meta property="article:published_time" content="2021-02-07T03:40:14.000Z">
+<meta property="article:modified_time" content="2021-07-22T12:08:34.477Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg"><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2021/02/07/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20DevStack/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenStack 单机部署 —— DevStack',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-22 20:08:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jckling/avatar.jpg" onerror="onerror=null;src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OpenStack 单机部署 —— DevStack</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-02-07T03:40:14.000Z" title="undefined 2021-02-07 11:40:14">2021-02-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/OpenStack/">OpenStack</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OpenStack 单机部署 —— DevStack"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/02/07/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20DevStack/#post-comment"><span class="waline-comment-count" id="/2021/02/07/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20DevStack/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p>DevStack 支持最新的 Ubuntu 长期支持版本、 CentOS/RHEL 8 以及 OpenSUSE ，Ubuntu 18.04 (Bionic Beaver) 是经过最多测试的推荐。</p>
+<p>使用 VirtualBox 安装 Ubuntu 18.04.5 ，配置如下：</p>
+<ul>
+<li>CPU：4 Cores</li>
+<li>内存：8 GB</li>
+<li>硬盘：100 GB</li>
+<li>网卡：NAT</li>
+</ul>
+<h2 id="更换-pip-源"><a href="#更换-pip-源" class="headerlink" title="更换 pip 源"></a>更换 pip 源</h2><p>在用户根目录创建文件夹 <code>.pip</code> ，添加配置文件 <code>pip.conf</code> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建文件夹</span></span><br><span class="line"><span class="built_in">cd</span> &amp;&amp; mkdir .pip &amp;&amp; <span class="built_in">cd</span> .pip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建并编辑配置文件</span></span><br><span class="line">sudo vim pip.conf</span><br></pre></td></tr></table></figure>
+
+<p>pip 源配置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">timeout &#x3D; 6000</span><br><span class="line">index-url &#x3D; http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&#x2F;</span><br><span class="line">trusted-host &#x3D; mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="更换-Ubuntu-源"><a href="#更换-Ubuntu-源" class="headerlink" title="更换 Ubuntu 源"></a>更换 Ubuntu 源</h2><p>备份源文件，再替换成清华的镜像源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份</span></span><br><span class="line">sudo mv /etc/apt/sources.list /etc/apt/sources.list.bk</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置镜像源</span></span><br><span class="line">sudo vim /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新</span></span><br><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<p>镜像源设置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">deb https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu&#x2F; bionic main restricted universe multiverse</span><br><span class="line">deb-src https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu&#x2F; bionic main restricted universe multiverse</span><br><span class="line">deb https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu&#x2F; bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu&#x2F; bionic-updates main restricted universe multiverse</span><br><span class="line">deb https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu&#x2F; bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu&#x2F; bionic-backports main restricted universe multiverse</span><br><span class="line">deb https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu&#x2F; bionic-security main restricted universe multiverse</span><br><span class="line">deb-src https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu&#x2F; bionic-security main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h2><p>DevStack 应该以非 root 用户（但拥有 <code>sudo</code> 权限）执行，手动添加 <code>stack</code> 用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加 stack 用户</span></span><br><span class="line">sudo useradd -s /bin/bash -d /opt/stack -m stack</span><br><span class="line"></span><br><span class="line"><span class="comment"># 授予 sudo 权限</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;stack ALL=(ALL) NOPASSWD: ALL&quot;</span> | sudo tee /etc/sudoers.d/stack</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以 stack 用户登录</span></span><br><span class="line">sudo su - stack</span><br></pre></td></tr></table></figure>
+
+<h1 id="DevStack-部署-OpenStack"><a href="#DevStack-部署-OpenStack" class="headerlink" title="DevStack 部署 OpenStack"></a>DevStack 部署 OpenStack</h1><h2 id="下载-DevStack"><a href="#下载-DevStack" class="headerlink" title="下载 DevStack"></a>下载 DevStack</h2><p>使用 <code>-b</code> 指定下载的版本，这里选择下载 Ussuri 版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载 DevStack</span></span><br><span class="line"><span class="comment"># git clone https://opendev.org/openstack/devstack -b stable/ussuri</span></span><br><span class="line"><span class="comment"># git clone https://github.com/openstack/devstack -b stable/ussuri</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com.cnpmjs.org/openstack/devstack -b stable/ussuri</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入文件夹</span></span><br><span class="line"><span class="built_in">cd</span> devstack</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建配置文件-local-conf"><a href="#创建配置文件-local-conf" class="headerlink" title="创建配置文件 local.conf"></a>创建配置文件 <code>local.conf</code></h2><p>在目录下创建 <code>local.conf</code> 配置文件</p>
+<ul>
+<li><code>ADMIN_PASSWORD</code>：OpenStack 用户 <code>admin</code> 和 <code>demo</code> 的密码</li>
+<li><code>DATABASE_PASSWORD</code>：MySQL 管理员用户密码</li>
+<li><code>RABBIT_PASSWORD</code>：RabbitMQ 密码</li>
+<li><code>SERVICE_PASSWORD</code>：服务组件和 KeyStone 交互的密码</li>
+<li><code>GIT_BASE</code>：源代码托管服务器</li>
+<li><code>HOST_IP</code>：绑定的 IP 地址</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[[local|localrc]]</span><br><span class="line">HOST_IP&#x3D;10.0.2.15</span><br><span class="line">GIT_BASE&#x3D;https:&#x2F;&#x2F;github.com.cnpmjs.org</span><br><span class="line"></span><br><span class="line">ADMIN_PASSWORD&#x3D;password</span><br><span class="line">DATABASE_PASSWORD&#x3D;$ADMIN_PASSWORD</span><br><span class="line">RABBIT_PASSWORD&#x3D;$ADMIN_PASSWORD</span><br><span class="line">SERVICE_PASSWORD&#x3D;$ADMIN_PASSWORD</span><br></pre></td></tr></table></figure>
+
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>执行目录下的脚本开始自动安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">./stack.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止 DevStack</span></span><br><span class="line">./unstack.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止 DevStack 并删除配置文件等</span></span><br><span class="line">./clean.sh</span><br></pre></td></tr></table></figure>
+
+<p>安装时间根据网络状况而定（我试了好几天xdd）以下是成功安装后输出的信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">=========================</span><br><span class="line">DevStack Component Timing</span><br><span class="line"> (<span class="built_in">times</span> are <span class="keyword">in</span> seconds)</span><br><span class="line">=========================</span><br><span class="line">run_process           36</span><br><span class="line">test_with_retry        4</span><br><span class="line">apt-get-update        46</span><br><span class="line">osc                  138</span><br><span class="line">wait_for_service      16</span><br><span class="line">dbsync                78</span><br><span class="line">pip_install          678</span><br><span class="line">apt-get                7</span><br><span class="line">-------------------------</span><br><span class="line">Unaccounted time     1720</span><br><span class="line">=========================</span><br><span class="line">Total runtime        2723</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">This is your host IP address: 10.0.2.15</span><br><span class="line">This is your host IPv6 address: ::1</span><br><span class="line">Horizon is now available at http://10.0.2.15/dashboard</span><br><span class="line">Keystone is serving at http://10.0.2.15/identity/</span><br><span class="line">The default users are: admin and demo</span><br><span class="line">The password: password</span><br><span class="line"></span><br><span class="line">WARNING:</span><br><span class="line">Using lib/neutron-legacy is deprecated, and it will be removed <span class="keyword">in</span> the future</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Services are running under systemd unit files.</span><br><span class="line">For more information see:</span><br><span class="line">https://docs.openstack.org/devstack/latest/systemd.html</span><br><span class="line"></span><br><span class="line">DevStack Version: ussuri</span><br><span class="line">Change: a6ede1b7a6e1698b3820b4c992e7cbce36b9acd5 Remove tempest deprecated img_dir option 2021-01-13 09:32:31 +0000</span><br><span class="line">OS Version: Ubuntu 18.04 bionic</span><br><span class="line"></span><br><span class="line">2021-02-05 04:06:28.733 | stack.sh completed <span class="keyword">in</span> 2724 seconds.</span><br><span class="line">stack@ubuntu1804:~/devstack$</span><br></pre></td></tr></table></figure>
+
+<p>在 NAT 模式下配置端口转发无法访问 Horizon，还没找到配置文件虚拟机就出问题了… 解决方法应当和使用 PackStack 安装时相同：<a href="https://jckling.github.io/2021/02/02/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20PackStack/">主机上无法访问 Horizon</a> 。</p>
+<h1 id="参阅"><a href="#参阅" class="headerlink" title="参阅"></a>参阅</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Enterprise_/article/details/90711465">ubuntu 18.04下修改pip镜像源</a></li>
+<li><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/">Ubuntu 镜像使用帮助</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/devstack/latest/index.html">DevStack</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/devstack/latest/guides/single-machine.html">All-In-One Single Machine</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/devstack/latest/configuration.html#">OpenStack Docs: Configuration</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/contributors/zh_CN/code-and-documentation/devstack.html">使用DevStack测试更改</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2021/02/07/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20DevStack/">https://jckling.github.io/2021/02/07/OpenStack/OpenStack 单机部署 —— DevStack/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/14/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20Ansible/"><img class="prev-cover" src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">OpenStack 单机部署 —— Ansible</div></div></a></div><div class="next-post pull-right"><a href="/2021/02/02/OpenStack/OpenStack%20%E5%8D%95%E6%9C%BA%E9%83%A8%E7%BD%B2%20%E2%80%94%E2%80%94%20PackStack/"><img class="next-cover" src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">OpenStack 单机部署 —— PackStack</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/05/10/Jaeger/Jaeger + Elasticsearch + Kibana/" title="使用 Docker 部署 Jaeger + Elasticsearch + Kibana"><img class="cover" src="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-10</div><div class="title">使用 Docker 部署 Jaeger + Elasticsearch + Kibana</div></div></a></div><div><a href="/2020/12/25/OpenStack/CentOS7+OpenStack(Rocky)-0/" title="CentOS 7 安装 Openstack Rocky 版本 - 环境搭建"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-25</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 环境搭建</div></div></a></div><div><a href="/2020/12/26/OpenStack/CentOS7+OpenStack(Rocky)-1/" title="CentOS 7 安装 Openstack Rocky 版本 - 身份认证服务（Keystone）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-26</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 身份认证服务（Keystone）</div></div></a></div><div><a href="/2020/12/26/OpenStack/CentOS7+OpenStack(Rocky)-2/" title="CentOS 7 安装 Openstack Rocky 版本 - 镜像服务（Glance）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-26</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 镜像服务（Glance）</div></div></a></div><div><a href="/2020/12/27/OpenStack/CentOS7+OpenStack(Rocky)-4/" title="CentOS 7 安装 Openstack Rocky 版本 - 网络服务（Neutron）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-27</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 网络服务（Neutron）</div></div></a></div><div><a href="/2020/12/28/OpenStack/CentOS7+OpenStack(Rocky)-6/" title="CentOS 7 安装 Openstack Rocky 版本 - 块存储服务（Cinder）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-28</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 块存储服务（Cinder）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 >_<</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2-pip-%E6%BA%90"><span class="toc-number">1.1.</span> <span class="toc-text">更换 pip 源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2-Ubuntu-%E6%BA%90"><span class="toc-number">1.2.</span> <span class="toc-text">更换 Ubuntu 源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7"><span class="toc-number">1.3.</span> <span class="toc-text">添加用户</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DevStack-%E9%83%A8%E7%BD%B2-OpenStack"><span class="toc-number">2.</span> <span class="toc-text">DevStack 部署 OpenStack</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD-DevStack"><span class="toc-number">2.1.</span> <span class="toc-text">下载 DevStack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-local-conf"><span class="toc-number">2.2.</span> <span class="toc-text">创建配置文件 local.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="toc-number">2.3.</span> <span class="toc-text">开始安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E9%98%85"><span class="toc-number">3.</span> <span class="toc-text">参阅</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览"><img src="https://i.loli.net/2021/06/14/2NXqsznriG8blc7.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Butterfly 主题预览"/></a><div class="content"><a class="title" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览">Butterfly 主题预览</a><time datetime="2021-07-22T09:02:46.000Z" title="发表于 2021-07-22 17:02:46">2021-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python ast 模块使用"/></a><div class="content"><a class="title" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用">Python ast 模块使用</a><time datetime="2021-07-14T06:30:05.000Z" title="发表于 2021-07-14 14:30:05">2021-07-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程"><img src="https://i.loli.net/2021/07/08/mXj4AlCkFwEbSdR.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Pyre 污点分析工具 Pysa 使用教程"/></a><div class="content"><a class="title" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程">Pyre 污点分析工具 Pysa 使用教程</a><time datetime="2021-07-07T03:39:19.000Z" title="发表于 2021-07-07 11:39:19">2021-07-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读"><img src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="OpenStack 组件源码阅读"/></a><div class="content"><a class="title" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读">OpenStack 组件源码阅读</a><time datetime="2021-07-02T12:22:24.000Z" title="发表于 2021-07-02 20:22:24">2021-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨"><img src="https://i.loli.net/2021/06/24/kzGsZ3T8wWDReE5.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="FF14 光之摄影师养成计划✨"/></a><div class="content"><a class="title" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨">FF14 光之摄影师养成计划✨</a><time datetime="2021-06-24T08:11:35.000Z" title="发表于 2021-06-24 16:11:35">2021-06-24</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      avatar: 'retro',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline() 
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

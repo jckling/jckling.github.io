@@ -1,0 +1,857 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OpenTelemetry 规范阅读 | Jckling's Blog</title><meta name="keywords" content="OpenTelemetry"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="整理之前的笔(fan)记(yi)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenTelemetry 规范阅读">
+<meta property="og:url" content="https://jckling.github.io/2021/04/02/Jaeger/OpenTelemetry%20%E8%A7%84%E8%8C%83%E9%98%85%E8%AF%BB/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="整理之前的笔(fan)记(yi)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/jlyVMmf1Q4ohsCB.png">
+<meta property="article:published_time" content="2021-04-02T02:29:21.000Z">
+<meta property="article:modified_time" content="2021-07-22T12:08:34.469Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="OpenTelemetry">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/jlyVMmf1Q4ohsCB.png"><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2021/04/02/Jaeger/OpenTelemetry%20%E8%A7%84%E8%8C%83%E9%98%85%E8%AF%BB/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenTelemetry 规范阅读',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-22 20:08:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jckling/avatar.jpg" onerror="onerror=null;src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/jlyVMmf1Q4ohsCB.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OpenTelemetry 规范阅读</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-04-02T02:29:21.000Z" title="undefined 2021-04-02 10:29:21">2021-04-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Jaeger/">Jaeger</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OpenTelemetry 规范阅读"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/04/02/Jaeger/OpenTelemetry%20%E8%A7%84%E8%8C%83%E9%98%85%E8%AF%BB/#post-comment"><span class="waline-comment-count" id="/2021/04/02/Jaeger/OpenTelemetry%20%E8%A7%84%E8%8C%83%E9%98%85%E8%AF%BB/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p>Open Tracing 和 OpenCensus 已经合并为 OpenTelemetry ，<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification">OpenTelemetry specification</a> 规定了所有实现需要遵循的要求。</p>
+<h2 id="OpenTelemetry-客户端架构"><a href="#OpenTelemetry-客户端架构" class="headerlink" title="OpenTelemetry 客户端架构"></a>OpenTelemetry 客户端架构</h2><p>面向切面的程序设计（Aspect-Oriented Programming, AOP）</p>
+<ul>
+<li>横切关注点（cross-cutting concern）</li>
+</ul>
+<img src="https://i.loli.net/2021/06/06/zU48tmThR1yJHKi.png" width="70%"/>
+
+<p>OpenTelemetry 被设计为一系列独立的观察性（Observability）工具，称为信号（Signal），在共享机制上下文传播（context propagation）的基础上设计。</p>
+<p>信号作为横切关注点（cross-cutting concern），被整合到许多库中。</p>
+<p>每个信号作为横切关注点的部分都和应用程序独立管理的部分是分离的。每个信号都提供特殊形式的可观察性，例如，tracing、metrics、baggage 就是三种独立的信号。信号共享通用的子系统——上下文传播。</p>
+<p>OpenTelemetry 客户端被设计为将信号的作为横切关注点导入的部分与可以独立管理的部分分离，同时也被设计为一个扩展框架。为了实现这些目标，每个信号都包含四种类型的包：API、SDK、语义约定（Semantic Conventions）、贡献包（Contrib）</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>API 包由用于检测的横切公共接口组成，导入到第三方库和应用程序代码的 OpenTelemetry 客户端的任何部分都被认为是 API 的一部分</p>
+<h3 id="SDK"><a href="#SDK" class="headerlink" title="SDK"></a>SDK</h3><p>SDK 是 OpenTelemetry 项目提供的 API 实现。在一个应用中，由应用程序所有者安装和管理 SDK 。SDK 包含额外的公共接口，不属于 API 包，因为它们不是横切关注点。这些公共接口被定义为构造器和插件。应用程序所有者使用 SDK 构造器，插件作者使用 SDK 插件接口。根据 OpenTelemetry API 编写 OpenTelemetry 仪器的维护者（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/glossary.md#instrumentation-author">Instrumentation Author</a>）不能直接引用任何 SDK 包，只能引用 API。</p>
+<ul>
+<li>构造器（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/glossary.md#constructors">Constructors</a>）：应用程序所有者用来初始化和配置 OpenTelemetry SDK 和 贡献包的公共代码。例如，配置对象、环境变量、生成器。</li>
+<li>插件（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/glossary.md#sdk-plugins">SDK Plugins</a>）：拓展 OpenTelemetry SDK 的库。插件接口如 <code>SpanProcessor</code>、<code>Exporter</code>、<code>Sampler</code> 。</li>
+</ul>
+<h3 id="语义约定（Semantic-Conventions）"><a href="#语义约定（Semantic-Conventions）" class="headerlink" title="语义约定（Semantic Conventions）"></a>语义约定（Semantic Conventions）</h3><p>语义约定定义了键值，用于描述应用程序的可观察概念、协议和操作。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/resource/semantic_conventions/README.md">Resource Conventions</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/README.md">Span Conventions</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/metrics/semantic_conventions/README.md">Metrics Conventions</a></li>
+</ul>
+<h3 id="贡献包（Contrib-Packages）"><a href="#贡献包（Contrib-Packages）" class="headerlink" title="贡献包（Contrib Packages）"></a>贡献包（Contrib Packages）</h3><p>OpenTelemetry 项目维护了流行开源软件（Open Source Software, OSS）项目的集成，API 集成包括 Web 框架、数据库客户端、消息队列，SDK 集成包含导出至分析工具和存储系统的插件。</p>
+<p>OpenTelemetry 规范必需的插件都包含在 SDK 中，例如 OTLP Exporters 和 TraceContext Propagators 。</p>
+<p>可选的、与 SDK 分离的插件和工具包被称为贡献包。API Contrib 指的是仅依赖于 API 的包；SDK Contrib 指的是依赖 SDK 的包。</p>
+<p>术语 Contrib 特指 OpenTelemetry 项目维护的插件和工具集合，不涉及第三方插件。</p>
+<h3 id="版本控制和稳定性（Versioning-amp-Stability）"><a href="#版本控制和稳定性（Versioning-amp-Stability）" class="headerlink" title="版本控制和稳定性（Versioning &amp; Stability）"></a>版本控制和稳定性（Versioning &amp; Stability）</h3><p>OpenTelemetry 重视稳定性和向后兼容性（backward compatibility）。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/versioning-and-stability.md">Versioning and stability for OpenTelemetry clients</a></li>
+</ul>
+<h2 id="Tracing-Signal"><a href="#Tracing-Signal" class="headerlink" title="Tracing Signal"></a>Tracing Signal</h2><p>分布式追踪是一组事件，由单个逻辑操作触发，并跨应用程序中的各个组件合并。一个分布式追踪包含跨进程、网络和安全边界的事件。</p>
+<h3 id="Traces"><a href="#Traces" class="headerlink" title="Traces"></a>Traces</h3><p>Trace 由 Span 隐式定义，可以认为是 Span 的有向无环图（Directed Acyclic Graph, DAG）。</p>
+<h3 id="Spans"><a href="#Spans" class="headerlink" title="Spans"></a>Spans</h3><p>Span 代表了事务中的操作，每个 Span 封装了以下状态：</p>
+<ul>
+<li>操作名称</li>
+<li>起止时间戳</li>
+<li>属性（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/common/common.md#attributes">Attributes</a>）：一系列键值对</li>
+<li>0 个或多个事件（Events）的集合，每个都是一个元组（时间戳，名称，属性），名称必须是字符串</li>
+<li>父 Span 的标识</li>
+<li>与 0 个或多个具有因果关系的 Span 链接（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/overview.md#links-between-spans">Links</a>），通过相关 Span 的 SpanContext</li>
+<li>引用 Span 所需的 SpanContext 信息</li>
+</ul>
+<h3 id="SpanContext"><a href="#SpanContext" class="headerlink" title="SpanContext"></a>SpanContext</h3><p>表示标识 Trace 中的 Span 的所有信息，必须传播到子 Span 和跨进程边界。一个 SpanContext 包含从父 Span 传播到子 Span 的跟踪标识符和选项。</p>
+<ul>
+<li>TraceId：trace 的标识符。全局唯一，随机生成 16 个字节。TraceId 用于将跨进程的特定 trace 的所有 span 分组在一起。</li>
+<li>SpanId：span 的标识符。全局唯一，随机生成 8 个字节。当传递给子 Span 时，该标识符将成为子 Span 的父 span id 。</li>
+<li>TraceFlags：trace 的选项。表示为一字节（位图 bitmap）<ul>
+<li>Sampling bit：表示 trace 是否被采样的比特（掩码 <code>0x1</code>）</li>
+</ul>
+</li>
+<li>Tracestate：在一个键值对列表中携带特定于追踪系统的上下文。Tracestate 允许不同的供应商传播额外的信息，用它们的遗留的 Id 格式进行互操作。</li>
+</ul>
+<h3 id="Span-之间的链接（Links）"><a href="#Span-之间的链接（Links）" class="headerlink" title="Span 之间的链接（Links）"></a>Span 之间的链接（Links）</h3><p>一个 Span 必须和 0 个或多个因果关联的其他 Span 链接（由 SpanContext 定义）。链接可以指向一个 Trace 内的 Span 或跨 Trace 。</p>
+<p>当 Trace 进入服务的可信边界，并且服务策略要求生成新的 Trace 而不信任传入的 Trace 上下文时，可以用来表示原始 trace 和接下来的 trace 之间的关系。新链接的 Trace 还可以表示一个长时间运行的异步数据处理操作，由传入的许多请求之一发起。</p>
+<h2 id="Metric-Signal"><a href="#Metric-Signal" class="headerlink" title="Metric Signal"></a>Metric Signal</h2><p>OpenTelemetry 允许用预定义的聚合和标签集记录原始测量或度量。</p>
+<p>使用 OpenTelemetry API 记录原始测量允许最终用户决定应该为这个度量用什么聚合算法，以及定义标签（维度）。它将被用于像 gRPC 的客户端库，记录原始测量 server_latency 和 received_bytes 。因此最终用户将决定应该从这些原始测量数据中收集哪种类型的聚合值，也可能是简单的平均值或精细的直方图计算。</p>
+<p>使用 OpenTelemetry API 记录预定义聚合的度量同样重要。它允许收集 CPU 和内存使用，或者是像队列长度这样的简单度量。</p>
+<h3 id="记录原始测量"><a href="#记录原始测量" class="headerlink" title="记录原始测量"></a>记录原始测量</h3><p>用于记录原始测量的主要类是 <code>Measure</code> 和 <code>Measurement</code> 。可以使用 OpenTelemetry API 记录附加上下文的 <code>Measurement</code> 列表。因此，用户可以通过定义来聚合这些 <code>Measurement</code> ，并使用传递上下文来定义结果度量的额外维度。</p>
+<h4 id="Measure"><a href="#Measure" class="headerlink" title="Measure"></a>Measure</h4><p><code>Measure</code> 描述库记录的单个值的类型。定义了公开测量方法的库和聚合独立测量到 <code>Metric</code> 中的应用之间的关系。<code>Measure</code> 由名称、描述和一个值的单位标识。</p>
+<h4 id="Measurement"><a href="#Measurement" class="headerlink" title="Measurement"></a>Measurement</h4><p><code>Measurement</code> 描述为 <code>Measure</code> 收集的单一值，<code>Measuremrnt</code> 是一个空接口，在 SDK 中定义。</p>
+<h3 id="使用预定义聚合记录度量"><a href="#使用预定义聚合记录度量" class="headerlink" title="使用预定义聚合记录度量"></a>使用预定义聚合记录度量</h3><p>所有类型的预定义聚合度量的基类称为 <code>Metric</code> ，它定义了基本的度量属性，例如名称和标签。继承 <code>Metric</code> 的类定义自己的聚合类型和单个测量或点的结构。API 定义了以下类型的预定义聚合度量：</p>
+<ul>
+<li>Counter metric 报告瞬时测量。Counter 值可以上升或保持不变，但不可能下降也不可能为负，Counter 度量值有两种类型：<code>double</code> 和 <code>long</code> 。</li>
+<li>Gauge metric 报告数字值的瞬时测量。Gauge 值可以上升或下降，也可以为负值。Gauge 度量值有两种类型：<code>double</code> 和 <code>long</code> 。</li>
+</ul>
+<p>API 允许构造选定类型的 <code>Metric</code> ，SDK 定义了要导出的 <code>Metric</code> 值的查询方式。</p>
+<p>每种类型的 <code>Metric</code> 拥有自己的 API 记录将要聚合的值。API 支持推拉模型（push and pull model）来设置 <code>Metric</code> 值。</p>
+<h3 id="度量数据模型和-SDK"><a href="#度量数据模型和-SDK" class="headerlink" title="度量数据模型和 SDK"></a>度量数据模型和 SDK</h3><p>基于 <a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-proto/blob/master/opentelemetry/proto/metrics/v1/metrics.proto">metrics.proto</a> 建立度量数据模型（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/metrics/datamodel.md">Metrics Data Model</a>），这个数据模型定义了三种语义：API 使用的事件模型（Event model）、SDK 和 OTLP 使用的 in-flight 数据模型、表示导出工具如何解释 in-flight 数据模型时间序列模型（TimeSeries model）。</p>
+<p>不同的导出工具有不同的能力（例如，支持的数据模型）和约束（例如，哪些字符允许作为标签键）。所有导出工具都通过 OpenTelemetry SDK 中定义的度量生产者接口（Metric Producer interface）从度量数据模型中消费数据。</p>
+<p>因此，Metrics 对数据的约束最小（例如，键中允许哪些字符），处理 Metrics 的代码应该避免对其进行验证和清洗。相反，将数据传递给后端，依赖后端执行验证，并从后端返回错误。</p>
+<ul>
+<li> <a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/metrics/datamodel.md">Metrics Data Model Specification</a></li>
+</ul>
+<h2 id="Log-Signal"><a href="#Log-Signal" class="headerlink" title="Log Signal"></a>Log Signal</h2><h3 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h3><p>数据模型定义了 OpenTelemetry 如何理解日志和事件</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md">Log Data Model</a></li>
+</ul>
+<h2 id="Baggage-Signal"><a href="#Baggage-Signal" class="headerlink" title="Baggage Signal"></a>Baggage Signal</h2><p>除了 trace 的传播，OpenTelemetry 还提供了 <code>Baggage</code> 来传播键值对。<code>Baggage</code> 用于索引一个服务中的可观察事件，该服务包含同一事务中先前的服务提供的属性，有助于在事件之间建立因果关系。</p>
+<p>虽然 <code>Baggage</code> 可以用作其他横切关注点的原型，但这种机制主要是为了传递 OpenTelemetry 可观测性系统的值。</p>
+<p>这些值可以从 <code>Baggage</code> 中消费，并作为度量的附加维度，或日志和跟踪的附加上下文使用。一些例子:</p>
+<ul>
+<li>web 服务可以从包含发送请求的服务的上下文中获益</li>
+<li>SaaS 提供商可以包含有关负责该请求的 API 用户或令牌的上下文</li>
+<li>确定特定浏览器版本与图像处理服务中的故障相关联</li>
+</ul>
+<h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2><p><code>Resources</code> 获取关于被记录的遥测数据实体信息。例如，Kubernetes 容器公开的度量可以链接到指定集群、名称空间、pod 和容器名称的资源。<code>Resources</code> 可以捕获实体标识的整个层次结构，它可以描述云中的主机和特定的容器或进程中运行的应用程序。</p>
+<h2 id="上下文传播（Context-Propagation）"><a href="#上下文传播（Context-Propagation）" class="headerlink" title="上下文传播（Context Propagation）"></a>上下文传播（Context Propagation）</h2><p>所有 OpenTelemetry 横切关注点，例如 trace 和 metric ，共享底层的 <code>Context</code> 机制，用于在分布式追踪中存储状态和访问跨 Span 生命周期的数据。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/context/context.md">Context</a></li>
+</ul>
+<h2 id="传播器（Propagators）"><a href="#传播器（Propagators）" class="headerlink" title="传播器（Propagators）"></a>传播器（Propagators）</h2><p>OpenTelemetry 使用 <code>Propagators</code> 来序列化和反序列话横切关注点的值，例如 <code>Span</code> （通常只有 SpanContext 的部分）和 <code>Baggage</code> 。不同的 <code>Propagators</code> 类型定义了特定传输和绑定到数据类型的限制。</p>
+<p>传播器 API 定义了一个 <code>Propagator</code> 类型</p>
+<ul>
+<li><code>TextMapPropagator</code> 将值注入载体并从载体中提取值为文本。</li>
+</ul>
+<h2 id="收集器（Collector）"><a href="#收集器（Collector）" class="headerlink" title="收集器（Collector）"></a>收集器（Collector）</h2><p>OpenTelemetry 收集器是一套组件，可以从 OpenTelementry 或其他监测/追踪库（Jaeger、Prometheus 等）执行的进程收集 traces、metrics 和其他遥测数据（例如，日志），并进行聚合和智能采样，导出 traces 和 metrics 到一个或多个监控/追踪后端。收集器允许丰富和转换所收集的遥测数据（例如，添加额外的属性或删除个人信息）。</p>
+<p>OpenTelemetry 收集器有两种主要的操作模式：代理（与应用程序一起在本地运行的守护进程），收集器（独立运行的服务）。</p>
+<h2 id="工具库（Instrumentation-Library）"><a href="#工具库（Instrumentation-Library）" class="headerlink" title="工具库（Instrumentation Library）"></a>工具库（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/glossary.md#instrumentation-library">Instrumentation Library</a>）</h2><p>被调用为另一个库启用 OpenTelemetry 可观测性的库称为工具库。</p>
+<h1 id="API-规范"><a href="#API-规范" class="headerlink" title="API 规范"></a>API 规范</h1><h2 id="上下文（Context）"><a href="#上下文（Context）" class="headerlink" title="上下文（Context）"></a>上下文（Context）</h2><p><code>Context</code>是一种传播机制，在 API 边界和逻辑关联的执行单元之间承载执行范围（execution-scoped）的值。横切关注点使用相同的共享 <code>Context</code> 对象访问进程内的数据。</p>
+<p><code>Context</code> 必须是不可变的，写操作必须导致创建一个新的 <code>Context</code> ，包含原始值和更新值。</p>
+<p>一个 <code>Context</code> 预期包含以下操作：</p>
+<h3 id="生成键"><a href="#生成键" class="headerlink" title="生成键"></a>生成键</h3><p>键允许横切关注点控制对其本地状态的访问。它们是唯一的，这样其他可能使用相同上下文的库就不会使用相同的键。建议关注点通过 API 中介数据访问，而不是提供对键的直接访问。</p>
+<p>API 必须接受以下参数：</p>
+<ul>
+<li>键名。键名的存在是为了调试，它不能唯一地标识键。使用相同名称多次调用 <code>CreateKey</code> 不应该返回相同的值，除非语言约束另有规定。</li>
+</ul>
+<p>API 必须返回一个表示新创建的键的不透明对象。</p>
+<h3 id="获取值"><a href="#获取值" class="headerlink" title="获取值"></a>获取值</h3><p>关注点可以在 <code>Context</code> 表示的当前执行状态中访问它们的本地状态。</p>
+<p>API 必须接受以下参数：</p>
+<ul>
+<li><code>Context</code></li>
+<li>键</li>
+</ul>
+<p>API 必须返回在 <code>Context</code> 中指定键的值。</p>
+<h3 id="设置值"><a href="#设置值" class="headerlink" title="设置值"></a>设置值</h3><p>关注点可以在 <code>Context</code> 表示的当前执行状态中记录它们的本地状态。</p>
+<p>API 必须接受以下参数：</p>
+<ul>
+<li><code>Context</code></li>
+<li>键</li>
+<li>设置的值</li>
+</ul>
+<p>API 必须返回包含新值的新的 <code>Context</code> 。</p>
+<h3 id="可选的通用操作"><a href="#可选的通用操作" class="headerlink" title="可选的通用操作"></a>可选的通用操作</h3><p>这些操作预计只能通过隐式使用 <code>Context</code> 实现，因此是可选的。这些操作应该只用于实现自动范围切换，并通过 SDK 组件和 OpenTelemetry 工具库定义更高级别的 API。</p>
+<h4 id="获取当前-Context"><a href="#获取当前-Context" class="headerlink" title="获取当前 Context"></a>获取当前 <code>Context</code></h4><p>API 必须返回与调用者的当前执行单元相关的 <code>Context</code> 。</p>
+<h4 id="附加到-Context"><a href="#附加到-Context" class="headerlink" title="附加到 Context"></a>附加到 <code>Context</code></h4><p>将 <code>Context</code> 与调用者的当前执行单元相关联。</p>
+<p>API 必须接受以下参数：</p>
+<ul>
+<li><code>Context</code></li>
+</ul>
+<p>API 必须返回一个可以用作 <code>Token</code> 的值，可用于恢复先前的 <code>Context</code> 。</p>
+<p>注意，对该操作的每次调用都应该导致对分离 <code>Context</code> 的相应调用。</p>
+<h4 id="分离-Context"><a href="#分离-Context" class="headerlink" title="分离 Context"></a>分离 <code>Context</code></h4><p>与调用者的当前执行单元相关的 <code>Context</code> 重置为附加到指定 <code>Context </code> 前的值。该操作用于帮助确保正确的 <code>Context</code> 与调用者的当前执行单元相关联。用户可以依靠它来识别错误的调用顺序，例如，试图分离不是当前实例的 <code>Context</code> 。在这种情况下，操作可以发出信号，警告用户错误的调用顺序，例如，记录错误或返回错误值。</p>
+<p>API 必须接受以下参数：</p>
+<ul>
+<li> 附加到 <code>Context</code> 时返回的 <code>Token</code></li>
+</ul>
+<p>API 可能会返回一个用于检查操作是否成功的值。</p>
+<h2 id="传播器（Propagators）-1"><a href="#传播器（Propagators）-1" class="headerlink" title="传播器（Propagators）"></a>传播器（Propagators）</h2><p>横切关注点使用 <code>Propagator</code> 将其状态发送到下一个进程，<code>Propagator</code> 定义为用于向应用程序交换的消息读写上下文数据的对象。每个关注点为每种支持的 <code>Propagators</code> 类型创建一组 <code>Propagators</code>。</p>
+<p><code>Propagators</code> 利用 <code>Context</code> 为每个横切关注点注入和提取数据，例如 trace 和 <code>Baggage</code> 。</p>
+<p>传播通常通过特定于库的请求拦截器和传播器的协作实现，其中拦截器检测传入请求和传出请求，并分别使用传播器的提取和注入操作。</p>
+<p>预计编写插装库的用户将利用传播器 API 。</p>
+<h3 id="传播器类型"><a href="#传播器类型" class="headerlink" title="传播器类型"></a>传播器类型</h3><p><code>Propagator</code> 类型定义了特定传输的限制，并绑定到数据类型，为了跨进程边界传播带内上下文数据。</p>
+<p>Propagators API 目前定义了一个 <code>Propagator</code> 类型：</p>
+<ul>
+<li><code>TextMapPropagator</code> 是一种使用字符串键值对的形式向载体注入和提取值的类型。</li>
+</ul>
+<p>未来将添加二进制 <code>Propagator</code>。</p>
+<h4 id="载体（Carrier）"><a href="#载体（Carrier）" class="headerlink" title="载体（Carrier）"></a>载体（Carrier）</h4><p>载体是 <code>Propagator</code> 用来读取值和写入值的媒介，每个特定的 <code>Propagator</code> 类型定义了预期的载体类型，例如字符串映射或字节数组。</p>
+<p>用于注入的载体预期是可变的。</p>
+<h4 id="操作（Operations）"><a href="#操作（Operations）" class="headerlink" title="操作（Operations）"></a>操作（Operations）</h4><p><code>Propagator</code> 必须定义 <code>Inject</code> 和 <code>Extract</code> 操作，以便向载体写入值和从载体读取值。每个 <code>Propagator</code> 类型必须定义特殊的载体类型，并且可以定义格外的参数。</p>
+<ol>
+<li>注入（Inject）</li>
+</ol>
+<p>向载体注入值，例如，向 HTTP 请求头注入。</p>
+<p>必须的参数：</p>
+<ul>
+<li><code>Context</code> 。传播其器必须首先从 <code>Context</code> 检索适当的值，例如 <code>SpanContext</code>、<code>Baggage</code> 或其他横切关注点上下文。</li>
+<li>保存传播器字段的载体。例如，传出的消息或 HTTP 请求。</li>
+</ul>
+<ol start="2">
+<li>提取（Extract）</li>
+</ol>
+<p>从传入的请求中提取值，例如，从 HTTP 请求头提取。</p>
+<p>如果无法从载体中解析值，从横切关注点考虑，实现不能抛出异常，也不能在 <code>Context</code> 中存储新的值，这是为了保存先前存在的任何有效值。</p>
+<p>必须的参数：</p>
+<ul>
+<li><code>Context</code> 。</li>
+<li>保存传播器字段的载体。例如，传入的消息或 HTTP 响应。</li>
+</ul>
+<p>返回从作为参数传递的 <code>Context</code> 派生的新的 <code>Context</code>，其中包含提取的值，该值可以是 <code>SpanContext</code>、<code>Baggage</code> 或其他横切关注点上下文.</p>
+<h3 id="TextMap-传播器"><a href="#TextMap-传播器" class="headerlink" title="TextMap 传播器"></a>TextMap 传播器</h3><p><code>TextMapPropagator</code> 将横切关注点的值作为字符串键值对注入和提取到跨进程边界的带内传输的载体中。</p>
+<p>传播数据的载体在客户端（injector）和服务端（extractor）通常是 HTTP 请求。为了增加兼容性，键值对必须只包含根据 <a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc7230#section-3.2">RFC 7230</a> 构成有效 HTTP 头部字段的 US-ASCII 字符。</p>
+<p><code>Getter</code> 和 <code>Setter</code> 是可选的帮助组件，分别用于提取和注入，它们被定义为与载体分离的对象，避免了运行时分配（runtime allocations）不需要额外的借接口实现对象来包装载体以访问其内容。</p>
+<p><code>Getter</code> 和 <code>Setter</code> 必须是无状态的，并且允许存储为常量，为了有效避免运行时分配。</p>
+<h4 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h4><p>预定义的传播器字段，如果载体被重用，应该在调用注入前删除这里的字段。</p>
+<p>字段被定义为字符串键，用于标识载体中特定格式的组件。</p>
+<p>例如，如果载体是一个单次使用或不可变的请求对象，则不需要清除字段；如果是可变的、可重用的对象，则后续调用应该首先请求这些字段。</p>
+<p>用例：</p>
+<ul>
+<li>允许预先分配字段，特别是在 gRPC 元数据这样的系统中</li>
+<li>允许在迭代器上进行单次传递</li>
+</ul>
+<p>返回 <code>TextMapPropagator</code> 将使用的字段列表。</p>
+<p>注意，除了返回值之外，一些 <code>Propagator</code> 还可能定义带有变量名的附加字段。要获得一个特定载体对象的完整字段列表，使用 <code>Keys</code> 操作。</p>
+<h4 id="TextMap-注入"><a href="#TextMap-注入" class="headerlink" title="TextMap 注入"></a>TextMap 注入</h4><p>向载体注入值。必须的参数和注入（Inject）操作相同。</p>
+<p>可选的参数：</p>
+<ul>
+<li>用于设置传播的键值对的<code>Setter</code> 。传播器可以多次调用它来设置多个键值对。</li>
+</ul>
+<p>Setter 参数</p>
+<p>Setter 是 <code>Inject</code> 中的一个参数，它将值设置到给定的字段中。</p>
+<p><code>Setter</code> 允许 <code>TextMapPropagator</code> 将传播字段设置到载体中。</p>
+<p>实现方法之一是使用 <code>Set</code> 方法的 <code>Setter</code> 类。</p>
+<p>Set</p>
+<p>用给定的值替换传播的字段。</p>
+<p>必需的参数：</p>
+<ul>
+<li>保存传播字段的载体。例如，传出消息或 HTTP 请求。</li>
+<li>字段的键</li>
+<li>字段的值</li>
+</ul>
+<p>如果所使用的协议不区分大小写，实现应该保留大小写，否则必须保留大小写。</p>
+<h4 id="TextMap-提取"><a href="#TextMap-提取" class="headerlink" title="TextMap 提取"></a>TextMap 提取</h4><p>从传入的请求中提取值。必须的参数和提取（Extract）操作相同。</p>
+<p>可选的参数：</p>
+<ul>
+<li>用于获取每个传播的键的 <code>Getter</code> 。</li>
+</ul>
+<p>返回从作为参数传递的 <code>Context</code> 派生的新的 <code>Context</code> 。</p>
+<p><strong>Getter 参数</strong></p>
+<p>Getter 是从给定字段中获取值的 <code>Extract</code> 的参数。</p>
+<p><code>Getter</code> 允许 <code>TextMapPropagator</code> 从载体中读取传播的字段。</p>
+<p>实现方法之一是使用 <code>Get</code> 和<code>Keys</code> 方法的 <code>Getter</code> 类。</p>
+<p><strong>Keys</strong></p>
+<p><code>Keys</code> 方法必须返回载体中所有的键的列表。</p>
+<p>必须的参数：</p>
+<ul>
+<li>传播字段的载体，例如 HTTP 请求。</li>
+</ul>
+<p><code>Keys</code> 方法可以被使用可变键名的 <code>Propagator</code> 调用，以遍历指定载体中的所有键。例如，它可以用来检测所有遵循 Jaeger 传输格式（<a target="_blank" rel="noopener" href="https://www.jaegertracing.io/docs/1.18/client-libraries/#baggage">Jaeger Propagation Format</a>）定义的 <code>uberctx-&#123;user-defined-key&#125;</code> 模式的键。</p>
+<p><strong>Get</strong></p>
+<p>Get 方法必须返回给定传播的键的第一个值，如果该键不存在则返回 null 。</p>
+<p>必需的参数</p>
+<ul>
+<li>传播字段的载体，例如 HTTP 请求。</li>
+<li>字段的键</li>
+</ul>
+<p>Get 方法负责处理大小写。如果 Getter 用于处理 HTTP 请求对象，则 Getter 必须不区分大小写。</p>
+<h3 id="注入器和提取器作为单独的接口"><a href="#注入器和提取器作为单独的接口" class="headerlink" title="注入器和提取器作为单独的接口"></a>注入器和提取器作为单独的接口</h3><p>可以将 <code>Propagator</code> 类型实现为公开 <code>Inject</code> 和 <code>Extract</code> 方法的单个对象，也可以选择进一步划分为独立的 <code>Injector</code> 和 <code>EXtractor</code> 。<code>Propagator</code> 可以通过组合单独的 <code>Injector</code> 和 <code>EXtractor</code>来实现。</p>
+<h3 id="复合传播器（Composite-Propagator）"><a href="#复合传播器（Composite-Propagator）" class="headerlink" title="复合传播器（Composite Propagator）"></a>复合传播器（Composite Propagator）</h3><p>实现必须提供一种工具，将来自不同横切关注点的多个 <code>Propagator</code> 进行分组，以便将其作为一个单独的实体。</p>
+<p>复合传播器可以从传播器列表或注入器和提取器列表中构建。生成的复合 <code>Propagator</code> 将按指定的顺序调用 <code>Propagator</code> 、<code>Injector</code> 或 <code>Extractor</code>。</p>
+<p>每个复合 <code>Propagator</code> 将实现一个特定的 <code>Propagator</code> 类型，例如 <code>TextMapPropagator</code> ，因为不同的 <code>Propagator</code> 类型可能会对不同的数据类型进行操作。</p>
+<p>必须有函数来完成以下操作</p>
+<ul>
+<li>创建复合传播器</li>
+<li>从复合传播器中提取</li>
+<li>注入到复合传播器中</li>
+</ul>
+<h4 id="创建复合传播器"><a href="#创建复合传播器" class="headerlink" title="创建复合传播器"></a>创建复合传播器</h4><p>必需的参数：</p>
+<ul>
+<li><code>Propagator</code> 列表或 <code>Injector</code> 和 <code>Extractor</code> 列表</li>
+</ul>
+<p>返回具有指定 <code>Propagator</code> 的新的复合 <code>Propagator</code> 。</p>
+<h4 id="从复合传播器中提取"><a href="#从复合传播器中提取" class="headerlink" title="从复合传播器中提取"></a>从复合传播器中提取</h4><p>必需的参数：</p>
+<ul>
+<li><code>Context</code></li>
+<li>传播字段的载体</li>
+</ul>
+<p>如果 <code>TextMapPropagator</code> 的 <code>Extract</code> 实现接受可选的 <code>Getter</code> 参数，则以下参数是必需的，否则是可选的</p>
+<ul>
+<li>用于获取每个传播的键的 <code>Getter</code> 实例。</li>
+</ul>
+<h4 id="注入到复合传播器中"><a href="#注入到复合传播器中" class="headerlink" title="注入到复合传播器中"></a>注入到复合传播器中</h4><p>必需的参数：</p>
+<ul>
+<li><code>Context</code></li>
+<li>传播字段的载体</li>
+</ul>
+<p>如果 <code>TextMapPropagator</code> 的 <code>Inject</code> 实现接受可选的 <code>Setter</code> 参数，则以下参数是必需的，否则是可选的</p>
+<ul>
+<li>设置传播键值对的 <code>Setter</code> ，传播器可以多次调用它来设置多个键值对。</li>
+</ul>
+<h3 id="全局传播器"><a href="#全局传播器" class="headerlink" title="全局传播器"></a>全局传播器</h3><p>OpenTelemetry API 必须提供一种方法来为每种支持的 <code>Propagator</code> 获取传播器。插桩库应该调用传播器来提取和注入所有远程调用的上下文。</p>
+<p>OpenTelemetry API 必须使用无操作传播器，除非另行显式配置。上下文传播可以用于各种信号（traces、metrics、logging 等），因此可以为其独立地启用上下文传播。</p>
+<h4 id="获取全局传播器"><a href="#获取全局传播器" class="headerlink" title="获取全局传播器"></a>获取全局传播器</h4><p>每种支持的 <code>Propagator</code> 类型都必须存在该方法。</p>
+<p>返回全局 <code>Propagator</code> ，通常是复合实例。</p>
+<h4 id="设置全局传播器"><a href="#设置全局传播器" class="headerlink" title="设置全局传播器"></a>设置全局传播器</h4><p>每种支持的 <code>Propagator</code> 类型都必须存在该方法。</p>
+<p>设置全局 <code>Propagator</code> 实例。</p>
+<p>必需的参数：</p>
+<ul>
+<li><code>Propagator</code> ，通常是复合实例。</li>
+</ul>
+<h3 id="传播器分发"><a href="#传播器分发" class="headerlink" title="传播器分发"></a>传播器分发</h3><p>OpenTelemetry 组织必须维护的传播器的官方列表，必须作为 OpenTelemetry 扩展包分发：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/trace-context/">W3C TraceContext</a>，也可以作为 OpenTelemetry API 的一部分发布</li>
+<li><a target="_blank" rel="noopener" href="https://w3c.github.io/baggage">W3C Baggage</a>，也可以作为 OpenTelemetry API 的一部分发布</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/openzipkin/b3-propagation">B3</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jaegertracing.io/docs/latest/client-libraries/#propagation-format">Jaeger</a></li>
+</ul>
+<p>这是一个可以作为 OpenTelemetry 扩展包维护和分发的附加传播器列表：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/opentracing?q=basic&type=&language=">OT Trace</a> OpenTracing 基础 Tracer 使用的传播器格式。不能在生成的传播器名称中使用 <code>OpenTracing</code> ，因为在 OpenTracing 生态系统中没有被广泛使用。</li>
+</ul>
+<p>特定于供应商的协议实现的 <code>Propagator</code> 不能作为 OpenTelemetry 核心仓库的一部分进行维护或分发，例如 AWS 的 X-Ray trace header protocol 。</p>
+<h4 id="B3-要求"><a href="#B3-要求" class="headerlink" title="B3 要求"></a>B3 要求</h4><p>B3 既有单头编码也有多头编码（single and multi-header encodings），它还具有不直接映射到 OpenTelemetry 的语义，例如调试跟踪标志（debug trace flag），并允许来自请求双方的 span 共享相同的 id 。为了最大化 OpenTelemetry 和 Zipkin 实现之间的兼容性，为 B3 上下文传播建立了以下指导原则。</p>
+<p><strong>B3 提取</strong></p>
+<p>当提取 B3 时，传播器：</p>
+<ul>
+<li>必须尝试提取 B3 编码使用的单头或多头格式，弹头版本优先于多头版本</li>
+<li>如果接收到调试跟踪标志，则必须保留，并将其与后续请求一起传播。此外，当设置调试标志时。OpenTelemetry 实现必须设置采样跟踪标志。</li>
+<li>不能重复使用 <code>X-B3-SpanId</code> 作为服务器端 span 的 id 。</li>
+</ul>
+<p><strong>B3 注入</strong></p>
+<p>当注入 B3 时，传播器：</p>
+<ul>
+<li>必须默认使用弹头格式注入 B3</li>
+<li>必须提供配置来改变默认的注入格式为 B3 多头格式</li>
+<li>不传播 <code>X-B3-ParentSpanId</code> ，因为 OpenTelemetry 不支持在请求的双方重用相同的 id</li>
+</ul>
+<h2 id="行李（Baggage）"><a href="#行李（Baggage）" class="headerlink" title="行李（Baggage）"></a>行李（Baggage）</h2><h2 id="追踪（Tracing）"><a href="#追踪（Tracing）" class="headerlink" title="追踪（Tracing）"></a>追踪（Tracing）</h2><p>Tracing API 由以下主要的几个类组成：</p>
+<ul>
+<li><code>TraceProvider</code> 是 API 的入口点，提供对 <code>Tracer</code> 的访问。</li>
+<li><code>Tracer</code> 是负责创建 <code>Span</code> 的类。</li>
+<li><code>Span</code> 是追踪操作的 API 。</li>
+</ul>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><h4 id="时间（Time）"><a href="#时间（Time）" class="headerlink" title="时间（Time）"></a>时间（Time）</h4><p>OpenTelemetry 可以对时间值进行操作，精度可达纳秒级别。</p>
+<p><strong>时间戳（Timestamp）</strong></p>
+<p>时间戳是自 Unix 纪元以来经过的时间。</p>
+<ul>
+<li>最小精度是毫秒</li>
+<li>最大精度是纳秒</li>
+</ul>
+<p><strong>持续时间（Duration）</strong></p>
+<p>两个事件之间经过的时间。</p>
+<ul>
+<li>最小精度是毫秒</li>
+<li>最大精度是纳秒</li>
+</ul>
+<h3 id="TracerProvider"><a href="#TracerProvider" class="headerlink" title="TracerProvider"></a>TracerProvider</h3><p>可以使用 <code>TracerProvider</code> 访问 <code>Tracer</code> 。</p>
+<p>在 API 实现中，<code>TraceProvider</code> 应该是保存任何配置的有状态对象。</p>
+<p>通常，<code>TraceProvider</code> 被期望从一个中心位置访问，因此 API 应该提供一种设置/注册和访问全局默认 <code>TraceProvider</code> 的方法。</p>
+<p>尽管有全局的 <code>TracerProvider</code>，一些应用程序可能想要或必须使用多个 <code>TracerProvider</code> 实例，例如每个实例有不同的配置（比如 <code>SpanProcessor</code>以及从它们获得 <code>Tracer</code> ），或者因为依赖注入框架更容易。因此， <code>TracerProvider</code> 的实现应该允许创建任意数量的 <code>TracerProvider</code> 实例。</p>
+<h4 id="TracerProvider-操作"><a href="#TracerProvider-操作" class="headerlink" title="TracerProvider 操作"></a>TracerProvider 操作</h4><p><code>TracerProvider</code> 必须提供以下方法：</p>
+<ul>
+<li>获取 <code>Tracer</code></li>
+</ul>
+<p><strong>获取 Tracer</strong></p>
+<p>这个 API 继续接受以下参数</p>
+<ul>
+<li><code>name</code>（必须）：这个名称必须标识工具库（例如，<code>io.opentelemetry.contrib.mongodb</code>）。如果一个应用程序或库有内置的 OpenTelemetry 工具，那么 <a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/glossary.md#instrumented-library">Instrumented library</a> 和 <a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/glossary.md#instrumentation-library">Instrumentation library</a> 都可以引用同一个库。在这种情况下，<code>name</code> 表示应用程序或库中的模块名或组件名。为了防止指定无效的名称（null 或空字符串），必须返回有效的 Tracer 实现回退，而不是返回 null 或抛出异常，其 <code>name</code> 属性应该保持原来的无效值，并且应该记录报告指定值无效的信息。一个实现 OpenTelemetry API 的库如果不支持命名功能（例如，一个与可观察性无关的实现），也可能会忽略这个名称并为所有调用返回一个默认实例。如果应用程序所有者配置 SDK 来阻止由这个库产生的遥测（telemetry），那么 TracerProvider 也可以在这里返回一个无操作的 Tracer 。</li>
+<li><code>version</code>（可选）：指定工具库版本（例如，<code>1.0.0</code>）</li>
+</ul>
+<p>该函数是否或在何种条件下返回相同或不同的 <code>Tracer</code> 实例是未指定的。</p>
+<p>实现不能要求重复获取具有相同名称+版本的 <code>Tracer</code> 来获取配置更改。这可以通过允许使用过时的配置或确保新配置应用于之前返回的 <code>Tracer</code> 来实现。</p>
+<p>注意：例如，这可以通过在 <code>TracerProvider</code> 中存储任何可变配置，并让 <code>Tracer</code> 实现的对象具有获取它们的 <code>TracerProvider</code> 的引用来实现。如果必须存储每个 tracer 的配置（例如禁用某个特定的 tracer），tracer 可以在 <code>TracerProvider</code> 中做一个查找名称+版本的映射，或者 <code>TracerProvider</code> 可以维护一个注册表返回所有的<code>Tracer</code> 并根据配置的改变动态更新。</p>
+<h3 id="Context-Interaction"><a href="#Context-Interaction" class="headerlink" title="Context Interaction"></a>Context Interaction</h3><p>此部分定义了与 <code>Context</code> 交互的 Tracing API 中的所有操作。</p>
+<p>API 必须提供以下功能来支持与 <code>Context</code> 实例的交互：</p>
+<ul>
+<li>从 <code>Context</code> 实例中提取 <code>Span</code></li>
+<li>向 <code>Context</code> 实例注入 <code>Span</code></li>
+</ul>
+<p>上述功能是必须的，因为 API 使用者不应该访问 Tracing API 实现所使用的 Context 键。</p>
+<p>如果语言支持隐式传播 <code>Context</code>，API 还应该提供以下功能：</p>
+<ul>
+<li>从隐式上下文中获取当前活跃的 Span 。等价于获取隐式上下文，然后从上下文中提取 <code>Span</code> 。</li>
+<li>将当前活跃的 Span 设置到隐式上下文。等价于获取隐式上下文，然后将 <code>Span</code> 注入上下文中。</li>
+</ul>
+<p>以上所有功能仅在上下文 API 上操作，可以公开为追踪模块的静态方法，或其类中的静态方法。如果可能的话，这个功能应该在 API 中完全实现。</p>
+<h3 id="Tracer"><a href="#Tracer" class="headerlink" title="Tracer"></a>Tracer</h3><p>tracer 用于生成 <code>Span</code> 。</p>
+<p>注意 <code>Tracer</code> 通常不负责配置，配置应当由 <code>TracerProvider</code> 负责。</p>
+<h4 id="Tracer-操作"><a href="#Tracer-操作" class="headerlink" title="Tracer 操作"></a>Tracer 操作</h4><p><code>Tracer</code> 必须提供以下功能：</p>
+<ul>
+<li>创建 <code>Span</code></li>
+</ul>
+<h3 id="SpanContext-1"><a href="#SpanContext-1" class="headerlink" title="SpanContext"></a>SpanContext</h3><p><code>SpanContext</code> 表示必须与分布式上下文一起序列化和传播的 <code>Span</code> 部分，<code>SpanContext</code> 是不可变的。</p>
+<p>OpenTelemetry 的 <code>SpanContext</code> 符合 W3C TraceContext 规范（<a target="_blank" rel="noopener" href="https://www.w3.org/TR/trace-context/">W3C TraceContext specification</a>），包含两个标识符：<code>TraceId</code> 和 <code>SpanId</code>，以及一组常见的 <code>TraceFlags</code> 和特定于系统的 <code>TraceState</code> 。</p>
+<ul>
+<li><code>TraceId</code> 有效的追踪标识符，至少有一个非零字节的 16 字节数组</li>
+<li><code>SpanId</code> 有效的 Span 标识符，至少有一个非零字节的 8 字节数组</li>
+<li><code>TraceFlags</code> 包含关于 trace 的详细信息。与 TraceState 值不同，TraceFlags 存在于所有 trace 中。本规范的当前版本只支持一个名为 <a target="_blank" rel="noopener" href="https://www.w3.org/TR/trace-context/#sampled-flag">sampled</a> 的标志</li>
+<li><code>TraceState</code> 携带特定于供应商的标识数据，表现为键值对列表。TraceState 允许多个追踪系统参与同一个 trace 。在 W3C TraceContext 规范中有完整的描述。</li>
+</ul>
+<p>API 必须实现创建 <code>SpanContext</code> 的方法，这些方法应该是创建 <code>SpanContext</code> 的唯一方法，该功能必须完全实现，并且不应该被重写。</p>
+<h4 id="获取-TraceId-和-SpanId"><a href="#获取-TraceId-和-SpanId" class="headerlink" title="获取 TraceId 和 SpanId"></a>获取 TraceId 和 SpanId</h4><p>API 必须允许以以下形式检索 <code>TraceId</code> 和 <code>SpanId</code>：</p>
+<ul>
+<li>Hex - 返回小写十六进制编码（<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc4648#section-8">hex encoded</a>）的 <code>TraceId</code> （必须是 32 十六进制字符的小写字符串）或 <code>SpanId</code> （必须是 16 十六进制字符的小写字符串）</li>
+<li>Binary - 返回二进制表示形式的 <code>TraceId</code> （必须是 16 字节数组）或 <code>SpanId</code> （必须是 8 字节数组）</li>
+</ul>
+<p>API 不应该公开关于内部存储方式的细节。</p>
+<h4 id="IsValid"><a href="#IsValid" class="headerlink" title="IsValid"></a>IsValid</h4><p>必须提供一个名为 <code>IsValid</code> 的 API ，该 API 返回一个布尔值，如果 SpanContext 有一个非零的 TraceID 和一个非零的 SpanID ，则该值为真。</p>
+<h4 id="IsRemote"><a href="#IsRemote" class="headerlink" title="IsRemote"></a>IsRemote</h4><p>必须提供一个名为 <code>IsRemote</code> 的 API，该 API 返回一个布尔值，如果 SpanContext 是从远程父对象传播来的，则该值为真。当通过传播器 API 提取 <code>SpanContext</code> 时，<code>IsRemote</code> 必须返回真，对于任何子 Span 的 SpanContext ，必须返回假。</p>
+<h4 id="TraceState"><a href="#TraceState" class="headerlink" title="TraceState"></a>TraceState</h4><p><code>TraceState</code> 是 <code>SpanContext</code> 的一部分，由不可变的字符串键值对表示，并由 W3C TraceContext 规范正式定义。Tracing API 必须在 <code>TraceState</code> 上至少提供以下操作：</p>
+<ul>
+<li>获取给定键的值</li>
+<li>添加新的键值对</li>
+<li>更新给定键的值</li>
+<li>删除键值对</li>
+</ul>
+<p>这些操作必须遵循 W3C TraceContext 规范中描述的规则。所有的修改操作必须返回一个新的 <code>TraceState</code> 。根据 W3C TraceContext 规范描述的规则，<code>TraceState</code> 必须在任何时候都是有效的，每个变化的操作必须验证输入参数，如果传递的是无效值，则操作不能返回包含无效数据的 <code>TraceState</code>，并且必须遵循通用错误处理准则（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/error-handling.md">general error handling guidelines</a>）。</p>
+<p>注意，由于 <code>SpanContext</code> 是不可变的，所以不可能使用新的 <code>TraceState</code> 更新 <code>SpanContext</code> 。这样的更改只有在 <code>SpanContext</code> 传播或遥测数据导出之前才有意义。在这两种情况下，<code>Propagator</code> 和 <code>SpanExporter</code> 都可以在将其序列化前创建修改过的 <code>TraceState</code> 副本。</p>
+<h3 id="Span"><a href="#Span" class="headerlink" title="Span"></a>Span</h3><p><code>Span</code> 表示 trace 中的单个操作。Span 可以嵌套形成 trace 树。每个 trace 都包含一个根 Span，通常用于描述整个操作，并且可以选择描述一个或多个子 Span 或子操作</p>
+<p><code>Span</code> 封装：</p>
+<ul>
+<li>Span 名称</li>
+<li>唯一标识 <code>Span</code> 的不可变的 <code>SpanContext</code></li>
+<li>以 <code>Span</code>、<code>SpanContext</code> 或 null 表示的父 <code>Span</code></li>
+<li><code>SpanKind</code></li>
+<li>开始时间戳</li>
+<li>结束时间戳</li>
+<li><code>Attributes</code></li>
+<li>链接到其他 <code>Span</code> 的 <code>Link</code> 列表</li>
+<li>带有时间戳的<code>Event</code> 列表</li>
+<li><code>Status</code></li>
+</ul>
+<p>Span 名称简明地标识由 Span 所表示的工作，例如，RPC 方法名、函数名、大型计算中的子任务或子截断的名称。Span 名称应该是最通用的字符串，用于标识 Span 的类别，而不是单个 Span 实例，同时仍然是人类可读的。</p>
+<p><code>Span</code> 的开始和结束时间戳反映了操作消耗的实际时间。例如，如果一个 Span 代表一个请求-响应周期（例如 HTTP 或 RPC ），那么 Span 应该有一个与第一个子操作的开始时间相对应的开始时间，以及最后一个子操作完成时的结束时间。这包括：</p>
+<ul>
+<li>从请求中接收数据</li>
+<li>解析数据（例如，从二进制或 json 格式）</li>
+<li>任何中间件或附加的处理逻辑</li>
+<li>业务逻辑</li>
+<li>构造响应</li>
+<li>发送响应</li>
+</ul>
+<p>子 Span （在某些情况下是事件）可能被创建用于表示需要更详细的可观察性的子操作。子 Span 应该度量各个子操作的时间，并且可以添加额外的属性。</p>
+<p><code>Span</code> 的开始时间应该设置为创建 Span 时的当前时间，在创建 <code>Span</code> 之后，应该可以修改它的名称、设置属性（<code>Attribute</code>）、添加事件（<code>Event</code>）、设置状态（<code>State</code>）。在设置了 <code>Span</code> 的结束时间之后，不能更改这些参数。</p>
+<p><code>Span</code> 并不意味着要用来在进程中传播信息。为了防止误用，实现不应该提供对 <code>Span</code> 的 <code>SpanContext</code> 之外的属性的访问。</p>
+<p>供应商可以实现 <code>Span</code> 接口来实现特定于供应商的逻辑。但是，替代的实现也不能允许调用者直接创建 <code>Span</code> ，所有 <code>Span</code> 必须ton过 <code>Tracer</code> 创建。</p>
+<h4 id="Span-的创建"><a href="#Span-的创建" class="headerlink" title="Span 的创建"></a>Span 的创建</h4><p>创建 <code>Span</code> 的唯一操作必须是使用 <code>Tracer</code> 。</p>
+<p>在使用隐式上下文传播的语言中，默认情况下，<code>Span</code> 的创建不能将新的 <code>Span</code> 设置为当前上下文中活跃的 <code>Span</code> ，但这个功能可以作为单独的操作提供。</p>
+<p>API 必须接受以下参数：</p>
+<ul>
+<li>Span 名称，必须。</li>
+<li>父 <code>Context</code> 或新 <code>Span</code> 应该是根 <code>Span</code> 的指向。API 还可以默认隐式地将当前的 <code>Context</code> 作为父对象。这个 API 不能接受 <code>Span</code> 或 <code>SpanContext</code> 作为父对象，只能接受一个完整的 <code>Context</code> 。<ul>
+<li>必须根据从上下文中确定父 Span 所描述的规则确定父 Span 。</li>
+</ul>
+</li>
+<li><code>SpanKind</code> 如果没有指定则默认为 <code>SpanKind.Internal</code> 。</li>
+<li><code>Attributes</code> 属性可用于抽样决策（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#sampling">sampling description</a>），如果未指定，则假定为空集合。<ul>
+<li>只要可能，用户应该在创建 Span 时设置任何已知的属性，而不是之后调用 <code>SetAttribute</code> 。</li>
+</ul>
+</li>
+<li><code>Link</code> 链接的有序序列。</li>
+<li><code>Start timestamp</code> 默认为当前时间。该参数只应在 Span 创建时设置，如果 API 在 Span 逻辑开始时调用，则 API 用户不能显式设置此参数。</li>
+</ul>
+<p>每个 Span 有零个或一个父 Span 以及零个或多个子 Span ，表示因果相关的操作。相关 Span 的树构成了 trace 。如果一个 Span 没有父 Span，那么就称它为根 Span 。每个 trace 都包含一个根 Span ，它是所有其他 Span 的共享祖先。实现必须提供一个选项来创建一个 Span 作为根 Span ，并且必须为创建的每个根 Span 生成新的 <code>TraceId</code> 。对于具有相同父 Span 的 Span ，<code>TraceId</code> 必须与父 Span 相同。另外，子 Span 在默认情况下必须继承父 Span 的所有 <code>TraceState</code> 值。</p>
+<p>如果 <code>Span</code> 是在另一个进程中创建的 <code>Span</code> 的子 Span ，则该 <code>Span</code> 具有远程父对象（remote parent）。每个传播器的反序列化必须在父 <code>SpanContext</code> 上将 <code>IsRemote</code> 设置为真，以便创建 <code>Span</code> 时了解父对象是否是远程的。</p>
+<p>创建的任何 Span 都必须结束。这是用户的责任，如果用户忘记结束 Span ，API 实现可能会泄露内存或其他资源（例如，迭代所有 Span 的周期性工作的 CPU时间）。</p>
+<p><strong>从上下文中确定父 Span</strong></p>
+<p>当从 <code>Context</code> 中创建新的 <code>Span</code> 时，<code>Context</code> 可能包含表示当前活跃的实例的 <code>Span</code> ，并将其作为父 Span 。如果 <code>Context</code> 中没有 <code>Span</code> ，则新创建的 <code>Span</code> 将是根 <code>Span</code> 。</p>
+<p><code>SpanContext</code> 不能直接在 <code>Context</code> 中被设置为活跃的，而必须将其包装到 Span 中（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#wrapping-a-spancontext-in-a-span">wrapping it into a Span</a>）。例如，执行上下文提取的 <code>Propagator</code> 可能需要。</p>
+<p><strong>指定链接</strong></p>
+<p>在 <code>Span</code> 创建期间，用户必须能够记录到其他 <code>Span</code> 的链接。链接的 <code>Span</code> 可以来自相同或不同的 trace 。在 Span 创建后不能添加链接。</p>
+<p><code>Link</code> 在结构上由以下属性定义：</p>
+<ul>
+<li>要链接的 <code>Span</code> 的 <code>SpanContext</code></li>
+<li>零个或多个 <code>Attribute</code>，进一步描述链接</li>
+</ul>
+<p>创建 Span 的 API 必须提供：</p>
+<ul>
+<li>记录单个 <code>Link</code> 的 API，其属性作为参数传递。该操作可以命名为 <code>AddLink</code> 。这个 API 接受要链接的 <code>Span</code> 的 <code>SpanContext</code> 和可选的 <code>Attribute</code> ，它们可以作为单独的参数，也可以作为封装它们的不可变对象。实现可能会忽略带有无效 <code>SpanContext</code> 的链接。</li>
+</ul>
+<p>链接应该保持设置的顺序。</p>
+<h4 id="Span-操作"><a href="#Span-操作" class="headerlink" title="Span 操作"></a>Span 操作</h4><p>除了检索 <code>Span</code> 的 <code>SpanContext</code> 和记录状态的函数外，在 <code>Span</code> 完成后不能调用以下任何函数。</p>
+<p><strong>Get Context</strong></p>
+<p>Span 接口必须提供：</p>
+<ul>
+<li>返回给定 <code>Span</code> 的 <code>SpanContext</code> 的 API 。即使在 <code>Span</code> 完成之后，也可以使用返回值。返回值在整个 Span 的生命周期内必须相同。该操作的名称可以命名为 <code>GetContext</code> 。</li>
+</ul>
+<p><strong>IsRecording</strong></p>
+<p>如果 <code>Span</code> 正在记录信息，比如使用 <code>AddEvent</code> 操作的事件、使用 <code>SetAttributes</code> 设置的属性、使用 <code>SetStatus</code> 设置的状态等，则返回真。</p>
+<p>在 <code>Span</code> 结束之后，它通常变为不记录的，因此 <code>IsRecording</code> 应该为结束的 Span 返回假。注意：流式实现无法预期 Span 是否结束，这是一种预期的情况，在结束 Span 之后不能再改变 <code>IsRecording</code>。</p>
+<p><code>IsRecording</code> 不应该接受任何参数。</p>
+<p>这个标志应该用于避免在绝对没有记录 Span 的情况下对 Span 的属性或事件进行昂贵的计算。注意，任何子 Span 的记录都是独立于该标志的值指定的（通常基于 <code>SpanContext</code> 上 <code>TraceFlags</code> 的 <code>sampled</code> 标志）。</p>
+<p>尽管对整个 trace 进行了采样，但这个标志可能是真。这允许记录和处理单个 Span 的信息，而无需将其发送到后端。</p>
+<p>API 用户在插桩代码时应该只访问 <code>IsRecording</code> 属性，除非要在上下文传播器中使用，否则有永远不要访问 <code>sampled</code> 标志。</p>
+<p><strong>Set Attributes</strong></p>
+<p><code>Span</code> 必须能够设置与其关联的属性。</p>
+<p>Span 接口必须提供：</p>
+<ul>
+<li>设置单个 <code>Attribute</code> 的 API，其中属性作为参数传递。该方法可以命名为 <code>SetAttribute</code> 。为了避免额外的分配，一些实现可能为每个可能值类型提供单独的 API 。</li>
+</ul>
+<p>Span 接口可以提供：</p>
+<ul>
+<li>设置多个 <code>Attribute</code> 的 API ，在单个方法调用中传递属性。</li>
+</ul>
+<p>设置与现有属性具有相同键的属性时，应该覆盖现有的属性。</p>
+<p>注意，OpenTelemetry 项目记录了某些具有指定语义含义的标准属性（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/README.md">standard attributes</a>）。</p>
+<p>注意，采样器只能考虑创构建 Span 过程中已经存在的信息。之后的任何更改，包括新的或更改的属性，都不能改变采样器的决策。</p>
+<p><strong>Add Events</strong></p>
+<p><code>Span</code> 必须有添加事件的能力。事件有一个与其被添加到 <code>Span</code> 中的时刻相关联的时间。</p>
+<p><code>Event</code> 在结构上由以下属性定义：</p>
+<ul>
+<li>事件的名称。</li>
+<li>时间的时间戳。添加事件的时间或用户提供的自定义时间戳。</li>
+<li>零个或多个 <code>Attribute</code> ，进一步描述事件。</li>
+</ul>
+<p>时间应该保持其被记录的顺序。通常会匹配事件时间戳的顺序，但使用自定义时间戳可能会无序地记录事件。</p>
+<p>OpenTelemetry 项目记录了某些具有特定语义含义的标准事件名称和键（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/README.md">standard event names and keys</a>）。</p>
+<p>注意，<code>RecordException</code> 是 <code>AddEvent</code> 的一个特殊变体，用于记录异常事件。</p>
+<p><strong>Set Status</strong></p>
+<p>设置 <code>Span</code>  的 <code>Status</code> ，如果使用，将覆盖默认的 <code>Span</code> 状态（<code>Unset</code>）</p>
+<p><code>Status</code> 在结构上由以下属性定义：</p>
+<ul>
+<li><code>StatusCode</code> 下面列出的值之一。</li>
+<li><code>Description</code> 可选，提供 <code>Status</code> 的描述信息。<code>Description</code> 只能与错误的 <code>StatusCode</code> 一起使用。空的 <code>Description</code> 等价于不存在。</li>
+</ul>
+<p><code>StatusCode</code> 可以是以下值之一：</p>
+<ul>
+<li><code>Unset</code> - 默认状态</li>
+<li><code>Ok</code> - 应用程序开发人员或操作人员已验证该操作成功完成</li>
+<li><code>Error</code> - 操作包含错误</li>
+</ul>
+<p><code>Span</code> 接口必须提供：</p>
+<ul>
+<li>设置 <code>Status</code> 的 API ，该方法可以命名为 <code>SetStatus</code> 。该 API 接受 <code>StatusCode</code> 和一个可选的 <code>Description</code> ，可以作为单独的参数，也可以封装为不可变对象。对于设置为 <code>Unset</code> 和 <code>Ok</code> 的 <code>StatusCode</code>，必须忽略 <code>Description</code> 。</li>
+</ul>
+<p>状态码应该保持为未设置，除了以下的情况：</p>
+<ul>
+<li><p>当插装库将状态设置为 <code>Error</code> 时，状态码应该被记录并可预测。根据语义约定中定义的规则，应该只将状态码设置为 <code>Error</code> ，对于语义约定未涵盖的操作，插装库应该发布自己的约定，包括状态码。</p>
+</li>
+<li><p>通常，插装库不应该将状态码设置诶 <code>Ok</code> ，除非显式配置。插装库应该将状态码保留为 <code>Unset</code> 除非出现错误。</p>
+</li>
+<li><p>应用程序开发人员和操作人员可以将状态码设置为 <code>Ok</code>。</p>
+</li>
+</ul>
+<p>分析工具应该阻止可能产生的任何错误来响应 <code>Ok</code> 状态，例如，阻止 404 之类的噪声错误。</p>
+<p>只有最后一次调用的值将被记录，实现可以自由地忽略之前的调用。</p>
+<p><strong>UpdateName</strong></p>
+<p>更新 <code>Span</code> 的名称，在此更新之后，任何基于 <code>Span</code> 名称的采样行为都将取决于实现。</p>
+<p>注意，采样器只能考虑创建 Span 过程中已有的信息。之后所做的任何更改，包括更新 Span 的名称，都不能修改采样器的决策。</p>
+<p>名称更新的替代方法可能是延后 <code>Span</code> 的创建，即当 Span 开始时使用显式时间戳，来自已知的最终 Span 名称，或者报告具有所需名称的 <code>Span</code> 作为子 <code>Span</code> 。</p>
+<p>必需的参数：</p>
+<ul>
+<li>新的 Span 名称，将取代在 <code>Span</code> 开始时传入的任何内容。 </li>
+</ul>
+<p><strong>End</strong></p>
+<p>表示当前 Span 现在（或在可选的指定时间）已经结束的信号。</p>
+<p>实现应该忽略所有对 <code>End</code> 和其他任何 Span 方法的后续调用。例如，通过结束，Span 变为不记录的（当 Tracer 是流式事件并且没有与 <code>Span</code> 关联的可变状态时可能会出现异常）。</p>
+<p><code>End</code> 不能对子 Span 产生任何影响，它们可能仍然在运行，可以稍后再结束。</p>
+<p><code>End</code> 不能在任何活跃的 <code>Span</code> 的 <code>Context</code> 中禁用 <code>Span</code> 。必须仍能够通过包含结束的 Span 的上下文，将其作为父 Span 使用。此外，在 Span 结束后将其放入上下文的机制必须仍然有效。</p>
+<p>参数：</p>
+<ul>
+<li>可选的时间戳，显式设置结束时间戳。如果省略，则等于当前时间。</li>
+</ul>
+<p>该 API 必须是非阻塞的。</p>
+<p><strong>Record Exception</strong></p>
+<p>为了便于记录异常，应该提供 <code>RecordException</code> 方法，这是 <code>AddEvent</code> 的一种特殊变体，与其要求相同。</p>
+<p>方法的签名由语言确定，并且可以适当地重载。该方法必须按照异常语义约定文档（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/exceptions.md">exception semantic conventions</a>）中列出的约定将异常记录为事件。所需的最小参数应该不超过一个异常对象。</p>
+<p>如果提供了 <code>RecordException</code> ，该方法必须接受一个可选参数，以提供任何附加的事件属性（与 <code>AddEvent</code> 方法相同）。如果方法已经生成了具有相同的名称的属性，则附加属性优先。</p>
+<p>注意：<code>RecordException</code> 可能被视为 <code>AddEvent</code> 的变体，具有额外的特定于异常的参数，所有其他参数都是可选的（因为它们有来自异常语义约定的默认值）。</p>
+<h4 id="Span-生命周期"><a href="#Span-生命周期" class="headerlink" title="Span 生命周期"></a>Span 生命周期</h4><p>Span 生命周期表示将开始和结束时间戳记录到 Span 对象的过程：</p>
+<ul>
+<li>在创建 Span 时记录开始时间</li>
+<li>在结束 Span 时记录结束时间</li>
+</ul>
+<p>开始和结束时间以及时间的时间戳必须在调用相应的 API 时记录。</p>
+<h4 id="将-SpanContext-包装在-Span-中"><a href="#将-SpanContext-包装在-Span-中" class="headerlink" title="将 SpanContext 包装在 Span 中"></a>将 SpanContext 包装在 Span 中</h4><p>API 必须提供一个操作，用于将 <code>SpanContext</code> 包装为实现 <code>Span</code> 接口的对象。这样做是为了在进程内传播 <code>Span</code> 等操作中将 <code>SpanContext</code> 暴露为 <code>Span</code> 。</p>
+<p>如果需要新的类型来支持此操作，则不应该尽可能公开它（例如，只公开返回具有 Span 接口类型的函数）。如果需要公开暴露新的类型，则应该将其命名为 <code>NonRecordingSpan</code> 。</p>
+<p>行为定义如下：</p>
+<ul>
+<li><code>GetContext</code> 必须返回被包装的 <code>SpanContext</code></li>
+<li><code>IsRecording</code> 必须返回假表示事件、属性和其他没有被记录的元素（例如，正在被删除）</li>
+</ul>
+<p><code>Span</code> 的其余功能必须定义为是无操作的。注意：这包括 <code>End</code>，因此作为例外，不需要（甚至没有帮助）结束这样的 Span 。</p>
+<p>这个功能必须在 API 中完全实现，并且不应该被重写。</p>
+<h3 id="SpanKind"><a href="#SpanKind" class="headerlink" title="SpanKind"></a>SpanKind</h3><p><code>SpanKind</code> 描述了在一次追踪中 Span 及其父子之间的关系。<code>SpanKind</code> 描述了两种独立的特性，有助于追踪系统的分析过程。</p>
+<p><code>SpanKind</code> 描述的第一个属性反映了 Span 是远程子对象还是父对象。具有远程父对象的 Span 是外部负载的源，具有远程子对象的 Span 反映了非本地系统的依赖关系。</p>
+<p><code>SpanKind</code> 描述的第二个属性反应了子 Span 是否表示同步调用。当子 Span 是同步调用的，通常其父 Span 需要等待它完成。对追踪系统来说，了解这个属性是很有用的，因为同步 Span 可能会导致整个追踪的延迟。异步场景可能是远程的也可能是本地的。</p>
+<p>为了使 <code>SpanKind</code> 有意义，调用者应该保证单个 Span 只有一个目的。例如，服务端的 Span 不应该直接用作另一个远程 Span 的父对象。插桩应该在提取和序列化远程调用的 SpanContext 之前创建一个新的 Span 。</p>
+<p>以下是可能的 <code>SpanKind</code> ：</p>
+<ul>
+<li><code>SERVER</code> 表示 Span 涵盖同步 RCP 或其他远程请求的服务端处理，该 Span 是远程期待响应的 <code>CLIENT</code> Span 的子 Span 。</li>
+<li><code>CLIENT</code> 表示 Span 描述了对某些远程服务的同步请求。该 Span 是远程 <code>SERVER</code> 的父 Span ，并等待其响应</li>
+<li><code>PRODUCER</code> 表示 Span 描述了异步请求的父对象。这个父级 Span 应该在对应的子 <code>CONSUMER</code> Span 之前结束，甚至可以在其开始前结束。在使用批处理的消息传递场景中，追踪单个消息需要为每个消息创建新的 <code>PRODUCER</code> Span 。</li>
+<li><code>CONSUMER</code> 表示 Span 描述异步 <code>PRODUCER</code> 请求的子对象。</li>
+<li><code>INTERNAL</code> 默认值，Span 表示应用程序的内部操作，而不是具有远程父对象或子对象的操作。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><code>SpanKind</code></th>
+<th>Synchronous</th>
+<th>Asynchronous</th>
+<th>Remote Incoming</th>
+<th>Remote Outgoing</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>CLIENT</code></td>
+<td>yes</td>
+<td></td>
+<td></td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>SERVER</code></td>
+<td>yes</td>
+<td></td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>PRODUCER</code></td>
+<td></td>
+<td>yes</td>
+<td></td>
+<td>maybe</td>
+</tr>
+<tr>
+<td><code>CONSUMER</code></td>
+<td></td>
+<td>yes</td>
+<td>maybe</td>
+<td></td>
+</tr>
+<tr>
+<td><code>INTERNAL</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Concurrency"><a href="#Concurrency" class="headerlink" title="Concurrency"></a>Concurrency</h3><p>对于支持并发执行的语言，Tracing API 提供了特定的保证和安全。并非所有 API 函数的并发调用都是安全的。</p>
+<ul>
+<li>TracerProvider - 所有方法都可以安全地并发调用</li>
+<li>Tracer - 所有方法都可以安全地并发调用</li>
+<li>Span - 所有方法都可以安全地并发调用</li>
+<li>Event - 事件是不可变的，可以安全地并发调用</li>
+<li>Link - 链接时不可变得，可以安全地并发调用</li>
+</ul>
+<h2 id="度量（Metrics）"><a href="#度量（Metrics）" class="headerlink" title="度量（Metrics）"></a>度量（Metrics）</h2><h1 id="OpenTelemetry-客户端设计原则"><a href="#OpenTelemetry-客户端设计原则" class="headerlink" title="OpenTelemetry 客户端设计原则"></a>OpenTelemetry 客户端设计原则</h1><p>本文档定义了一些共同的原则，将帮助设计者构造 OpenTelemetry 客户端，这些客户端易于使用，在所有受支持的语言中都是统一的，同时也为特定语言的表达提供了足够的灵活性。</p>
+<p>OpenTelemetry 客户端有望提供开箱即用的全部功能，并允许通过扩展进行创新和实验。</p>
+<h2 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h2><ol>
+<li>OpenTelemetry API 必须良好定义，并与实现清晰地分离。这允许最终用户使用 API 而不用实现。</li>
+<li>在代码中添加第三方库和框架将只依赖于 OpenTelemetry 客户端的 API 。第三方库和框架的开发人员不关心（也不知道）最终应用程序中使用了 OpenTelemetry 的什么具体实现。</li>
+<li>最终应用程序的开发者通常决定如何配置 OpenTelemetry SDK 和使用什么扩展。他们也可以选择不使用任何 OpenTelemetry 的实现，及时应用程序和/或它的库已经被插装过了。其基本原理是，使用 OpenTelemetry 的第三方库和框架必须在不使用 OpenTelemetry 的应用程序中仍然完全可用（因此这就消除了开发人员对其框架的插装和无插装版本的需要）。</li>
+<li>SDK 必须清晰地划分为独立于线路协议（wire protocol-independent）部分，它们实现公共逻辑（例如，批处理、通过进程信息添加标记等）和依赖于协议的遥测数据导出器。遥测数据导出器必须包含最低限度的功能，从而使供应商能够轻松地添加对其特定协议的支持。</li>
+<li>SDK 实现必须包括以下导出器<ul>
+<li>OTLP</li>
+<li>Jaeger</li>
+<li>Zipkin</li>
+<li>Primetheus</li>
+<li>用于调试和测试的标准输出（或日志），以及作为各种日志代理工具的输入</li>
+<li>内存（模拟）导出器，在本地内存中积累遥测数据，并允许检查，对单元测试很有用</li>
+</ul>
+</li>
+</ol>
+<p>注意：其中一些支持多个协议（例如 gRPC、Thrift 等）。要在导出器中实现的协议是待定的。</p>
+<p>其他特定于供应商的导出器不应该包括在 OpenTelemetry 客户端中，而应该放在其他地方。</p>
+<h2 id="OpenTelemetry-客户端通用设计"><a href="#OpenTelemetry-客户端通用设计" class="headerlink" title="OpenTelemetry 客户端通用设计"></a>OpenTelemetry 客户端通用设计</h2><p>箭头表示调用</p>
+<img src="https://i.loli.net/2021/06/06/kvxd9K1c8N4znG2.png" width="80%"/>
+
+<h3 id="预期使用方式"><a href="#预期使用方式" class="headerlink" title="预期使用方式"></a>预期使用方式</h3><p>OpenTelemetry 客户端由 4 种类型的包组成：API、SDK、语义约定、插件。API 和 SDK 基于信号类型被分成多个包（例如 API-trace、API-metric、SDK-trace、SDK-metric），只要 API 与 SDK 保持分离，就将其视为实现细节。</p>
+<p>想要用 OpenTelemetry 进行插装的库、框架和应用程序只依赖于 API 包。这些第三方库的开发者将调用 API 来生成遥测数据。</p>
+<p>使用 OpenTelemetry API 插装的第三方库的应用程序可以控制是否安装 SDK 和生成遥测数据。当没有安装 SDK 时，API 调用应该是无操作的，产生最小开销。</p>
+<p>为了启用遥测技术，应用程序必须依赖 OpenTelemetry SDK 。应用程序必须配置导出程序和其他插件，以便能够正确地生成遥测数据，并将其传递给选择的分析工具。插件如何启用和配置的细节与语言有关。</p>
+<h3 id="API-和最小实现"><a href="#API-和最小实现" class="headerlink" title="API 和最小实现"></a>API 和最小实现</h3><p>API 包是自依赖的，在这个意义上，如果最终用户的应用程序或第三方库只依赖 API 包，没有安装完整的 SDK ，那么应用程序的构建和运行仍然不会失败，尽管没有遥测数据被传递给后端。</p>
+<p> 这种自依赖是通过以下途径实现的。</p>
+<p>API 依赖包含 API 的最小实现。当应用程序中没有明确包含其他实现时，就不会收集遥测数据。</p>
+<p>从 API 的最小实现返回的值是有效的，不需要调用者执行额外的检查（例如，<code>createSpan</code> 方法不应该失败，应该返回一个有效的非空 <code>Span</code> 对象）。调用者不需要知道和担心最小实现是否有效，这将最小化插装代码中的模板文件和错误处理。</p>
+<p>最小实现尽可能导致少的性能损失，使用 OpenTelemetry 的第三方框架和库希望使用 OpenTelemetry 的这些库的开销可以忽略不计。</p>
+<h3 id="SDK-实现"><a href="#SDK-实现" class="headerlink" title="SDK 实现"></a>SDK 实现</h3><p>SDK 实现是一个单独的（可选的）依赖项。当它被插入时，会替换 API 包中的最小实现（替换机制依赖于实现用的语言）。</p>
+<p>SDK 实现了将 API 调用转换为可导出的遥测数据所需的核心功能。</p>
+<p>SDK 定义了导出接口，负责将遥测数据发送到后端的特定协议导出器必须实现这个接口。</p>
+<p>SDK 还包括可选的帮助导出器，如果需要，可以组合这些导出器以实现额外的功能。</p>
+<p>库设计者需要根据这个通用规范（<a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#span-exporter">Span Exporter</a>）定义特定于语言的导出器接口。</p>
+<h4 id="协议导出器"><a href="#协议导出器" class="headerlink" title="协议导出器"></a>协议导出器</h4><p>遥测后端供应商期望实现导出器接口。通过 <code>Export</code> 函数接收的数据应该被序列化，并以特定于供应商的方式发送到后端。</p>
+<p>鼓励供应商尽可能使特定于协议的导出器保持简单，并实现理想的附加功能，例如，使用 SDK 提供的帮助程序进行排队和重试。</p>
+<p>最终用户应该能够灵活地做出许多决定，包括排队、重试、标记、批处理功能，这些功能对他们的应用程序最有意义。例如，如果应用程序的遥测数据必须传递给无法保证可用性的远程后端，那么最终用户可以选择使用持久的本地队列和 <code>Exporter</code> 在失败时重试发送。与将遥测数据传递到本地运行的代理守护进程的应用程序不同，最终用户可能更喜欢使用更简单的导出配置，而不需要重试或排队。</p>
+<p>如果 SDK 的其他导出器是作为单独的库提供的，那么库的名称应该根据命名约定加上 “OpenTelemetry” 和 “Exporter” 。例如：</p>
+<ul>
+<li>Python 和 Java：opentelemetry-exporter-jaeger</li>
+<li>Javascript：@opentelemetry/exporter-jeager</li>
+</ul>
+<h4 id="资源发现"><a href="#资源发现" class="headerlink" title="资源发现"></a>资源发现</h4><p>鼓励云供应商提供检测环境中资源信息的包，这些必须在 SDK 之外实现。</p>
+<h3 id="替代实现"><a href="#替代实现" class="headerlink" title="替代实现"></a>替代实现</h3><p>最终用户的应用程序可能决定依赖于替代实现。SDK 为实现的灵活性和扩展性提供了许多实现。在开发替代实现之前，请回顾 OpenTelemetry 提供的扩展。</p>
+<p>替代实现的一个用例是自动化测试。可以在自动化测试期间插入模拟实现。例如，它可以将所有生成的遥测数据存储在存储器中，并提供检查存储数据的能力。这将允许测试验证是否正确生成了遥测数据。鼓励 OpenTelemetry 客户端的作者提供这样的模拟实现。</p>
+<p>注意，使用 SDK 和模拟 <code>Exporter</code> 也可以进行模拟，而不需要替换整个 SDK 。</p>
+<p>所选择的模拟方法将取决于测试目标，以及在测试过程中需要截取的具体的遥测数据。</p>
+<h3 id="版本标记"><a href="#版本标记" class="headerlink" title="版本标记"></a>版本标记</h3><p>API 包和 SDK 包必须使用语义版本编号。API 包版本号和 SDK 包版本号是解耦的，可以是不同的（也可以与其实现的规范版本号不同）。API 包和 SDK 包必须标注自己的版本号。</p>
+<p>版本号的解耦允许 OpenTelemetry 客户端作者独立发布 API 包和 SDK 包，而不需要与规范协调和匹配版本号。</p>
+<p>因为 API 包和 SDK 包的版本号没有耦合，所以每个 API 和 SDK 包发布时都必须清楚地提到它们实现的规范版本号。此外，如果特定版本的 SDK 包只与特定版本的 API 包兼容，那么 OpenTelemetry 客户端作者也必须发布这个兼容性信息。OpenTelemetry 客户端作者必须在发布说明中包括这些信息。例如，SDK 包发布说明可能会说明：SDK 0.3.4 与API 0.1.0 一起使用，实现了 OpenTelemetry 规范 0.1.0 。</p>
+<h3 id="性能和屏阻塞"><a href="#性能和屏阻塞" class="headerlink" title="性能和屏阻塞"></a>性能和屏阻塞</h3><p>参阅 <a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/performance.md">Performance and Blocking</a> 了解 API 实现应该满足的性能期望及其策略，以及应该如何记录在负载下的行为。</p>
+<h3 id="并发和线程安全"><a href="#并发和线程安全" class="headerlink" title="并发和线程安全"></a>并发和线程安全</h3><p>请参考单独的 API 规范，了解 API 实现应该提供哪些并发安全，以及应该如何记录这些安全：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/metrics/api.md#concurrency">Metrics API</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#concurrency">Tracing API</a></li>
+</ul>
+<h1 id="参阅"><a href="#参阅" class="headerlink" title="参阅"></a>参阅</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-specification">OpenTelemetry Specification</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2021/04/02/Jaeger/OpenTelemetry%20%E8%A7%84%E8%8C%83%E9%98%85%E8%AF%BB/">https://jckling.github.io/2021/04/02/Jaeger/OpenTelemetry 规范阅读/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OpenTelemetry/">OpenTelemetry</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/jlyVMmf1Q4ohsCB.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/26/Game/FFXIV/FF14-CMTool%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"><img class="prev-cover" src="https://i.loli.net/2021/06/06/Yurzqd2CsQviTt6.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">FF14 CMTool 使用教程</div></div></a></div><div class="next-post pull-right"><a href="/2021/04/02/Jaeger/%E5%85%A8%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E4%B8%8E%20Jaeger%20%E5%85%A5%E9%97%A8/"><img class="next-cover" src="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">全链路追踪与 Jaeger 入门</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/02/Jaeger/全链路追踪与 Jaeger 入门/" title="全链路追踪与 Jaeger 入门"><img class="cover" src="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-02</div><div class="title">全链路追踪与 Jaeger 入门</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 >_<</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">概要</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenTelemetry-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9E%B6%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">OpenTelemetry 客户端架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#API"><span class="toc-number">1.1.1.</span> <span class="toc-text">API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SDK"><span class="toc-number">1.1.2.</span> <span class="toc-text">SDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E4%B9%89%E7%BA%A6%E5%AE%9A%EF%BC%88Semantic-Conventions%EF%BC%89"><span class="toc-number">1.1.3.</span> <span class="toc-text">语义约定（Semantic Conventions）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%A1%E7%8C%AE%E5%8C%85%EF%BC%88Contrib-Packages%EF%BC%89"><span class="toc-number">1.1.4.</span> <span class="toc-text">贡献包（Contrib Packages）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%92%8C%E7%A8%B3%E5%AE%9A%E6%80%A7%EF%BC%88Versioning-amp-Stability%EF%BC%89"><span class="toc-number">1.1.5.</span> <span class="toc-text">版本控制和稳定性（Versioning &amp; Stability）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tracing-Signal"><span class="toc-number">1.2.</span> <span class="toc-text">Tracing Signal</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Traces"><span class="toc-number">1.2.1.</span> <span class="toc-text">Traces</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spans"><span class="toc-number">1.2.2.</span> <span class="toc-text">Spans</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpanContext"><span class="toc-number">1.2.3.</span> <span class="toc-text">SpanContext</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Span-%E4%B9%8B%E9%97%B4%E7%9A%84%E9%93%BE%E6%8E%A5%EF%BC%88Links%EF%BC%89"><span class="toc-number">1.2.4.</span> <span class="toc-text">Span 之间的链接（Links）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Metric-Signal"><span class="toc-number">1.3.</span> <span class="toc-text">Metric Signal</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%8E%9F%E5%A7%8B%E6%B5%8B%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">记录原始测量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Measure"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">Measure</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Measurement"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">Measurement</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E9%A2%84%E5%AE%9A%E4%B9%89%E8%81%9A%E5%90%88%E8%AE%B0%E5%BD%95%E5%BA%A6%E9%87%8F"><span class="toc-number">1.3.2.</span> <span class="toc-text">使用预定义聚合记录度量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%A6%E9%87%8F%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E5%92%8C-SDK"><span class="toc-number">1.3.3.</span> <span class="toc-text">度量数据模型和 SDK</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-Signal"><span class="toc-number">1.4.</span> <span class="toc-text">Log Signal</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.4.1.</span> <span class="toc-text">数据模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Baggage-Signal"><span class="toc-number">1.5.</span> <span class="toc-text">Baggage Signal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resources"><span class="toc-number">1.6.</span> <span class="toc-text">Resources</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BC%A0%E6%92%AD%EF%BC%88Context-Propagation%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">上下文传播（Context Propagation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E6%92%AD%E5%99%A8%EF%BC%88Propagators%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">传播器（Propagators）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B6%E9%9B%86%E5%99%A8%EF%BC%88Collector%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">收集器（Collector）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E5%BA%93%EF%BC%88Instrumentation-Library%EF%BC%89"><span class="toc-number">1.10.</span> <span class="toc-text">工具库（Instrumentation Library）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#API-%E8%A7%84%E8%8C%83"><span class="toc-number">2.</span> <span class="toc-text">API 规范</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%EF%BC%88Context%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">上下文（Context）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E9%94%AE"><span class="toc-number">2.1.1.</span> <span class="toc-text">生成键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%80%BC"><span class="toc-number">2.1.2.</span> <span class="toc-text">获取值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%80%BC"><span class="toc-number">2.1.3.</span> <span class="toc-text">设置值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%E7%9A%84%E9%80%9A%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">2.1.4.</span> <span class="toc-text">可选的通用操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D-Context"><span class="toc-number">2.1.4.1.</span> <span class="toc-text">获取当前 Context</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%84%E5%8A%A0%E5%88%B0-Context"><span class="toc-number">2.1.4.2.</span> <span class="toc-text">附加到 Context</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E7%A6%BB-Context"><span class="toc-number">2.1.4.3.</span> <span class="toc-text">分离 Context</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E6%92%AD%E5%99%A8%EF%BC%88Propagators%EF%BC%89-1"><span class="toc-number">2.2.</span> <span class="toc-text">传播器（Propagators）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E6%92%AD%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.1.</span> <span class="toc-text">传播器类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E4%BD%93%EF%BC%88Carrier%EF%BC%89"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">载体（Carrier）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%EF%BC%88Operations%EF%BC%89"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">操作（Operations）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TextMap-%E4%BC%A0%E6%92%AD%E5%99%A8"><span class="toc-number">2.2.2.</span> <span class="toc-text">TextMap 传播器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E6%AE%B5"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">字段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextMap-%E6%B3%A8%E5%85%A5"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">TextMap 注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TextMap-%E6%8F%90%E5%8F%96"><span class="toc-number">2.2.2.3.</span> <span class="toc-text">TextMap 提取</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E5%99%A8%E5%92%8C%E6%8F%90%E5%8F%96%E5%99%A8%E4%BD%9C%E4%B8%BA%E5%8D%95%E7%8B%AC%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.2.3.</span> <span class="toc-text">注入器和提取器作为单独的接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%90%88%E4%BC%A0%E6%92%AD%E5%99%A8%EF%BC%88Composite-Propagator%EF%BC%89"><span class="toc-number">2.2.4.</span> <span class="toc-text">复合传播器（Composite Propagator）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%A4%8D%E5%90%88%E4%BC%A0%E6%92%AD%E5%99%A8"><span class="toc-number">2.2.4.1.</span> <span class="toc-text">创建复合传播器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E5%A4%8D%E5%90%88%E4%BC%A0%E6%92%AD%E5%99%A8%E4%B8%AD%E6%8F%90%E5%8F%96"><span class="toc-number">2.2.4.2.</span> <span class="toc-text">从复合传播器中提取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E5%88%B0%E5%A4%8D%E5%90%88%E4%BC%A0%E6%92%AD%E5%99%A8%E4%B8%AD"><span class="toc-number">2.2.4.3.</span> <span class="toc-text">注入到复合传播器中</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E4%BC%A0%E6%92%AD%E5%99%A8"><span class="toc-number">2.2.5.</span> <span class="toc-text">全局传播器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%85%A8%E5%B1%80%E4%BC%A0%E6%92%AD%E5%99%A8"><span class="toc-number">2.2.5.1.</span> <span class="toc-text">获取全局传播器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%80%E4%BC%A0%E6%92%AD%E5%99%A8"><span class="toc-number">2.2.5.2.</span> <span class="toc-text">设置全局传播器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E6%92%AD%E5%99%A8%E5%88%86%E5%8F%91"><span class="toc-number">2.2.6.</span> <span class="toc-text">传播器分发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#B3-%E8%A6%81%E6%B1%82"><span class="toc-number">2.2.6.1.</span> <span class="toc-text">B3 要求</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E6%9D%8E%EF%BC%88Baggage%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">行李（Baggage）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%BD%E8%B8%AA%EF%BC%88Tracing%EF%BC%89"><span class="toc-number">2.4.</span> <span class="toc-text">追踪（Tracing）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.4.1.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%EF%BC%88Time%EF%BC%89"><span class="toc-number">2.4.1.1.</span> <span class="toc-text">时间（Time）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TracerProvider"><span class="toc-number">2.4.2.</span> <span class="toc-text">TracerProvider</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TracerProvider-%E6%93%8D%E4%BD%9C"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">TracerProvider 操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Context-Interaction"><span class="toc-number">2.4.3.</span> <span class="toc-text">Context Interaction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tracer"><span class="toc-number">2.4.4.</span> <span class="toc-text">Tracer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Tracer-%E6%93%8D%E4%BD%9C"><span class="toc-number">2.4.4.1.</span> <span class="toc-text">Tracer 操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpanContext-1"><span class="toc-number">2.4.5.</span> <span class="toc-text">SpanContext</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96-TraceId-%E5%92%8C-SpanId"><span class="toc-number">2.4.5.1.</span> <span class="toc-text">获取 TraceId 和 SpanId</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IsValid"><span class="toc-number">2.4.5.2.</span> <span class="toc-text">IsValid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IsRemote"><span class="toc-number">2.4.5.3.</span> <span class="toc-text">IsRemote</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TraceState"><span class="toc-number">2.4.5.4.</span> <span class="toc-text">TraceState</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Span"><span class="toc-number">2.4.6.</span> <span class="toc-text">Span</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Span-%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-number">2.4.6.1.</span> <span class="toc-text">Span 的创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Span-%E6%93%8D%E4%BD%9C"><span class="toc-number">2.4.6.2.</span> <span class="toc-text">Span 操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Span-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">2.4.6.3.</span> <span class="toc-text">Span 生命周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%86-SpanContext-%E5%8C%85%E8%A3%85%E5%9C%A8-Span-%E4%B8%AD"><span class="toc-number">2.4.6.4.</span> <span class="toc-text">将 SpanContext 包装在 Span 中</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpanKind"><span class="toc-number">2.4.7.</span> <span class="toc-text">SpanKind</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Concurrency"><span class="toc-number">2.4.8.</span> <span class="toc-text">Concurrency</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%A6%E9%87%8F%EF%BC%88Metrics%EF%BC%89"><span class="toc-number">2.5.</span> <span class="toc-text">度量（Metrics）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenTelemetry-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-number">3.</span> <span class="toc-text">OpenTelemetry 客户端设计原则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A6%81%E6%B1%82"><span class="toc-number">3.1.</span> <span class="toc-text">要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenTelemetry-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%80%9A%E7%94%A8%E8%AE%BE%E8%AE%A1"><span class="toc-number">3.2.</span> <span class="toc-text">OpenTelemetry 客户端通用设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E6%9C%9F%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">3.2.1.</span> <span class="toc-text">预期使用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-%E5%92%8C%E6%9C%80%E5%B0%8F%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.2.</span> <span class="toc-text">API 和最小实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SDK-%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.3.</span> <span class="toc-text">SDK 实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%AF%BC%E5%87%BA%E5%99%A8"><span class="toc-number">3.2.3.1.</span> <span class="toc-text">协议导出器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%8F%91%E7%8E%B0"><span class="toc-number">3.2.3.2.</span> <span class="toc-text">资源发现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%BF%E4%BB%A3%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.4.</span> <span class="toc-text">替代实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%A0%87%E8%AE%B0"><span class="toc-number">3.2.5.</span> <span class="toc-text">版本标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E5%B1%8F%E9%98%BB%E5%A1%9E"><span class="toc-number">3.2.6.</span> <span class="toc-text">性能和屏阻塞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="toc-number">3.2.7.</span> <span class="toc-text">并发和线程安全</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E9%98%85"><span class="toc-number">4.</span> <span class="toc-text">参阅</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览"><img src="https://i.loli.net/2021/06/14/2NXqsznriG8blc7.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Butterfly 主题预览"/></a><div class="content"><a class="title" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览">Butterfly 主题预览</a><time datetime="2021-07-22T09:02:46.000Z" title="发表于 2021-07-22 17:02:46">2021-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python ast 模块使用"/></a><div class="content"><a class="title" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用">Python ast 模块使用</a><time datetime="2021-07-14T06:30:05.000Z" title="发表于 2021-07-14 14:30:05">2021-07-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程"><img src="https://i.loli.net/2021/07/08/mXj4AlCkFwEbSdR.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Pyre 污点分析工具 Pysa 使用教程"/></a><div class="content"><a class="title" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程">Pyre 污点分析工具 Pysa 使用教程</a><time datetime="2021-07-07T03:39:19.000Z" title="发表于 2021-07-07 11:39:19">2021-07-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读"><img src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="OpenStack 组件源码阅读"/></a><div class="content"><a class="title" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读">OpenStack 组件源码阅读</a><time datetime="2021-07-02T12:22:24.000Z" title="发表于 2021-07-02 20:22:24">2021-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨"><img src="https://i.loli.net/2021/06/24/kzGsZ3T8wWDReE5.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="FF14 光之摄影师养成计划✨"/></a><div class="content"><a class="title" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨">FF14 光之摄影师养成计划✨</a><time datetime="2021-06-24T08:11:35.000Z" title="发表于 2021-06-24 16:11:35">2021-06-24</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/jlyVMmf1Q4ohsCB.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      avatar: 'retro',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline() 
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

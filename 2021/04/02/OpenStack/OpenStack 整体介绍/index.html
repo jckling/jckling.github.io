@@ -1,0 +1,469 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OpenStack 整体介绍 | Jckling's Blog</title><meta name="keywords" content="Python"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="OpenStack 架构及核心组件交互逻辑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenStack 整体介绍">
+<meta property="og:url" content="https://jckling.github.io/2021/04/02/OpenStack/OpenStack%20%E6%95%B4%E4%BD%93%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="OpenStack 架构及核心组件交互逻辑">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg">
+<meta property="article:published_time" content="2021-04-02T01:40:03.000Z">
+<meta property="article:modified_time" content="2021-07-22T12:08:34.477Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg"><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2021/04/02/OpenStack/OpenStack%20%E6%95%B4%E4%BD%93%E4%BB%8B%E7%BB%8D/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenStack 整体介绍',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-22 20:08:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jckling/avatar.jpg" onerror="onerror=null;src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OpenStack 整体介绍</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-04-02T01:40:03.000Z" title="undefined 2021-04-02 09:40:03">2021-04-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/OpenStack/">OpenStack</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OpenStack 整体介绍"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/04/02/OpenStack/OpenStack%20%E6%95%B4%E4%BD%93%E4%BB%8B%E7%BB%8D/#post-comment"><span class="waline-comment-count" id="/2021/04/02/OpenStack/OpenStack%20%E6%95%B4%E4%BD%93%E4%BB%8B%E7%BB%8D/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="OpenStack"><a href="#OpenStack" class="headerlink" title="OpenStack"></a>OpenStack</h1><p>OpenStack 提供了一种模块化云基础架构。OpenStack 是一个云操作系统，在整个数据中心控制大量的计算、存储和网络资源池，通过 API 进行管理，并提供通用的认证机制。</p>
+<img src="https://i.loli.net/2021/06/06/TWHKvxG9JCXicBw.png" width="80%"/>
+
+<h2 id="OpenStack-全景图"><a href="#OpenStack-全景图" class="headerlink" title="OpenStack 全景图"></a>OpenStack 全景图</h2><p>OpenStack 目前一共包含 65 个服务组件，其中 6 个核心服务主要担纲系统的基础架构，其余项目则负责管理控制面板、编排、裸机部署、信息传递、容器及统筹管理等操作。</p>
+<img src="https://i.loli.net/2021/06/06/pUbcNZP9lk4W7Oo.png"/>
+
+<h2 id="OpenStack-架构"><a href="#OpenStack-架构" class="headerlink" title="OpenStack 架构"></a>OpenStack 架构</h2><h3 id="模块化架构"><a href="#模块化架构" class="headerlink" title="模块化架构"></a>模块化架构</h3><p>OpenStack 采用模块化架构，提供一组服务，可扩展性和弹性是其核心设计原则。以下 7 个组件为实验环境部署的组件服务，除控制面板（Dashboard）外都为核心服务。</p>
+<img src="https://i.loli.net/2021/06/06/1LZYkWdpPOfbFxu.png"/>
+
+<h3 id="概念体系结构"><a href="#概念体系结构" class="headerlink" title="概念体系结构"></a>概念体系结构</h3><p>主要服务组件之间的关系</p>
+<img src="https://i.loli.net/2021/06/06/kRjAqDSpxdNmCvJ.png"/>
+
+<h3 id="逻辑架构"><a href="#逻辑架构" class="headerlink" title="逻辑架构"></a>逻辑架构</h3><p>最常见的 OpenStack 云架构，加粗表示实验环境部署的服务组件。</p>
+<ul>
+<li>  <strong>Keystone</strong>：身份认证服务</li>
+<li>  <strong>Glance</strong>：镜像服务</li>
+<li>  <strong>Nova</strong>：计算服务</li>
+<li>  <strong>Neutron</strong>：网络服务</li>
+<li>  <strong>Swift</strong>：对象存储</li>
+<li>  <strong>Cinder</strong>：块存储</li>
+<li>  <strong>Dashboard</strong>：控制面板</li>
+<li>  Ceilometer：计量服务</li>
+<li>  Heat：编排服务</li>
+<li>  Ironic：裸金属服务</li>
+<li>  Trove：数据库即服务</li>
+<li>  Sahara：提供大数据处理框架</li>
+</ul>
+<img src="https://i.loli.net/2021/06/06/VArs3Dl17nxWfaP.png"/>
+
+<h2 id="核心组件交互逻辑"><a href="#核心组件交互逻辑" class="headerlink" title="核心组件交互逻辑"></a>核心组件交互逻辑</h2><p>OpenStack 逻辑架构展示了 OpenStack 中最常见的集成服务以及它们之间的交互。终端用户可以通过控制面板、终端命令行和 API 与服务进行交互。所有服务都通过公共的身份认证服务进行身份验证，各个服务通过公共 API 交互，但需要特权管理员命令的情况除外。</p>
+<img src="https://i.loli.net/2021/06/06/O1JuC6AnaMZ87tm.png"/>
+
+<p>以上组件的相关日志文件</p>
+<table>
+<thead>
+<tr>
+<th>Node type</th>
+<th>Service</th>
+<th>Log location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cloud controller</td>
+<td>nova-*</td>
+<td>/var/log/nova</td>
+</tr>
+<tr>
+<td>Cloud controller</td>
+<td>glance-*</td>
+<td>/var/log/glance</td>
+</tr>
+<tr>
+<td>Cloud controller</td>
+<td>cinder-*</td>
+<td>/var/log/cinder</td>
+</tr>
+<tr>
+<td>Cloud controller</td>
+<td>keystone-*</td>
+<td>/var/log/keystone</td>
+</tr>
+<tr>
+<td>Cloud controller</td>
+<td>neutron-*</td>
+<td>/var/log/neutron</td>
+</tr>
+<tr>
+<td>Cloud controller</td>
+<td>horizon</td>
+<td>/var/log/apache2/</td>
+</tr>
+<tr>
+<td>All nodes</td>
+<td>misc (swift, dnsmasq)</td>
+<td>/var/log/syslog</td>
+</tr>
+<tr>
+<td>Compute nodes</td>
+<td>libvirt</td>
+<td>/var/log/libvirt/libvirtd.log</td>
+</tr>
+<tr>
+<td>Compute nodes</td>
+<td>Console (boot up messages) for VM instances:</td>
+<td>/var/lib/nova/instances/instance-<instance id>/console.log</td>
+</tr>
+<tr>
+<td>Block Storage nodes</td>
+<td>cinder-volume</td>
+<td>/var/log/cinder/cinder-volume.log</td>
+</tr>
+</tbody></table>
+<h3 id="核心组件日志"><a href="#核心组件日志" class="headerlink" title="核心组件日志"></a>核心组件日志</h3><h4 id="Identity-Service-keystone"><a href="#Identity-Service-keystone" class="headerlink" title="Identity Service (keystone)"></a>Identity Service (keystone)</h4><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Service Name</th>
+<th>Log Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenStack Identity Service</td>
+<td>openstack-keystone.service</td>
+<td>/var/log/keystone/keystone.log</td>
+</tr>
+</tbody></table>
+<h4 id="Image-Service-glance"><a href="#Image-Service-glance" class="headerlink" title="Image Service (glance)"></a>Image Service (glance)</h4><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Service Name</th>
+<th>Log Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenStack Image Service API server</td>
+<td>openstack-glance-api.service</td>
+<td>/var/log/glance/api.log</td>
+</tr>
+<tr>
+<td>OpenStack Image Service Registry server</td>
+<td>openstack-glance-registry.service</td>
+<td>/var/log/glance/registry.log</td>
+</tr>
+</tbody></table>
+<h4 id="Compute-nova"><a href="#Compute-nova" class="headerlink" title="Compute (nova)"></a>Compute (nova)</h4><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Service Name</th>
+<th>Log Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenStack Compute API service</td>
+<td>openstack-nova-api.service</td>
+<td>/var/log/nova/nova-api.log</td>
+</tr>
+<tr>
+<td>OpenStack Compute certificate server</td>
+<td>openstack-nova-cert.service</td>
+<td>/var/log/nova/nova-cert.log</td>
+</tr>
+<tr>
+<td>OpenStack Compute service</td>
+<td>openstack-nova-compute.service</td>
+<td>/var/log/nova/nova-compute.log</td>
+</tr>
+<tr>
+<td>OpenStack Compute Conductor service</td>
+<td>openstack-nova-conductor.service</td>
+<td>/var/log/nova/nova-conductor.log</td>
+</tr>
+<tr>
+<td>OpenStack Compute VNC console authentication server</td>
+<td>openstack-nova-consoleauth.service</td>
+<td>/var/log/nova/nova-consoleauth.log</td>
+</tr>
+<tr>
+<td>Informational messages</td>
+<td>nova-manage command</td>
+<td>/var/log/nova/nova-manage.log</td>
+</tr>
+<tr>
+<td>OpenStack Compute NoVNC Proxy service</td>
+<td>openstack-nova-novncproxy.service</td>
+<td>/var/log/nova/nova-novncproxy.log</td>
+</tr>
+<tr>
+<td>OpenStack Compute Scheduler service</td>
+<td>openstack-nova-scheduler.service</td>
+<td>/var/log/nova/nova-scheduler.log</td>
+</tr>
+</tbody></table>
+<h4 id="Networking-neutron"><a href="#Networking-neutron" class="headerlink" title="Networking (neutron)"></a>Networking (neutron)</h4><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Service Name</th>
+<th>Log Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenStack Neutron DHCP Agent</td>
+<td>neutron-dhcp-agent.service</td>
+<td>/var/log/neutron/dhcp-agent.log</td>
+</tr>
+<tr>
+<td>OpenStack Networking Layer 3 Agent</td>
+<td>neutron-l3-agent.service</td>
+<td>/var/log/neutron/l3-agent.log</td>
+</tr>
+<tr>
+<td>Metadata agent service</td>
+<td>neutron-metadata-agent.service</td>
+<td>/var/log/neutron/metadata-agent.log</td>
+</tr>
+<tr>
+<td>Metadata namespace proxy</td>
+<td>n/a</td>
+<td>/var/log/neutron/neutron-ns-metadata-proxy-UUID.log</td>
+</tr>
+<tr>
+<td>Open vSwitch agent</td>
+<td>neutron-openvswitch-agent.service</td>
+<td>/var/log/neutron/openvswitch-agent.log</td>
+</tr>
+<tr>
+<td>OpenStack Networking service</td>
+<td>neutron-server.service</td>
+<td>/var/log/neutron/server.log</td>
+</tr>
+</tbody></table>
+<h4 id="Object-Storage-swift"><a href="#Object-Storage-swift" class="headerlink" title="Object Storage (swift)"></a>Object Storage (swift)</h4><p>OpenStack Object Storage sends logs to the system logging facility only.</p>
+<h4 id="Block-Storage-cinder"><a href="#Block-Storage-cinder" class="headerlink" title="Block Storage (cinder)"></a>Block Storage (cinder)</h4><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Service Name</th>
+<th>Log Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Block Storage API</td>
+<td>openstack-cinder-api.service</td>
+<td>/var/log/cinder-api.log</td>
+</tr>
+<tr>
+<td>Block Storage Backup</td>
+<td>openstack-cinder-backup.service</td>
+<td>/var/log/cinder/backup.log</td>
+</tr>
+<tr>
+<td>Informational messages</td>
+<td>The cinder-manage command</td>
+<td>/var/log/cinder/cinder-manage.log</td>
+</tr>
+<tr>
+<td>Block Storage Scheduler</td>
+<td>openstack-cinder-scheduler.service</td>
+<td>/var/log/cinder/scheduler.log</td>
+</tr>
+<tr>
+<td>Block Storage Volume</td>
+<td>openstack-cinder-volume.service</td>
+<td>/var/log/cinder/volume.log</td>
+</tr>
+</tbody></table>
+<h4 id="Dashboard-horizon"><a href="#Dashboard-horizon" class="headerlink" title="Dashboard (horizon)"></a>Dashboard (horizon)</h4><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Service Name</th>
+<th>Log Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Log of certain user interactions</td>
+<td>Dashboard interface</td>
+<td>/var/log/horizon/horizon.log</td>
+</tr>
+</tbody></table>
+<h2 id="端到端核心组件交互-——-创建实例"><a href="#端到端核心组件交互-——-创建实例" class="headerlink" title="端到端核心组件交互 —— 创建实例"></a>端到端核心组件交互 —— 创建实例</h2><p>在 OpenStack 上创建实例时，端到端的组件交互，包括网络和卷的请求与分配。</p>
+<img src="https://i.loli.net/2021/06/06/eCkJNORIrfjlYiu.jpg"/>
+
+<p>创建实例的状态改变。</p>
+<img src="https://i.loli.net/2021/06/06/9oiKzJTNpHcLwRd.png" width="80%"/>
+
+<p>从另一个视角看组件间的交互。</p>
+<img src="https://i.loli.net/2021/06/06/dl8L3u9rxUEiRXA.png"/>
+
+<p>组件之间的交互依赖于控制节点，控制节点使用消息队列（RabbitMQ）对组件交互消息进行排序，使用 REST API 并遵循 AMQP 协议；而组件内部的交互使用 RPC ，例如 nova 中的四个模块。</p>
+<img src="https://i.loli.net/2021/06/06/1VAesMiBSRGKyFt.png" width="80%"/>
+
+<h1 id="参阅"><a href="#参阅" class="headerlink" title="参阅"></a>参阅</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/operations-guide/ops-customize-provision-instance.html">Provision an instance</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/arch-design/index.html">OpenStack Architecture Design Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/security-guide/index.html">OpenStack Security Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/install-guide/index.html">OpenStack Installation Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.1/html/logging_monitoring_and_troubleshooting_guide/logging">CHAPTER 2. LOGGING</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/arch-design/design-compute/design-compute-logging.html">Compute server logging</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/rocky/install/">OpenStack Rocky Installation Guides</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openstack.org/api-quick-start/">OpenStack API Documentation</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2021/04/02/OpenStack/OpenStack%20%E6%95%B4%E4%BD%93%E4%BB%8B%E7%BB%8D/">https://jckling.github.io/2021/04/02/OpenStack/OpenStack 整体介绍/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/02/Jaeger/%E5%85%A8%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E4%B8%8E%20Jaeger%20%E5%85%A5%E9%97%A8/"><img class="prev-cover" src="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">全链路追踪与 Jaeger 入门</div></div></a></div><div class="next-post pull-right"><a href="/2021/03/18/Other/Python%20%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/"><img class="next-cover" src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python 单元测试框架</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/05/10/Jaeger/Jaeger + Elasticsearch + Kibana/" title="使用 Docker 部署 Jaeger + Elasticsearch + Kibana"><img class="cover" src="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-10</div><div class="title">使用 Docker 部署 Jaeger + Elasticsearch + Kibana</div></div></a></div><div><a href="/2020/12/25/OpenStack/CentOS7+OpenStack(Rocky)-0/" title="CentOS 7 安装 Openstack Rocky 版本 - 环境搭建"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-25</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 环境搭建</div></div></a></div><div><a href="/2020/12/26/OpenStack/CentOS7+OpenStack(Rocky)-1/" title="CentOS 7 安装 Openstack Rocky 版本 - 身份认证服务（Keystone）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-26</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 身份认证服务（Keystone）</div></div></a></div><div><a href="/2020/12/26/OpenStack/CentOS7+OpenStack(Rocky)-2/" title="CentOS 7 安装 Openstack Rocky 版本 - 镜像服务（Glance）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-26</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 镜像服务（Glance）</div></div></a></div><div><a href="/2020/12/27/OpenStack/CentOS7+OpenStack(Rocky)-4/" title="CentOS 7 安装 Openstack Rocky 版本 - 网络服务（Neutron）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-27</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 网络服务（Neutron）</div></div></a></div><div><a href="/2020/12/28/OpenStack/CentOS7+OpenStack(Rocky)-6/" title="CentOS 7 安装 Openstack Rocky 版本 - 块存储服务（Cinder）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-28</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 块存储服务（Cinder）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 >_<</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenStack"><span class="toc-number">1.</span> <span class="toc-text">OpenStack</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenStack-%E5%85%A8%E6%99%AF%E5%9B%BE"><span class="toc-number">1.1.</span> <span class="toc-text">OpenStack 全景图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenStack-%E6%9E%B6%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">OpenStack 架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E6%9E%B6%E6%9E%84"><span class="toc-number">1.2.1.</span> <span class="toc-text">模块化架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.2.</span> <span class="toc-text">概念体系结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84"><span class="toc-number">1.2.3.</span> <span class="toc-text">逻辑架构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E4%BA%A4%E4%BA%92%E9%80%BB%E8%BE%91"><span class="toc-number">1.3.</span> <span class="toc-text">核心组件交互逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E6%97%A5%E5%BF%97"><span class="toc-number">1.3.1.</span> <span class="toc-text">核心组件日志</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Identity-Service-keystone"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">Identity Service (keystone)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Image-Service-glance"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">Image Service (glance)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Compute-nova"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">Compute (nova)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Networking-neutron"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">Networking (neutron)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Object-Storage-swift"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">Object Storage (swift)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Block-Storage-cinder"><span class="toc-number">1.3.1.6.</span> <span class="toc-text">Block Storage (cinder)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dashboard-horizon"><span class="toc-number">1.3.1.7.</span> <span class="toc-text">Dashboard (horizon)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E4%BA%A4%E4%BA%92-%E2%80%94%E2%80%94-%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.4.</span> <span class="toc-text">端到端核心组件交互 —— 创建实例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E9%98%85"><span class="toc-number">2.</span> <span class="toc-text">参阅</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览"><img src="https://i.loli.net/2021/06/14/2NXqsznriG8blc7.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Butterfly 主题预览"/></a><div class="content"><a class="title" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览">Butterfly 主题预览</a><time datetime="2021-07-22T09:02:46.000Z" title="发表于 2021-07-22 17:02:46">2021-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python ast 模块使用"/></a><div class="content"><a class="title" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用">Python ast 模块使用</a><time datetime="2021-07-14T06:30:05.000Z" title="发表于 2021-07-14 14:30:05">2021-07-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程"><img src="https://i.loli.net/2021/07/08/mXj4AlCkFwEbSdR.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Pyre 污点分析工具 Pysa 使用教程"/></a><div class="content"><a class="title" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程">Pyre 污点分析工具 Pysa 使用教程</a><time datetime="2021-07-07T03:39:19.000Z" title="发表于 2021-07-07 11:39:19">2021-07-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读"><img src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="OpenStack 组件源码阅读"/></a><div class="content"><a class="title" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读">OpenStack 组件源码阅读</a><time datetime="2021-07-02T12:22:24.000Z" title="发表于 2021-07-02 20:22:24">2021-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨"><img src="https://i.loli.net/2021/06/24/kzGsZ3T8wWDReE5.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="FF14 光之摄影师养成计划✨"/></a><div class="content"><a class="title" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨">FF14 光之摄影师养成计划✨</a><time datetime="2021-06-24T08:11:35.000Z" title="发表于 2021-06-24 16:11:35">2021-06-24</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      avatar: 'retro',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline() 
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

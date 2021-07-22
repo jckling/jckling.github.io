@@ -1,0 +1,1140 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《数据库系统概论》笔记整理 | Jckling's Blog</title><meta name="keywords" content="数据库,Database"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《数据库系统概论》第五版">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《数据库系统概论》笔记整理">
+<meta property="og:url" content="https://jckling.github.io/2018/04/22/Notes/Database/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="《数据库系统概论》第五版">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg">
+<meta property="article:published_time" content="2018-04-22T02:57:00.000Z">
+<meta property="article:modified_time" content="2021-07-22T12:08:34.473Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="Database">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg"><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2018/04/22/Notes/Database/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《数据库系统概论》笔记整理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-22 20:08:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jckling/avatar.jpg" onerror="onerror=null;src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《数据库系统概论》笔记整理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2018-04-22T02:57:00.000Z" title="undefined 2018-04-22 10:57:00">2018-04-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Notes/">Notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《数据库系统概论》笔记整理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2018/04/22/Notes/Database/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/#post-comment"><span class="waline-comment-count" id="/2018/04/22/Notes/Database/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="I-绪论"><a href="#I-绪论" class="headerlink" title="I. 绪论"></a>I. 绪论</h1><h2 id="1-1-数据库系统概述"><a href="#1-1-数据库系统概述" class="headerlink" title="1.1 数据库系统概述"></a>1.1 数据库系统概述</h2><h3 id="1-11-数据库的-4-个基本概念"><a href="#1-11-数据库的-4-个基本概念" class="headerlink" title="1.11 数据库的 4 个基本概念"></a>1.11 数据库的 4 个基本概念</h3><h4 id="数据（data）"><a href="#数据（data）" class="headerlink" title="数据（data）"></a>数据（data）</h4><p>数据是数据库中存储的基本对象。<br>定义：描述事物的符号记录称为数据。可以是数字、文本（text）、图形（graph）、图像（image）、音频（audio）、视频（video）等。<br>数据的解释是指对数据含义的说明，数据的含义称为数据的语义，<strong>数据与其语义是不可分的</strong>。<br>记录是计算机中表示和存储数据的一种格式或一种方法。</p>
+<h4 id="数据库（DataBase，DB）"><a href="#数据库（DataBase，DB）" class="headerlink" title="数据库（DataBase，DB）"></a>数据库（DataBase，DB）</h4><p>数据库是长期存储在计算机内、有组织的、可共享的大量数据的集合。数据库中的数据按一定的数据模型组织、描述和储存，具有较小的冗余度（redundancy）、较高的数据独立性（data independency）和易扩展性（scalability），并可为各种用户共享。</p>
+<p>数据库数据具有永久存储、有组织和可共享三个基本特点。</p>
+<p>数据库中的数据存储在若干个操作系统文件中。</p>
+<p>每个文件中即存储了关系中的数据又存储了关系的结构，用户不能对文件直接操作，必须通过DBMS。</p>
+<p>数据库是以一定的组织方式将相关数据组织在一起存储在磁盘上所形成的、能为多个用户共享的、与应用程序彼此独立的一组相互关联的数据的集合。</p>
+<h4 id="数据库管理系统（DataBase-Management-System，-DBMS）"><a href="#数据库管理系统（DataBase-Management-System，-DBMS）" class="headerlink" title="数据库管理系统（DataBase Management System， DBMS）"></a>数据库管理系统（DataBase Management System， DBMS）</h4><p>数据库管理系统是位于用户与操作系统之间的一层数据管理软件。数据库管理系统和操作系统一样是计算机的基础软件，也是一个大型复杂的软件系统。它的主要功能包括以下几个方面：</p>
+<ol>
+<li><p>数据定义功能<br>数据库管理系统提供数据定义语言（Data Definition Language，DDL），用户通过它可以方便的对数据库中的数据对象的组成和结构进行定义。</p>
+</li>
+<li><p>数据组织、存储和管理<br>数据库管理系统要分类组织、存储和管理各种数据，包括数据字典、用户数据、数据的存取路径等。要确定以何种文件结构和存取方式在存储级上组织这些数据，如何实现数据之间的联系。数据组织和存储的基本目标是提高存储空间利用率和方便存取，提供多种存取方法（如索引查找、hash查找、顺序查找等）来提高存取效率。</p>
+</li>
+<li><p>数据操纵功能<br>数据库管理系统提供数据操纵语言（Data Manipulation Language，DML），用户可以使用它操纵数据，实现对数据库的基本操作，如查询、插入、删除和修改等。</p>
+</li>
+<li><p>数据库的事务管理和运行管理<br>数据库在建立、运用和维护时由数据库管理系统统一管理和控制，以保证事务的正确运行，保证数据的安全性、完整性、多用户对数据的并发使用及发生故障后的系统修复。</p>
+</li>
+<li><p>数据库的建立和维护功能<br>数据库的建立和维护功能包括数据库初始数据的输入、转换功能，数据库的转储恢复功能，数据库的重组织功能和性能监视、分析功能等。这些功能通常是由一些实用程序或管理工具完成的。</p>
+</li>
+<li><p>其他功能<br>其他功能包括数据库管理系统与网络中其他软件系统的通信功能，一个数据库管理系统与另一个数据库管理系统或文件系统的数据转换功能，异构数据库之间的互访和互操作功能。</p>
+</li>
+</ol>
+<p>DBMS 是用户与数据库交互的桥梁，是数据库系统的核心。</p>
+<p>DBMS 在操作系统的支持下工作</p>
+<p>DBMS 支持其上的应用开发工具</p>
+<h4 id="数据库系统（DataBase-System，DBS）"><a href="#数据库系统（DataBase-System，DBS）" class="headerlink" title="数据库系统（DataBase System，DBS）"></a>数据库系统（DataBase System，DBS）</h4><p>数据库系统是由数据库、数据库管理系统（及其应用开发工具）、应用程序和数据库管理员（DataBase Administrator，DBA）组成的存储、管理、处理和维护数据的系统。</p>
+<h3 id="1-12-数据管理技术的产生和发展"><a href="#1-12-数据管理技术的产生和发展" class="headerlink" title="1.12 数据管理技术的产生和发展"></a>1.12 数据管理技术的产生和发展</h3><p>数据库技术是应数据管理任务的需要而产生的。</p>
+<p>数据管理是指对数据进行分类、组织、编码、存储、检索和维护，它是数据处理的中心问题。</p>
+<p>数据的处理是指对各种数据进行收集、存储、加工和传播的一系列活动的总和。</p>
+<p>在应用需求的推动下，在计算机硬件、软件发展的基础上，数据管理技术经历了人工管理、文件系统、数据库系统三个阶段。</p>
+<ol>
+<li><p>人工管理阶段<br>（1）数据不保存<br>（2）应用程序管理数据<br>（3）数据不共享<br>（4）数据不具有独立性</p>
+</li>
+<li><p>文件系统阶段<br>（1）数据可以长期保存<br>（2）由文件系统管理数据</p>
+</li>
+</ol>
+<p>优点：实现了记录内的结构性<br>缺点：i.数据共享性差，冗余度大 ii.数据独立性差</p>
+<p>文件系统仍然是一个不具有弹性的无整体结构的数据集合，即文件之间是孤立的，不能反映现实世界事物之间的内在联系。</p>
+<p>文件系统管理的文件是流式文件，或者说只是一些字节流。</p>
+<ol start="3">
+<li>数据库系统阶段<br>从文件系统到数据库系统标志着数据管理技术的飞跃</li>
+</ol>
+<h3 id="1-13-数据库系统的特点"><a href="#1-13-数据库系统的特点" class="headerlink" title="1.13 数据库系统的特点"></a>1.13 数据库系统的特点</h3><ol>
+<li><p>数据结构化<br>数据库系统实现<em>整体数据的结构化</em>，这是数据库的主要特征之一，也是数据库系统与文件系统的本质区别。<br>所谓“整体”结构化是指数据库中的数据不再仅仅针对某一个应用，而是面向整个组织或企业；不仅数据内部是结构化的，而且整体是结构化的，数据之间是具有联系的。</p>
+</li>
+<li><p>数据的共享性高，冗余度低且易扩充<br>数据共享可以大大减少数据冗余，节约存储空间。数据共享还能够避免数据之间的不相容性与不一致性。 </p>
+</li>
+</ol>
+<p>由于数据面向整个系统，是有结构的数据，不仅可以被多个应用共享使用，而且容易增加新的应用，这就使得数据库系统弹性大，易于扩充。<br>数据的不一致性是指统一数据不同副本的值不一样。</p>
+<ol start="3">
+<li><p>数据独立性高<br>数据独立性包括数据的物理独立性和逻辑独立性。<br>物理独立性是指用户的应用程序与数据库中数据的物理存储是相互独立的。<br>逻辑独立性是指用户的应用程序与数据库的逻辑结构是相互独立的。</p>
+</li>
+<li><p>数据由数据库管理系统统一管理和控制<br>数据库管理系统提供数据控制功能</p>
+</li>
+</ol>
+<p>（1）数据的安全性（security）保护<br>数据的安全性是指保护数据以防止不合法使用造成的数据泄密和破坏。<br>（2）数据的完整性（integrity）检查<br>数据的完整性是指数据的正确性、有效性和相容性。完整性检查将数据控制在有效的范围内，并保证数据之间满足一定的关系。<br>（3）并发（concurrency）控制<br>对多用户的并发操作加以控制和协调<br>（4）数据库恢复（recovery）<br>将数据库从错误状态恢复到某一已知的正确状态（亦称为完整状态或一致状态）。</p>
+<p>综上，数据库是长期存储在计算机内有组织、大量、共享的数据集合。它可以供各种用户共享，具有最小冗余度和较高的数据独立性。数据库管理系统在数据库建立、运用和维护时进行并发控制，以保证数据的完整性和安全性，并在多用户同时使用数据库时进行并发控制，在发生故障后对数据库进行恢复。<br>数据库系统的出现使信息系统从以加工数据的程序为中心转向围绕共享的数据库为中心的新阶段。</p>
+<h2 id="1-2-数据模型"><a href="#1-2-数据模型" class="headerlink" title="1.2 数据模型"></a>1.2 数据模型</h2><p>模型是对现实世界中某个对象特征的模拟和抽象。<br>数据模型（data model）是对现实世界数据特征的抽象。是用来描述数据、组织数据和对数据进行操作的。<br>数据模型是数据库系统的核心和基础。</p>
+<h3 id="1-2-1-两类数据模型"><a href="#1-2-1-两类数据模型" class="headerlink" title="1.2.1 两类数据模型"></a>1.2.1 两类数据模型</h3><p>数据模型应满足三方面要求：一是能比较真实地模拟现实世界，二是容易为人所理解，三是便于在计算机上实现。<br>根据模型应用的不同目的，可以将这些模型划分为两大类，它们分别属于两个不同的层次。第一类是概念模型，第二类是逻辑模型和物理模型。<br>第一类概念模型（conceptual model），也称信息模型，它是按用户的观点来对数据和信息建模，主要用于数据库设计。<br>第二类中的逻辑模型，它是按计算机系统的观点对数据建模，主要用于数据库管理系统的实现。<br>第二类中的物理模型是对数据最低层的抽象，它描述数据在系统内部的表示方式和存取方法，或在磁盘或磁带上的存储方式和存取方法，是面向计算机系统的。</p>
+<p>为了把现实世界中的具体事物抽象、组织为某一数据库管理系统支持的数据模型，人们常常首先将现实世界抽象为信息世界，然后将信息世界转换为机器世界。</p>
+<h2 id="1-2-2-概念模型"><a href="#1-2-2-概念模型" class="headerlink" title="1.2.2 概念模型"></a>1.2.2 概念模型</h2><p>概念模型实际上是现实世界到机器世界的一个中间层次。</p>
+<p>概念模型用于信息世界的建模，是现实世界到信息世界的第一层抽象，是数据库设计人员进行数据库设计的有力工具，也是数据库设计人员和用户之间进行交流的语言。</p>
+<ol>
+<li><p>信息世界中的基本概念<br>（1）实体（entity）<br>客观存在并可相互区别的事物称为实体。<br>（2）属性（attribute）<br>实体所具有的某一特性称为属性。<br>（3）码（key）<br>唯一标识实体的属性集称为码<br>（4）实体型（entity type）<br>具有相同属性的实体必然具有共同的特征和性质。用实体名及其属性名集合来抽象和刻画同类实体，称为实体型。<br>（5）实体集（entity set）<br>同一类型实体的集合称为实体集。<br>（6）联系（relationship）<br>实体内部的联系通常是指组成实体的各属性之间的联系，实体之间的联系通常是指不同实体之间的联系。<br>实体之间的联系有一对一、一对多和多对多等多种类型。<br>（7）域（domain）<br>属性的取值范围。</p>
+</li>
+<li><p>概念模型的一种表示方法：实体-联系方法<br>该方法用 E-R 图来描述现实世界的概念模型，E-R 方法也称为 E-R 模型。</p>
+</li>
+</ol>
+<h2 id="1-2-3-数据模型的组成要素"><a href="#1-2-3-数据模型的组成要素" class="headerlink" title="1.2.3 数据模型的组成要素"></a>1.2.3 数据模型的组成要素</h2><p>数据模型是严格定义的一组概念的集合。这些概念精确地描述了系统的静态特性、动态特性和完整性约束条件（integrity constraints）。<br><strong>数据模型通常由数据结构、数据操作和数据的完整性约束条件三部分组成</strong>。</p>
+<ol>
+<li><p>数据结构<br>数据结构描述数据库的组成对象以及对象之间的联系。<br>数据结构是刻画一个数据模型性质最重要的方面。通常按照其数据结构的类型来命名数据模型。<br>数据结构是所描述的对象类型的集合，是对系统静态特性的描述。</p>
+</li>
+<li><p>数据操作<br>数据操作是指对数据库中各种对象（型）的实例（值）允许执行的操作的集合，包括操作及有关的操作规则。</p>
+</li>
+</ol>
+<p>数据库主要有查询和更新（包括插入、删除、修改）两大类操作。数据模型必须定义这些操作的确切含义、操作符号、操作规则（如优先级）以及实现操作的语言<br>数据操作是对系统动态特性的描述。</p>
+<ol start="3">
+<li>数据的完整性约束条件<br>数据的完整性约束条件是一组完整性规则。<br>完整性规则是给定的数据模型中数据及其联系所具有的制约和依存规则，用以限定符合数据模型的数据库状态以及状态的变化，以保证数据的正确、有效和相容。</li>
+</ol>
+<p>数据模型应该反映和规定其必须遵守的基本的和通用的完整性约束条件。</p>
+<p>数据模型还应该提供定义完整性约束条件的机制，以反映具体应用所涉及的数据必须遵守的特定的语义约束条件。</p>
+<h3 id="1-2-4-常用的数据模型"><a href="#1-2-4-常用的数据模型" class="headerlink" title="1.2.4 常用的数据模型"></a>1.2.4 常用的数据模型</h3><p>数据库领域中主要的逻辑数据模型有：</p>
+<ul>
+<li>层次模型（hierarchical model）</li>
+<li>网状模型（network model）</li>
+<li>关系模型（relational model）</li>
+<li>面向对象数据模型（object oriented data model）</li>
+<li>对象关系数据模型（object relational data model）</li>
+<li>半结构化数据模型（semistructure data model）</li>
+</ul>
+<p>其中层次模型和网状模型统称为格式化模型。<br>在格式化模型中实体用记录表示，实体的属性对应记录的数据项（或字段）。实体之间的联系在格式化模型中转换成记录之间的两两联系。<br>在格式化模型中数据结构的单位是基本层次联系。<br>基本层次联系是指两个记录以及它们之间的一对多（包括一对一）的联系。</p>
+<h3 id="1-2-5-层次模型"><a href="#1-2-5-层次模型" class="headerlink" title="1.2.5 层次模型"></a>1.2.5 层次模型</h3><p>层次模型用树形结构来表示各类实体以及实体间的联系。</p>
+<ol>
+<li>层次模型的数据结构<br>在数据库中定义满足下面两个条件的基本层次联系的集合为层次模型：<br>（1）有且只有一个结点没有双亲结点，这个结点称为根节点<br>（2）根以外的其他结点有且只有一个双亲结点</li>
+</ol>
+<p>层次模型的一个基本的特点是，任何一个给定的记录值只能按其层次路径查看，没有一个子女记录值能够脱离双亲记录值而独立存在。</p>
+<ol start="2">
+<li><p>层次模型的数据操纵与完整性约束<br>进行插入操作时，如果没有相应的双亲结点值就不能插入它的子女结点值。<br>进行删除操作时，如果删除双亲结点值，则相应的子女结点值也将被同时删除。</p>
+</li>
+<li><p>层次模型的优缺点<br>优点：<br>（1）层次模型的数据结构比较简单清晰<br>（2）层次数据库的查询效率高（层次数据库的性能优于关系数据库，不低于网状数据库）<br>（3）层次数据模型提供了良好的完整性支持<br>缺点：<br>（1）现实世界中的很多联系是非层次性的，如结点之间具有多对多联系，不适合用层次模型表示<br>（2）如果一个结点具有多个双亲结点等，用层次模型表示这类联系只能通过引入冗余（易产生不一致性）数据或创建非自然的数据结构（引入虚拟结点）来解决，对插入和删除操作的限制比较多，因此应用程序的编写比较复杂。<br>（3）查询子女结点必须通过双亲结点<br>（4）由于结构严密，层次命令趋于程序化</p>
+</li>
+</ol>
+<h3 id="1-2-6-网状模型"><a href="#1-2-6-网状模型" class="headerlink" title="1.2.6 网状模型"></a>1.2.6 网状模型</h3><p>网状数据模型的典型代表是DBTG（Data Base Task Group，DBTG）系统，亦称CODASYL（Conference On Data System Language，CODASYL）系统。</p>
+<ol>
+<li>网状模型的数据结构<br>在数据库中，把满足以下两个条件的基本层次联系集合称为网状模型：<br>（1）允许一个以上的结点无双亲<br>（2）一个结点可以有多于一个的双亲</li>
+</ol>
+<p>允许两个结点之间有多种联系（称之为复合联系），可以更直接地去描述现实世界。层次模型实际上是网状模型的一个特例。<br>层次模型中子女结点与双亲结点的联系是唯一的，而在网状模型中这种联系可以不唯一。因此要为每个联系命名，并指出与该联系有关的双亲记录和子女记录。</p>
+<ol start="2">
+<li><p>网状模型的数据操纵与完整性约束</p>
+</li>
+<li><p>网状模型的优缺点<br>优点：<br>（1）能够更改为直接地描述现实世界，如一个结点可以有多个双亲，结点之间可以有多种联系<br>（2）具有良好的性能，存取效率较高<br>缺点：<br>（1）结构比较复杂<br>（2）网状模型 DDL、DML 复杂，并且要嵌入某一种高级语言（如COBOL、C）中<br>（3）由于记录之间的联系是通过存取路径实现的，应用程序在访问数据时必须选择适当的存取路径</p>
+</li>
+</ol>
+<h3 id="1-2-7-关系模型"><a href="#1-2-7-关系模型" class="headerlink" title="1.2.7 关系模型"></a>1.2.7 关系模型</h3><ol>
+<li>关系模型的数据结构<br>术语：</li>
+</ol>
+<ul>
+<li><p>关系（relation）：一个关系对应通常说的一张表</p>
+</li>
+<li><p>元组（tuple）：表中的一行即为一个元组</p>
+</li>
+<li><p>属性（attribute）：表中的一列即为一个属性，给每一个属性起一个名称即属性名</p>
+</li>
+<li><p>码（key）：也成为码键。表中的某个属性组，可以唯一确定一个元组</p>
+</li>
+<li><p>域（domain）：域是一组具有相同数据类型的值的集合。属性的取值范围来自某个域</p>
+</li>
+<li><p>分量：元组中的一个属性值</p>
+</li>
+<li><p>关系模式：对关系的描述，一般表示为<code>关系名（属性1，属性2，…，属性n）</code></p>
+<p>关系模型要求关系必须是规范化的，即要求关系必须满足一定的规范条件，这些规范条件中最基本的一条就是，关系的每一个分量必须是一个不可分的数据项</p>
+</li>
+</ul>
+<ol start="2">
+<li><p>关系模型的数据操纵与完整性约束<br>关系的完整性约束条件包括三大类：实体完整性、参照完整性和用户定义的完整性。</p>
+</li>
+<li><p>关系模型的优缺点<br>优点：<br>（1）关系模型与格式化模型不同，它是建立在严格的数学概念的基础上<br>（2）关系模型的概念单一。无论是实体还是实体之间的联系都用关系来表示，对数据的检索和更新也是关系（即表）<br>（3）关系模型的存取路径对用户透明，从而具有更高的数据独立性、更好的安全保密性，也简化了程序员的工作和数据库开发建立的工作<br>缺点：<br>（1）由于存取路径对用户是隐蔽的，查询效率往往不如格式化数据模型<br>（2）开发数据库管理系统的难度较大</p>
+</li>
+</ol>
+<h2 id="1-3-数据库系统的结构"><a href="#1-3-数据库系统的结构" class="headerlink" title="1.3 数据库系统的结构"></a>1.3 数据库系统的结构</h2><p>从数据库应用开发人员角度看，数据库系统通常采用三级模式结构，这是数据库系统内部的系统结构。</p>
+<p>从数据库最终用户角度看，数据库系统的结构分为单用户结构、主从式结构、分布式结构、客户-服务器、浏览器-应用服务器/数据库服务器多层结构等，这是数据库系统外部的体系结构。</p>
+<h3 id="1-3-1-数据库系统模式的概念"><a href="#1-3-1-数据库系统模式的概念" class="headerlink" title="1.3.1 数据库系统模式的概念"></a>1.3.1 数据库系统模式的概念</h3><p>在数据模型中有“型”（type）和“值”（value）的概念。</p>
+<p>型是指对某一类数据的结构和属性的说明。</p>
+<p>值是型的一个具体赋值。</p>
+<p>模式（schema）是数据库中全体数据的逻辑结构和特征的描述，仅仅涉及型的描述，不涉及具体的值。</p>
+<p>模式的一个具体值称为模式的一个实例（instance）。</p>
+<p>同一个模式可以有很多实例。</p>
+<p>模式是相对稳定的，而实例是相对变动的，因为数据库中的数据是在不断更新的。模式反映的是数据的结构及其联系，而实例反映的是数据库某一时刻的状态。</p>
+<h3 id="1-3-2-数据库系统的三级模式结构"><a href="#1-3-2-数据库系统的三级模式结构" class="headerlink" title="1.3.2 数据库系统的三级模式结构"></a>1.3.2 数据库系统的三级模式结构</h3><p>数据库系统的三级模式结构是指数据库是由外模式、模式和内模式三级构成。</p>
+<ol>
+<li>模式（schema）</li>
+</ol>
+<p>模式也称逻辑模式，是数据库中全体数据的逻辑结构和特称的描述，是所有用户的共公共数据视图。</p>
+<p>是数据库系统模式结构的中间层，既不涉及数据的物理存储细节和硬件环境，由于具体的应用程序、所使用的应用开发工具及高级程序设计语言无关。</p>
+<p>模式实际上是数据库数据在逻辑级上的视图。</p>
+<p>一个数据库只有一个模式。数据库模式以某一种数据模型为基础，统一综合地考虑了所有用户的需求，并将这些需求有机的结合成一个逻辑整体。</p>
+<p>数据库管理系统提供模式数据定义语言（模式 DDL）来严格地定义模式。</p>
+<ol start="2">
+<li>外模式（external schema）</li>
+</ol>
+<p>外模式也称子模式（subschema）或用户模式，它是数据库用户能够看见和使用的局部数据的逻辑结构和特征的描述，是数据库用户的数据视图，是与某一应用有关的数据的逻辑表示。</p>
+<p>外模式通常是模式的子集。一个数据库可以有多个外模式。</p>
+<p>外模式是保证数据库安全性的一个有力措施。每个用户只能看见和访问所对应的外模式中的数据，数据库中的其余数据是不可见的。</p>
+<p>数据库管理系统提供外模式数据定义语言（外模式 DDL）来严格地定义外模式。</p>
+<ol start="3">
+<li>内模式（internal schema）</li>
+</ol>
+<p>内模式也称存储模式（storage schema），一个数据库只有一个内模式。它是数据物理结构和存储方式的描述，是数据在数据库内部的组织方式。</p>
+<h3 id="1-3-3-数据库的二级映像功能与数据独立性"><a href="#1-3-3-数据库的二级映像功能与数据独立性" class="headerlink" title="1.3.3 数据库的二级映像功能与数据独立性"></a>1.3.3 数据库的二级映像功能与数据独立性</h3><p>数据库系统的三级模式是数据的三个抽象级别，它把数据的具体组织留给数据库管理系统管理，使用户能逻辑地、抽象地处理数据，而不必关心数据在计算机中的具体表示方式与存储方式。</p>
+<p>为了能够在系统内部实现这三个抽象层次的联系和转换，数据库管理系统在这三级模式之间提供了两层映像：外模式/模式映像和模式/内模式映像。</p>
+<p>正是这两层映像保证了数据库系统中的数据能够具有较高的逻辑独立性和物理独立性。</p>
+<ol>
+<li><p>外模式/模式映像</p>
+<ul>
+<li>模式描述的是数据的全局逻辑结构，外模式描述的是数据的局部逻辑结构。对应于同一个模式可以有任意多个外模式。对于每一个外模式，数据库系统都有一个外模式/模式映像，它定义了该<em>外模式与模式之间的对应关系。</em>这些映像定义通常包含在各自外模式的描述中。</li>
+<li>当模式改变时，由数据管理员对各个外模式/模式映像作相应改变，可以使外模式保持不变。</li>
+<li>应用程序是依据数据的外模式编写的，从而应用程序不必修改，保证了数据与程序的逻辑独立性，简称数据的逻辑独立性。</li>
+</ul>
+</li>
+<li><p>模式/内模式映像</p>
+<ul>
+<li>数据库中只有一个模式，也只有一个内模式，所以模式/内模式映像是唯一的，它定义了数据全局逻辑结构与存储结构之间的对应关系。</li>
+<li>当数据库的存储结构改变时，由数据库管理员对模式/内模式映像作相应改变，可以是模式保持不变，从而应用程序也不比改变。保证了数据与程序的物理独立性，简称数据的物理独立性。</li>
+</ul>
+</li>
+</ol>
+<p>数据与程序之间的独立性使的数据的定义和描述可以从应用程序中分离出去。</p>
+<p>由于数据的存取由数据库管理系统管理，从而简化而应用程序的编制，大大减少了应用程序的维护和修改。</p>
+<h2 id="1-4-数据库系统的组成"><a href="#1-4-数据库系统的组成" class="headerlink" title="1.4 数据库系统的组成"></a>1.4 数据库系统的组成</h2><ol>
+<li><p>硬件平台及数据库<br>（1）足够大的内存<br>（2）足够大的磁盘或磁盘阵列等设备<br>（3）要求系统有较高的通道能力</p>
+</li>
+<li><p>软件<br>（1）数据库管理系统<br>（2）支持数据库管理系统运行的操作系统<br>（3）具有与数据库接口的高级语言及编译系统<br>（4）以数据库管理系统为核心的应用开发程序<br>（5）为特定应用环境开发的数据库应用系统</p>
+</li>
+<li><p>人员<br>（1）数据库管理员（DataBase Administrator，DBA）<br>职责：①决定数据库中的信息内容和结构。②决定数据库的存储结构和存取策略。③定义数据的安全性要求和完整性约束条件。④监控数据库的使用和运行。⑤数据库的改进和重组、重构。</p>
+</li>
+</ol>
+<p>（2）系统分析员和数据库设计人员<br>系统分析员负责应用系统的需求分析和规范说明，要和用户及数据库管理员相结合，确定系统的硬件软件配置，并参与数据库系统的概要设计。<br>数据库设计人员负责数据库中数据的确定及数据库各级模式的设计。数据库设计人员必须参加用户需求调查和系统分析，然后进行数据库设计。在很多情况下，数据库设计人员就由数据库管理员担任。</p>
+<p>（3）应用程序员<br>应用程序员负责设计和编写应用程序的程序模块，并进行调试和安装。</p>
+<p>（4）用户<br>最后总用户可以分为三类：①偶然用户。②简单用户。③复杂用户。</p>
+<h1 id="II-关系数据库"><a href="#II-关系数据库" class="headerlink" title="II. 关系数据库"></a>II. 关系数据库</h1><p>关系数据库应用数学方法来处理数据库中的数据。</p>
+<h2 id="2-1-关系数据结构及形式化定义"><a href="#2-1-关系数据结构及形式化定义" class="headerlink" title="2.1 关系数据结构及形式化定义"></a>2.1 关系数据结构及形式化定义</h2><h3 id="2-1-1-关系"><a href="#2-1-1-关系" class="headerlink" title="2.1.1 关系"></a>2.1.1 关系</h3><p>关系：单一的数据结构关系</p>
+<p>关系模型中数据的逻辑结构：二维表</p>
+<p>现实世界的实体以及实体间的各种联系均用单一的结构类型，即关系来表示</p>
+<ol>
+<li>域（domain）</li>
+</ol>
+<p>域是一组具有相同数据类型的值的集合</p>
+<ol start="2">
+<li>笛卡尔积（cartensian product）</li>
+</ol>
+<p>笛卡尔积是域上的一种集合运算</p>
+<p>一个域允许的不同取值个数称为这个域的基数（cardinal number）</p>
+<ol start="3">
+<li>关系（relation）</li>
+</ol>
+<p>（1）关系的表示</p>
+<p>关系也是一个二维表，表的每行对应一个元组，表的每列对应一个域。</p>
+<p>（2）属性</p>
+<p>为了加以区分，必须对每列起一个名字，称为属性（attribute）</p>
+<p>n 目关系必有 n 个属性</p>
+<p>（3）码</p>
+<p>候选码（candidate key）</p>
+<ul>
+<li>若关系中的某一属性组的值能唯一地标识一个元组，而其子集不能，则称该属性为候选码。最简单的情况下，候选码只包含一个属性。</li>
+</ul>
+<p>全码（all-key）</p>
+<ul>
+<li>在最极端的情况下，关系模式的所有属性是这个关系模式的候选码。</li>
+</ul>
+<p>主码（prime key）</p>
+<p>主属性（prime attribute）</p>
+<p>候选码的诸属性</p>
+<ul>
+<li>不包含在任何候选码中的属性称为非主属性（non-prime attribute）或非码属性（non-key attribute）</li>
+</ul>
+<p>（7）三类关系</p>
+<p>基本关系（基本表或基表）</p>
+<ul>
+<li>实际存在的表，是实际存储数据的逻辑表示</li>
+</ul>
+<p>查询表</p>
+<ul>
+<li>查询结果对应的表</li>
+</ul>
+<p>视图表</p>
+<ul>
+<li>由基本表或其他视图表导出的表，是虚表，不对应实际存储的数据</li>
+</ul>
+<p>（8）基本关系的性质</p>
+<p>列是同质的，即每一列中的分量是同一类型的数据，来自同一个域</p>
+<p>不同的列可以出自同一个域</p>
+<p>称其中的每一列为一个属性</p>
+<p>不用的属性要给予不同的属性名</p>
+<p>列的顺序无所谓，即列的次序可以任意交换</p>
+<p>任意两个元组的候选码不能取相同的值</p>
+<p>行的顺序无所谓，即行的次序可以任意交换</p>
+<p>分量必须取原子值，即每一个分量都必须是不可分的数据项</p>
+<p>关系模型要求关系必须是规范化（normalization）的，即要求关系必须满足一定的规范条件。这些规范条件中最基本的一条就是，关系的每一个分量必须是一个不可分的数据项。规范化的关系简称为范式（Normal Form，NF）。</p>
+<h3 id="2-1-2-关系模式"><a href="#2-1-2-关系模式" class="headerlink" title="2.1.2 关系模式"></a>2.1.2 关系模式</h3><ol>
+<li>关系模式<ul>
+<li>关系模式是型，关系是值</li>
+<li>关系模式是对关系的描述</li>
+<li>关系是元组的集合</li>
+</ul>
+</li>
+<li>关系模式意义<ul>
+<li>关系模式必须指出元组集合的结构</li>
+<li>关系模式应当刻画出完整性约束条件</li>
+</ul>
+</li>
+<li>关系模式与关系<ul>
+<li>关系是关系模式在某一时刻的状态或内容</li>
+<li>关系模式是静态的、稳定的，而关系是动态地、随时间不断变化的</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-1-3-关系数据库"><a href="#2-1-3-关系数据库" class="headerlink" title="2.1.3 关系数据库"></a>2.1.3 关系数据库</h3><p>关系数据库的型也称为关系数据库模式，是对关系数据库的描述。关系数据库模式包括若干域的定义，以及在这些域上定义的若干关系模式。</p>
+<p>关系数据库的值是这些关系模式在某一时刻对应的关系的集合，通常就称为关系数据库。</p>
+<h3 id="2-1-4-关系模型的结构"><a href="#2-1-4-关系模型的结构" class="headerlink" title="2.1.4 关系模型的结构"></a>2.1.4 关系模型的结构</h3><p>在关系数据库的物理组织中，</p>
+<p>有的关系数据库管理系统中一个表对应一个操作系统文件，将物理数据组织交给操作系统完成</p>
+<p>有的关系数据库管理系统从操作系统那里申请若干个大的文件，自己划分空间，组织表、索引等储存结构，并进行存储管理</p>
+<h2 id="2-2-关系操作"><a href="#2-2-关系操作" class="headerlink" title="2.2 关系操作"></a>2.2 关系操作</h2><h3 id="2-2-1-关系的基本操作"><a href="#2-2-1-关系的基本操作" class="headerlink" title="2.2.1 关系的基本操作"></a>2.2.1 关系的基本操作</h3><p>关系模型中常用的关系操作包括查询（query）操作和插入（insert）、删除（delete）、修改（update）操作两大部分。</p>
+<p>查询操作又可以分为：选择（select）、投影（project）、连接（join）、除（divide）、并（union）、差（expect）、交（intersection）、笛卡尔积等。其中选择、投影、并、差、笛卡尔积是5种基本操作，其他操作可以用基本操作来定义和导出。</p>
+<p>关系操作的特点是集合操作方式，即操作对象和结果都是集合。这种操作方式也称为一次一集合（set-at-a-time）的方式，非关系型数据模型的数据操作方式则为一次一记录（record-at-a-time）的方式。</p>
+<h3 id="2-2-2-关系数据语言的分类"><a href="#2-2-2-关系数据语言的分类" class="headerlink" title="2.2.2 关系数据语言的分类"></a>2.2.2 关系数据语言的分类</h3><p>关系代数（relational algebra）</p>
+<ul>
+<li>用对关系的运算来表达查询要求</li>
+</ul>
+<p>关系演算（relational calculus）</p>
+<ul>
+<li>用谓词来表达查询要求</li>
+</ul>
+<p>按谓词变元的基本对象分为：元组关系演算、域关系演算。</p>
+<p>一个关系数据语言能够表示关系代数可以表示的查询，称为具有完备的表达能力，简称关系完备性。</p>
+<p>结构化查询语言（Structured Query Language，SQL）</p>
+<ul>
+<li>介于关系代数和关系演算之间</li>
+<li>查询功能、数据定义和数据控制功能</li>
+<li>是集查询、数据定义语言、数据操纵语言和数据控制语言（Data Control Language，DCL）于一体的关系数据语言。</li>
+<li>是一种高度非过程化的语言，用户不必请求数据库管理员为其建立特殊的存取路径，存取路径的选择由关系数据库管理系统的优化机制来完成。</li>
+</ul>
+<p>关系数据语言可以分为三类：</p>
+<ul>
+<li>关系代数语言（例如ISBL）</li>
+<li>关系演算语言</li>
+<li>元组关系演算语言（例如ALPHA、QUEL）</li>
+</ul>
+<p>域关系演算语言（例如QBE）</p>
+<ul>
+<li>具有关系代数和关系演算双重特点的语言（例如 SQL）</li>
+</ul>
+<h2 id="2-3-关系的完整性"><a href="#2-3-关系的完整性" class="headerlink" title="2.3 关系的完整性"></a>2.3 关系的完整性</h2><p>关系模型的完整性规则是对关系的某种约束条件。</p>
+<p>关系模型中有三类完整性约束：实体完整性（entity integrity）、参照完整性（referential integrity）和用户定义的完整性（user-defined  integrity）。其中实体完整性和参照完整性是关系模型必须满足的完整性约束条件，被称作是关系的两个不变性。</p>
+<h3 id="2-3-1-实体完整性"><a href="#2-3-1-实体完整性" class="headerlink" title="2.3.1 实体完整性"></a>2.3.1 实体完整性</h3><p>关系数据库中每个元组应该是可区分的、唯一的。</p>
+<p>（1）实体完整性规则是针对基本关系而言的。一个基本表通常对应现实世界的一个实体集。<br>（2）现实世界中的实体是可区分的，即它们具有某种唯一性标识。<br>（3）关系模型中以主码作为唯一性标识<br>（4）主码中的属性即主属性不能取空值。</p>
+<h3 id="2-3-2-参照完整性"><a href="#2-3-2-参照完整性" class="headerlink" title="2.3.2 参照完整性"></a>2.3.2 参照完整性</h3><p>参照完整性规则就是定义外码与主码之间的引用规则。</p>
+<p>若属性（或属性组） F 是基本关系 R 的外码，它与基本关系 S 的主码 $$K_s$$ 相对应（基本关系 R 和 S 不一定是不同的关系），则对于 R 中每个元组在F上的值必须：</p>
+<ul>
+<li>或者取空值（F的每个属性值均为空值）</li>
+<li>或者等于S中某个元组的主码值</li>
+</ul>
+<h3 id="2-3-3-用户定义的完整性"><a href="#2-3-3-用户定义的完整性" class="headerlink" title="2.3.3 用户定义的完整性"></a>2.3.3 用户定义的完整性</h3><p>用户定义的完整性就是针对某一具体关系数据库的约束条件，它反映某一具体应用所涉及的数据必须满足的语义要求。</p>
+<h2 id="2-4-关系代数"><a href="#2-4-关系代数" class="headerlink" title="2.4 关系代数"></a>2.4 关系代数</h2><p>关系代数是一种抽象的查询语言，它用对关系的运算来表达查询。</p>
+<p>关系代数的运算对象是关系，运算结果亦为关系。关系代数用到的运算符包括两类：集合运算符和专门的关系运算符。</p>
+<p>关系代数的运算按运算符的不同可分为传统的集合运算和专门的关系运算两类。其中，传统的集合运算将关系看成元组的集合，其运算是从行的角度来进行；专门的关系运算不仅涉及行，而且涉及列。</p>
+<h3 id="2-4-1-传统的集合运算"><a href="#2-4-1-传统的集合运算" class="headerlink" title="2.4.1 传统的集合运算"></a>2.4.1 传统的集合运算</h3><p>传统的集合运算是二目运算，包括并、交、差、笛卡尔积4种运算。</p>
+<h3 id="2-4-2-专门的关系运算"><a href="#2-4-2-专门的关系运算" class="headerlink" title="2.4.2 专门的关系运算"></a>2.4.2 专门的关系运算</h3><p>专门的关系运算包括选择、投影、连接、除运算等。</p>
+<p>关系代数中，这些运算经有限次复合后形成的表达式称为关系代数表达式。</p>
+<h1 id="III-关系数据库标准语言SQL"><a href="#III-关系数据库标准语言SQL" class="headerlink" title="III. 关系数据库标准语言SQL"></a>III. 关系数据库标准语言SQL</h1><p>结构化查询语言（Structured Query Language，SQL）</p>
+<ol>
+<li>数据定义（data definition）</li>
+</ol>
+<ul>
+<li>用来定义数据库的逻辑结构，包括定义表、视图和数据库及索引。</li>
+</ul>
+<ol start="2">
+<li>数据操纵（data manipulation）</li>
+</ol>
+<ul>
+<li>包括插入、修改和删除数据的操作。</li>
+</ul>
+<ol start="3">
+<li><p>数据查询（data query）</p>
+</li>
+<li><p>数据控制（data control）</p>
+</li>
+</ol>
+<ul>
+<li>包括对数据的安全性控制、完整性规则的描述以及对事物的控制语句。</li>
+</ul>
+<h2 id="3-1-SQL-概述"><a href="#3-1-SQL-概述" class="headerlink" title="3.1 SQL 概述"></a>3.1 SQL 概述</h2><h3 id="3-1-1-SQL-的产生与发展"><a href="#3-1-1-SQL-的产生与发展" class="headerlink" title="3.1.1 SQL 的产生与发展"></a>3.1.1 SQL 的产生与发展</h3><h3 id="3-1-2-SQL-的特点"><a href="#3-1-2-SQL-的特点" class="headerlink" title="3.1.2 SQL 的特点"></a>3.1.2 SQL 的特点</h3><ol>
+<li>综合统一</li>
+<li>高度非过程化</li>
+<li>面向集合的操作方式</li>
+<li>以同一种语法结构提供多种使用方式<ul>
+<li>自含式（独立的）语言可以独立使用交互命令，适用于终端用户、应用程序员和DBA</li>
+<li>嵌入式语言使其嵌入在高级语言中使用，供应用程序员开发应用程序。</li>
+</ul>
+</li>
+<li>语言简洁，易学易用</li>
+</ol>
+<h3 id="3-1-3-SQL-的基本概念"><a href="#3-1-3-SQL-的基本概念" class="headerlink" title="3.1.3 SQL 的基本概念"></a>3.1.3 SQL 的基本概念</h3><p>SQL 支持数据库的三级模式结构，即外模式、模式和内模式。</p>
+<p>与之对应的数据库对象是视图、基本表、索引。</p>
+<p>外模式包括若干视图（view）和部分基本表（base table），数据库模式包括若干基本表，内模式包括若干存储文件（stored table）。</p>
+<p>用户可以用 SQL 对基本表和视图进行查询或其他操作，基本表和视图，都是关系。</p>
+<p>基本表是本身独立存在的表，在关系数据库管理系统中的一个关系就对应一个基本表。一个或多个基本表对应一个存储文件，一个表可以带若干索引，索引也存放在存储文件中</p>
+<p>存储文件的逻辑结构组成了关系数据库的内模式。存储文件的物理结构对最终用户是隐蔽的。</p>
+<p>视图是从一个或几个基本表导出的表。它本身不独立存储在数据库中，即数据库中只存放视图的定义而不存放视图对应的数据。这些数据仍存放在导出视图的基本表中，因此视图是一个虚表。视图在概念上与基本表等同，用户可以在视图上再定义视图。</p>
+<h2 id="3-3-数据定义"><a href="#3-3-数据定义" class="headerlink" title="3.3 数据定义"></a>3.3 数据定义</h2><p>SQL 标准不提供修改模式定义和修改视图定义的操作，如果想修改，必须先删除再重建。</p>
+<p>一个关系数据库管理系统的实例（instance）中可以建立多个数据库，一个数据库中可以建立多个模式，一个模式下通常包括多个表、视图和索引等数据库对象。</p>
+<h3 id="3-3-1-模式的定义与删除"><a href="#3-3-1-模式的定义与删除" class="headerlink" title="3.3.1 模式的定义与删除"></a>3.3.1 模式的定义与删除</h3><ol>
+<li>定义模式<ul>
+<li><code>CREATE DATABASE/SCHEMA &lt;模式名&gt;AUTHORIZATION&lt;用户名&gt;</code></li>
+<li>可以在创建模式的同时在这个模式定义中创建基本表、视图，定义授权。<ul>
+<li><code>CREATE DATABASE/SCHEMA &lt;模式名&gt;AUTHORIZATION&lt;用户名&gt;[&lt;表定义子句&gt;|&lt;视图定义子句&gt;|&lt;授权定义子句&gt;]</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>删除模式<ul>
+<li><code>DROP DATABASE/SCHEMA &lt;模式名&gt;&lt;CASCADE | RESTRICT&gt;</code></li>
+<li>CASCADE级联，RESTRICT限制</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-3-2-基本表的定义、删除与修改"><a href="#3-3-2-基本表的定义、删除与修改" class="headerlink" title="3.3.2 基本表的定义、删除与修改"></a>3.3.2 基本表的定义、删除与修改</h3><ol>
+<li><p>定义基本表</p>
+<ul>
+<li>创建了一个模式就建立了一个数据库的命名空间，一个框架。在这个空间中首先要定义的是该模式包含的数据库基本表。</li>
+<li>参照表和被参照表可以是同一个表<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE&lt;表名&gt; (&lt;列名&gt;&lt;数据类型&gt;[列级完整性约束条件]</span><br><span class="line">      			    [,&lt;列名&gt;&lt;数据类型&gt;[列级完整性约束条件]]</span><br><span class="line">      				......</span><br><span class="line">      				[,&lt;表级完整性约束条件&gt;]);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>数据类型</p>
+<ul>
+<li>关系模型中一个很重要的概念是域，每一个属性来自一个域，它的取值必须是域中的值。</li>
+<li>在SQL中域的概念用数据类型来实现，定义表的各个属性时需要指明其数据类型及长度。</li>
+</ul>
+</li>
+<li><p>模式与表</p>
+<ul>
+<li>每一个基本表都属于某一个模式，一个模式包含多个基本表。</li>
+<li>定义基本表时一般可以有三种方法<ul>
+<li>在表名中明显地给出模式名</li>
+<li>在创建模式语句中同时创建表</li>
+<li>设置所属的模式，这样在创建表时表名中不必给出模式名</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>修改基本表</p>
+<ul>
+<li>SQL语言用ALTER TABLE语句修改基本表<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE &lt;表名&gt;</span><br><span class="line">[ADD [COLUMN] &lt;新列名&gt;&lt;数据类型&gt; [完整性约束]]</span><br><span class="line">[ADD &lt;表级完整性约束&gt;]</span><br><span class="line">[DROP [COLUMN] &lt;列名&gt; [CASCADE | RESTRICT]]</span><br><span class="line">[DROP CONSTRAINT &lt;完整性约束名&gt; [RESTRICT | CASCADE]]</span><br><span class="line">[ALTER COLUMN &lt;列名&gt;&lt;数据类型&gt;];</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>删除基本表</p>
+<ul>
+<li><code>DROP TABLE &lt;表名&gt; [RESTRICT | CASCADE];</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="3-3-3-索引的建立与删除"><a href="#3-3-3-索引的建立与删除" class="headerlink" title="3.3.3 索引的建立与删除"></a>3.3.3 索引的建立与删除</h3><p>当表的数据量比较大时，查询操作会比较耗时。建立索引是加快查询速度的有效手段。</p>
+<p>数据库索引有多种类型，常见索引包括顺序文件上的索引、B+ 树索引、散列（hash）索引、位图索引等。</p>
+<p>索引虽然能够加速数据库查询，但需要占用一定的数据空间，当基本表更新时，索引要进行相应的维护，增加了数据库的负担。</p>
+<p>关系数据库管理系统在执行查询时会自动选择合适的索引作为存取路径，用户不必也不能显式地选择索引。索引是关系数据库管理系统的内部实现技术，属于内模式的范畴。</p>
+<ol>
+<li>建立索引<ul>
+<li>次序可选ASC（升序）DESC（降序），默认值为ASC</li>
+<li>UNIQUE表明此索引的每一个索引值只对应唯一的数据记录</li>
+<li>CLUSTER表示要建立的索引是聚簇索引<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE [UNIQUE] [CLUSTER] INDEX&lt;索引名&gt;</span><br><span class="line">ON &lt;表名&gt; (&lt;列名&gt; [&lt;次序&gt;][,&lt;列名&gt; [&lt;次序&gt;]]...);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>修改索引<ul>
+<li><code>ALTER INDEX &lt;旧索引名&gt; RENAME TO &lt;新索引名&gt;</code></li>
+</ul>
+</li>
+<li>删除索引<ul>
+<li>索引一经建立就由系统使用和维护，不需用户干预。</li>
+<li>建立索引是为了减少查询操作的时间，如果数据增删改频繁，系统就会花费许多时间来维护索引，从而降低了查询效率。</li>
+<li><code>DROP INDEX &lt;索引名&gt;</code></li>
+<li>删除索引时，系统会同时从数据字典中删去有关该索引的描述。</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-3-4-数据字典"><a href="#3-3-4-数据字典" class="headerlink" title="3.3.4 数据字典"></a>3.3.4 数据字典</h3><ul>
+<li>数据字典是关系数据库管理系统内部的一组系统表，它记录了数据库中所有的定义信息，包括关系模式定义、视图定义、索引定义、完整性约束定义、各类用户对数据库的操作权限、统计信息等。</li>
+<li>关系数据库管理系统在执行SQL的数据定义语句时，实际上就是在更新数据字典表中的相应信息。</li>
+<li>在进行查询优化和查询处理时，数据字典中的信息是其重要依据。</li>
+</ul>
+<h2 id="3-4-数据查询"><a href="#3-4-数据查询" class="headerlink" title="3.4 数据查询"></a>3.4 数据查询</h2><p>数据查询是数据库的核心操作。</p>
+<h3 id="3-4-1-单表查询"><a href="#3-4-1-单表查询" class="headerlink" title="3.4.1 单表查询"></a>3.4.1 单表查询</h3><p>单表查询是指仅涉及一个表的查询。</p>
+<ol>
+<li>选择表中的若干列<ul>
+<li>选择表中的全部或部分列即关系代数的投影运算</li>
+</ul>
+</li>
+<li>选择表中的若干元组</li>
+<li>ORDER BY子句<ul>
+<li>升序（ASC），降序（DESC），默认值为升序</li>
+</ul>
+</li>
+<li>聚集函数</li>
+<li>GROUP BY 子句</li>
+</ol>
+<h3 id="3-4-2-连接查询"><a href="#3-4-2-连接查询" class="headerlink" title="3.4.2 连接查询"></a>3.4.2 连接查询</h3><p>若一个查询同时涉及两个以上的表，则称之为连接查询；<br>连接查询是关系数据库中最主要的查询。</p>
+<ol>
+<li>等值与非等值连接查询</li>
+<li>自身连接</li>
+<li>外连接</li>
+<li>多表连接</li>
+</ol>
+<h3 id="3-4-3-嵌套查询"><a href="#3-4-3-嵌套查询" class="headerlink" title="3.4.3 嵌套查询"></a>3.4.3 嵌套查询</h3><p>在 SQL 语言中，一个 SELECT-FROM-WHERE 语句称为一个查询块/.</p>
+<p>将一个查询块嵌套在另一个查询块的 WHERE 子句或 HAVING 短语的条件中的查询称为嵌套查询（nested query）</p>
+<ul>
+<li>子查询的 SELECT 语句不能使用 ORDER BY 子句，ORDER BY 子句只能对最终查询结果排序（除非子查询中用了 top 3 之类）</li>
+</ul>
+<ol>
+<li>带有 IN 谓词的子查询<ul>
+<li>子查询的查询条件不依赖于父查询，称为不相关子查询</li>
+<li>子查询的查询条件依赖于父查询，这类子查询称为相关子查询（correlated subquery），整个查询语句称为相关嵌套查询（correlated nested query）</li>
+</ul>
+</li>
+<li>带有比较运算符的子查询</li>
+<li>带有 ANY (SOME) 或 ALL 谓词的子查询</li>
+<li>带有 EXISTS 谓词的子查询<ul>
+<li>带有 EXISTS 谓词的子查询不返回任何数据，只产生逻辑真值 true 或逻辑假值 false</li>
+<li>与 EXISTS 谓词相对应的是 NOT EXISTS 谓词</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-4-4-集合查询"><a href="#3-4-4-集合查询" class="headerlink" title="3.4.4 集合查询"></a>3.4.4 集合查询</h3><p>SELECT 语句的查询结果是元组的集合，所以多个 SELECT 语句的结果可进行集合操作。</p>
+<p>集合操作包括并操作 UNION ，交操作 INTERSECT ，差操作 EXCEPT</p>
+<ul>
+<li>参加集合操作的各查询结果的列数必须相同，对应项的数据类型也必须相同</li>
+<li>如果要保留重复元组则用 UNION ALL 操作符</li>
+</ul>
+<h3 id="3-4-5-基于派生表的查询"><a href="#3-4-5-基于派生表的查询" class="headerlink" title="3.4.5 基于派生表的查询"></a>3.4.5 基于派生表的查询</h3><p>子查询不仅可以出现在 WHERE 子句中，还可以出现在 FROM 子句中，这时子查询生成的临时派生表（derived table）成为主查询的查询对象</p>
+<h3 id="3-4-6-SELECT-语句的一般格式"><a href="#3-4-6-SELECT-语句的一般格式" class="headerlink" title="3.4.6 SELECT 语句的一般格式"></a>3.4.6 SELECT 语句的一般格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT[ALL|DISTINCT]&lt;目标列表达式&gt;[别名][.&lt;目标列表达式&gt;[别名]]...</span><br><span class="line">FROM&lt;表名或视图名&gt;[别名][,&lt;表名或视图名&gt;[别名]]...|(&lt;SELECT语句&gt;)[AS]&lt;别名&gt;</span><br><span class="line">[WHERE&lt;条件表达式&gt;]</span><br><span class="line">[GROUP BY&lt;列名1&gt;[HAVING&lt;条件表达式&gt;]]</span><br><span class="line">[ORDER BY&lt;列名2&gt;[ASC|DESC]];</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>目标列表表达式的可选格式</li>
+<li>聚集函数的一般格式</li>
+<li>WHERE 子句的条件表达式的可选格式</li>
+</ol>
+<h2 id="3-5-数据更新"><a href="#3-5-数据更新" class="headerlink" title="3.5 数据更新"></a>3.5 数据更新</h2><p>数据更新操作有三种：</p>
+<ul>
+<li>向表中添加若干行数据</li>
+<li>修改表中的数据</li>
+<li>删除表中的若干行</li>
+</ul>
+<h3 id="3-5-1-插入数据"><a href="#3-5-1-插入数据" class="headerlink" title="3.5.1 插入数据"></a>3.5.1 插入数据</h3><ol>
+<li>插入元组</li>
+<li>插入子查询结果<ul>
+<li>可以一次插入多个元组</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-5-2-修改数据"><a href="#3-5-2-修改数据" class="headerlink" title="3.5.2 修改数据"></a>3.5.2 修改数据</h3><p>修改操作又称为更新操作，其语句的一般格式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE&lt;表名&gt;</span><br><span class="line">SET&lt;列名&gt;&#x3D;&lt;表达式&gt;[,&lt;列名&gt;&#x3D;&lt;表达式&gt;]...</span><br><span class="line">[WHERE&lt;条件&gt;];</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改指定表中满足 WHERE 子句条件的元组</li>
+<li>其中 SET 子句给出表达式的值用于取代相应的属性列值</li>
+<li>如果省略 WHERE 子句，则表示要修改表中的所有元组</li>
+</ul>
+<ol>
+<li>修改某一个元组的值</li>
+<li>修改多个元组的值</li>
+<li>带子查询的修改语句</li>
+</ol>
+<h3 id="3-5-3-删除数据"><a href="#3-5-3-删除数据" class="headerlink" title="3.5.3 删除数据"></a>3.5.3 删除数据</h3><p>删除语句的一般格式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DELETE</span><br><span class="line">FROM&lt;表名&gt;</span><br><span class="line">[WHERE&lt;条件&gt;];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>从指定表中删除满足 WHERE 子句条件的所有元组</li>
+<li>如果省略 WHERE 子句，则表示删除表中全部元组，但表的定义仍在字典中</li>
+<li>DELETE 语句删除的是表中的数据，而不是关于表的定义</li>
+</ul>
+<ol>
+<li>删除某一个元组的值</li>
+<li>删除多个元组的值</li>
+<li>带子查询的删除语句</li>
+</ol>
+<h2 id="3-6-空值的处理"><a href="#3-6-空值的处理" class="headerlink" title="3.6 空值的处理"></a>3.6 空值的处理</h2><ol>
+<li>空值的产生</li>
+<li>空值的判断<ul>
+<li>用 <code>IS NULL</code> 或 <code>IS NOT NULL</code> 来表示</li>
+</ul>
+</li>
+<li>空值的约束条件<ul>
+<li>属性定义（或域定义）中有 NOT NULL 约束条件的不能取空值，加了 UNIQUE 限制的属性不能取空值，码属性不能取空值</li>
+</ul>
+</li>
+</ol>
+<h2 id="3-7-视图"><a href="#3-7-视图" class="headerlink" title="3.7 视图"></a>3.7 视图</h2><ul>
+<li>视图是从一个或几个基本表（或视图）导出的表，是一个虚表</li>
+<li>数据库中只存放视图的定义，而不存放视图对应的数据，这些数据仍在原来的基本表中（无数据冗余）</li>
+<li>一旦基本表中的数据发生变化，从视图中查询出的数据也就随之改变了</li>
+<li>视图一经定义，就可以和基本表一样被查询、被删除；也可以在一个视图上再定义新的视图</li>
+</ul>
+<h3 id="3-7-1-定义视图"><a href="#3-7-1-定义视图" class="headerlink" title="3.7.1 定义视图"></a>3.7.1 定义视图</h3><ol>
+<li>建立视图<ul>
+<li>以下三种情况下，必须明确指定组成视图的所有列名<ul>
+<li>某个目标列不是单纯的属性名，而是聚集函数或列表达式</li>
+<li>多表连接时选出了几个同名列作为视图的字段</li>
+<li>需要在视图中为某个列启用新的更合适的名字</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>删除视图<ul>
+<li>视图删除后视图的定义将从数据字典中删除<ul>
+<li>如果该视图上还导出了其他视图，则使用 CASCADE 级联删除语句把该视图和由它导出的所有视图一起删除</li>
+</ul>
+</li>
+<li>基本表删除后，由该基本表导出的所有视图均无法使用了，但是视图的定义没有从字典中清除，删除这些视图定义需要显式地使用 DROP VIEW 语句</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-7-2-查询视图"><a href="#3-7-2-查询视图" class="headerlink" title="3.7.2 查询视图"></a>3.7.2 查询视图</h3><p>定义视图并查询视图与基于派生表的查询是有区别的</p>
+<ul>
+<li>试图一旦定义，其定义将永久保存在数据字典中，之后的所有查询都可以直接引用该视图</li>
+<li>派生表只是在语句执行时临时定义，语句执行后该定义即被删除</li>
+</ul>
+<h3 id="3-7-3-更新视图"><a href="#3-7-3-更新视图" class="headerlink" title="3.7.3 更新视图"></a>3.7.3 更新视图</h3><p>更新视图是指通过视图来插入（INSERT）、删除（DELETE）和修改（UPDATE）数据</p>
+<ul>
+<li>由于视图是不实际存储数据的虚表，因此对视图的更新最终要转换为对基本表的更新<ul>
+<li>像查询视图那样，对视图的更新操作也是通过视图消解，转换为对基本表的更新操作</li>
+</ul>
+</li>
+<li>不可更新视图和不允许更新视图是两个不同的概念</li>
+</ul>
+<h3 id="3-7-4-视图的作用"><a href="#3-7-4-视图的作用" class="headerlink" title="3.7.4 视图的作用"></a>3.7.4 视图的作用</h3><ol>
+<li>视图能够简化用户的操作</li>
+<li>视图使用户能以多种角度看待同一数据</li>
+<li>视图对重构数据库提供了一定程度的逻辑独立性</li>
+<li>视图能够对机密数据提供安全保护</li>
+<li>适当利用视图可以更清晰地表达查询</li>
+</ol>
+<h1 id="IV-数据库安全性"><a href="#IV-数据库安全性" class="headerlink" title="IV. 数据库安全性"></a>IV. 数据库安全性</h1><p>数据库的数据保护主要包括数据的安全性和完整性。</p>
+<h2 id="4-1-数据库安全性概述"><a href="#4-1-数据库安全性概述" class="headerlink" title="4.1 数据库安全性概述"></a>4.1 数据库安全性概述</h2><p>数据库的安全性是指保护数据库以防止不合法使用所造成的数据泄露、更改或破坏。</p>
+<h3 id="4-1-1-数据库的不安全因素"><a href="#4-1-1-数据库的不安全因素" class="headerlink" title="4.1.1 数据库的不安全因素"></a>4.1.1 数据库的不安全因素</h3><ol>
+<li>非授权用户对数据库的恶意存取和破坏<ul>
+<li>用户身份鉴别、存取控制、视图</li>
+</ul>
+</li>
+<li>数据库中重要或敏感的数据被泄露<ul>
+<li>强制存取控制、数据加密存储、加密传输、审计日志</li>
+</ul>
+</li>
+<li>安全环境的脆弱性<ul>
+<li>建立了一套可信（trusted）计算机系统的概念和标准</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-1-2-安全标准简介"><a href="#4-1-2-安全标准简介" class="headerlink" title="4.1.2 安全标准简介"></a>4.1.2 安全标准简介</h3><p>通用准则（Common Criteria, CC）项目</p>
+<ul>
+<li>TCSEC</li>
+<li>CTCPEC</li>
+<li>FC</li>
+<li>ITSEC</li>
+<li>99年被ISO采用为国际标准</li>
+<li>01年被我国采用为国家标准</li>
+</ul>
+<p>CC 把对信息产品的安全要求分为安全功能要求和安全保证要求。</p>
+<h2 id="4-2-数据库安全性控制"><a href="#4-2-数据库安全性控制" class="headerlink" title="4.2 数据库安全性控制"></a>4.2 数据库安全性控制</h2><p>主要包括用户身份鉴别、多层存取控制、审计、视图、数据加密等安全技术。</p>
+<h3 id="4-2-1-用户身份鉴别"><a href="#4-2-1-用户身份鉴别" class="headerlink" title="4.2.1 用户身份鉴别"></a>4.2.1 用户身份鉴别</h3><p>用户身份鉴别是数据库管理系统提供的最外层安全保护措施。</p>
+<ol>
+<li>静态口令鉴别</li>
+<li>动态口令鉴别</li>
+<li>生物特征鉴别</li>
+<li>智能卡鉴别</li>
+</ol>
+<h3 id="4-2-2-存取控制"><a href="#4-2-2-存取控制" class="headerlink" title="4.2.2 存取控制"></a>4.2.2 存取控制</h3><p>数据库安全最重要的一点就是确保只授权给有资格的用户访问数据库的权限，同时令所有未被授权的人员无法接近数据，这主要通过数据库系统的存取控制机制实现。</p>
+<p>存取控制机制主要包括：</p>
+<ol>
+<li>定义用户权限（，并将用户权限登记到数据字典中）<ul>
+<li>用户对某一数据对象的操作权力称为权限</li>
+</ul>
+</li>
+<li>合法权限检查</li>
+</ol>
+<p>定义用户权限和合法权限检查机制一起组成了数据库管理系统的存取控制子系统。</p>
+<ul>
+<li>C2 级的数据库管理系统支持自主存取控制（Discretionary Access Control, DAC）</li>
+<li>B1 级的数据库管理系统支持强制存取控制（Mandatory Access Control, MAC）</li>
+</ul>
+<h3 id="4-2-3-自主存取控制方法"><a href="#4-2-3-自主存取控制方法" class="headerlink" title="4.2.3 自主存取控制方法"></a>4.2.3 自主存取控制方法</h3><ul>
+<li>用户权限是由两个要素组成的：数据库对象和操作类型</li>
+<li>定义一个用户的存取权限就是要定义这个月用户可以在哪些数据对象上进行哪些类型的操作</li>
+<li>在数据库系统中，定义存取权限称为授权（authorization）</li>
+<li>在关系数据库系统中，存取控制的对象不仅有数据本身（基本表中的数据、属性列上的数据），还有数据库模式（包括数据库、基本表、视图和索引的创建等）</li>
+</ul>
+<h3 id="4-2-4-授权：授予与收回"><a href="#4-2-4-授权：授予与收回" class="headerlink" title="4.2.4 授权：授予与收回"></a>4.2.4 授权：授予与收回</h3><ol>
+<li>GRANT 语句向用户授予权限</li>
+<li>REVOKE 语句收回已经授予用户的权限</li>
+<li>创建数据库模式的权限<ul>
+<li>GRANT 和 REVOKE 语句向用户授予或收回对数据的操作权限</li>
+<li>对创建数据库模式一类的数据库对象的授权则由数据库管理员在创建用户时实现</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-2-5-数据库角色"><a href="#4-2-5-数据库角色" class="headerlink" title="4.2.5 数据库角色"></a>4.2.5 数据库角色</h3><p>数据库角色是被命名的一组与数据库操作相关的权限，角色是权限的集合。</p>
+<ol>
+<li>角色的创建</li>
+<li>给角色授权</li>
+<li>将一个角色授予其他的角色或用户</li>
+<li>角色权限的收回</li>
+</ol>
+<h3 id="4-2-6-强制存取控制方法"><a href="#4-2-6-强制存取控制方法" class="headerlink" title="4.2.6 强制存取控制方法"></a>4.2.6 强制存取控制方法</h3><h2 id="4-3-视图机制"><a href="#4-3-视图机制" class="headerlink" title="4.3 视图机制"></a>4.3 视图机制</h2><p>通过视图机制把要保密的数据对无权存取的用户隐藏起来，从而自动对数据提供一定程度的安全保护</p>
+<ul>
+<li>视图机制间接地实现支持存取谓词的用户权限定义</li>
+</ul>
+<h2 id="4-4-审计"><a href="#4-4-审计" class="headerlink" title="4.4 审计"></a>4.4 审计</h2><p>按照 TDI/TCSEC 标准中安全策略的要求，审计（audit）功能是数据库管理系统达到C2以上安全级别必不可少的一项指标</p>
+<ul>
+<li>审计功能把用户对数据库的所有操作自动记录下来放入审计日志（audit log）中</li>
+<li>数据库安全审计系统提供了一种事后检查的安全机制</li>
+</ul>
+<ol>
+<li>审计事件</li>
+<li>审计功能</li>
+<li>AUDIT 语句和 NOAUDIT 语句<ul>
+<li>AUDIT 语句用来设置审计功能，NOAUDIT 语句则取消审计功能</li>
+<li>审计一般可分为用户级审计和系统级审计</li>
+</ul>
+</li>
+</ol>
+<h2 id="4-5-数据加密"><a href="#4-5-数据加密" class="headerlink" title="4.5 数据加密"></a>4.5 数据加密</h2><p>加密的基本思想是根据一定的算法将原始数据——明文（plain text）变换为不可直接识别的格式——密文（cipher text），从而使得不知道解密算法的人无法获知数据的内容。</p>
+<p>数据加密主要包括：</p>
+<ol>
+<li>存储加密<ul>
+<li>提供透明和非透明两种存储方式</li>
+</ul>
+</li>
+<li>传输加密<ul>
+<li>在客户/服务器结构中，链路加密和端到端加密</li>
+</ul>
+</li>
+</ol>
+<h2 id="4-6-其他安全性保护"><a href="#4-6-其他安全性保护" class="headerlink" title="4.6 其他安全性保护"></a>4.6 其他安全性保护</h2><ul>
+<li>推理控制（inference control）<ul>
+<li>避免用户利用其能够访问的数据推知更高密级的数据</li>
+</ul>
+</li>
+<li>隐蔽信道（covert channel）</li>
+<li>数据隐私（data privacy）保护<ul>
+<li>控制不愿被他人知道或他人不便知道的个人数据的能力</li>
+</ul>
+</li>
+</ul>
+<h1 id="V-数据库完整性"><a href="#V-数据库完整性" class="headerlink" title="V. 数据库完整性"></a>V. 数据库完整性</h1><p>数据库的完整性（integrity）是指数据的正确性（correctness）和相容性（compatability）</p>
+<ul>
+<li>数据的正确性是指数据是符合现实世界语义、反映当前实际状况的</li>
+<li>数据的相容性是指数据库同一对象在不同关系表中的数据是符合逻辑的</li>
+</ul>
+<p>数据的完整性和安全性是两个既有联系又不尽相同的概念</p>
+<ul>
+<li>数据库的完整性是为了防止数据库中存在不符合语义的数据，也就是防止数据库中存在不正确的数据<ul>
+<li>完整性检查和控制的防范对象是不合语义的、不正确的数据，防止它们进入数据库</li>
+</ul>
+</li>
+<li>数据的安全性是保护数据库防止恶意破坏和非法存取<ul>
+<li>安全性控制的防范对象是非法用户和非法操作，防止他们对数据库数据的非法存取</li>
+</ul>
+</li>
+</ul>
+<p>为维护数据库的完整性，数据库管理系统（DBMS）必须能够实现如下功能</p>
+<ol>
+<li>提供完整性约束条件的机制<ul>
+<li>完整性约束条件也称为完整性规则，是数据库中的数据必须满足的语义约束条件</li>
+<li>关系模型的实体完整性、参照完整性和用户定义的完整性（作为数据库模式的一部分存入数据字典中）</li>
+</ul>
+</li>
+<li>提供完整性检查的方法<ul>
+<li>DBMS 中检查数据是否满足完整性约束条件的机制称为完整性检查</li>
+</ul>
+</li>
+<li>进行违约处理<ul>
+<li>DBMS 若发现用户的操作违背了完整性约束条件将采取一定的动作，如拒绝（NO ACTION）执行该操作或级联（CASCADE）执行其他操作，进行违约处理以保证数据的完整性</li>
+</ul>
+</li>
+</ol>
+<p>关系数据库管理系统使得完整性控制成为其核心支持的功能，从而能够为所有用户和应用提供一致的数据库完整性。</p>
+<h2 id="5-1-实体完整性"><a href="#5-1-实体完整性" class="headerlink" title="5.1 实体完整性"></a>5.1 实体完整性</h2><h3 id="5-1-1-定义实体完整性"><a href="#5-1-1-定义实体完整性" class="headerlink" title="5.1.1 定义实体完整性"></a>5.1.1 定义实体完整性</h3><p>关系模型的实体完整性在 CREATE TABLE 中用 PRIMARY KEY 定义</p>
+<ul>
+<li>对单属性构成的码有两种说明方法：<ul>
+<li>定义为列级约束条件</li>
+<li>定义为表级约束条件</li>
+</ul>
+</li>
+<li>对多个属性构成的码只有一种说明方法：<ul>
+<li>定义为表级约束条件</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-1-2-实体完整性检查和违约处理"><a href="#5-1-2-实体完整性检查和违约处理" class="headerlink" title="5.1.2 实体完整性检查和违约处理"></a>5.1.2 实体完整性检查和违约处理</h3><p>用 PRIMARY KEY 短语定义了关系的主码后，每当用户程序对基本表插入一条记录或对主码列进行更新操作时，关系 DBMS 将按照实体完整性规则自动进行检查</p>
+<ul>
+<li>检查主码是否唯一，如果不唯一则拒绝插入或修改</li>
+<li>检查主码的各个属性是否为空，只要有一个为空就拒绝插入或修改</li>
+</ul>
+<p>检查记录中主码值是否唯一的一种方法是进行全表扫描，依次判断表中每一条记录的主码值与将插入记录的主码值（或修改的新主码值）是否相同</p>
+<ul>
+<li>全表扫描非常耗时</li>
+<li>为了避免对基本表进行全表扫描，关系 DBMS 一般都在主码上自动建立一个索引（如 B+ 树索引）</li>
+</ul>
+<h2 id="5-2-参照完整性"><a href="#5-2-参照完整性" class="headerlink" title="5.2 参照完整性"></a>5.2 参照完整性</h2><h3 id="5-2-1-定义参照完整性"><a href="#5-2-1-定义参照完整性" class="headerlink" title="5.2.1 定义参照完整性"></a>5.2.1 定义参照完整性</h3><p>关系模型的参照完整性在 CREATE TABLE 中用 FOREIGN KEY 短语定义哪些列为外码，用 REFERENCES 短语指明这些外码参照哪些表的主码</p>
+<ul>
+<li>表级定义参照完整性 </li>
+</ul>
+<h3 id="5-2-2-参照完整性检查和违约处理"><a href="#5-2-2-参照完整性检查和违约处理" class="headerlink" title="5.2.2 参照完整性检查和违约处理"></a>5.2.2 参照完整性检查和违约处理</h3><p>参照完整性将两个表中相应元组联系起来了。因此，对被参照表和参照表进行增、删、改操作时有可能破坏参照完整性，必须进行检查以保证这两个表的相容性。</p>
+<p>可能破坏参照完整性的情况及违约处理</p>
+<table>
+<thead>
+<tr>
+<th align="center">被参照表</th>
+<th align="center">参照表</th>
+<th align="center">违约处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">可能破坏参照完整性</td>
+<td align="center">←插入元组</td>
+<td align="center">拒绝</td>
+</tr>
+<tr>
+<td align="center">可能破坏参照完整性</td>
+<td align="center">←修改外码值</td>
+<td align="center">拒绝</td>
+</tr>
+<tr>
+<td align="center">删除元组→</td>
+<td align="center">可能破坏参照完整性</td>
+<td align="center">拒绝/级联删除/设置为空值</td>
+</tr>
+<tr>
+<td align="center">修改主码值→</td>
+<td align="center">可能破坏参照完整性</td>
+<td align="center">拒绝/级联删除/设置为空值</td>
+</tr>
+</tbody></table>
+<ul>
+<li>拒绝（NO ACTION）执行<ul>
+<li>不允许该操作执行。该策略一般设置为默认策略</li>
+</ul>
+</li>
+<li>级联（CASCADE）操作<ul>
+<li>当删除或修改被参照表的一个元组导致与参照表的不一致时，删除或修改参照表中的所有导致不一致的元组</li>
+</ul>
+</li>
+<li>设置为空值<ul>
+<li>当删除或修改被参照表的一个元组时造成了不一致，则将参照表中的所有导致不一致的元组的对应属性设置为空值</li>
+</ul>
+</li>
+</ul>
+<p>外码能否接受空值的问题</p>
+<ul>
+<li>对于参照完整性，除了应该定义外码，还应该定义外码列是否允许空值</li>
+</ul>
+<h2 id="5-3-用户定义的完整性"><a href="#5-3-用户定义的完整性" class="headerlink" title="5.3 用户定义的完整性"></a>5.3 用户定义的完整性</h2><p>用户定义的完整性就是针对某一具体应用的数据必须满足的语义要求。</p>
+<h3 id="5-3-1-属性上的约束条件"><a href="#5-3-1-属性上的约束条件" class="headerlink" title="5.3.1 属性上的约束条件"></a>5.3.1 属性上的约束条件</h3><h4 id="属性上约束条件的定义"><a href="#属性上约束条件的定义" class="headerlink" title="属性上约束条件的定义"></a>属性上约束条件的定义</h4><p>在 CREATE TABLE 中定义属性的同时，可以根据应用要求定义属性上的约束条件，即属性限制</p>
+<ul>
+<li>列值非空（NOT NULL）</li>
+<li>列值唯一（UNIQUE）</li>
+<li>检查列值是否满足一个条件表达式（CHECK短语）</li>
+</ul>
+<h4 id="属性上约束条件的检查和违约处理"><a href="#属性上约束条件的检查和违约处理" class="headerlink" title="属性上约束条件的检查和违约处理"></a>属性上约束条件的检查和违约处理</h4><h3 id="5-3-2-元组上的约束条件"><a href="#5-3-2-元组上的约束条件" class="headerlink" title="5.3.2 元组上的约束条件"></a>5.3.2 元组上的约束条件</h3><h4 id="元组上的约束条件定义"><a href="#元组上的约束条件定义" class="headerlink" title="元组上的约束条件定义"></a>元组上的约束条件定义</h4><p>与属性上约束条件的定义类似，在 CREATE TABLE 语句中可以用 CHECK 短语定义元组上的约束条件，即元组级的限制；<br>同属性值限制相比，元组级的限制可以设置不同属性之间的取值的相互约束条件。</p>
+<h4 id="元组上约束条件的检查和违约处理"><a href="#元组上约束条件的检查和违约处理" class="headerlink" title="元组上约束条件的检查和违约处理"></a>元组上约束条件的检查和违约处理</h4><h2 id="5-4-完整性约束命名子句"><a href="#5-4-完整性约束命名子句" class="headerlink" title="5.4 完整性约束命名子句"></a>5.4 完整性约束命名子句</h2><p>SQL 在 CREATE TABLE 语句中提供了完整性约束命名子句 CONSTRAINT ，通用来对完整性约束条件命名，从而可以灵活地增加、删除一个完整性约束条件。</p>
+<p>完整性约束命名子句</p>
+<ul>
+<li><code>CONSTRAINT &lt;完整性约束条件名&gt;&lt;完整性约束条件&gt;</code></li>
+<li>完整性约束条件包括 NOT NULL、UNIQUE、PRIMARY KEY、FOREIGN KEY、CHECK 短语等</li>
+</ul>
+<p>修改表中的完整性限制</p>
+<ul>
+<li>可以使用 ALTER TABLE 语句修改表中的完整性限制。</li>
+</ul>
+<h2 id="5-5-域中的完整性限制"><a href="#5-5-域中的完整性限制" class="headerlink" title="5.5 域中的完整性限制"></a>5.5 域中的完整性限制</h2><h2 id="5-6-断言"><a href="#5-6-断言" class="headerlink" title="5.6 断言"></a>5.6 断言</h2><p>在 SQL 中可以使用数据定义语言中的 CREATE ASSERTION 语句，通过声明性断言（declarative assertions）来指定更具一般性的约束</p>
+<ul>
+<li>可以定义涉及多个表或聚集操作的比较复杂的完整性约束</li>
+<li>断言创建以后，任何对断言中所涉及关系的操作都会触发关系 DBMS 对断言的检查，任何使断言不为真值的操作都会被拒绝执行</li>
+</ul>
+<p>创建断言的语句格式</p>
+<ul>
+<li><code>CREATE ASSERTION &lt;断言名&gt; &lt;CHECK 子句&gt;</code></li>
+<li>每个断言都被赋予一个名字</li>
+<li>CHECK 子句中的约束条件与WHERE子句的条件表达式类似</li>
+</ul>
+<p>删除断言的语句格式</p>
+<ul>
+<li><code>DROP ASSERTION &lt;断言名&gt;</code></li>
+</ul>
+<h2 id="5-7-触发器"><a href="#5-7-触发器" class="headerlink" title="5.7 触发器"></a>5.7 触发器</h2><p>触发器（trigger）是用户定义在关系表上的一类由事件驱动的特殊过程</p>
+<ul>
+<li>一旦定义，触发器将被保存在数据库服务器中</li>
+<li>任何用户对表的增、删、改操作均由服务器自动激活相应的触发器，在关系 DBMS 核心层进行集中的完整性控制</li>
+</ul>
+<h3 id="5-7-1-定义触发器"><a href="#5-7-1-定义触发器" class="headerlink" title="5.7.1 定义触发器"></a>5.7.1 定义触发器</h3><p>触发器又叫做事件-条件-动作（event-condition-action）规则</p>
+<ul>
+<li>当特定的系统事件发生时，对规则的条件进行检查，如果条件成立则执行规则中的动作，否则不执行该动作</li>
+<li>规则中的动作体可以很复杂，可以涉及其他表和其他数据库对象，通常是一段 SQL 存储过程</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER &lt;触发器名&gt;</span><br><span class="line">&#123;BEFORE|AFTER&#125; &lt;触发事件&gt; ON &lt;表名&gt;</span><br><span class="line">REFERENCING NEW|OLD ROW AS &lt;变量&gt;</span><br><span class="line">FOR EACH &#123;ROW|STATEMENT&#125;</span><br><span class="line">[WHEN &lt;触发事件&gt;] &lt;触发动作体&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>只有表的拥有者，即创建表的用户才可以在表上创建触发器，并且一个表上只能创建一定数量的触发器</li>
+<li>触发器名<ul>
+<li>触发器名可以包含模式名，也可以不包含模式名</li>
+<li>同一模式下，触发器名必须是唯一的，并且触发器名和表名必须在同一模式下</li>
+</ul>
+</li>
+<li>表名<ul>
+<li>触发器只能定义在基本表上，不能定义在视图上</li>
+<li>当基本表的数据发生变化时，将激活定义在该表上相应触发事件的触发器，因此该表也称为触发器的目标表</li>
+</ul>
+</li>
+<li>触发事件<ul>
+<li>触发事件可以是 INSERT、DELETE、UPDATE ，也可以是这几个事件的组合（如INSERT OR DELETE），还可以是 UPDATE OF &lt;触发列, …&gt;，即进一步指明修改哪些列时激活触发器</li>
+<li>AFTER/BEFORE 是触发的时机。AFTER 表示在触发事件的操作执行之后激活触发器，BEFORE 表示在触发事件的操作执行之前激活触发器</li>
+</ul>
+</li>
+<li>触发器类型<ul>
+<li>触发器按照所触发动作的间隔尺寸可以分为行级触发器（FOR EACH ROW）和语句级触发器（FOR EACH STATEMENT）</li>
+<li>语句级触发器触发动作体执行一次，行级触发器触发动作体执行（行数）次</li>
+</ul>
+</li>
+<li>触发条件<ul>
+<li>触发器被激活时，只有当前触发条件为真时触发动作体才执行，否则触发动作体不执行</li>
+<li>如果省略 WHEN 触发条件，则触发动作体在触发器激活后立即执行</li>
+</ul>
+</li>
+<li>触发动作体<ul>
+<li>触发动作体既可以是一个匿名 PL/SQL 过程块 （BEGIN…END），也可以是对已创建存储过程的调用<ul>
+<li>如果是行级触发器，用户可以在过程体中使用 NEW 和 OLD 引用 UPDATE/INSERT 事件之后的新值和 UPDATE/DELETE 事件之前的旧值</li>
+<li>如果是语句级触发器，则不能在触发动作体中使用 NEW 或 OLD 进行引用</li>
+</ul>
+</li>
+<li>如果触发动作体执行失败，激活触发器的事件就会终止执行，触发器的目标表或触发器可能影响的其他对象不会发生任何变化</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-7-2-激活触发器"><a href="#5-7-2-激活触发器" class="headerlink" title="5.7.2 激活触发器"></a>5.7.2 激活触发器</h3><p>触发器的执行是由触发事件激活，并由数据库服务器自动执行的。一个数据表上可能定义了多个触发器，如多个 BEFORE 触发器、多个 AFTER 触发器等，同一个表上的多个触发器激活时遵循如下执行顺序：</p>
+<ul>
+<li>执行该表上的 BEFORE 触发器</li>
+<li>激活触发器的 SQL 语句</li>
+<li>执行该表上的 AFTER 触发器</li>
+</ul>
+<p>对于同一个表上的多个 BEFORE(AFTER) 触发器，遵循“谁先创建谁先执行”的原则，即按照触发器创建的时间先后顺序执行</p>
+<ul>
+<li>有些关系 DBMS 是按照触发器名称的字母排序顺序执行触发器</li>
+</ul>
+<h3 id="5-7-3-删除触发器"><a href="#5-7-3-删除触发器" class="headerlink" title="5.7.3 删除触发器"></a>5.7.3 删除触发器</h3><p><code>DROP TRIGGER &lt;触发器名&gt; ON &lt;表名&gt;</code><br>触发器必须是一个已经创建的触发器，并且只能由具有相应权限的用户删除</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2018/04/22/Notes/Database/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/">https://jckling.github.io/2018/04/22/Notes/Database/数据库系统概论/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><a class="post-meta__tags" href="/tags/Database/">Database</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/06/13/Notes/Computer%20Networks/The-Introduction/"><img class="prev-cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《计算机网络（英文版·第5版）》 The Introduction</div></div></a></div><div class="next-post pull-right"><a href="/2018/04/01/Algorithm/cryptography/RC4%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/"><img class="next-cover" src="https://i.loli.net/2021/06/14/oKxFG62yjhqRrJ9.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">RC4 算法实现</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/04/03/LeetCode/DataBase-1/" title="LeetCode Database Easy"><img class="cover" src="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-03</div><div class="title">LeetCode Database Easy</div></div></a></div><div><a href="/2020/04/04/LeetCode/DataBase-2/" title="LeetCode Database Medium & Hard"><img class="cover" src="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-04</div><div class="title">LeetCode Database Medium & Hard</div></div></a></div><div><a href="/2020/11/22/Notes/Database/MySQL 必知必会/" title="《MySQL 必知必会》实验"><img class="cover" src="https://i.loli.net/2021/06/14/wF3vNBjf1LH79Ss.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-22</div><div class="title">《MySQL 必知必会》实验</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 >_<</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#I-%E7%BB%AA%E8%AE%BA"><span class="toc-text">I. 绪论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-text">1.1 数据库系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-11-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84-4-%E4%B8%AA%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">1.11 数据库的 4 个基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%EF%BC%88data%EF%BC%89"><span class="toc-text">数据（data）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88DataBase%EF%BC%8CDB%EF%BC%89"><span class="toc-text">数据库（DataBase，DB）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88DataBase-Management-System%EF%BC%8C-DBMS%EF%BC%89"><span class="toc-text">数据库管理系统（DataBase Management System， DBMS）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%EF%BC%88DataBase-System%EF%BC%8CDBS%EF%BC%89"><span class="toc-text">数据库系统（DataBase System，DBS）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-12-%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF%E7%9A%84%E4%BA%A7%E7%94%9F%E5%92%8C%E5%8F%91%E5%B1%95"><span class="toc-text">1.12 数据管理技术的产生和发展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-13-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">1.13 数据库系统的特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.2 数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E4%B8%A4%E7%B1%BB%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.2.1 两类数据模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-2-%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.2.2 概念模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-3-%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%84%E6%88%90%E8%A6%81%E7%B4%A0"><span class="toc-text">1.2.3 数据模型的组成要素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-4-%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.2.4 常用的数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-5-%E5%B1%82%E6%AC%A1%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.2.5 层次模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-6-%E7%BD%91%E7%8A%B6%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.2.6 网状模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-7-%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.2.7 关系模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">1.3 数据库系统的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">1.3.1 数据库系统模式的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%89%E7%BA%A7%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="toc-text">1.3.2 数据库系统的三级模式结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-3-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BA%8C%E7%BA%A7%E6%98%A0%E5%83%8F%E5%8A%9F%E8%83%BD%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%8B%AC%E7%AB%8B%E6%80%A7"><span class="toc-text">1.3.3 数据库的二级映像功能与数据独立性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">1.4 数据库系统的组成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#II-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">II. 关系数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E5%BD%A2%E5%BC%8F%E5%8C%96%E5%AE%9A%E4%B9%89"><span class="toc-text">2.1 关系数据结构及形式化定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-%E5%85%B3%E7%B3%BB"><span class="toc-text">2.1.1 关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.1.2 关系模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-3-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">2.1.3 关系数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-4-%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">2.1.4 关系模型的结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%85%B3%E7%B3%BB%E6%93%8D%E4%BD%9C"><span class="toc-text">2.2 关系操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E5%85%B3%E7%B3%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-text">2.2.1 关系的基本操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E8%AF%AD%E8%A8%80%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">2.2.2 关系数据语言的分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%85%B3%E7%B3%BB%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">2.3 关系的完整性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-%E5%AE%9E%E4%BD%93%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">2.3.1 实体完整性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-%E5%8F%82%E7%85%A7%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">2.3.2 参照完整性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-3-%E7%94%A8%E6%88%B7%E5%AE%9A%E4%B9%89%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">2.3.3 用户定义的完整性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E5%85%B3%E7%B3%BB%E4%BB%A3%E6%95%B0"><span class="toc-text">2.4 关系代数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-1-%E4%BC%A0%E7%BB%9F%E7%9A%84%E9%9B%86%E5%90%88%E8%BF%90%E7%AE%97"><span class="toc-text">2.4.1 传统的集合运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-2-%E4%B8%93%E9%97%A8%E7%9A%84%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97"><span class="toc-text">2.4.2 专门的关系运算</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#III-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A0%87%E5%87%86%E8%AF%AD%E8%A8%80SQL"><span class="toc-text">III. 关系数据库标准语言SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-SQL-%E6%A6%82%E8%BF%B0"><span class="toc-text">3.1 SQL 概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-SQL-%E7%9A%84%E4%BA%A7%E7%94%9F%E4%B8%8E%E5%8F%91%E5%B1%95"><span class="toc-text">3.1.1 SQL 的产生与发展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-SQL-%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">3.1.2 SQL 的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-SQL-%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">3.1.3 SQL 的基本概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89"><span class="toc-text">3.3 数据定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%88%A0%E9%99%A4"><span class="toc-text">3.3.1 模式的定义与删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-%E5%9F%BA%E6%9C%AC%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89%E3%80%81%E5%88%A0%E9%99%A4%E4%B8%8E%E4%BF%AE%E6%94%B9"><span class="toc-text">3.3.2 基本表的定义、删除与修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-3-%E7%B4%A2%E5%BC%95%E7%9A%84%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%88%A0%E9%99%A4"><span class="toc-text">3.3.3 索引的建立与删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-4-%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8"><span class="toc-text">3.3.4 数据字典</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2"><span class="toc-text">3.4 数据查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="toc-text">3.4.1 单表查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-2-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="toc-text">3.4.2 连接查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-3-%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2"><span class="toc-text">3.4.3 嵌套查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-4-%E9%9B%86%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-text">3.4.4 集合查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-5-%E5%9F%BA%E4%BA%8E%E6%B4%BE%E7%94%9F%E8%A1%A8%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="toc-text">3.4.5 基于派生表的查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-6-SELECT-%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%B8%80%E8%88%AC%E6%A0%BC%E5%BC%8F"><span class="toc-text">3.4.6 SELECT 语句的一般格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="toc-text">3.5 数据更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-1-%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-text">3.5.1 插入数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-2-%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE"><span class="toc-text">3.5.2 修改数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-3-%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-text">3.5.3 删除数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6-%E7%A9%BA%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-text">3.6 空值的处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-7-%E8%A7%86%E5%9B%BE"><span class="toc-text">3.7 视图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-1-%E5%AE%9A%E4%B9%89%E8%A7%86%E5%9B%BE"><span class="toc-text">3.7.1 定义视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-2-%E6%9F%A5%E8%AF%A2%E8%A7%86%E5%9B%BE"><span class="toc-text">3.7.2 查询视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-3-%E6%9B%B4%E6%96%B0%E8%A7%86%E5%9B%BE"><span class="toc-text">3.7.3 更新视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-4-%E8%A7%86%E5%9B%BE%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">3.7.4 视图的作用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IV-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-text">IV. 数据库安全性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7%E6%A6%82%E8%BF%B0"><span class="toc-text">4.1 数据库安全性概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-1-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%B8%8D%E5%AE%89%E5%85%A8%E5%9B%A0%E7%B4%A0"><span class="toc-text">4.1.1 数据库的不安全因素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-2-%E5%AE%89%E5%85%A8%E6%A0%87%E5%87%86%E7%AE%80%E4%BB%8B"><span class="toc-text">4.1.2 安全标准简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7%E6%8E%A7%E5%88%B6"><span class="toc-text">4.2 数据库安全性控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-1-%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E9%89%B4%E5%88%AB"><span class="toc-text">4.2.1 用户身份鉴别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-2-%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6"><span class="toc-text">4.2.2 存取控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-3-%E8%87%AA%E4%B8%BB%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E6%96%B9%E6%B3%95"><span class="toc-text">4.2.3 自主存取控制方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-4-%E6%8E%88%E6%9D%83%EF%BC%9A%E6%8E%88%E4%BA%88%E4%B8%8E%E6%94%B6%E5%9B%9E"><span class="toc-text">4.2.4 授权：授予与收回</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-5-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%92%E8%89%B2"><span class="toc-text">4.2.5 数据库角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-6-%E5%BC%BA%E5%88%B6%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E6%96%B9%E6%B3%95"><span class="toc-text">4.2.6 强制存取控制方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E8%A7%86%E5%9B%BE%E6%9C%BA%E5%88%B6"><span class="toc-text">4.3 视图机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-%E5%AE%A1%E8%AE%A1"><span class="toc-text">4.4 审计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-5-%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86"><span class="toc-text">4.5 数据加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-6-%E5%85%B6%E4%BB%96%E5%AE%89%E5%85%A8%E6%80%A7%E4%BF%9D%E6%8A%A4"><span class="toc-text">4.6 其他安全性保护</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#V-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">V. 数据库完整性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E5%AE%9E%E4%BD%93%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">5.1 实体完整性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-1-%E5%AE%9A%E4%B9%89%E5%AE%9E%E4%BD%93%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">5.1.1 定义实体完整性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-2-%E5%AE%9E%E4%BD%93%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A3%80%E6%9F%A5%E5%92%8C%E8%BF%9D%E7%BA%A6%E5%A4%84%E7%90%86"><span class="toc-text">5.1.2 实体完整性检查和违约处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E5%8F%82%E7%85%A7%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">5.2 参照完整性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-1-%E5%AE%9A%E4%B9%89%E5%8F%82%E7%85%A7%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">5.2.1 定义参照完整性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-2-%E5%8F%82%E7%85%A7%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A3%80%E6%9F%A5%E5%92%8C%E8%BF%9D%E7%BA%A6%E5%A4%84%E7%90%86"><span class="toc-text">5.2.2 参照完整性检查和违约处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E7%94%A8%E6%88%B7%E5%AE%9A%E4%B9%89%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">5.3 用户定义的完整性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-1-%E5%B1%9E%E6%80%A7%E4%B8%8A%E7%9A%84%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="toc-text">5.3.1 属性上的约束条件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E4%B8%8A%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">属性上约束条件的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E4%B8%8A%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%A3%80%E6%9F%A5%E5%92%8C%E8%BF%9D%E7%BA%A6%E5%A4%84%E7%90%86"><span class="toc-text">属性上约束条件的检查和违约处理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-2-%E5%85%83%E7%BB%84%E4%B8%8A%E7%9A%84%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="toc-text">5.3.2 元组上的约束条件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E4%B8%8A%E7%9A%84%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6%E5%AE%9A%E4%B9%89"><span class="toc-text">元组上的约束条件定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E4%B8%8A%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%A3%80%E6%9F%A5%E5%92%8C%E8%BF%9D%E7%BA%A6%E5%A4%84%E7%90%86"><span class="toc-text">元组上约束条件的检查和违约处理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E5%91%BD%E5%90%8D%E5%AD%90%E5%8F%A5"><span class="toc-text">5.4 完整性约束命名子句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5-%E5%9F%9F%E4%B8%AD%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7%E9%99%90%E5%88%B6"><span class="toc-text">5.5 域中的完整性限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-6-%E6%96%AD%E8%A8%80"><span class="toc-text">5.6 断言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-7-%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-text">5.7 触发器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-7-1-%E5%AE%9A%E4%B9%89%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-text">5.7.1 定义触发器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-7-2-%E6%BF%80%E6%B4%BB%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-text">5.7.2 激活触发器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-7-3-%E5%88%A0%E9%99%A4%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-text">5.7.3 删除触发器</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览"><img src="https://i.loli.net/2021/06/14/2NXqsznriG8blc7.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Butterfly 主题预览"/></a><div class="content"><a class="title" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览">Butterfly 主题预览</a><time datetime="2021-07-22T09:02:46.000Z" title="发表于 2021-07-22 17:02:46">2021-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python ast 模块使用"/></a><div class="content"><a class="title" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用">Python ast 模块使用</a><time datetime="2021-07-14T06:30:05.000Z" title="发表于 2021-07-14 14:30:05">2021-07-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程"><img src="https://i.loli.net/2021/07/08/mXj4AlCkFwEbSdR.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Pyre 污点分析工具 Pysa 使用教程"/></a><div class="content"><a class="title" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程">Pyre 污点分析工具 Pysa 使用教程</a><time datetime="2021-07-07T03:39:19.000Z" title="发表于 2021-07-07 11:39:19">2021-07-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读"><img src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="OpenStack 组件源码阅读"/></a><div class="content"><a class="title" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读">OpenStack 组件源码阅读</a><time datetime="2021-07-02T12:22:24.000Z" title="发表于 2021-07-02 20:22:24">2021-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨"><img src="https://i.loli.net/2021/06/24/kzGsZ3T8wWDReE5.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="FF14 光之摄影师养成计划✨"/></a><div class="content"><a class="title" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨">FF14 光之摄影师养成计划✨</a><time datetime="2021-06-24T08:11:35.000Z" title="发表于 2021-06-24 16:11:35">2021-06-24</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      avatar: 'retro',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline() 
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

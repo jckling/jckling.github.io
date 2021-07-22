@@ -1,0 +1,970 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《计算机网络（英文版·第5版）》 The Data Link Layer | Jckling's Blog</title><meta name="keywords" content="计算机网络,Computer Networks"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《计算机网络》第五版（英文） 数据链路层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《计算机网络（英文版·第5版）》 The Data Link Layer">
+<meta property="og:url" content="https://jckling.github.io/2018/06/14/Notes/Computer%20Networks/The-Data-Link-Layer/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="《计算机网络》第五版（英文） 数据链路层">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg">
+<meta property="article:published_time" content="2018-06-14T12:20:59.000Z">
+<meta property="article:modified_time" content="2021-07-22T12:08:34.473Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="计算机网络">
+<meta property="article:tag" content="Computer Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg"><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2018/06/14/Notes/Computer%20Networks/The-Data-Link-Layer/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《计算机网络（英文版·第5版）》 The Data Link Layer',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-22 20:08:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jckling/avatar.jpg" onerror="onerror=null;src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《计算机网络（英文版·第5版）》 The Data Link Layer</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2018-06-14T12:20:59.000Z" title="undefined 2018-06-14 20:20:59">2018-06-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Notes/">Notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《计算机网络（英文版·第5版）》 The Data Link Layer"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2018/06/14/Notes/Computer%20Networks/The-Data-Link-Layer/#post-comment"><span class="waline-comment-count" id="/2018/06/14/Notes/Computer%20Networks/The-Data-Link-Layer/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>什么是数据链路</p>
+<ul>
+<li>数据链路层处理关注两台相邻（adjacent）机器实现可靠有效的完整信息块（称为帧）通信的算法，而不像物理层那样只关注单个比特传输</li>
+<li>沿着通信路径连接相邻节点的通信信道就是链路</li>
+<li>相邻指两台机器通过一条通信信道连接起来，通信信道在概念上就像一条线路（比如同轴电缆、电话线、无线信道）</li>
+<li>信道像一条线路的本质特性使得信道上传递的比特顺序与发送顺序完全相同</li>
+</ul>
+<p>一个链路的性质（property）和局限性（limitation）</p>
+<ul>
+<li>基本属性<ul>
+<li>信道上传递的比特顺序与发送顺序完全相同</li>
+</ul>
+</li>
+<li>局限<ul>
+<li>通信电路偶尔会产生错误</li>
+<li>只有有限的数据速率</li>
+<li>在比特发送时间和接收时间之间有一个非零延迟（propagation）</li>
+</ul>
+</li>
+</ul>
+<h1 id="数据链路层设计问题"><a href="#数据链路层设计问题" class="headerlink" title="数据链路层设计问题"></a>数据链路层设计问题</h1><p>数据链路层使用物理层提供的服务在通信信道上发送和接收比特</p>
+<p>数据链路层的要完成的功能</p>
+<ul>
+<li>向网络层提供一个定义良好的服务接口</li>
+<li>处理传输错误</li>
+<li>调节数据流，确保慢速的接收方不会被快速的发送方淹没</li>
+</ul>
+<p>数据包和帧的关系</p>
+<ul>
+<li>数据链路层从网络层获得数据包，然后将这些数据包封装成帧（frame）以便传输</li>
+<li>每个帧包含一个帧头、一个有效载荷（用于存放数据包）、一个帧尾</li>
+<li>帧的管理构成了数据链路层工作的核心</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-1.png" width="65%">
+
+
+<p>可靠性（reliability）是网络的总目标</p>
+<ul>
+<li>这个目标的实现需要各层次紧密配合</li>
+<li>在数据链路层的错误控制（error control）和流量控制（flow control）等同样可以在传输层和其他协议中寻觅到类似的踪迹</li>
+<li>实际上在许多网络中，这些功能最常出现的地方是上层，数据链路层只要做很少的一点工作就已经“足够好”</li>
+</ul>
+<h2 id="提供给网络层的服务"><a href="#提供给网络层的服务" class="headerlink" title="提供给网络层的服务"></a>提供给网络层的服务</h2><p>数据链路层的功能是为网络层提供服务，最主要的服务是将数据从源机器的网络层传输到目标机器的网络层</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-2.png" width="65%">
+
+<ul>
+<li>在源机器的网络层有一个实体（称为进程），它将一些比特交给数据链路层，要求传输到目标机器</li>
+<li>数据链路层的任务就是将这些比特传输给目标机器，然后再进一步交付给网络层</li>
+</ul>
+<h3 id="3-种可能的服务"><a href="#3-种可能的服务" class="headerlink" title="3 种可能的服务"></a>3 种可能的服务</h3><p>无确认的无连接服务</p>
+<ul>
+<li>源机器向目标机器发送独立的帧，目标机器并不对这些帧进行确认。采用这种服务，事先不需要建立逻辑连接，事后也不用释放逻辑连接。若由于线路的噪声而丢失了某一帧，数据链路层并不试图去检测或恢复丢帧</li>
+<li>错误率很低的场合，比如以太网</li>
+<li>实时通信，比如语音传输</li>
+</ul>
+<p>有确认的无连接服务</p>
+<ul>
+<li>没有使用逻辑连接，但发送的每一帧都需要单独确认。发送方可以知道一个帧是否已经正确到达目的地。如果一个帧在制定的时间间隔内还没有到达，则发送方将再次发送该帧</li>
+<li>不可靠的（错误率高的）信道，比如无线系统（802.11 WiFi）</li>
+</ul>
+<p>有确认的有连接服务</p>
+<ul>
+<li>确保发出的每个帧都会真正被接收方收到，还保证每个帧只被接收一次，并且所有的帧都将按正确的顺序被接收</li>
+<li>相当于为网络层进程提供了一个可靠的比特流</li>
+<li>长距离且不可靠的链路，比如卫星信道、长途电话网络</li>
+</ul>
+<h3 id="确认"><a href="#确认" class="headerlink" title="确认"></a>确认</h3><p>确认（acknowledgement）只是一种优化手段</p>
+<ul>
+<li>数据链路层提供确认只是一种优化手段，永远不应该成为一种需求</li>
+<li>在很多情况下，恢复留给更高层<ul>
+<li>例如，网络层可以发送一个数据包，然后等待该数据包被确认。如果在计时器超时之前，该数据包的确认还没有到来，那么发送方只要再次发送整个报文即可</li>
+</ul>
+</li>
+</ul>
+<p>这个策略的麻烦在于可能导致传输的低效率。链路层对帧通常有严格的长度限制，由硬件所决定；此外还有传播延迟。但网络层并不清楚这些参数，网络层可能发出了一个很大的数据包，该数据包被拆分并封装到多个帧中，且部分在传输中被丢失，那么这个数据包可能要花很长时间才能传到接收方</p>
+<p>相反的，如果每个帧都单独确认和必要时重传，那么出现的差错就能更直接并且更快地被检测到</p>
+<p>在可靠信道上，比如光纤，重量级数据链路协议的开销可能是不必要的；在无线信道上，由于信道内在的不可靠性，这种开销还是非常值得的</p>
+<h3 id="面向连接的服务"><a href="#面向连接的服务" class="headerlink" title="面向连接的服务"></a>面向连接的服务</h3><p>源机器和目标机器在传输任何数据之前要建立一个连接；连接上发送的每一帧都被编号，数据链路层确保发出的每个帧都会真正被接收方收到；它还保证每个帧只被接收一次，并且所有的帧都将按正确的顺序被接收</p>
+<p>当使用面向连接的服务时，数据传输必须经过三个不同的阶段</p>
+<ul>
+<li>建立连接，双方初始化各种便利和计数器，这些变量和计数器记录了哪些帧已经接收到，哪些帧还没有接收到</li>
+<li>真正传输一个或多个数据帧</li>
+<li>连接被释放，所有的变量、缓冲区以及其他用于维护该连接的资源也随之被释放</li>
+</ul>
+<h2 id="成帧（frame）"><a href="#成帧（frame）" class="headerlink" title="成帧（frame）"></a>成帧（frame）</h2><p>对于数据链路层来说，通常的做法是将比特流拆分成多个离散的帧，为每个帧计算一个校验和，并将其放在帧中一起传输</p>
+<p>如何使接收方发现一个新帧的开始，同时所使用的信道带宽要少</p>
+<ul>
+<li>字节计数法（Byte Count）</li>
+<li>字节填充的标志字节法（Flag bytes with byte stuffing）</li>
+<li>比特填充的标志比特法（Flag bits with bit stuffing）</li>
+<li>物理层编码违禁法（Physical layer coding Violations）</li>
+</ul>
+<h3 id="字节计数法"><a href="#字节计数法" class="headerlink" title="字节计数法"></a>字节计数法</h3><ul>
+<li>利用头部中的一个字段来标识该帧中的字符数</li>
+<li>问题：可能因为一个传输错误而混淆</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-3.png" width="65%">
+
+
+<h3 id="字节填充的标志字节法"><a href="#字节填充的标志字节法" class="headerlink" title="字节填充的标志字节法"></a>字节填充的标志字节法</h3><ul>
+<li>用标志字节（flag byte）作为帧的起始和结束分界符</li>
+<li>两个连续的标志字节代表了一帧的结束和下一帧的开始</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-4.png" width="65%">
+
+<ul>
+<li>标志字节出现在数据中，在前面加入一个特殊的转义字节（ESC）</li>
+<li>转义字节也出现在数据中，也在前面加入一个特殊的转义字节（ESC）</li>
+</ul>
+<h3 id="比特填充的标志比特法"><a href="#比特填充的标志比特法" class="headerlink" title="比特填充的标志比特法"></a>比特填充的标志比特法</h3><ul>
+<li>只能使用 8 比特的字节</li>
+<li>帧的划分可以在比特级完成，因此帧可以包含由任意大小单元组成的二进制比特数</li>
+<li>每个帧的开始和结束由一个特殊的比特模式，<code>01111110</code> 或 <code>0x7E</code> 标记<ul>
+<li>每当发送方数据链路层在数据中遇到连续五个 1，它便自动在输出的比特流中填入一个比特 0</li>
+<li>类似字节填充，在数据字段的标志字节之前插入一个转义字节到出境字符流中</li>
+<li>比特填充还确保了转换的最小密度，这将有助于物理层保持同步。USB（通用串行总线）采用了比特填充技术</li>
+<li>接收方看到5个连续入境比特 1，并且后面紧跟一个比特 0，它就自动删除比特 0</li>
+</ul>
+</li>
+<li>比特填充和字符填充的一个副作用是帧的长度增加了</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-5.png" width="65%">
+
+
+<h3 id="物理层编码违禁法"><a href="#物理层编码违禁法" class="headerlink" title="物理层编码违禁法"></a>物理层编码违禁法</h3><ul>
+<li>冗余意味着一些信号将不会出现在常规数据中。例如，在 4B/5B 线性编码模式下，4 个数据位被映射成 5 个信号比特，通过这种方法确保线路上的信号有足够跳变。这意味着 32 个可能的信号中有 16 个是不会被使用的。我们可以利用这些保留信号来指示帧的开始和结束</li>
+<li>使用编码违禁法来区分帧的边界的优点在于，因为这些用做分界符的信号是保留不用的，所以很容易通过它们找到帧的开始和结束，而且不再需要填充数据</li>
+</ul>
+<h3 id="成帧方法的综合"><a href="#成帧方法的综合" class="headerlink" title="成帧方法的综合"></a>成帧方法的综合</h3><p>许多数据链路层协议为安全起见综合使用了这些方法。以太网和 802.11 使用了共同的分界模式，即用一个定义良好的比特模式来标识一帧的开始，该比特模式称为前导码（preamble）</p>
+<p>前导码之后是头的长度字段（即计数），这个字段将被用来定位帧的结束处</p>
+<h2 id="差错控制"><a href="#差错控制" class="headerlink" title="差错控制"></a>差错控制</h2><p>如何确保所有的帧最终都被传递给目标机器的网络层，并且保持正确的顺序</p>
+<ul>
+<li>三种方法：确认（acknowledgment）、计时器（timer）、序号（sequence number）</li>
+</ul>
+<p>确认</p>
+<ul>
+<li>接收方返回一些特殊的控制帧，在这些控制帧中，对于它所接收到的帧进行肯定或否定的确认（ACK / NACK）</li>
+<li>问题：控制帧被丢失</li>
+</ul>
+<p>计时器</p>
+<ul>
+<li>当发送方发出一帧时，通常还要启动一个计时器。</li>
+<li>该计时器的超时值应该设置得足够长，以便保证在正常情况下该帧能够到达接收方，并且在接收方进行处理后再将确认返回到发送方</li>
+<li>在计时器超时前，该帧应该被正确地接收，并且确认帧也被传回来。此时计时器被取消</li>
+<li>如果帧或确认被丢失，则触发计时器，重传该帧</li>
+</ul>
+<p>序号</p>
+<ul>
+<li>重传引入了重复帧（duplicate frames），为了区分重复帧，需要给发送出去的帧分配序号，这样接收方可以根据帧的序号来区分原始帧和重传帧</li>
+<li>用于序号的比特取决于任何时候可能重复的帧的数量</li>
+</ul>
+<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><p>流量控制处理发送方的速度以匹配接收方的速度。通常这是一个动态过程，因为接受速度取决于诸如负载、可用的缓存空间等变化因素</p>
+<ul>
+<li>目的是为了防止快速发送方淹没慢速接收方</li>
+</ul>
+<p>基于反馈的流量控制（Feedback-based flow control）</p>
+<ul>
+<li>接收方给发送方返回消息，允许它发送更多的数据，或至少告诉发送方自己的情况</li>
+<li>可同时出现在链路层和更高的层次</li>
+<li>协议规定了发送方什么时候可以发送下一帧，通常在没有得到接收方许可（隐式或显示）之前禁止继续发送帧</li>
+</ul>
+<p>基于速率的流量控制（Rate-based flow control）</p>
+<ul>
+<li>使用内置机制限制发送方传输数据的速率</li>
+<li>never used in data link layer 仅在传输层可见</li>
+</ul>
+<p>网络接口卡（NIC, Network Interface Cards）</p>
+<h1 id="差错检测和纠正"><a href="#差错检测和纠正" class="headerlink" title="差错检测和纠正"></a>差错检测和纠正</h1><p>在数据中加入足够的冗余（redundancy）以便能够检测（并纠正）数据错误</p>
+<p>针对错误处理由两种基本策略（都是在发送的数据中加入冗余信息）</p>
+<ul>
+<li>纠错码（error-correcting code）<ul>
+<li>在每一个被发送的数据块中包含足够多的冗余信息，以便接收方能据此判断出被发送的数据是什么</li>
+<li>使用纠错码的技术通常也称为前向纠错（FEC, Forward Error Correction）</li>
+</ul>
+</li>
+<li>检错码（error-detecting code）<ul>
+<li>包含一些冗余信息，只能够让接收方推断出是否发生了错误，然后接收方可以请求发送方重传</li>
+</ul>
+</li>
+</ul>
+<p>传输错误非常普遍</p>
+<ul>
+<li>在高度可靠的信道上（比如光纤）：使用检错码<ul>
+<li>偶尔发生错误时只需重传整个数据块</li>
+</ul>
+</li>
+<li>错误发生频繁的信道上（比如无线链路）：使用纠错码<ul>
+<li>FEC 被用在有噪声的信道上，因为重传的数据本身也可能像第一次传输那样出错</li>
+</ul>
+</li>
+</ul>
+<h2 id="错误模型"><a href="#错误模型" class="headerlink" title="错误模型"></a>错误模型</h2><p>在第一种错误模型中，偶尔出现的极端热噪声快速淹没了信号，引起独立的单个比特错误</p>
+<p>在第二种错误模型中，传输错误往往呈现突发性而不以单个的形式出现</p>
+<ul>
+<li>这种错误源自物理过程，比如无线信道上的一个深衰落（deep fade）、有线信道上的瞬态电气干扰、信号衰减（signal attenuation）</li>
+</ul>
+<p>两种错误模型实际上造成的问题以及处理方式有不同的权衡</p>
+<p>纠错码也会出现在物理层，特别是有噪声干扰的信道，同时还会出现在更高的层次，特别是实时流媒体应用和内容分发应用</p>
+<p>检错码更经常被用在数据链路层、网络层和传输层</p>
+<p>差错编码是应用的数学，应该从可靠的来源获得性质更优良的编码，而不是自己设计编码方案</p>
+<h2 id="纠错码"><a href="#纠错码" class="headerlink" title="纠错码"></a>纠错码</h2><p>以下所有编码都将冗余信息加入到待发送的信息中</p>
+<ul>
+<li>海明码（Hamming codes）</li>
+<li>二进制卷积码（Binary convolutional codes）*</li>
+<li>里德所罗门码（Reed-Solomon codes）*</li>
+<li>低密度奇偶校验码（Low-Density Parity Check codes）*</li>
+</ul>
+<p>一个帧由 $m$ 个数据位（即信息）和 $r$ 个冗余位（即校验位）组成</p>
+<ul>
+<li>在块码（block code）中，$r$ 个校验位是作为与之相关的 $m$ 个数据位的函数计算获得的，就好像在一张表中找到 $m$ 位数据对应的 $r$ 个校验位</li>
+<li>在系统码（systematic code）中，直接发送 $m$ 个数据位，然后发出 $r$ 个校验位，而不是在发送前对它们进行编码</li>
+<li>在线性码（line code）中，$r$ 个校验位是作为 $m$ 个数据位的线性函数被计算出来的。异或（XOR）或模 2 加是函数的流行选择，意味着编码过程可用诸如矩阵乘法或简单逻辑电路完成</li>
+</ul>
+<p>令数据块的总长度为 n (n=m+r)，将此描述 (m,n) 码</p>
+<p>一个包含了数据位和校验位的 $n$ 位单元称为码字（codeword）</p>
+<p>码率（code rate）则定义为码字中不包含冗余部分所占的比例：$m/n$</p>
+<h3 id="海明距离（Hamming-distance）"><a href="#海明距离（Hamming-distance）" class="headerlink" title="海明距离（Hamming distance）"></a>海明距离（Hamming distance）</h3><p>两个码字中不相同的位的个数称为海明距离</p>
+<ul>
+<li>如果两个码字的海明距离为 $d$，则需要 $d$ 个 1 位错误才能将一个码字转变成另一个码字</li>
+<li>为确定有多少个不同位，只需要 XOR 两个码字，并计算结果中 1 的个数</li>
+</ul>
+<p>$$ 10001001 \oplus 10110001 = 00111000$$</p>
+<ul>
+<li>XOR（$\oplus$）：相同为 0 ，不同为 1</li>
+</ul>
+<p>给定计算校验位的算法，完全可以构建一个完整的合法码字列表，然后从这个列表中找出两个具有最小海明距离的码字。这个距离就是整个编码的海明距离</p>
+<p>在大多数数据传输应用中，所有 $2^m$ 种可能的数据报文都是合法的；但是，根据校验位的计算方法，并非所有的 $2^n$ 种可能的码字都会被用到</p>
+<p>块码的检错和纠错特性和它的海明距离有关</p>
+<ul>
+<li>检测 $d$ 个错误：需要海明距离为 $d+1$ 的编码方案</li>
+<li>纠正 $d$ 个错误：需要海明距离为 $2d+1$ 的编码方案</li>
+</ul>
+<p>在给定 $m$ 的情况下，纠正单个错误所需要的校验位数的下界为：$ (m+r+1) \leq 2^r $</p>
+<h3 id="海明码（Hamming-codes）"><a href="#海明码（Hamming-codes）" class="headerlink" title="海明码（Hamming codes）"></a>海明码（Hamming codes）</h3><p>2 的幂次方为是校验位，其余位是数据位</p>
+<ul>
+<li>(11,7) 海明码，7 个数据位，4 个校验位</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-7.png" width="65%">
+
+
+<p>若要查看数据 $k$ 位上的校验位，必须将 $k$ 改写成 2 的幂之和</p>
+<ul>
+<li>11 = 1+2+8 （校验 1、2、8 就可确定 11 位是否出错）</li>
+<li>校验结果不是全零，则意味着检测到了一个错误</li>
+<li>8、4、2、1 的校验结果是 <code>0101</code>，因此第 5 位发生了错误</li>
+</ul>
+<p>海明码还被用在纠错存储器中</p>
+<h3 id="二进制卷积码（Binary-convolutional-codes）"><a href="#二进制卷积码（Binary-convolutional-codes）" class="headerlink" title="二进制卷积码（Binary convolutional codes）*"></a>二进制卷积码（Binary convolutional codes）*</h3><ul>
+<li>唯一不属于块码的编码</li>
+<li>编码器处理一个输入位序列，并生成一个输出位序列</li>
+<li>编码器有内存，决定当前输出的以前输入位称为代码的余数长度（constraint length）</li>
+<li>卷积码由它们的速率和约束长度来标识</li>
+<li>已经被广泛应用于实际部署的网络中，GSM 移动电话系统、卫星通信、802.11</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-8.png" width="65%">
+
+<ul>
+<li>软判决解码（soft-decision decoding）*<ul>
+<li>带有一位不确定性的工作方法，把 -0.1V 看成很可能是 0，把 0.9V 看成很可能是 1</li>
+</ul>
+</li>
+<li>硬判决解码（hardd-decision decoding）*<ul>
+<li>在执行纠错之前就决定了每个位是 0/1</li>
+</ul>
+</li>
+</ul>
+<h3 id="里德所罗门码（Reed-Solomon-codes）"><a href="#里德所罗门码（Reed-Solomon-codes）" class="headerlink" title="里德所罗门码（Reed-Solomon codes）*"></a>里德所罗门码（Reed-Solomon codes）*</h3><ul>
+<li>实际上被定义成一个在有限域上操作的多项式</li>
+<li>强大的纠错性能，尤其针对突发错误</li>
+<li>被用在 DSL、线缆上的数据通信、卫星通信、CD、DVD、蓝光光盘</li>
+<li>里德所罗门码结合卷积码，对单个错误和突发错误都有良好的保障</li>
+</ul>
+<h3 id="低密度奇偶校验码（LDPC-Low-Density-Parity-Check-codes）"><a href="#低密度奇偶校验码（LDPC-Low-Density-Parity-Check-codes）" class="headerlink" title="低密度奇偶校验码（LDPC, Low-Density Parity Check codes）*"></a>低密度奇偶校验码（LDPC, Low-Density Parity Check codes）*</h3><ul>
+<li>比较适用于大块数据，具有出色的纠错能力</li>
+<li>用于数字视频广播、万兆以太网、电力线网络、802.11</li>
+</ul>
+<h2 id="检错码"><a href="#检错码" class="headerlink" title="检错码"></a>检错码</h2><p>以下都是线性的系统块码</p>
+<ul>
+<li>奇偶（Parity）</li>
+<li>校验和（Checksums）</li>
+<li>循环冗余校验（CRC, Cyclic Redundancy Checks）</li>
+</ul>
+<h3 id="奇偶"><a href="#奇偶" class="headerlink" title="奇偶"></a>奇偶</h3><p>单个奇偶校验位</p>
+<ul>
+<li>具有单个校验位的编码具有海明距离 2，因为任何 1 位错误都将使得码字的奇偶校验码出错，这意味着奇偶校验码可以检测出 1 位错误<ul>
+<li>偶校验：1 的个数为偶数，校验位为 0</li>
+<li>奇校验：1 的个数为奇数，校验位为 0</li>
+</ul>
+</li>
+</ul>
+<p>交错奇偶校验位（interleaving）</p>
+<ul>
+<li>以不同于数据位发送的次序来计算校验位<ul>
+<li>将 $n$ 列中的每列计算检验位，按 $k$ 行发送全部的数据，发送次序是从上到下发送每一行，行内数据通常按从左到右的次序发送</li>
+<li>在最后一行，发送 $n$ 个校验位，$k$ 行</li>
+</ul>
+</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-9.png" width="65%">
+
+<ul>
+<li>对 $nk$ 长度的数据块使用了 $n$ 个校验位就能检测出一个长度小于等于 $n$ 的突发错误</li>
+<li>$n+1$ 的突发错误将被遗漏</li>
+</ul>
+<h3 id="校验和"><a href="#校验和" class="headerlink" title="校验和"></a>校验和</h3><p>校验和（checksum）指与信息相关的一组校验位，不管这些校验位是如何计算出来的</p>
+<ul>
+<li>一组奇偶校验位是校验和的一个例子</li>
+</ul>
+<p>校验和通常放置在消息的末尾，作为求和功能的补充。通过对整个接收到的码字（包含数据位和校验和）进行求和计算就能检测出错误</p>
+<ul>
+<li>如果计算结果是零，则没有检测出错误</li>
+</ul>
+<p>例子</p>
+<ul>
+<li>16 位的 Internet 校验和，作为 IP 协议的一部分用在所有 Internt 数据包中</li>
+</ul>
+<h3 id="循环冗余校验"><a href="#循环冗余校验" class="headerlink" title="循环冗余校验"></a>循环冗余校验</h3><p>数据链路层广泛使用，也称为多项式编码（polynomial code）</p>
+<ul>
+<li>允许我们确认正确收到帧/丢弃不正确的帧</li>
+</ul>
+<p>检测</p>
+<ul>
+<li>所有一位错误</li>
+<li>所有两个独立的比特错误</li>
+<li>奇数个位发生错误</li>
+<li>长度小于 $r$ 的突发错误</li>
+<li>大多数突发错误</li>
+</ul>
+<p>常用的三个生成多项式（generator）</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-10.png" width="65%">
+
+
+<p>位移寄存器</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-11.png" width="65%">
+
+
+<h1 id="基本数据链路层协议"><a href="#基本数据链路层协议" class="headerlink" title="基本数据链路层协议"></a>基本数据链路层协议</h1><p>物理层、数据链路层、网络层的实现</p>
+<ul>
+<li>由一个模块上的网络层递交给数据链路层的数据通过另一个模块上的数据链路层递交到网络层</li>
+<li>远程网络层对等体应接收发送方生成的相同的消息（例如，如果数据链路层添加了控制信息，则在消息传递到网络层之前必须删除标头信息）</li>
+<li>网络层可能会确保它发送的所有消息将被正确传送（例如，没有丢失/损坏）。任何错误可能会导致数据和控制帧丢失</li>
+<li>网络层可以按照发送的顺序将消息发送到远程对等体</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-12.png" width="65%">
+
+
+<p>关键假设</p>
+<ul>
+<li>物理层、数据链路层、网络层都是独立的进程，他们通过来回传递消息进行通信</li>
+<li>机器 A 希望用一个可靠的、面向连接的服务向机器 B 发送一个长数据流</li>
+<li>假定 A 要发送的数据总是已经准备好，不必等待数据生成</li>
+<li>假设机器不会崩溃（只处理通信错误）</li>
+</ul>
+<p>帧序号总是在 $ [0, \rm MAX_{SEQ}]$ 范围内</p>
+<h2 id="乌托邦式的单工协议（Utopian-Simplex-Protocol）"><a href="#乌托邦式的单工协议（Utopian-Simplex-Protocol）" class="headerlink" title="乌托邦式的单工协议（Utopian Simplex Protocol）"></a>乌托邦式的单工协议（Utopian Simplex Protocol）</h2><p>假设</p>
+<ul>
+<li>数据只能单向传输（单工 simplex）</li>
+<li>发送方和接收方的网络层总是处于准备就绪状态</li>
+<li>数据处理的时间忽略不计</li>
+<li>可用的缓存空间无穷大</li>
+<li>数据链路层之间的通信信道永远不会损坏/丢失帧</li>
+</ul>
+<h2 id="无错信道上的单工停-等式协议（Simplex-Stop-and-Wait-Protocol-for-an-Error-Free-Channel）"><a href="#无错信道上的单工停-等式协议（Simplex-Stop-and-Wait-Protocol-for-an-Error-Free-Channel）" class="headerlink" title="无错信道上的单工停-等式协议（Simplex Stop and Wait Protocol for an Error-Free Channel）"></a>无错信道上的单工停-等式协议（Simplex Stop and Wait Protocol for an Error-Free Channel）</h2><p>假设</p>
+<ul>
+<li>不再假设接收方可以无限地快速处理入境数据</li>
+<li>发送方发送一帧，等待对方确认到达后才继续发送（停-等式协议，stop-and-wait）</li>
+<li>确认帧的内容（content）不重要</li>
+<li>通信信道不会出错，数据流量是单工的，从发送方传到接收方，但帧可以在两个方向上传送<ul>
+<li>一个半双工的物理信道就足够了（一次只在一个方向上发送，流量严格交替）</li>
+</ul>
+</li>
+</ul>
+<h2 id="有错信道上的单工停-等式协议（Simplex-Stop-and-Wait-Protocol-for-a-Noisy-Channel）"><a href="#有错信道上的单工停-等式协议（Simplex-Stop-and-Wait-Protocol-for-a-Noisy-Channel）" class="headerlink" title="有错信道上的单工停-等式协议（Simplex Stop-and-Wait Protocol for a Noisy Channel）"></a>有错信道上的单工停-等式协议（Simplex Stop-and-Wait Protocol for a Noisy Channel）</h2><p>假设</p>
+<ul>
+<li>通信信道可能会出错，帧可能损坏/丢失</li>
+<li>简单的解决<ul>
+<li>增加一个计时器（timer），在一定时间内没收到确认就重传该帧</li>
+</ul>
+</li>
+</ul>
+<p>特殊场景</p>
+<ul>
+<li>A 传输帧 1</li>
+<li>B 接收 A1</li>
+<li>B 生成 ACK</li>
+<li>ACK 丢失</li>
+<li>A 的计时器超时，重传帧 1</li>
+<li>B 收到重复的 A1（又递交给了它的网络层）</li>
+</ul>
+<p>延迟也可能导致重复帧</p>
+<p>序号（sequence number）</p>
+<ul>
+<li>让发送方在它所发送的每个帧的头部放上一个序号。然后接收方可以检查它所接收到的每个帧的序号，由此判断帧的新旧</li>
+</ul>
+<p>序号的字段长度</p>
+<ul>
+<li>唯一不明确的地方在于一帧和它的前/后一帧，而不是它的前一帧和后一帧，因此1位序号就足够了<ul>
+<li>0 变 1，1 变 0</li>
+</ul>
+</li>
+</ul>
+<p>ARQ</p>
+<ul>
+<li>在一个协议中，发送方在发送前移到下一个数据之前必须等待一个肯定确认，这样的协议称为自动重复请求（ARQ, Automatic Repeat reQuest），也称为带有重传的肯定确认（PAR, Positive Acknowledgement with Retransmission）<ul>
+<li>只在一个方向上传输数据</li>
+</ul>
+</li>
+</ul>
+<p>效率问题（Efficiency Problem）</p>
+<ul>
+<li>停-等协议的问题是发送方只能有一个未确认帧</li>
+<li>例子，长肥网络（Long Fat Network）<ul>
+<li>Short frame length: 1000 bit frames</li>
+<li>High bandwidth: 1 Mbps channel （satellite）</li>
+<li>Long transit time: 270 ms propagation delay</li>
+<li>帧需要 1 ms 发送（$1000 {\rm bit}/10^6{\rm bps}=1 {\rm ms}$），利用传输延迟，发送方在 541 ms 之前都不会收到确认。信道利用率很差</li>
+<li>我们可以使用更大的帧，但是帧的大小被信道的错误率限制。帧越大，越可能在传输过程中损坏</li>
+</ul>
+</li>
+</ul>
+<p>性能评估（Performance Evaluation）</p>
+<ul>
+<li>$F$ = frame size (bits)</li>
+<li>$C$ = channel capacity (Bandwidth in bits/second)</li>
+<li>$I$ = propagation delay plus processor service time (second)</li>
+<li>Time to transmit a single frame = $F/C$</li>
+<li>Total Delay = $2I$</li>
+</ul>
+<p>在停-等协议中，信道在 $F/C$ 内忙碌，在 $2I$ 内空闲</p>
+<p>如果 $F &lt; 2CI$ 的话，信道利用率 = $F/(F+2CI) &lt; 50%$</p>
+<p>如果网络的带宽延迟积明显大于 $10^5$ 位（$\sim 12$ kB），则被认为是长肥网络（LFN）</p>
+<h1 id="滑动窗口协议"><a href="#滑动窗口协议" class="headerlink" title="滑动窗口协议"></a>滑动窗口协议</h1><p>假设</p>
+<ul>
+<li>在两个方向上同时传输数据<ul>
+<li>每个方向使用一条独立的链路进行单工数据传输<ul>
+<li>逆向信道带宽几乎完全被浪费了</li>
+</ul>
+</li>
+<li>使用同一条链路来传输两个方向上的数据<ul>
+<li>使用帧头部的 kind 字段，区分数据帧和确认帧</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>捎带确认（piggybacking）</p>
+<ul>
+<li>暂时延缓确认以便将确认信息搭载在下一个出境数据帧上的技术</li>
+<li>主要好处：更好地利用了信道的可用带宽</li>
+<li>问题：为捎带一个确认，数据链路层应该等网络层传递给它下一个数据包多久？</li>
+</ul>
+<p>滑动窗口协议</p>
+<ul>
+<li>3 个双向协议<ul>
+<li>1 位滑动窗口协议（A One-Bit Sliding Window Protocol）</li>
+<li>回退 N 协议（A Protocol Using Go Back N）</li>
+<li>选择重传协议（A Protocol Using Selective Repeat）</li>
+</ul>
+</li>
+<li>不同<ul>
+<li>效率（efficiency）、复杂性（complexity）、缓冲区需求（buffer requirements）</li>
+</ul>
+</li>
+</ul>
+<p>任何一个出境帧都包含一个序号，范围从 0 到某个最大值。序号的最大值通常是 $2^n-1$，这样序号证号可以填入到一个 $n$ 位的字段中</p>
+<ul>
+<li>停-等式窗口协议使用 $n = 1$，限制序号只能是 0 / 1</li>
+</ul>
+<p>发送 / 接收窗口</p>
+<ul>
+<li>所有滑动窗口协议的本质是在任何时刻发送方总是维持着一组序号，分别对应于允许它发送的帧。称这些帧落在发送窗口（sending window）</li>
+<li>接收方也维持着一个接受窗口（receiving window），对应于一组允许它接收的帧</li>
+<li>发送窗口和接受窗口不必拥有同样的上下界，甚至也不必有同样的大小<ul>
+<li>有些协议中，这两个窗口有固定的大小，但在其他协议中，它们可以随着帧的发送和接收而增大（grow）或者缩小（shrink）</li>
+</ul>
+</li>
+</ul>
+<p><strong>滑动窗口协议的例子</strong></p>
+<p>停等式滑动窗口协议</p>
+<ul>
+<li>最大序号（MaxSeq）= $2^n - 1, n \geq 1 $</li>
+<li>窗口大小（window size）= 1</li>
+</ul>
+<p>协议有效</p>
+<ul>
+<li>所有帧以正确的顺序传送</li>
+<li>易于实现</li>
+<li>只需要很少的缓冲空间</li>
+<li>停-等式导致信道利用率差</li>
+</ul>
+<p>大小为 1 的滑动窗口</p>
+<ul>
+<li>3 位序号，$[0, 7]$</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-13.png" width="65%">
+
+<ul>
+<li>发送方窗口<ul>
+<li>由于当前在发送方窗口内的帧最终有可能在传输过程中丢失或损坏，所以发送方必须在内存中保存所有这些帧，以便满足可能的重传需要</li>
+<li>因此，如果最大的窗口尺寸为 $n$，则发送方需要 $n$ 个缓冲区来存放未被确认的帧。如果窗口在某个时候达到了它的最大尺寸，则发送方的数据链路层必须强行关闭网络层，直到有一个缓冲区空出来为止</li>
+</ul>
+</li>
+<li>接收方窗口<ul>
+<li>接收方的数据链路层窗口对应于它可以接收的帧。任何落在窗口内的帧被放入接收方的缓冲区；任何落在窗口外面的帧都将被丢弃</li>
+<li>当收到一个帧，且其序号等于窗口下边界时，接收方将它传递给网络层并将整个窗口向前移动 1 个位置</li>
+<li>所有情况下，接收方都要生成一个确认并返回给发送方</li>
+<li>窗口大小为 1 意味着数据链路层只能按顺序接收帧，对于大一点的窗口就不成立</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-位滑动窗口协议"><a href="#1-位滑动窗口协议" class="headerlink" title="1 位滑动窗口协议"></a>1 位滑动窗口协议</h2><p>确认字段包含了最后接收到的正确帧的序号</p>
+<p>特殊情况</p>
+<ul>
+<li>（序号, 确认, 包号）</li>
+<li><code>*</code>表示网络层接受了一个包</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-14.png" width="65%">
+
+<ul>
+<li>（a）正常情况，每一帧到来后都带给网络层一个新的数据包，没有任何重复</li>
+<li>（b）异常情况，即使没有传输错误，也会有一半的帧是重复的<ul>
+<li>B 在发送自己的帧之前等待 A 的第一帧</li>
+</ul>
+</li>
+</ul>
+<h2 id="回退N协议（go-back-n）"><a href="#回退N协议（go-back-n）" class="headerlink" title="回退N协议（go back n）"></a>回退N协议（go back n）</h2><h3 id="管道化策略（Pipelining-Strategies）"><a href="#管道化策略（Pipelining-Strategies）" class="headerlink" title="管道化策略（Pipelining Strategies）"></a>管道化策略（Pipelining Strategies）</h3><p>允许多个帧同时传输</p>
+<ul>
+<li>发送方不等待每个帧被确认。相反，它发送了许多帧，并假定它们将到达。每帧仍然必须被确认</li>
+<li>提供更高效的传输带宽使用，但错误处理更为复杂</li>
+</ul>
+<h3 id="问题和解决"><a href="#问题和解决" class="headerlink" title="问题和解决"></a>问题和解决</h3><p>问题</p>
+<ul>
+<li>如果发送了 20 个帧，第 2 帧发生了错误<ul>
+<li>3~20 帧如何处理？重传（retransmission）？</li>
+</ul>
+</li>
+</ul>
+<p>接收方窗口大小的策略</p>
+<ul>
+<li>回退 N（go back n）</li>
+<li>选则重传（selective repeat）</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-15.png" width="65%">
+
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-16.png" width="65%">
+
+<p>（a）回退 n —— 接收窗口大小为 1</p>
+<ul>
+<li>损坏帧/丢失序号：丢弃后续帧</li>
+<li>丢弃的帧没有确认返回</li>
+</ul>
+<p>（b）回退 n 帧的情形</p>
+<ul>
+<li>接收方的窗口比较大</li>
+<li>发送方意识到问题，继续发送后续的帧直到 2 号帧的计时器超时</li>
+<li>然后退回到 2 号帧，从这里重新发送 2 号、3 号、4 号帧等</li>
+</ul>
+<p>选则重传 —— 接收窗口大于 1</p>
+<ul>
+<li>将坏帧丢弃，接收并缓存后续的好帧</li>
+<li>只确认顺序收到的最后一个帧</li>
+<li>否定确认（NAK, negative acknowledgement）: 触发该帧的重传，无需等待计时器超时</li>
+</ul>
+<h3 id="带宽与缓存"><a href="#带宽与缓存" class="headerlink" title="带宽与缓存"></a>带宽与缓存</h3><p>这两种不同方法恰好是带宽使用效率和数据链路层缓存空间之间的权衡</p>
+<ul>
+<li>无论哪种情况，发送方都需要缓冲区空间，直到收到确认后才能释放</li>
+<li>为已发送的每个未被确认的帧设置一个计时器</li>
+<li>必须能够启用 / 禁用网络层，因为如果有许多未被确认的帧，可能无法处理更多的发送数据<ul>
+<li>组织网络层向下传数据，因为缓冲区已满</li>
+</ul>
+</li>
+</ul>
+<h3 id="最大序号与发送窗口大小"><a href="#最大序号与发送窗口大小" class="headerlink" title="最大序号与发送窗口大小"></a>最大序号与发送窗口大小</h3><p>任何时候，可以发送的帧的最大个数不能等同于序号空间大小</p>
+<ul>
+<li>对回退 n 协议，可以发送的帧最多为 $\rm MAX_{SEQ}$ 个<ul>
+<li>发送窗口大小为 $2^n - 1$</li>
+</ul>
+</li>
+</ul>
+<h3 id="累计确认（cumulative-acknowledgement）"><a href="#累计确认（cumulative-acknowledgement）" class="headerlink" title="累计确认（cumulative acknowledgement）"></a>累计确认（cumulative acknowledgement）</h3><p>当 $n$ 号帧的确认到达，$n-1$ 号帧、$n-2$ 号帧等都会自动被确认</p>
+<h3 id="计时器（timer）"><a href="#计时器（timer）" class="headerlink" title="计时器（timer）"></a>计时器（timer）</h3><p>所有未发生的超时时间构成一个链表</p>
+<ul>
+<li>指向下一个超时值</li>
+<li>超时对应的帧</li>
+<li>剩余滴答数</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-17.png" width="65%">
+
+
+<h2 id="选择重传协议（selective-repeat）"><a href="#选择重传协议（selective-repeat）" class="headerlink" title="选择重传协议（selective repeat）"></a>选择重传协议（selective repeat）</h2><p>允许接收方接收并缓存坏帧或丢失帧后面的所有好帧</p>
+<h3 id="发送-接收窗口"><a href="#发送-接收窗口" class="headerlink" title="发送 / 接收窗口"></a>发送 / 接收窗口</h3><ul>
+<li>发送方和接收方各自维持一个窗口，该窗口分别包含可发送或已发送但未被确认的和可接受的序号</li>
+<li>发送方的窗口大小从 0 开始，可以增大到某一预设的值</li>
+<li>接收方的窗口大小总是固定不变，等于预先设定的最大值<ul>
+<li>接收方为其窗口内的每个序号保留一个缓冲区</li>
+<li>帧只能被保存在数据链路层中，直到所有序号比它小的帧都已经按顺序递交给网络层后，它才能被传递给网络层</li>
+</ul>
+</li>
+</ul>
+<h3 id="非顺序接收"><a href="#非顺序接收" class="headerlink" title="非顺序接收"></a>非顺序接收</h3><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-18.png" width="65%">
+
+<ul>
+<li>（a）窗口大小为 7 的初始情形</li>
+<li>（b）发出 7 个帧并接收 7 个帧，但未确认</li>
+<li>（c）窗口大小为 4 的初始情形</li>
+<li>（d）发出 4 个帧并接收 4 个帧，但未确认</li>
+</ul>
+<p>问题的本质在于：</p>
+<ul>
+<li>当接收方向前移动它的窗口后，新的有效序号范围与老的序号范围有重叠</li>
+<li>因此，后续的帧可能是重复的帧（如果确认丢失），也可能是新的帧（确认正确接收）</li>
+</ul>
+<h3 id="最大序号与接收窗口大小"><a href="#最大序号与接收窗口大小" class="headerlink" title="最大序号与接收窗口大小"></a>最大序号与接收窗口大小</h3><ul>
+<li>选择重传的最大窗口大小是 ${\rm(MAX_{SEQ}}+1)/2$</li>
+<li>接收窗口大小 $(2^n-1 + 1)/2$</li>
+</ul>
+<p>窗口大小</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-19.png" width="65%">
+
+
+<h3 id="缓冲区与计时器"><a href="#缓冲区与计时器" class="headerlink" title="缓冲区与计时器"></a>缓冲区与计时器</h3><p>接收方所需的缓冲区数量等于窗口的大小</p>
+<p>需要的计时器数量等于缓冲区的数量</p>
+<ul>
+<li>每个缓冲区都有一个相关联的计时器。当计时器超时，缓冲区的内容就要被重传</li>
+</ul>
+<p>计时器时间</p>
+<ul>
+<li>在某些情形下，从一帧发送出去开始算起，到该帧经传播抵达目的地、在那里被处理，然后它的确认被传回来，整个过程所需要的时间（几乎）是个常数<ul>
+<li>发送方可以把计时器的事件设置为恰好略大于正常情况下从发送一帧到接收到其确认之间的时间间隔</li>
+<li>NAK 没什么作用</li>
+</ul>
+</li>
+<li>其他情况下这段时间的变化非常大<ul>
+<li>逆向流量零散/没有逆向流量</li>
+<li>NAK 可以加快丢失帧或损坏帧的重传速度</li>
+<li>可变时间？</li>
+</ul>
+</li>
+</ul>
+<p>逆向流量很轻，确认会被延迟</p>
+<ul>
+<li>依赖反方向上的数据帧来捎带确认信息</li>
+<li>如果在一个方向上有很大的流量，而另一个方向上根本没有流量，那么当发送方的窗口达到最大值后协议将被阻塞</li>
+<li>解决<ul>
+<li>辅助计时器，超时则发送单独的确认帧</li>
+</ul>
+</li>
+</ul>
+<h3 id="更加有效的策略来处理错误"><a href="#更加有效的策略来处理错误" class="headerlink" title="更加有效的策略来处理错误"></a>更加有效的策略来处理错误</h3><ul>
+<li>否定确认（NAK），实际上是一个重传请求，指定了要重传的帧<ul>
+<li>接收到一个受损的帧</li>
+<li>到达的帧并非期望的（可能出现丢帧）</li>
+</ul>
+</li>
+<li>如果 NAK 丢失 / 损坏，不会有实质性的伤害，因为发送方最终会超时，并重传帧</li>
+</ul>
+<h3 id="性能（performance）"><a href="#性能（performance）" class="headerlink" title="性能（performance）"></a>性能（performance）</h3><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-20.png" width="65%">
+
+
+<h1 id="数据链路层协议实例"><a href="#数据链路层协议实例" class="headerlink" title="数据链路层协议实例"></a>数据链路层协议实例</h1><p>通过广域网中的 SONET 光纤链路发送数据包，这些链路被广泛用于连接一个 ISP 网络中位于不同位置的路由器，并构成了通信网络的骨干网，其中包括电话系统</p>
+<p>运行在 Internet 边缘的电话网络本地回路上的 ADSL 链路，这些链路把成千上百的个人和企业连接到 Internet 上</p>
+<h2 id="SONET上的数据包（Packet-over-SONET）"><a href="#SONET上的数据包（Packet-over-SONET）" class="headerlink" title="SONET上的数据包（Packet over SONET）"></a>SONET上的数据包（Packet over SONET）</h2><p>SONET 是物理层协议</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-21.png" width="65%">
+
+<ul>
+<li>IP （Internet Protocol）</li>
+<li>点到点协议（PPP, Point to Point Protocol）</li>
+<li>SONET（Synchronous Optical Network）</li>
+</ul>
+<h3 id="PPP-特性"><a href="#PPP-特性" class="headerlink" title="PPP 特性"></a>PPP 特性</h3><p>单独的帧，错误检测</p>
+<ul>
+<li>一种成帧方法。它可以毫无歧义地区分出一帧的结束和下一帧的开始</li>
+</ul>
+<p>链路控制协议（LCP, Link Control Protocol）</p>
+<ul>
+<li>一个链路控制协议。它可用于启动线路、测试线路、协商参数，以及当线路不再需要时关闭线路</li>
+</ul>
+<p>网络控制协议（NCP, Network Control Protocol）</p>
+<ul>
+<li>一种协商网络层选择的方式。协商方式独立于网络层协议，所选择的方法是针对每一种支持的网络层都有一个不同的网络控制协议</li>
+</ul>
+<h3 id="PPP-和-HDLC"><a href="#PPP-和-HDLC" class="headerlink" title="PPP 和 HDLC"></a>PPP 和 HDLC</h3><ul>
+<li>PPP 帧格式的选择类似 HDLC 帧格式（高级数据链路控制协议, High-level Data Link Control），但是是面向字节而不是面向比特的</li>
+<li>PPP 默认不提供可靠的数据传输（LCP 的一部分），实际上很少使用；HDLC 提供了可靠的数据传输</li>
+</ul>
+<h3 id="点到点通信"><a href="#点到点通信" class="headerlink" title="点到点通信"></a>点到点通信</h3><p>与外部世界的所有连接都通过一个或两个具有点到点租用线路的路由器连接到远程路由器</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-22.png" width="65%">
+
+
+<h3 id="PPP-帧格式"><a href="#PPP-帧格式" class="headerlink" title="PPP 帧格式"></a>PPP 帧格式</h3><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-23.png" width="65%">
+
+<ul>
+<li>HDLC 标志字节 <code>0x7E</code>（<code>01111110</code>）</li>
+<li>地址（address）字段（<code>11111111</code>），表示所有站点都接收该帧</li>
+<li>控制（control）字段（<code>00000011</code>），默认值表示无编号帧</li>
+<li>协议（protocol）字段<ul>
+<li>通告 payload 字段中包含什么类型的数据包</li>
+<li>以 0 开始的编码定义为 IPv4、IPv6 以及其他可能用到的网络层协议，比如 IPX 和 AppleTalk</li>
+<li>以 1 开始的编码被用于 PPP 配置协议，包括 LCP 和针对每个网络层协议而设置的不同 NCP</li>
+<li>默认大小为 2 个字节，可以通过 LCP 协商减少到 1 字节</li>
+</ul>
+</li>
+<li>有效载荷（payload）字段，可变长度，无 LCP 协商采用默认长度 1500，必要时填充技术</li>
+<li>校验和（checksum）字段，通常占 2 字节，但可以协商使用 4 字节</li>
+</ul>
+<h3 id="状态机"><a href="#状态机" class="headerlink" title="状态机"></a>状态机</h3><p>PPP 链路建立到释放</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-24.png" width="65%">
+
+<ul>
+<li>链路的初始状态为死（DEAD）</li>
+<li>一旦进入打开（OPEN）状态，双方就可以进行数据传输。IP 数据包被承载在 PPP 帧中通过 SONET 线路传输</li>
+</ul>
+<h2 id="对称数字用户线（ADSL-（Asymmetric-Digital-Subscriber-Loop）"><a href="#对称数字用户线（ADSL-（Asymmetric-Digital-Subscriber-Loop）" class="headerlink" title="对称数字用户线（ADSL, （Asymmetric Digital Subscriber Loop）"></a>对称数字用户线（ADSL, （Asymmetric Digital Subscriber Loop）</h2><p>以 Mbps 速率将百万家庭用户连接到Internrt上，使用的是与普通老式电话服务相同的本地回路</p>
+<p>典型的 ADSL 设备配置</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-25.png" width="65%">
+
+
+<p>ADSL 协议栈</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-26.png" width="65%">
+
+<ul>
+<li>ADSL 物理层，基于正交频分复用（OFDM）</li>
+<li>异步传输模式（ATM, Asynchronous Transfer Mode），是一种链路层<ul>
+<li>面向连接</li>
+<li>映射成一系列信元（cell），映射过程称为分段（segmentation）和重组（reassembly）</li>
+</ul>
+</li>
+<li>ATM 适应层 5（AAL5, ATM Adaptation Layer 5）</li>
+</ul>
+<p>运载 PPP 数据的 AAL5 帧</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/3/3-27.png" width="65%">
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>将原始比特流转换为帧流：字节计数（character count）、比特填充（bit stuffing）、字节填充（character stuffing）</li>
+<li>错误检测和纠正：奇偶校验（parity）、校验和（checksum）、CRC</li>
+<li>流量控制：保持发送方和接收方的速度</li>
+<li>数据链路层协议：滑动窗口（sliding window）</li>
+<li>规范和验证：正确性（correctness）、完整性（completeness）、可达性分析（reachability analysis）、失败案例（failure cases）</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2018/06/14/Notes/Computer%20Networks/The-Data-Link-Layer/">https://jckling.github.io/2018/06/14/Notes/Computer Networks/The-Data-Link-Layer/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="post-meta__tags" href="/tags/Computer-Networks/">Computer Networks</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/06/15/Notes/Computer%20Networks/The-Network-Layer/"><img class="prev-cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《计算机网络（英文版·第5版）》 The Network Layer</div></div></a></div><div class="next-post pull-right"><a href="/2018/06/14/Notes/Computer%20Networks/The-Medium-Access-Control-Sublayer/"><img class="next-cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《计算机网络（英文版·第5版）》 The Medium Access Control Sublayer</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/06/25/Notes/Computer Networks/The-Application-Layer/" title="《计算机网络（英文版·第5版）》 The Application Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-25</div><div class="title">《计算机网络（英文版·第5版）》 The Application Layer</div></div></a></div><div><a href="/2018/06/13/Notes/Computer Networks/The-Introduction/" title="《计算机网络（英文版·第5版）》 The Introduction"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-13</div><div class="title">《计算机网络（英文版·第5版）》 The Introduction</div></div></a></div><div><a href="/2018/06/14/Notes/Computer Networks/The-Medium-Access-Control-Sublayer/" title="《计算机网络（英文版·第5版）》 The Medium Access Control Sublayer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-14</div><div class="title">《计算机网络（英文版·第5版）》 The Medium Access Control Sublayer</div></div></a></div><div><a href="/2018/06/13/Notes/Computer Networks/The-Physical-Layer/" title="《计算机网络（英文版·第5版）》 The Physical Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-13</div><div class="title">《计算机网络（英文版·第5版）》 The Physical Layer</div></div></a></div><div><a href="/2018/06/22/Notes/Computer Networks/The-Transport-Layer/" title="《计算机网络（英文版·第5版）》 The Transport Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-22</div><div class="title">《计算机网络（英文版·第5版）》 The Transport Layer</div></div></a></div><div><a href="/2018/06/15/Notes/Computer Networks/The-Network-Layer/" title="《计算机网络（英文版·第5版）》 The Network Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-15</div><div class="title">《计算机网络（英文版·第5版）》 The Network Layer</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 >_<</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">数据链路层设计问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E4%BE%9B%E7%BB%99%E7%BD%91%E7%BB%9C%E5%B1%82%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.1.</span> <span class="toc-text">提供给网络层的服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%A7%8D%E5%8F%AF%E8%83%BD%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.1.1.</span> <span class="toc-text">3 种可能的服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E8%AE%A4"><span class="toc-number">1.1.2.</span> <span class="toc-text">确认</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.1.3.</span> <span class="toc-text">面向连接的服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%90%E5%B8%A7%EF%BC%88frame%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">成帧（frame）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E8%AE%A1%E6%95%B0%E6%B3%95"><span class="toc-number">1.2.1.</span> <span class="toc-text">字节计数法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E5%A1%AB%E5%85%85%E7%9A%84%E6%A0%87%E5%BF%97%E5%AD%97%E8%8A%82%E6%B3%95"><span class="toc-number">1.2.2.</span> <span class="toc-text">字节填充的标志字节法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E7%89%B9%E5%A1%AB%E5%85%85%E7%9A%84%E6%A0%87%E5%BF%97%E6%AF%94%E7%89%B9%E6%B3%95"><span class="toc-number">1.2.3.</span> <span class="toc-text">比特填充的标志比特法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E7%BC%96%E7%A0%81%E8%BF%9D%E7%A6%81%E6%B3%95"><span class="toc-number">1.2.4.</span> <span class="toc-text">物理层编码违禁法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%B8%A7%E6%96%B9%E6%B3%95%E7%9A%84%E7%BB%BC%E5%90%88"><span class="toc-number">1.2.5.</span> <span class="toc-text">成帧方法的综合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%AE%E9%94%99%E6%8E%A7%E5%88%B6"><span class="toc-number">1.3.</span> <span class="toc-text">差错控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">1.4.</span> <span class="toc-text">流量控制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%AE%E9%94%99%E6%A3%80%E6%B5%8B%E5%92%8C%E7%BA%A0%E6%AD%A3"><span class="toc-number">2.</span> <span class="toc-text">差错检测和纠正</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.1.</span> <span class="toc-text">错误模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A0%E9%94%99%E7%A0%81"><span class="toc-number">2.2.</span> <span class="toc-text">纠错码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%B7%E6%98%8E%E8%B7%9D%E7%A6%BB%EF%BC%88Hamming-distance%EF%BC%89"><span class="toc-number">2.2.1.</span> <span class="toc-text">海明距离（Hamming distance）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%B7%E6%98%8E%E7%A0%81%EF%BC%88Hamming-codes%EF%BC%89"><span class="toc-number">2.2.2.</span> <span class="toc-text">海明码（Hamming codes）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8D%B7%E7%A7%AF%E7%A0%81%EF%BC%88Binary-convolutional-codes%EF%BC%89"><span class="toc-number">2.2.3.</span> <span class="toc-text">二进制卷积码（Binary convolutional codes）*</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8C%E5%BE%B7%E6%89%80%E7%BD%97%E9%97%A8%E7%A0%81%EF%BC%88Reed-Solomon-codes%EF%BC%89"><span class="toc-number">2.2.4.</span> <span class="toc-text">里德所罗门码（Reed-Solomon codes）*</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8E%E5%AF%86%E5%BA%A6%E5%A5%87%E5%81%B6%E6%A0%A1%E9%AA%8C%E7%A0%81%EF%BC%88LDPC-Low-Density-Parity-Check-codes%EF%BC%89"><span class="toc-number">2.2.5.</span> <span class="toc-text">低密度奇偶校验码（LDPC, Low-Density Parity Check codes）*</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E9%94%99%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">检错码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%87%E5%81%B6"><span class="toc-number">2.3.1.</span> <span class="toc-text">奇偶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%A1%E9%AA%8C%E5%92%8C"><span class="toc-number">2.3.2.</span> <span class="toc-text">校验和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C"><span class="toc-number">2.3.3.</span> <span class="toc-text">循环冗余校验</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.</span> <span class="toc-text">基本数据链路层协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%8C%E6%89%98%E9%82%A6%E5%BC%8F%E7%9A%84%E5%8D%95%E5%B7%A5%E5%8D%8F%E8%AE%AE%EF%BC%88Utopian-Simplex-Protocol%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">乌托邦式的单工协议（Utopian Simplex Protocol）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E9%94%99%E4%BF%A1%E9%81%93%E4%B8%8A%E7%9A%84%E5%8D%95%E5%B7%A5%E5%81%9C-%E7%AD%89%E5%BC%8F%E5%8D%8F%E8%AE%AE%EF%BC%88Simplex-Stop-and-Wait-Protocol-for-an-Error-Free-Channel%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">无错信道上的单工停-等式协议（Simplex Stop and Wait Protocol for an Error-Free Channel）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E9%94%99%E4%BF%A1%E9%81%93%E4%B8%8A%E7%9A%84%E5%8D%95%E5%B7%A5%E5%81%9C-%E7%AD%89%E5%BC%8F%E5%8D%8F%E8%AE%AE%EF%BC%88Simplex-Stop-and-Wait-Protocol-for-a-Noisy-Channel%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">有错信道上的单工停-等式协议（Simplex Stop-and-Wait Protocol for a Noisy Channel）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.</span> <span class="toc-text">滑动窗口协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BD%8D%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.1.</span> <span class="toc-text">1 位滑动窗口协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E9%80%80N%E5%8D%8F%E8%AE%AE%EF%BC%88go-back-n%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">回退N协议（go back n）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E5%8C%96%E7%AD%96%E7%95%A5%EF%BC%88Pipelining-Strategies%EF%BC%89"><span class="toc-number">4.2.1.</span> <span class="toc-text">管道化策略（Pipelining Strategies）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3"><span class="toc-number">4.2.2.</span> <span class="toc-text">问题和解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E5%AE%BD%E4%B8%8E%E7%BC%93%E5%AD%98"><span class="toc-number">4.2.3.</span> <span class="toc-text">带宽与缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E5%BA%8F%E5%8F%B7%E4%B8%8E%E5%8F%91%E9%80%81%E7%AA%97%E5%8F%A3%E5%A4%A7%E5%B0%8F"><span class="toc-number">4.2.4.</span> <span class="toc-text">最大序号与发送窗口大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%AF%E8%AE%A1%E7%A1%AE%E8%AE%A4%EF%BC%88cumulative-acknowledgement%EF%BC%89"><span class="toc-number">4.2.5.</span> <span class="toc-text">累计确认（cumulative acknowledgement）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E6%97%B6%E5%99%A8%EF%BC%88timer%EF%BC%89"><span class="toc-number">4.2.6.</span> <span class="toc-text">计时器（timer）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%87%8D%E4%BC%A0%E5%8D%8F%E8%AE%AE%EF%BC%88selective-repeat%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">选择重传协议（selective repeat）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E9%80%81-%E6%8E%A5%E6%94%B6%E7%AA%97%E5%8F%A3"><span class="toc-number">4.3.1.</span> <span class="toc-text">发送 &#x2F; 接收窗口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%A1%BA%E5%BA%8F%E6%8E%A5%E6%94%B6"><span class="toc-number">4.3.2.</span> <span class="toc-text">非顺序接收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E5%BA%8F%E5%8F%B7%E4%B8%8E%E6%8E%A5%E6%94%B6%E7%AA%97%E5%8F%A3%E5%A4%A7%E5%B0%8F"><span class="toc-number">4.3.3.</span> <span class="toc-text">最大序号与接收窗口大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E8%AE%A1%E6%97%B6%E5%99%A8"><span class="toc-number">4.3.4.</span> <span class="toc-text">缓冲区与计时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E5%8A%A0%E6%9C%89%E6%95%88%E7%9A%84%E7%AD%96%E7%95%A5%E6%9D%A5%E5%A4%84%E7%90%86%E9%94%99%E8%AF%AF"><span class="toc-number">4.3.5.</span> <span class="toc-text">更加有效的策略来处理错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%EF%BC%88performance%EF%BC%89"><span class="toc-number">4.3.6.</span> <span class="toc-text">性能（performance）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E5%8D%8F%E8%AE%AE%E5%AE%9E%E4%BE%8B"><span class="toc-number">5.</span> <span class="toc-text">数据链路层协议实例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SONET%E4%B8%8A%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8C%85%EF%BC%88Packet-over-SONET%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">SONET上的数据包（Packet over SONET）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PPP-%E7%89%B9%E6%80%A7"><span class="toc-number">5.1.1.</span> <span class="toc-text">PPP 特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPP-%E5%92%8C-HDLC"><span class="toc-number">5.1.2.</span> <span class="toc-text">PPP 和 HDLC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E5%88%B0%E7%82%B9%E9%80%9A%E4%BF%A1"><span class="toc-number">5.1.3.</span> <span class="toc-text">点到点通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPP-%E5%B8%A7%E6%A0%BC%E5%BC%8F"><span class="toc-number">5.1.4.</span> <span class="toc-text">PPP 帧格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="toc-number">5.1.5.</span> <span class="toc-text">状态机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E6%95%B0%E5%AD%97%E7%94%A8%E6%88%B7%E7%BA%BF%EF%BC%88ADSL-%EF%BC%88Asymmetric-Digital-Subscriber-Loop%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">对称数字用户线（ADSL, （Asymmetric Digital Subscriber Loop）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览"><img src="https://i.loli.net/2021/06/14/2NXqsznriG8blc7.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Butterfly 主题预览"/></a><div class="content"><a class="title" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览">Butterfly 主题预览</a><time datetime="2021-07-22T09:02:46.000Z" title="发表于 2021-07-22 17:02:46">2021-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python ast 模块使用"/></a><div class="content"><a class="title" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用">Python ast 模块使用</a><time datetime="2021-07-14T06:30:05.000Z" title="发表于 2021-07-14 14:30:05">2021-07-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程"><img src="https://i.loli.net/2021/07/08/mXj4AlCkFwEbSdR.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Pyre 污点分析工具 Pysa 使用教程"/></a><div class="content"><a class="title" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程">Pyre 污点分析工具 Pysa 使用教程</a><time datetime="2021-07-07T03:39:19.000Z" title="发表于 2021-07-07 11:39:19">2021-07-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读"><img src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="OpenStack 组件源码阅读"/></a><div class="content"><a class="title" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读">OpenStack 组件源码阅读</a><time datetime="2021-07-02T12:22:24.000Z" title="发表于 2021-07-02 20:22:24">2021-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨"><img src="https://i.loli.net/2021/06/24/kzGsZ3T8wWDReE5.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="FF14 光之摄影师养成计划✨"/></a><div class="content"><a class="title" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨">FF14 光之摄影师养成计划✨</a><time datetime="2021-06-24T08:11:35.000Z" title="发表于 2021-06-24 16:11:35">2021-06-24</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      avatar: 'retro',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline() 
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

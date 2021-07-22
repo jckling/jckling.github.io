@@ -1,0 +1,290 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Frabic CA 部署流程 | Jckling's Blog</title><meta name="keywords" content="Hyperledger Fabric"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="阅读 Fabric CA 部署的官方文档，理清 register 与 enroll">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Frabic CA 部署流程">
+<meta property="og:url" content="https://jckling.github.io/2020/08/23/Blockchain/Frabic/Frabic-CA-%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="阅读 Fabric CA 部署的官方文档，理清 register 与 enroll">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/uYIL1tjaQinr4My.jpg">
+<meta property="article:published_time" content="2020-08-23T11:31:59.000Z">
+<meta property="article:modified_time" content="2021-07-22T12:08:34.469Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="Hyperledger Fabric">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/uYIL1tjaQinr4My.jpg"><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2020/08/23/Blockchain/Frabic/Frabic-CA-%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Frabic CA 部署流程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-22 20:08:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jckling/avatar.jpg" onerror="onerror=null;src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/uYIL1tjaQinr4My.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Frabic CA 部署流程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-08-23T11:31:59.000Z" title="undefined 2020-08-23 19:31:59">2020-08-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Blockchain/">Blockchain</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Frabic CA 部署流程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2020/08/23/Blockchain/Frabic/Frabic-CA-%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/#post-comment"><span class="waline-comment-count" id="/2020/08/23/Blockchain/Frabic/Frabic-CA-%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Frabic-CA-部署流程"><a href="#Frabic-CA-部署流程" class="headerlink" title="Frabic CA 部署流程"></a>Frabic CA 部署流程</h1><h2 id="TLS-CA"><a href="#TLS-CA" class="headerlink" title="TLS CA"></a>TLS CA</h2><p>提供加密通信使用的公钥证书，通常一个组织使用一个 TLS CA 根证书。</p>
+<h2 id="ORG-CA"><a href="#ORG-CA" class="headerlink" title="ORG CA"></a>ORG CA</h2><p>提供身份证明，节点证明自己属于该组织。</p>
+<h1 id="TLS-CA-1"><a href="#TLS-CA-1" class="headerlink" title="TLS CA"></a>TLS CA</h1><img src="https://media.githubusercontent.com/media/jckling/Assets/master/Fabric/ca-tls-flow.png" width="65%">
+
+<h2 id="TLS-CA-服务器搭建"><a href="#TLS-CA-服务器搭建" class="headerlink" title="TLS CA 服务器搭建"></a>TLS CA 服务器搭建</h2><p>配置：Server-side TLS</p>
+<p>工具：fabric-ca-server</p>
+<h3 id="1-初始化"><a href="#1-初始化" class="headerlink" title="1. 初始化"></a>1. 初始化</h3><p>创建 TLS CA 管理员账户（Register）</p>
+<ul>
+<li>用户名:密码</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建文件夹</span></span><br><span class="line">mkdir fabric-ca-server-tls &amp;&amp; <span class="built_in">cd</span> fabric-ca-server-tls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化</span></span><br><span class="line"><span class="comment"># -b bootstrap identity</span></span><br><span class="line">./fabric-ca-server init -b tls-admin:tls-adminpw</span><br></pre></td></tr></table></figure>
+
+<p>以上操作实现：</p>
+<ul>
+<li>生成 TLS CA root signed certificate ，即自签公钥证书<ul>
+<li>区块链网络中的所有组织成员节点都必须拥有该证书</li>
+</ul>
+</li>
+<li>生成私钥并存储在 <code>/msp/keystore</code> 文件夹中</li>
+<li>初始化数据库（默认使用 SQLite 数据库）</li>
+<li>根据传入的用户名密码初始化 TLS CA 管理员</li>
+</ul>
+<h3 id="2-修改配置"><a href="#2-修改配置" class="headerlink" title="2. 修改配置"></a>2. 修改配置</h3><p>配置文件：<code>fabric-ca-server-config.yaml</code></p>
+<p>至少要注意/修改的配置：</p>
+<ul>
+<li><code>post</code>：端口</li>
+<li><code>tls-enabled</code>：启用 TLS<ul>
+<li>启动 CA 服务器后将生成自签证书 <code>tls-cert.pem</code></li>
+</ul>
+</li>
+<li><code>ca.name</code>：为 CA 命名，比如 TLS CA 可以叫 <code>tls-ca</code>，组织的 CA 可以叫 <code>org-ca</code></li>
+<li><code>csr.hosts</code>：设置 CA 服务器运行的主机名和 IP 地址</li>
+<li><code>signing.profiles.ca</code>：TLS CA 不签发 CA 证书</li>
+<li><code>operatons.listenAddress</code>：监听地址和端口</li>
+</ul>
+<h3 id="3-启动-TLS-CA-服务器"><a href="#3-启动-TLS-CA-服务器" class="headerlink" title="3. 启动 TLS CA 服务器"></a>3. 启动 TLS CA 服务器</h3><p>启动时无法设置 CA 管理员账户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./fabric-ca-server start</span><br></pre></td></tr></table></figure>
+
+<h2 id="TLS-CA-管理员账户登记（Enroll）"><a href="#TLS-CA-管理员账户登记（Enroll）" class="headerlink" title="TLS CA 管理员账户登记（Enroll）"></a>TLS CA 管理员账户登记（Enroll）</h2><p>工具：fabric-ca-client</p>
+<p>目录结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fabric-ca-client</span><br><span class="line">  └── tls-ca            # 存储登记后 TLS CA 返回的公私钥</span><br><span class="line">  └── tls-root-cert     # 存储 TLS CA root certificate</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-拷贝证书"><a href="#1-拷贝证书" class="headerlink" title="1. 拷贝证书"></a>1. 拷贝证书</h3><p><code>fabric-ca-server-tls/ca-cert.pem</code> 拷贝到 <code>fabric-ca-client/tls-root-cert/tls-ca-cert.pem</code></p>
+<p><strong>每个和 TLS CA 通讯的节点都需要包含该证书</strong></p>
+<h3 id="2-向-TLS-CA-进行登记"><a href="#2-向-TLS-CA-进行登记" class="headerlink" title="2. 向 TLS CA 进行登记"></a>2. 向 TLS CA 进行登记</h3><p>使用用户名密码向 TLS CA 登记 CA 管理员账户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./fabric-ca-client enroll -d -u https://tls-admin:tls-adminpw@my-machine.example.com:7054 --tls.certfiles tls-root-cert/tls-ca-cert.pem --enrollment.profile tls --csr.hosts <span class="string">&#x27;host1,*.example.com&#x27;</span> --mspdir tls-ca/tlsadmin/msp</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>-u https://tls-admin:tls-adminpw@my-machine.example.com:7054</code>：TLS CA 服务器地址和端口</li>
+<li><code>--tls.certfiles tls-root-cert/tls-ca-cert.pem</code>：TLS CA 根证书位置</li>
+<li><code>--enrollment.profile tls</code>：向 TLS CA 登记<ul>
+<li>如果在 TLS CA 服务器端的配置中移除了 <code>signing.profiles.ca</code>，则该指令参数是必须的</li>
+</ul>
+</li>
+<li><code>--csr.hosts &#39;host1,*.example.com&#39;</code>：任何域名下的主机都被视为 host1</li>
+<li><code>--mspdir tls-ca/tlsadmin/msp</code>：存储 TLS CA 管理员的 TLS 证书的位置</li>
+</ul>
+<h1 id="Organization-CA"><a href="#Organization-CA" class="headerlink" title="Organization CA"></a>Organization CA</h1><h2 id="获得-TLS-证书"><a href="#获得-TLS-证书" class="headerlink" title="获得 TLS 证书"></a>获得 TLS 证书</h2><p>为之后要创建的 ORG CA 管理员用户进行注册（register）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./fabric-ca-client register -d --id.name rcaadmin --id.secret rcaadminpw -u https://my-machine.example.com:7054  --tls.certfiles tls-root-cert/tls-ca-cert.pem --mspdir tls-ca/tlsadmin/msp</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>--id.name rcaadmin --id.secret rcaadminpw</code>：用户名、密码</li>
+<li><code>--mspdir tls-ca/tlsadmin/msp</code>：指向 TLS CA 管理员证书</li>
+</ul>
+<hr>
+<p>为之后要创建的 ORG CA 管理员用户进行登记（enroll）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./fabric-ca-client enroll -d -u https://rcaadmin:rcaadminpw@my-machine.example.com:7054 --tls.certfiles tls-root-cert/tls-ca-cert.pem --enrollment.profile tls --csr.hosts <span class="string">&#x27;host1,*.example.com&#x27;</span> --mspdir tls-ca/rcaadmin/msp</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>--mspdir tls-ca/rcaadmin/msp</code>：存储 rcaadmmin 的 TLS 证书 的位置</li>
+</ul>
+<h2 id="部署-Organization-CA"><a href="#部署-Organization-CA" class="headerlink" title="部署 Organization CA"></a>部署 Organization CA</h2><p>作为 enrollment CA / eCert CA / root CA</p>
+<p>工具：fabric-ca-server</p>
+<h3 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h3><ul>
+<li>向 TLS CA 注册并登记，即 rcaadmin</li>
+<li>拷贝之前生成的密钥对及 TLS 证书<ul>
+<li>私钥重命名为 <code>key.pem</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建文件夹</span></span><br><span class="line">mkdir fabric-ca-server-org1</span><br><span class="line"><span class="built_in">cd</span> fabric-ca-server-org1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建文件夹</span></span><br><span class="line">mkdir tls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝 TLS 公私钥对</span></span><br><span class="line">cp ../fabric-ca-client/tls-ca/rcaadmin/msp/signcerts/cert.pem tls &amp;&amp; cp ../fabric-ca-client/tls-ca/rcaadmin/msp/keystore/key.pem tls</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-初始化"><a href="#2-初始化" class="headerlink" title="2. 初始化"></a>2. 初始化</h3><p>创建 CA 管理员用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./fabric-ca-server init -b rcaadmin:rcaadminpw</span><br></pre></td></tr></table></figure>
+
+<p>按需修改生成的配置文件 <code>fabric-ca-server-config.yaml</code></p>
+<h3 id="3-启动-CA-服务器"><a href="#3-启动-CA-服务器" class="headerlink" title="3. 启动 CA 服务器"></a>3. 启动 CA 服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./fabric-ca-server start</span><br></pre></td></tr></table></figure>
+
+<h2 id="CA-管理员账户登记（Enroll）"><a href="#CA-管理员账户登记（Enroll）" class="headerlink" title="CA 管理员账户登记（Enroll）"></a>CA 管理员账户登记（Enroll）</h2><p>rcaadmin 已经向 TLS 进行注册与登记，但是仅向 Organization CA 进行注册（初始化阶段），因此还需要向 CA 进行登记</p>
+<p>工具：fabric-ca-client</p>
+<p>目录结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fabric-ca-client</span><br><span class="line">  └── org1-ca           # 存储登记后 CA 返回的公私钥</span><br><span class="line">  └── tls-root-cert     # 存储 TLS CA root certificate</span><br></pre></td></tr></table></figure>
+
+<h3 id="向-CA-进行登记"><a href="#向-CA-进行登记" class="headerlink" title="向 CA 进行登记"></a>向 CA 进行登记</h3><p>使用用户名密码向 CA 登记 CA 管理员账户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./fabric-ca-client enroll -d -u https://rcaadmin:rcaadminpw@my-machine.example.com:7055 --tls.certfiles tls-root-cert/tls-ca-cert.pem --csr.hosts <span class="string">&#x27;host1,*.example.com&#x27;</span> --mspdir org1-ca/rcaadmin/msp</span><br></pre></td></tr></table></figure>
+
+<p>以上操作生成文件夹 <code>fabric-ca-client/org1-ca/rcaadmin/msp</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">└── msp</span><br><span class="line">    ├── cacerts</span><br><span class="line">        └── my-machine-example-com-7055.pem     # Organization CA root certificate</span><br><span class="line">    ├── keystore</span><br><span class="line">        └── 60b6a16b8b5ba3fc3113c522cce86a724d7eb92d6c3961cfd9afbd27bf11c37f_sk     # CA 管理员身份私钥，可重命名为 org1-key.pem</span><br><span class="line">    ├── signcerts</span><br><span class="line">        └── cert.pem        # CA 管理员身份签名证书（公钥）</span><br><span class="line">    ├── user</span><br><span class="line">    ├── IssuerPublicKey</span><br><span class="line">    └── IssuerRevocationPublicKey       </span><br></pre></td></tr></table></figure>
+
+<h1 id="参阅"><a href="#参阅" class="headerlink" title="参阅"></a>参阅</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric-ca.readthedocs.io/en/latest/deployguide/cadeploy.html">CA Deployment steps</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2020/08/23/Blockchain/Frabic/Frabic-CA-%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/">https://jckling.github.io/2020/08/23/Blockchain/Frabic/Frabic-CA-部署流程/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hyperledger-Fabric/">Hyperledger Fabric</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/uYIL1tjaQinr4My.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/04/Blockchain/Frabic/Fabric-CA-%E7%BD%91%E7%BB%9C%E6%90%AD%E5%BB%BA/"><img class="prev-cover" src="https://i.loli.net/2021/06/14/uYIL1tjaQinr4My.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Fabric CA 网络搭建</div></div></a></div><div class="next-post pull-right"><a href="/2020/05/11/Game/FFXIV/FF14-%E5%AE%8F%E8%AE%B0%E5%BD%95/"><img class="next-cover" src="https://i.loli.net/2021/06/14/SZXtIyRYzjqoh6D.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">FF14 宏记录</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/09/04/Blockchain/Frabic/Fabric-CA-网络搭建/" title="Fabric CA 网络搭建"><img class="cover" src="https://i.loli.net/2021/06/14/uYIL1tjaQinr4My.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-04</div><div class="title">Fabric CA 网络搭建</div></div></a></div><div><a href="/2020/09/05/Blockchain/Frabic/Fabric-测试网络/" title="Fabric 测试网络"><img class="cover" src="https://i.loli.net/2021/06/14/uYIL1tjaQinr4My.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-05</div><div class="title">Fabric 测试网络</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">96</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 >_<</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Frabic-CA-%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">Frabic CA 部署流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TLS-CA"><span class="toc-number">1.1.</span> <span class="toc-text">TLS CA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ORG-CA"><span class="toc-number">1.2.</span> <span class="toc-text">ORG CA</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TLS-CA-1"><span class="toc-number">2.</span> <span class="toc-text">TLS CA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TLS-CA-%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA"><span class="toc-number">2.1.</span> <span class="toc-text">TLS CA 服务器搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.1.1.</span> <span class="toc-text">1. 初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.2.</span> <span class="toc-text">2. 修改配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%90%AF%E5%8A%A8-TLS-CA-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text">3. 启动 TLS CA 服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TLS-CA-%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7%E7%99%BB%E8%AE%B0%EF%BC%88Enroll%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">TLS CA 管理员账户登记（Enroll）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%8B%B7%E8%B4%9D%E8%AF%81%E4%B9%A6"><span class="toc-number">2.2.1.</span> <span class="toc-text">1. 拷贝证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%90%91-TLS-CA-%E8%BF%9B%E8%A1%8C%E7%99%BB%E8%AE%B0"><span class="toc-number">2.2.2.</span> <span class="toc-text">2. 向 TLS CA 进行登记</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Organization-CA"><span class="toc-number">3.</span> <span class="toc-text">Organization CA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97-TLS-%E8%AF%81%E4%B9%A6"><span class="toc-number">3.1.</span> <span class="toc-text">获得 TLS 证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2-Organization-CA"><span class="toc-number">3.2.</span> <span class="toc-text">部署 Organization CA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.2.1.</span> <span class="toc-text">1. 准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">3.2.2.</span> <span class="toc-text">2. 初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%90%AF%E5%8A%A8-CA-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">3.2.3.</span> <span class="toc-text">3. 启动 CA 服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CA-%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7%E7%99%BB%E8%AE%B0%EF%BC%88Enroll%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">CA 管理员账户登记（Enroll）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91-CA-%E8%BF%9B%E8%A1%8C%E7%99%BB%E8%AE%B0"><span class="toc-number">3.3.1.</span> <span class="toc-text">向 CA 进行登记</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E9%98%85"><span class="toc-number">4.</span> <span class="toc-text">参阅</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览"><img src="https://i.loli.net/2021/06/14/2NXqsznriG8blc7.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Butterfly 主题预览"/></a><div class="content"><a class="title" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览">Butterfly 主题预览</a><time datetime="2021-07-22T09:02:46.000Z" title="发表于 2021-07-22 17:02:46">2021-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python ast 模块使用"/></a><div class="content"><a class="title" href="/2021/07/14/Other/Python%20ast%20%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/" title="Python ast 模块使用">Python ast 模块使用</a><time datetime="2021-07-14T06:30:05.000Z" title="发表于 2021-07-14 14:30:05">2021-07-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程"><img src="https://i.loli.net/2021/07/08/mXj4AlCkFwEbSdR.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Pyre 污点分析工具 Pysa 使用教程"/></a><div class="content"><a class="title" href="/2021/07/07/Security/Pysa%20Tutorial/" title="Pyre 污点分析工具 Pysa 使用教程">Pyre 污点分析工具 Pysa 使用教程</a><time datetime="2021-07-07T03:39:19.000Z" title="发表于 2021-07-07 11:39:19">2021-07-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读"><img src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="OpenStack 组件源码阅读"/></a><div class="content"><a class="title" href="/2021/07/02/OpenStack/OpenStack%20%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="OpenStack 组件源码阅读">OpenStack 组件源码阅读</a><time datetime="2021-07-02T12:22:24.000Z" title="发表于 2021-07-02 20:22:24">2021-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨"><img src="https://i.loli.net/2021/06/24/kzGsZ3T8wWDReE5.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="FF14 光之摄影师养成计划✨"/></a><div class="content"><a class="title" href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨">FF14 光之摄影师养成计划✨</a><time datetime="2021-06-24T08:11:35.000Z" title="发表于 2021-06-24 16:11:35">2021-06-24</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/uYIL1tjaQinr4My.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      avatar: 'retro',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline() 
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
