@@ -2135,7 +2135,7 @@ blockquote footer cite:before {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
 .layout {
   display: -webkit-box;
@@ -3301,7 +3301,7 @@ blockquote footer cite:before {
   transition: all 0.5s;
 }
 #page-header.full_page {
-  min-height: 420px;
+  height: 420px;
   background-attachment: fixed;
 }
 #page-header.full_page #site-info {
@@ -3367,7 +3367,7 @@ blockquote footer cite:before {
   font-size: 30px;
 }
 #page-header.not-home-page {
-  min-height: 20rem;
+  height: 20rem;
 }
 @media screen and (max-width: 768px) {
   #page-header.not-home-page {
@@ -3386,7 +3386,7 @@ blockquote footer cite:before {
   }
 }
 #page-header.post-bg {
-  min-height: 20rem;
+  height: 20rem;
 }
 @media screen and (max-width: 768px) {
   #page-header.post-bg {
@@ -3424,7 +3424,7 @@ blockquote footer cite:before {
 }
 #page-header.not-top-img {
   margin-bottom: 0.5rem;
-  min-height: 60px;
+  height: 60px;
   background: 0;
 }
 #page-header.not-top-img #nav {
