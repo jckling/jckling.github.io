@@ -1,0 +1,373 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>百度 OpenRASP 组成分析 | Jckling's Blog</title><meta name="keywords" content="Python,Golang,Java"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="梳理 OpenRASP 的各个组成部分：Java Agent 插桩、JS 插件检测、管理后台、IAST 扫描器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百度 OpenRASP 组成分析">
+<meta property="og:url" content="https://jckling.github.io/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="梳理 OpenRASP 的各个组成部分：Java Agent 插桩、JS 插件检测、管理后台、IAST 扫描器。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/31592614?s=200&v=4">
+<meta property="article:published_time" content="2021-09-08T07:17:39.000Z">
+<meta property="article:modified_time" content="2021-09-08T07:42:47.521Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Golang">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/31592614?s=200&v=4"><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '百度 OpenRASP 组成分析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-09-08 15:42:47'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jckling/avatar.jpg" onerror="onerror=null;src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">100</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">39</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://avatars.githubusercontent.com/u/31592614?s=200&amp;v=4')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">百度 OpenRASP 组成分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-09-08T07:17:39.000Z" title="undefined 2021-09-08 15:17:39">2021-09-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Security/">Security</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="百度 OpenRASP 组成分析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/#post-comment"><span class="waline-comment-count" id="/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="RASP-架构"><a href="#RASP-架构" class="headerlink" title="RASP 架构"></a>RASP 架构</h1><p>RASP 将 agent 嵌入应用，通过 hook 技术植入探针，在关键点触发检测，拦截/放行</p>
+<img src="http://blog.nsfocus.net/wp-content/uploads/2018/01/7195ace984937ccbddc171ece82e237e.png" style="zoom:80%;" />
+
+
+<p>Java 应用的探针植入方法</p>
+<ul>
+<li>Servlet Filter：在请求响应路径上监测，只能对 http 报文过滤处理</li>
+<li>JVM 重构：植入 JVM 内部, 基于 JVM 的安全控制层实现 RASP 容器<ul>
+<li>需要对 JVM 非常熟悉，难度很大，国外 <a target="_blank" rel="noopener" href="https://www.waratek.com/runtime-application-self-protection-rasp/">waratek</a> 采用这种方法</li>
+</ul>
+</li>
+<li>Java Instrument：普遍，OpenRASP 使用该方法</li>
+</ul>
+<img src="http://blog.nsfocus.net/wp-content/uploads/2018/01/fca02f0c30846c349a6f3f35998724dd.png" style="zoom:80%">
+
+<h1 id="OpenRASP-组成部分"><a href="#OpenRASP-组成部分" class="headerlink" title="OpenRASP 组成部分"></a>OpenRASP 组成部分</h1><ul>
+<li>Java Agent</li>
+<li>JavaScript 插件</li>
+<li>Agent 管理后台（Vue + Golang 实现）<ul>
+<li>ElasticSearch + MongoDB</li>
+</ul>
+</li>
+<li>IAST 扫描器（Python 实现）</li>
+</ul>
+<h2 id="Java-Agent"><a href="#Java-Agent" class="headerlink" title="Java Agent"></a>Java Agent</h2><p>启动服务时使用 <code>-javaagent</code> 参数指定 Java Agent，动态修改 Java 字节码（即 hook 插桩）</p>
+<ul>
+<li>攻击触发插桩点，Java Agent 获取到函数的参数</li>
+</ul>
+<h3 id="启动流程"><a href="#启动流程" class="headerlink" title="启动流程"></a>启动流程</h3><ol>
+<li>启动时首先会进入 <code>javaagent</code> 的 premain 函数，该函数会在 main 函数之前预先执行</li>
+<li>当去 hook 像 java.io.File 这样由 <code>BootstrapClassLoader</code> 加载的类的时候，无法从该类调用非 <code>BootstrapClassLoader</code> 加载的类中的接口，所以 agent.jar 会先将自己添加到 <code>BootstrapClassLoader</code> 的 ClassPath 下，这样 hook 由 <code>BootstrapClassLoader</code> 加载的类的时候就能够成功调用到 agent.jar 中的检测入口</li>
+<li>释放 <code>log4j</code> 日志配置文件，如果存在则跳过</li>
+<li>根据 <code>openrasp.yml</code> 文件初始化相应配置项</li>
+<li>初始化 JS 插件模块<ul>
+<li>JS 上下文类初始化</li>
+<li>插件文件初始化</li>
+</ul>
+</li>
+<li>初始化字节码转换模块<ul>
+<li>给 load class 操作进行插桩操作，当类加载的时候会先进入 agent 进行处理</li>
+<li>对于在初始化前已加载的类执行 <code>retransform</code> 处理，e.g <code>FileInputStream</code></li>
+</ul>
+</li>
+<li>输出启动成功日志，开启全局 Hook 开关（启动阶段为关闭状态）<ul>
+<li>若启动过程中发生错误，记录错误日志</li>
+</ul>
+</li>
+<li>给 openrasp.yml 配置文件和 js 插件目录以及 assets 目录增加文件监控，以便文件内容更改的时候不需要重启就能够实时生效</li>
+</ol>
+<h3 id="hook-class-流程"><a href="#hook-class-流程" class="headerlink" title="hook class 流程"></a>hook class 流程</h3><ol>
+<li>因为启动时候进行了插桩操作（<code>premain</code>），当有类被 ClassLoader 加载时候，所以会把该类的字节码先交给自定义的 Transformer 处理</li>
+<li><strong>自定义 Transformer 会判断该类是否为需要 hook 的类</strong>，如果是会将该类交给 javassist 字节码处理框架进行处理</li>
+<li>javassist 框架会将类的字节码依照事件驱动模型逐步解析每个方法，当触发需要 hook 的方法时，会在方法的开头或者结尾插入进入检测函数的字节码</li>
+<li>把 hook 好的字节码返回给 transformer 从而载入虚拟机</li>
+</ol>
+<img src="https://rasp.baidu.com/doc/hacking/architect/images/startup.png" style="zoom:80%">
+
+
+<h3 id="请求处理流程"><a href="#请求处理流程" class="headerlink" title="请求处理流程"></a>请求处理流程</h3><p>以 <code>tomcat + JDBC + MySQL</code> 为例</p>
+<ol>
+<li>服务器收到一个请求，从而进入了服务器的请求 hook 点，该 hook 点标注当前线程为请求线程，开启当前线程的检测开关并把请求对象和响应对象进行缓存，以便后面使用</li>
+<li>服务器发起 SQL 查询</li>
+<li>进入 SQLStatementHook 点，我们挂钩了 execute、executeUpdate、executeQuery 等方法，从该方法进入检测流程如下：<ul>
+<li>判断当前线程是否为请求线程（第一步标记的），如果是继续下面检测</li>
+<li>采集 <code>connection_id（这个字段仅JDBC支持）</code>、<code>SQL 语句</code> 以及 <code>数据库类型</code> 等信息</li>
+<li>构建参数信息，调用<strong>本地插件（Java）和 JS 插件</strong>进行安全检测<ul>
+<li>还有<strong>基线检测</strong></li>
+</ul>
+</li>
+<li>根据插件的执行结果决定是拦截请求、放行还是仅打印日志</li>
+</ul>
+</li>
+<li>进入 SQLResultSetHook 点，我们挂钩了 resultSet.next 方法<ul>
+<li>调用本地插件检查是否发生拖库行为，默认策略为一次查询结果超过 500 条就报警</li>
+</ul>
+</li>
+<li>若决定拦截攻击<ul>
+<li>输出报警日志到 logs/alarm.log</li>
+<li>如果 header 还没有发出，默认使用 302 跳转到拦截页面</li>
+<li>如果 body 还没有发出，则重置未发送的 body</li>
+<li>输出自定义拦截页面跳转 js 脚本<ul>
+<li><code>&lt;/script&gt;&lt;script&gt;location.href=&#39;.../?request_id=xxx&#39;&lt;/script&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><code>-javaagent</code> 启动服务时加载 Agent，在 <code>premain</code> 函数中定义插桩逻辑，实现插桩<ul>
+<li>预定义的 hook 点：<a target="_blank" rel="noopener" href="https://rasp.baidu.com/doc/hacking/architect/hook.html">Hook 函数列表</a></li>
+<li>可新增 hook 点</li>
+</ul>
+</li>
+<li>收到请求后，触发插桩点收集函数调用参数信息，调用插件检测</li>
+<li>插件检测并返回结果，根据策略执行相应操作</li>
+</ul>
+<h2 id="JavaScript-插件"><a href="#JavaScript-插件" class="headerlink" title="JavaScript 插件"></a>JavaScript 插件</h2><p>Rhino 引擎支持将 Java 中的对象注册到 JavaScript 环境，并被 JavaScript 代码调用（数据共享）</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mozilla/rhino">mozilla/rhino</a></li>
+<li>JS 插件提供热更新功能，即<strong>能够实时更新检测逻辑</strong></li>
+<li>根据 Java Agent 返回的插桩点信息，执行检测算法，最后进行<strong>告警/拦截</strong></li>
+</ul>
+<img src="https://rasp.baidu.com/doc/hacking/architect/images/js.png" style="zoom:80%">
+
+<p>检测插件针对应用的行为进行检测，当应用执行操作时（触发检测点），OpenRASP 引擎就会调用检测插件，并将相关参数一并传递过来。</p>
+<p>官方提供 14 个检测点：</p>
+<ul>
+<li>数据库查询</li>
+<li>读取目录</li>
+<li>请求参数</li>
+<li>读取文件</li>
+<li>写入文件</li>
+<li>删除文件</li>
+<li>文件包含操作</li>
+<li>WebDAV 操作</li>
+<li>文件上传</li>
+<li>文件重命名</li>
+<li>命令执行</li>
+<li>XML 外部实体引用</li>
+<li>Struts OGNL 表达式解析</li>
+<li>RMI 反序列化</li>
+<li>服务器端 HTTP 请求</li>
+<li>服务器端 HTTP 请求 - 重定向之后</li>
+<li>代码执行</li>
+<li>类库加载</li>
+<li>响应检查</li>
+</ul>
+<h2 id="IAST-扫描器"><a href="#IAST-扫描器" class="headerlink" title="IAST 扫描器"></a>IAST 扫描器</h2><p>被动扫描模式：启动扫描后保持运行，对新 url 进行实时扫描</p>
+<ul>
+<li>Python3 实现，MySQL 数据库，HTTP + JSON 通讯</li>
+<li>属于主动 IAST，重放 payload<ul>
+<li>被动 IAST 使用污点追踪实现</li>
+<li>缺点：脏数据</li>
+</ul>
+</li>
+</ul>
+<p><strong>Agent 端</strong></p>
+<p>用于收集 Web 应用的运行信息，即 OpenRASP Java Agent + Java Application</p>
+<p><strong>扫描器端</strong></p>
+<p>用于处理 OpenRASP 插件产生的请求信息，并完成整个 IAST 扫描逻辑</p>
+<ul>
+<li>预处理模块（HTTPServer）：接收 agent 插件的 http 请求，处理、存储、分发 http 请求信息</li>
+<li>扫描模块（Scanner）：运行扫描插件，执行漏洞扫描逻辑<ul>
+<li>生成扫描请求，发送给 web server 处理并返回结果（以及 hook 信息），检验结果</li>
+</ul>
+</li>
+<li>监控模块（Monitor）：定期获取其他模块的运行时信息，调整参数，提供控制台服务等</li>
+</ul>
+<img src="https://rasp.baidu.com/doc/hacking/architect/images/iast-main.png" style="zoom:80%">
+
+<p><a target="_blank" rel="noopener" href="https://github.com/baidu-security/openrasp-iast">openrasp_iast</a> 源码中包含三种类型的插件</p>
+<ul>
+<li>扫描插件：plugin/scanner，生成测试向量，检测测试结果</li>
+<li>去重插件：plugin/deduplicate，避免同一个请求被反复扫描</li>
+<li>认证插件：plugin/authorizer</li>
+</ul>
+<p>执行流程</p>
+<ol>
+<li>等待用户发送请求</li>
+<li>Agent 端将 hook 信息发送给扫描器端</li>
+<li>扫描器端构建 payload 重放</li>
+<li>Agent 端将 hook 信息发送给扫描器端，扫描器端收到响应</li>
+</ol>
+<p>RASP + IAST</p>
+<ul>
+<li>RASP 安装 IAST 插件：openrasp/plugins/iast/plugin.js（热更新）<ul>
+<li>注册 hook 点，触发检测逻辑</li>
+</ul>
+</li>
+<li>IAST 扫描器结合插件使用<ul>
+<li>hook 信息、响应信息</li>
+</ul>
+</li>
+</ul>
+<h2 id="管理后台"><a href="#管理后台" class="headerlink" title="管理后台"></a>管理后台</h2><p>管理 Agent、查询日志</p>
+<img src="https://rasp.baidu.com/doc/hacking/architect/images/rasp-cloud.png" style="zoom:80%">
+
+<h1 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>hook 点预先定义，触发后调用 JS 插件检测</li>
+<li>扫描器接收请求及其 hook 信息，构造新的请求，根据执行结果和 hook 信息实现检测</li>
+</ol>
+<h1 id="参阅"><a href="#参阅" class="headerlink" title="参阅"></a>参阅</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://blog.nsfocus.net/rasp-tech/">RASP技术分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://rasp.baidu.com/doc/">OpenRASP 官方文档</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/">https://jckling.github.io/2021/09/08/Security/百度 OpenRASP 架构分析/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/Golang/">Golang</a><a class="post-meta__tags" href="/tags/Java/">Java</a></div><div class="post_share"><div class="social-share" data-image="https://avatars.githubusercontent.com/u/31592614?s=200&amp;v=4" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/08/31/OpenStack/Kolla-Ansible%20%E5%A4%9A%E6%9C%BA%E9%83%A8%E7%BD%B2/"><img class="next-cover" src="https://i.loli.net/2021/06/14/O6DgG2AzyvJfTso.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Kolla-Ansible 多机部署 V 版 OpenStack</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/05/10/Jaeger/Jaeger + Elasticsearch + Kibana/" title="使用 Docker 部署 Jaeger + Elasticsearch + Kibana"><img class="cover" src="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-10</div><div class="title">使用 Docker 部署 Jaeger + Elasticsearch + Kibana</div></div></a></div><div><a href="/2021/07/28/Notes/Python 静态分析相关论文/" title="Python 静态分析相关论文"><img class="cover" src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-28</div><div class="title">Python 静态分析相关论文</div></div></a></div><div><a href="/2020/12/25/OpenStack/CentOS7+OpenStack(Rocky)-0/" title="CentOS 7 安装 Openstack Rocky 版本 - 环境搭建"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-25</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 环境搭建</div></div></a></div><div><a href="/2020/12/26/OpenStack/CentOS7+OpenStack(Rocky)-1/" title="CentOS 7 安装 Openstack Rocky 版本 - 身份认证服务（Keystone）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-26</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 身份认证服务（Keystone）</div></div></a></div><div><a href="/2020/12/26/OpenStack/CentOS7+OpenStack(Rocky)-2/" title="CentOS 7 安装 Openstack Rocky 版本 - 镜像服务（Glance）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-26</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 镜像服务（Glance）</div></div></a></div><div><a href="/2020/12/27/OpenStack/CentOS7+OpenStack(Rocky)-4/" title="CentOS 7 安装 Openstack Rocky 版本 - 网络服务（Neutron）"><img class="cover" src="https://i.loli.net/2021/06/14/Y3ljqCHn76RITPz.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-27</div><div class="title">CentOS 7 安装 Openstack Rocky 版本 - 网络服务（Neutron）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">100</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">39</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳🥳 <br/>评论需要审核，请不要重复提交~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RASP-%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">RASP 架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenRASP-%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">OpenRASP 组成部分</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-Agent"><span class="toc-number">2.1.</span> <span class="toc-text">Java Agent</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.1.</span> <span class="toc-text">启动流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hook-class-%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.2.</span> <span class="toc-text">hook class 流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.3.</span> <span class="toc-text">请求处理流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.1.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-%E6%8F%92%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">JavaScript 插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IAST-%E6%89%AB%E6%8F%8F%E5%99%A8"><span class="toc-number">2.3.</span> <span class="toc-text">IAST 扫描器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E5%90%8E%E5%8F%B0"><span class="toc-number">2.4.</span> <span class="toc-text">管理后台</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E9%98%85"><span class="toc-number">4.</span> <span class="toc-text">参阅</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/" title="百度 OpenRASP 组成分析"><img src="https://avatars.githubusercontent.com/u/31592614?s=200&amp;v=4" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="百度 OpenRASP 组成分析"/></a><div class="content"><a class="title" href="/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/" title="百度 OpenRASP 组成分析">百度 OpenRASP 组成分析</a><time datetime="2021-09-08T07:17:39.000Z" title="发表于 2021-09-08 15:17:39">2021-09-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/OpenStack/Kolla-Ansible%20%E5%A4%9A%E6%9C%BA%E9%83%A8%E7%BD%B2/" title="Kolla-Ansible 多机部署 V 版 OpenStack"><img src="https://i.loli.net/2021/06/14/O6DgG2AzyvJfTso.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Kolla-Ansible 多机部署 V 版 OpenStack"/></a><div class="content"><a class="title" href="/2021/08/31/OpenStack/Kolla-Ansible%20%E5%A4%9A%E6%9C%BA%E9%83%A8%E7%BD%B2/" title="Kolla-Ansible 多机部署 V 版 OpenStack">Kolla-Ansible 多机部署 V 版 OpenStack</a><time datetime="2021-08-31T01:49:26.000Z" title="发表于 2021-08-31 09:49:26">2021-08-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/23/Other/Python%20%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0%E7%A7%81%E6%9C%89%20PyPI%20%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="Python 项目打包并发布到私有 PyPI 服务器"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python 项目打包并发布到私有 PyPI 服务器"/></a><div class="content"><a class="title" href="/2021/08/23/Other/Python%20%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0%E7%A7%81%E6%9C%89%20PyPI%20%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="Python 项目打包并发布到私有 PyPI 服务器">Python 项目打包并发布到私有 PyPI 服务器</a><time datetime="2021-08-23T03:01:14.000Z" title="发表于 2021-08-23 11:01:14">2021-08-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/28/Notes/Python%20%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" title="Python 静态分析相关论文"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python 静态分析相关论文"/></a><div class="content"><a class="title" href="/2021/07/28/Notes/Python%20%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" title="Python 静态分析相关论文">Python 静态分析相关论文</a><time datetime="2021-07-28T11:01:13.000Z" title="发表于 2021-07-28 19:01:13">2021-07-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览"><img src="https://camo.githubusercontent.com/cc33313189cc45d475faff9b2c4a9c5d5e4289e48ee333704ba7f105c9d04e95/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f6a65727279633132372f43444e406d322f696d672f7468656d652d627574746572666c792d726561646d652e706e67" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Butterfly 主题预览"/></a><div class="content"><a class="title" href="/2021/07/22/Other/Butterfly%20%E4%B8%BB%E9%A2%98%E9%A2%84%E8%A7%88/" title="Butterfly 主题预览">Butterfly 主题预览</a><time datetime="2021-07-22T09:02:46.000Z" title="发表于 2021-07-22 17:02:46">2021-07-22</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://avatars.githubusercontent.com/u/31592614?s=200&amp;v=4')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      avatar: 'retro',
+      avatarCDN: 'https://sdn.geekzu.org/avatar/',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline() 
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
