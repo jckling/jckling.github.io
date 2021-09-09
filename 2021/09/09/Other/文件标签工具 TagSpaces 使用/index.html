@@ -1,0 +1,243 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>文件标签工具 TagSpaces 使用 | Jckling's Blog</title><meta name="keywords" content="Windows"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="给文件和文件夹打标签进行管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件标签工具 TagSpaces 使用">
+<meta property="og:url" content="https://jckling.github.io/2021/09/09/Other/%E6%96%87%E4%BB%B6%E6%A0%87%E7%AD%BE%E5%B7%A5%E5%85%B7%20TagSpaces%20%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="给文件和文件夹打标签进行管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/tagspaces/documentation/master/static/media/v3/tagspaces-v3-themes.jpg">
+<meta property="article:published_time" content="2021-09-09T06:10:54.000Z">
+<meta property="article:modified_time" content="2021-09-09T08:09:51.529Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/tagspaces/documentation/master/static/media/v3/tagspaces-v3-themes.jpg"><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2021/09/09/Other/%E6%96%87%E4%BB%B6%E6%A0%87%E7%AD%BE%E5%B7%A5%E5%85%B7%20TagSpaces%20%E4%BD%BF%E7%94%A8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '文件标签工具 TagSpaces 使用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-09-09 16:09:51'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jckling/avatar.jpg" onerror="onerror=null;src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">101</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">39</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/tagspaces/documentation/master/static/media/v3/tagspaces-v3-themes.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">文件标签工具 TagSpaces 使用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-09-09T06:10:54.000Z" title="undefined 2021-09-09 14:10:54">2021-09-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Other/">Other</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="文件标签工具 TagSpaces 使用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/09/09/Other/%E6%96%87%E4%BB%B6%E6%A0%87%E7%AD%BE%E5%B7%A5%E5%85%B7%20TagSpaces%20%E4%BD%BF%E7%94%A8/#post-comment"><span class="waline-comment-count" id="/2021/09/09/Other/%E6%96%87%E4%BB%B6%E6%A0%87%E7%AD%BE%E5%B7%A5%E5%85%B7%20TagSpaces%20%E4%BD%BF%E7%94%A8/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前玩 mod 下载了一大堆材质文件和动作文件，但是下载的文件并没有按照网站上的 id 统一文件夹名称，结果就是各种各样的文件夹名称，完全看不出来内容到底是什么，而且也不知道某些种族能不能用…</p>
+<p><img src="https://i.loli.net/2021/09/09/HrSD3Rj9g7Ew4Wq.png" style="zoom:80%;" /> <br /></p>
+<p>后来是打算直接爬 <a target="_blank" rel="noopener" href="https://www.xivmodarchive.com/">ffxivmodarchive</a> 网站上的 mod 信息，然后在本地浏览，提供预览、是否已下载和其他各种标签（种族、性别等）。但是做一半发现有点做不动（<a target="_blank" rel="noopener" href="https://github.com/jckling/ffxiv-modarchive">jckling/ffxiv-modarchive</a>）：① 需要每天同步网站上的数据；② 下载地址可能外链到谷歌云端硬盘，需要手动将保存的文件夹名称改为 id；③ 前端展示页面不好写。</p>
+<p>四舍五入上面的功能就是“反向代理”加一个是否已下载的记录而已，做起来好麻烦于是搁置了（摊手</p>
+<p>昨天花了点时间找打标签的工具，有一个 <a target="_blank" rel="noopener" href="https://github.com/files-community/Files">Files</a> 文件浏览工具支持打标签，但是从微软应用商店里下载的是 1.x 版本，暂不支持标签功能 😅。其他的有 <a target="_blank" rel="noopener" href="https://www.tagflow.ch/en/">TagFlow</a>、<a target="_blank" rel="noopener" href="https://alltags.net/">allTags</a>、<a target="_blank" rel="noopener" href="https://www.tagspaces.org/">TagSpaces</a>、<a target="_blank" rel="noopener" href="https://www.taglyst.com/">tagLyst</a>，直接根据 UI 的喜好选了 TagSpaces 用，功能也是够的。</p>
+<h1 id="TagSpaces"><a href="#TagSpaces" class="headerlink" title="TagSpaces"></a>TagSpaces</h1><p>跨平台打标签工具，支持对文件和文件夹打标签、加注解；支持文本搜索和标签搜索（布尔运算）；集成预览和编辑功能。</p>
+<p>下载地址：</p>
+<ul>
+<li>官网：<a target="_blank" rel="noopener" href="https://www.tagspaces.org/downloads/">https://www.tagspaces.org/downloads/</a></li>
+<li>Github：<a target="_blank" rel="noopener" href="https://github.com/tagspaces/tagspaces/releases">https://github.com/tagspaces/tagspaces/releases</a></li>
+</ul>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>从官网下载 64 位的 installer</p>
+<p><img src="https://i.loli.net/2021/09/09/WTKhz4ZfGlLgU8D.jpg" style="zoom:80%;" /><br /></p>
+<p>选择为任何人安装（我这里已经安装过了）</p>
+<p><img src="https://i.loli.net/2021/09/09/nSW6aodrHus9X7Q.jpg" style="zoom: 75%;" /><br /></p>
+<p>同意许可证协议后，然后，执行安装</p>
+<p><img src="https://i.loli.net/2021/09/09/32OvhnMu8Ycx49g.jpg" style="zoom:75%;" /><br /></p>
+<p>第一次打开需要选择标签的保存方式，也可以在设置里修改</p>
+<ul>
+<li>重命名文件（RENAME FILE）</li>
+<li>额外文件（USE SIDECAR FILE）</li>
+</ul>
+<p>另外，可以在设置里选择中文</p>
+<img src="https://i.loli.net/2021/09/09/e5JglQmKXhdaMzj.jpg" style="zoom:60%;" />
+
+
+<h2 id="界面"><a href="#界面" class="headerlink" title="界面"></a>界面</h2><p>这些界面在浏览文件时不一定都有，可以通过设置更改是否显示，每个区域具体的功能就不展开了，看官方文档就好。</p>
+<ol>
+<li>垂直工具栏：始终可见，提供对应用程序主要部分的快速访问</li>
+<li>位置管理器/标签库/搜索区域：管理关联的位置，标记库，搜索文件和文件夹</li>
+<li>导航：切换位置或快速导航到父文件夹</li>
+<li>浏览区域：浏览文件和文件夹</li>
+<li>常用操作区：在这里可以访问当前打开的文件或文件夹的常用操作</li>
+<li>文件/文件夹属性：展示文件或文件夹的一些属性</li>
+<li>预览区：预览或编辑当前文件</li>
+</ol>
+<img src="https://docs.tagspaces.org/assets/images/main-ui-areas-7170f35243bccbbfc608936cb13577ab.png" />
+
+
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><p>重点就是给文件夹<strong>打标签</strong>，首先我删除了默认关联的文件夹（LOCATION MANAGER），然后关联保存姿势文件（CMTool）和 Mod 文件（TexTools）的路径。</p>
+<p>具体的操作是：<code>CONNECT A LOCATION -&gt; 填入 Location Path -&gt; 设置 Location Name -&gt; OK</code></p>
+<p><img src="https://i.loli.net/2021/09/09/xIae7kfpDPzMN6J.jpg" style="zoom:70%;" /><br /></p>
+<p>关联之后就可以进行查看（我这里已经打了几个标签）</p>
+<p><img src="https://i.loli.net/2021/09/09/Rxa47IV2KDghcSr.jpg" style="zoom:70%;" /><br /></p>
+<p>点击左侧的标签可以创建标签组，我已经把默认的标签组都给删了，Collected Tags 收集直接对文件/文件夹添加不在标签组中的标签。</p>
+<p><img src="https://i.loli.net/2021/09/09/HmOA7pC9KcfS3PT.jpg" style="zoom:70%;" /><br /></p>
+<p>点击 TAG LIBRARY 旁边的三个点，选择创建标签组（Create Tag Group），设置标签组名称和默认的背景/文字颜色，创建完毕后括号内显示创建标签时所在的文件夹名称，不过其他文件夹也可以用就是了。</p>
+<p><img src="https://i.loli.net/2021/09/09/h2vuLrXIYQNVMjZ.png" style="zoom:60%;" /><br /></p>
+<p>点击标签组旁边的三个点，选择添加标签（Add Tags），添加完毕后点击标签旁边的三个点可以设置标签名称、背景/文字颜色。</p>
+<p><img src="https://i.loli.net/2021/09/09/qr9kKMJY45F6RPp.png" style="zoom:60%;" /><br /></p>
+<p>设置完标签之后就可以对文件夹打标签了，选择文件夹后，点击上方的标签图标即可添加标签，一次可添加多个标签。</p>
+<img src="https://i.loli.net/2021/09/09/bvaD9USQEJsnmA7.jpg" style="zoom:75%;" />
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我把上面的写完才看到设置里可以改成中文，然后在安装那一节补充了设置方法 🆘</p>
+<p>总体来说用起来很方便，为了避免重命名文件，我选择了使用附加文件的方式，这样做的结果就是文件夹中会出现一个 <code>.ts</code> 文件夹，其中的 json 文件保存了标签信息。<code>.ts</code> 文件夹默认是隐藏的，对我来说，存的文件夹和标签也占不了多大空间，所以这样就好了！</p>
+<p><img src="https://i.loli.net/2021/09/09/qwxXlvUAaBdjfui.png" style="zoom:80%;" /><br /></p>
+<p>这个工具还有许多其他功能，我只是用了其中的标签功能而已，更多的就看 <a target="_blank" rel="noopener" href="https://docs.tagspaces.org/">文档</a> 发掘吧~</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2021/09/09/Other/%E6%96%87%E4%BB%B6%E6%A0%87%E7%AD%BE%E5%B7%A5%E5%85%B7%20TagSpaces%20%E4%BD%BF%E7%94%A8/">https://jckling.github.io/2021/09/09/Other/文件标签工具 TagSpaces 使用/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Windows/">Windows</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/tagspaces/documentation/master/static/media/v3/tagspaces-v3-themes.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/"><img class="next-cover" src="https://avatars.githubusercontent.com/u/31592614?s=200&amp;v=4" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">百度 OpenRASP 组成分析</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/09/08/Other/Windows-平台软件推荐/" title="Windows 平台软件推荐"><img class="cover" src="https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-08</div><div class="title">Windows 平台软件推荐</div></div></a></div><div><a href="/2020/09/18/Other/了解自己的电脑硬件/" title="了解自己的电脑硬件"><img class="cover" src="https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-18</div><div class="title">了解自己的电脑硬件</div></div></a></div><div><a href="/2020/11/21/Other/Docker/Windows 10 Home+VirtualBox+ Docker Machine/" title="如何在 Windows 10 家庭版上使用 Docker"><img class="cover" src="https://i.loli.net/2021/06/14/aKl57xkrPEVzvGA.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-21</div><div class="title">如何在 Windows 10 家庭版上使用 Docker</div></div></a></div><div><a href="/2020/11/23/Other/Docker/Windows 10 Home+WSL2+Docker Desktop/" title="Windows 10 家庭版 + WSL 2 + Docker Desktop"><img class="cover" src="https://i.loli.net/2021/06/14/aKl57xkrPEVzvGA.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-23</div><div class="title">Windows 10 家庭版 + WSL 2 + Docker Desktop</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">101</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">39</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳🥳 <br/>评论需要审核，请不要重复提交~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TagSpaces"><span class="toc-number">2.</span> <span class="toc-text">TagSpaces</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%95%8C%E9%9D%A2"><span class="toc-number">2.2.</span> <span class="toc-text">界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE"><span class="toc-number">2.3.</span> <span class="toc-text">标签</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/09/09/Other/%E6%96%87%E4%BB%B6%E6%A0%87%E7%AD%BE%E5%B7%A5%E5%85%B7%20TagSpaces%20%E4%BD%BF%E7%94%A8/" title="文件标签工具 TagSpaces 使用"><img src="https://raw.githubusercontent.com/tagspaces/documentation/master/static/media/v3/tagspaces-v3-themes.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文件标签工具 TagSpaces 使用"/></a><div class="content"><a class="title" href="/2021/09/09/Other/%E6%96%87%E4%BB%B6%E6%A0%87%E7%AD%BE%E5%B7%A5%E5%85%B7%20TagSpaces%20%E4%BD%BF%E7%94%A8/" title="文件标签工具 TagSpaces 使用">文件标签工具 TagSpaces 使用</a><time datetime="2021-09-09T06:10:54.000Z" title="发表于 2021-09-09 14:10:54">2021-09-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/" title="百度 OpenRASP 组成分析"><img src="https://avatars.githubusercontent.com/u/31592614?s=200&amp;v=4" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="百度 OpenRASP 组成分析"/></a><div class="content"><a class="title" href="/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/" title="百度 OpenRASP 组成分析">百度 OpenRASP 组成分析</a><time datetime="2021-09-08T07:17:39.000Z" title="发表于 2021-09-08 15:17:39">2021-09-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/OpenStack/Kolla-Ansible%20%E5%A4%9A%E6%9C%BA%E9%83%A8%E7%BD%B2/" title="Kolla-Ansible 多机部署 V 版 OpenStack"><img src="https://i.loli.net/2021/06/14/O6DgG2AzyvJfTso.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Kolla-Ansible 多机部署 V 版 OpenStack"/></a><div class="content"><a class="title" href="/2021/08/31/OpenStack/Kolla-Ansible%20%E5%A4%9A%E6%9C%BA%E9%83%A8%E7%BD%B2/" title="Kolla-Ansible 多机部署 V 版 OpenStack">Kolla-Ansible 多机部署 V 版 OpenStack</a><time datetime="2021-08-31T01:49:26.000Z" title="发表于 2021-08-31 09:49:26">2021-08-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/23/Other/Python%20%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0%E7%A7%81%E6%9C%89%20PyPI%20%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="Python 项目打包并发布到私有 PyPI 服务器"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python 项目打包并发布到私有 PyPI 服务器"/></a><div class="content"><a class="title" href="/2021/08/23/Other/Python%20%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0%E7%A7%81%E6%9C%89%20PyPI%20%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="Python 项目打包并发布到私有 PyPI 服务器">Python 项目打包并发布到私有 PyPI 服务器</a><time datetime="2021-08-23T03:01:14.000Z" title="发表于 2021-08-23 11:01:14">2021-08-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/28/Notes/Python%20%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" title="Python 静态分析相关论文"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Python 静态分析相关论文"/></a><div class="content"><a class="title" href="/2021/07/28/Notes/Python%20%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" title="Python 静态分析相关论文">Python 静态分析相关论文</a><time datetime="2021-07-28T11:01:13.000Z" title="发表于 2021-07-28 19:01:13">2021-07-28</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/tagspaces/documentation/master/static/media/v3/tagspaces-v3-themes.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      avatar: 'retro',
+      avatarCDN: 'https://sdn.geekzu.org/avatar/',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline() 
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
