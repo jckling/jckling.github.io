@@ -4333,7 +4333,7 @@ h1.page-title + .tag-cloud-list {
   background-image: none;
 }
 #waline-wrap textarea {
-  background: url("/img/jckling/comment_bg.png") 100% 100% no-repeat;
+  background: url("https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/comment_bg.png") 100% 100% no-repeat;
 }
 #waline-wrap textarea:focus {
   background-image: none;
