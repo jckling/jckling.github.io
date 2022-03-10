@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://soot-oss.github.io/soot/logo/soot-logo.png">
 <meta property="article:published_time" content="2022-02-23T11:40:17.000Z">
-<meta property="article:modified_time" content="2022-03-08T05:26:27.000Z">
+<meta property="article:modified_time" content="2022-03-09T12:22:18.000Z">
 <meta property="article:author" content="Jckling">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -64,7 +64,7 @@ gtag('config', 'UA-164555720-1');
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-03-08 13:26:27'
+  postUpdate: '2022-03-09 20:22:18'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -187,7 +187,7 @@ gtag('config', 'UA-164555720-1');
 <li>一个 Unit 可以有多个 UnitBox，但是每个 UnitBox 只能指向一个 Unit。</li>
 <li>ValueBox 包含在 Unit 中使用的值以及定义的值。</li>
 </ul>
-<p>Stmt 与 Unit 都表示方法中的一个句子。interface Unit 继承于 interface Stmt；同样 AssignStmt、IdentityStmt、IfStmt、RetrunVoidStmt、NopStmt 等也继承于 interface Stmt。</p>
+<p>Stmt 与 Unit 都表示方法中的一个句子。</p>
 <ul>
 <li>Unit 在 Jimple 中的实现是 Stmt</li>
 <li>不同：Unit 注重于句子的构成、而 AssignStmt 之类的则注重句式的种类</li>
@@ -195,6 +195,58 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一般 Value 指的是 Local（变量）、Expr（表达式）、Constant（常量）</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;ValueBox&gt; <span class="title">getUseBoxes</span><span class="params">()</span></span>;	<span class="comment">//返回 Unit 中使用的 Value 的引用</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;ValueBox&gt; <span class="title">getDefBoxes</span><span class="params">()</span></span>;	<span class="comment">//返回 Unit 中定义的 Value 的引用</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;ValueBox&gt; <span class="title">getUseAndDefBox</span><span class="params">()</span></span>;<span class="comment">//返回 Unit 中定义并使用的 Value 的引用</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List <span class="title">geUnitBoxes</span><span class="params">()</span></span>;				<span class="comment">//获得 Unit 跳转到的 UnitxBox 列表</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List <span class="title">getBoxesPointingTothis</span><span class="params">()</span></span>;	<span class="comment">//Unit 作为跳转对象时，获取所有跳转到该 Unit 的 UnitBox</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">fallsThrough</span><span class="params">()</span></span>;			<span class="comment">//如果接下来执行后面的 Unit，则为 true</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">branches</span><span class="params">()</span></span>;				<span class="comment">//如果执行时会跳转到其他 Unit，则返回 true。如：IfStmt、GotoStmt</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rediectJumpsToThisTo</span><span class="params">(Unit newLocation)</span></span>;<span class="comment">//把跳转到 Unit 重定向到 newLocation</span></span><br></pre></td></tr></table></figure>
 
+<p>Unit 表示某种用于执行的单元（例如 Jimple 中的 Stmt 和 Baf 中的 Inst）</p>
+<ul>
+<li>Stmt 继承 Unit 接口，AssignStmt、IdentityStmt、IfStmt、RetrunVoidStmt、NopStmt 等继承 Stmt 接口。</li>
+<li>Stmt 子接口</li>
+</ul>
+<p>Block 是划分方法体的基本块，被实现为底层 Body 实例的视图；因此，对 Block 所做的更改将自动反映在其封闭的方法体中。</p>
+<ul>
+<li>Block 存在于 BlockGraph 的上下文中（CFG），图节点是 Block 实例。<ul>
+<li>可以查询后继块和前驱块</li>
+</ul>
+</li>
+</ul>
+<p>UnitGraph</p>
+<ul>
+<li>BriefUnitGraph：正常，异常分离。将正常流程与异常处理流程进行了分离，不相交，在最后才汇聚。</li>
+<li>ExceptionalUnitGraph：将正常流程与异常处理流程进行了融合</li>
+<li>TrapUnitGraph：相对于 ExceptionalUnitGraph，一些普通的语句也会跳转到异常流程中。<ul>
+<li>即认为 try 中包含的所有的语句都有可能触发异常</li>
+</ul>
+</li>
+<li>EnhancedUnitGraph：异常流在 try-catch-finally 块级别而不是 Unit 级别表示</li>
+</ul>
+<p>BlockGraph </p>
+<ul>
+<li>BriefBlockGraph：与异常相关的控制流被忽略，因此图将是一个森林，其中每个异常处理程序构成一个不相交的子图。</li>
+<li>ExceptionalBlockGraph：考虑与异常相关的控制流：当一个 Unit 可能抛出一个被 Body 内的 Trap 捕获的异常时，异常 Unit 创建一个新的基本块。<ul>
+<li>当 Unit 可能抛出的所有异常都将逃脱方法而未被捕获时，不会创建新块</li>
+</ul>
+</li>
+<li>ClassicCompleteBlockGraph：考虑与异常相关的控制流，当一个 Unit 可能抛出一个被 Body 内的 Trap 捕获的异常时，异常 Unit 会创建一个新的基本块。仅用于测试，不应用于实际分析。</li>
+<li>ArrayRefBlockGraph：节点是 Block 实例，其中包含数组引用的 Unit 将创建新块。异常控制流被忽略，因此图将是一个森林，其中每个异常处理程序构成一个不相交的子图。</li>
+<li>ZonedBlockGraph：节点是 Block 实例，并且在为提供的 Body 查找 Block 时会考虑异常边界。<ul>
+<li>任何作为第一个被某个异常处理程序转换的 Unit 都将创建一个新块，任何作为最后一个被某个异常处理程序覆盖的单元，都将结束它所属的块。然而，这些 Zone 并没有被分割以表明异常可能导致控制在完成之前退出该区域。</li>
+</ul>
+</li>
+<li>EnhancedBlockGraph</li>
+</ul>
+<p>ICFG</p>
+<ul>
+<li>JimpleBasedInterproceduralCFG：InterproceduralCFG 接口的默认实现<ul>
+<li>包括通过显式调用语句或通过调用 <code>Thread.start()</code> 从 <code>Scene.getEntryPoints()</code> 可达的所有语句</li>
+<li>此类被设计为线程安全的，并且此类的子类也必须以线程安全的方式设计</li>
+</ul>
+</li>
+<li>BackwardsInterproceduralCFG：与 JimpleBasedInterproceduralCFG 相同，但基于倒置的 UnitGraph，用于反向分析。</li>
+<li>OnTheFlyJimpleBasedICFG：实时计算 ICFG，即可以在不预先计算调用图的情况下使用。<ul>
+<li>实现通过类层次结构分析 (CHA) 解析调用，通过 FastHierarchy 实现。</li>
+<li>CHA 由 LocalMustNotAliasAnalysis 支持，用于确定在 InvokeVirtual 或 InvokeInterface 调用点上对象的具体类型已知的情况。在这些情况下，可以具体解决调用，即，对单个目标进行调用。</li>
+<li>为了更精确（sound），对于无法具体解析的 InvokeInterface 调用，OnTheFlyJimpleBasedICFG 要求类路径上的所有类至少加载到签名。这必须在计算 FastHierarchy 之前完成，以便层次结构完好无损。客户端应调用 <code>loadAllClassesOnClassPathToSignatures()</code> 将所有需要的类加载到此级别。</li>
+</ul>
+</li>
+</ul>
 <h2 id="执行流"><a href="#执行流" class="headerlink" title="执行流"></a>执行流</h2><p>Soot 执行被分成几个阶段，这些阶段被称为 Packs。</p>
 <ul>
 <li>第一步生成 Jimple 代码，然后将 Jimple 代码输入到其他 Packs 中。<ul>
