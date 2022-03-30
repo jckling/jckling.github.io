@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2021/06/06/dgfbjE4oxIcRBDt.jpg">
 <meta property="article:published_time" content="2021-05-02T14:50:01.000Z">
-<meta property="article:modified_time" content="2022-03-19T03:12:28.000Z">
+<meta property="article:modified_time" content="2022-03-29T01:14:26.000Z">
 <meta property="article:author" content="Jckling">
 <meta property="article:tag" content="FFXIV">
 <meta name="twitter:card" content="summary">
@@ -64,7 +64,7 @@ gtag('config', 'UA-164555720-1');
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-03-19 11:12:28'
+  postUpdate: '2022-03-29 09:14:26'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -454,7 +454,15 @@ gtag('config', 'UA-164555720-1');
 <p>安装后从开始菜单打开 Control Panel，默认打开 HOME 选项卡，如果有更新会显示；关闭更新提醒需要在在 TOOLS 选项卡中设置。</p>
 <img src="https://s2.loli.net/2022/03/26/y1fjCQeU4bnFpaG.jpg" />
 
-
+<p>相关解决方法：</p>
+<ol>
+<li>禁用 VPN</li>
+<li>确认防火墙或电脑管家没有阻止 <code>api.github.com</code> 和 <code>storage.googleapis.com</code></li>
+<li>修改 hosts 文件，添加 <code>api.github.com</code> 和 <code>storage.googleapis.com</code> 的 IP 映射</li>
+<li>在 cmd 或以管理员身份运行的 Powershell 中运行 <code>ipconfig /flushdns</code></li>
+<li>关闭电脑、调制解调器、路由器 5 分钟，尝试清除旧的路由</li>
+<li>如果连接移动 3G/4G/5G 设备（例如手机），某些提供商会故意阻止与某些服务器的连接</li>
+</ol>
 <h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://gposers.com/gshade/">GShade - GPOSERS</a></li>
 </ul>
