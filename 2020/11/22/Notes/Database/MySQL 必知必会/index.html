@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2021/06/14/wF3vNBjf1LH79Ss.png">
 <meta property="article:published_time" content="2020-11-22T12:20:59.000Z">
-<meta property="article:modified_time" content="2022-03-30T02:08:15.636Z">
+<meta property="article:modified_time" content="2022-04-01T05:03:24.000Z">
 <meta property="article:author" content="Jckling">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="Database">
@@ -66,7 +66,7 @@ gtag('config', 'UA-164555720-1');
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-03-30 10:08:15'
+  postUpdate: '2022-04-01 13:03:24'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -168,11 +168,11 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">use <span class="built_in">test</span>;</span><br><span class="line"><span class="built_in">source</span> /home/create.sql</span><br><span class="line"><span class="built_in">source</span> /home/populate.sql</span><br></pre></td></tr></table></figure>
 
-<p><img src="source_sql.png"></p>
+<p><img src="https://s2.loli.net/2022/04/01/9AODB5azFXbJNYh.jpg"></p>
 <p>查看一下执行结果：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 列出当前数据库（test）中所有的表</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">tables</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 列出 customers 表的信息</span></span><br><span class="line"><span class="keyword">describe</span> customers;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 列出 customers 表中的前 3 行数据</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> customers <span class="keyword">limit</span> <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
 
-<p><img src="show_table.png"></p>
+<p><img src="https://s2.loli.net/2022/04/01/75EUrP46def2Zvh.png"></p>
 <p>注意事项：</p>
 <ul>
 <li>MySQL 清屏：<code>CTRL+l</code></li>
@@ -267,10 +267,99 @@ gtag('config', 'UA-164555720-1');
 <th>Description</th>
 </tr>
 </thead>
-</table>
-<blockquote>
-<p>   |Greater than operator<br>=    |Greater than or equal operator<br>&lt;    |Less than operator<br>&lt;&gt;, |!=    Not equal operator<br>&lt;=    |Less than or equal operator<br>&lt;=&gt;    |NULL-safe equal to operator<br>=    |Equal operator<br>BETWEEN … AND …    |Whether a value is within a range of values<br>COALESCE()    |Return the first non-NULL argument<br>GREATEST()    |Return the largest argument<br>IN()    |Whether a value is within a set of values<br>INTERVAL()    |Return the index of the argument that is less than the first argument<br>IS    |Test a value against a boolean<br>IS NOT    |Test a value against a boolean<br>IS NOT NULL    |NOT NULL value test<br>IS NULL    |NULL value test<br>ISNULL()    |Test whether the argument is NULL<br>LEAST()    |Return the smallest argument<br>LIKE    |Simple pattern matching<br>NOT BETWEEN … AND …    |Whether a value is not within a range of values<br>NOT IN()    |Whether a value is not within a set of values<br>NOT LIKE    |Negation of simple pattern matching<br>STRCMP()    |Compare two strings</p>
-</blockquote>
+<tbody><tr>
+<td><code>&gt;</code></td>
+<td>Greater than operator</td>
+</tr>
+<tr>
+<td><code>&gt;=</code></td>
+<td>Greater than or equal operator</td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>Less than operator</td>
+</tr>
+<tr>
+<td><code>&lt;&gt;</code>, <code>!=</code></td>
+<td>Not equal operator</td>
+</tr>
+<tr>
+<td><code>&lt;=</code></td>
+<td>Less than or equal operator</td>
+</tr>
+<tr>
+<td><code>&lt;=&gt;</code></td>
+<td>NULL-safe equal to operator</td>
+</tr>
+<tr>
+<td><code>=</code></td>
+<td>Equal operator</td>
+</tr>
+<tr>
+<td><code>BETWEEN ... AND ...</code></td>
+<td>Whether a value is within a range of values</td>
+</tr>
+<tr>
+<td><code>COALESCE()</code></td>
+<td>Return the first non-NULL argument</td>
+</tr>
+<tr>
+<td><code>GREATEST()</code></td>
+<td>Return the largest argument</td>
+</tr>
+<tr>
+<td><code>IN()</code></td>
+<td>Whether a value is within a set of values</td>
+</tr>
+<tr>
+<td><code>INTERVAL()</code></td>
+<td>Return the index of the argument that is less than the first argument</td>
+</tr>
+<tr>
+<td><code>IS</code></td>
+<td>Test a value against a boolean</td>
+</tr>
+<tr>
+<td><code>IS NOT</code></td>
+<td>Test a value against a boolean</td>
+</tr>
+<tr>
+<td><code>IS NOT NULL</code></td>
+<td>NOT NULL value test</td>
+</tr>
+<tr>
+<td><code>IS NULL</code></td>
+<td>NULL value test</td>
+</tr>
+<tr>
+<td><code>ISNULL()</code></td>
+<td>Test whether the argument is NULL</td>
+</tr>
+<tr>
+<td><code>LEAST()</code></td>
+<td>Return the smallest argument</td>
+</tr>
+<tr>
+<td><code>LIKE</code></td>
+<td>Simple pattern matching</td>
+</tr>
+<tr>
+<td><code>NOT BETWEEN ... AND ...</code></td>
+<td>Whether a value is not within a range of values</td>
+</tr>
+<tr>
+<td><code>NOT IN()</code></td>
+<td>Whether a value is not within a set of values</td>
+</tr>
+<tr>
+<td><code>NOT LIKE</code></td>
+<td>Negation of simple pattern matching</td>
+</tr>
+<tr>
+<td><code>STRCMP()</code></td>
+<td>Compare two strings</td>
+</tr>
+</tbody></table>
 <p><strong>1. 检查单个值</strong></p>
 <p>使用 <code>=</code> 检索 prod_name 列中值为 <code>fuses</code> 的行：</p>
 <ul>
@@ -340,19 +429,19 @@ gtag('config', 'UA-164555720-1');
 </tr>
 </thead>
 <tbody><tr>
-<td>AND, &amp;&amp;</td>
+<td><code>AND</code>, <code>&amp;&amp;</code></td>
 <td>Logical AND</td>
 </tr>
 <tr>
-<td>NOT, !</td>
+<td><code>NOT</code>, <code>!</code></td>
 <td>Negates value</td>
 </tr>
 <tr>
-<td>OR,</td>
-<td></td>
+<td><code>OR</code>, &#124;&#124;</td>
+<td>Logical OR</td>
 </tr>
 <tr>
-<td>XOR</td>
+<td><code>XOR</code></td>
 <td>Logical XOR</td>
 </tr>
 </tbody></table>
@@ -431,23 +520,23 @@ gtag('config', 'UA-164555720-1');
 </tr>
 </thead>
 <tbody><tr>
-<td>\f</td>
+<td><code>\\f</code></td>
 <td>换页</td>
 </tr>
 <tr>
-<td>\n</td>
+<td><code>\\n</code></td>
 <td>换行</td>
 </tr>
 <tr>
-<td>\r</td>
+<td><code>\\r</code></td>
 <td>回车</td>
 </tr>
 <tr>
-<td>\t</td>
+<td><code>\\t</code></td>
 <td>制表</td>
 </tr>
 <tr>
-<td>\v</td>
+<td><code>\\v</code></td>
 <td>纵向制表</td>
 </tr>
 </tbody></table>
@@ -560,19 +649,19 @@ gtag('config', 'UA-164555720-1');
 </tr>
 </thead>
 <tbody><tr>
-<td>+</td>
+<td><code>+</code></td>
 <td>加</td>
 </tr>
 <tr>
-<td>-</td>
+<td><code>-</code></td>
 <td>减</td>
 </tr>
 <tr>
-<td>*</td>
+<td><code>*</code></td>
 <td>乘</td>
 </tr>
 <tr>
-<td>/</td>
+<td><code>/</code></td>
 <td>除</td>
 </tr>
 </tbody></table>
@@ -594,123 +683,123 @@ gtag('config', 'UA-164555720-1');
 </tr>
 </thead>
 <tbody><tr>
-<td>ABS()</td>
+<td><code>ABS()</code></td>
 <td>Return the absolute value</td>
 </tr>
 <tr>
-<td>ACOS()</td>
+<td><code>ACOS()</code></td>
 <td>Return the arc cosine</td>
 </tr>
 <tr>
-<td>ASIN()</td>
+<td><code>ASIN()</code></td>
 <td>Return the arc sine</td>
 </tr>
 <tr>
-<td>ATAN()</td>
+<td><code>ATAN()</code></td>
 <td>Return the arc tangent</td>
 </tr>
 <tr>
-<td>ATAN2(), ATAN()</td>
+<td><code>ATAN2()</code>, <code>ATAN()</code></td>
 <td>Return the arc tangent of the two arguments</td>
 </tr>
 <tr>
-<td>CEIL()</td>
+<td><code>CEIL()</code></td>
 <td>Return the smallest integer value not less than the argument</td>
 </tr>
 <tr>
-<td>CEILING()</td>
+<td><code>CEILING()</code></td>
 <td>Return the smallest integer value not less than the argument</td>
 </tr>
 <tr>
-<td>CONV()</td>
+<td><code>CONV()</code></td>
 <td>Convert numbers between different number bases</td>
 </tr>
 <tr>
-<td>COS()</td>
+<td><code>COS()</code></td>
 <td>Return the cosine</td>
 </tr>
 <tr>
-<td>COT()</td>
+<td><code>COT()</code></td>
 <td>Return the cotangent</td>
 </tr>
 <tr>
-<td>CRC32()</td>
+<td><code>CRC32()</code></td>
 <td>Compute a cyclic redundancy check value</td>
 </tr>
 <tr>
-<td>DEGREES()</td>
+<td><code>DEGREES()</code></td>
 <td>Convert radians to degrees</td>
 </tr>
 <tr>
-<td>EXP()</td>
+<td><code>EXP()</code></td>
 <td>Raise to the power of</td>
 </tr>
 <tr>
-<td>FLOOR()</td>
+<td><code>FLOOR()</code></td>
 <td>Return the largest integer value not greater than the argument</td>
 </tr>
 <tr>
-<td>LN()</td>
+<td><code>LN()</code></td>
 <td>Return the natural logarithm of the argument</td>
 </tr>
 <tr>
-<td>LOG()</td>
+<td><code>LOG()</code></td>
 <td>Return the natural logarithm of the first argument</td>
 </tr>
 <tr>
-<td>LOG10()</td>
+<td><code>LOG10()</code></td>
 <td>Return the base-10 logarithm of the argument</td>
 </tr>
 <tr>
-<td>LOG2()</td>
+<td><code>LOG2()</code></td>
 <td>Return the base-2 logarithm of the argument</td>
 </tr>
 <tr>
-<td>MOD()</td>
+<td><code>MOD()</code></td>
 <td>Return the remainder</td>
 </tr>
 <tr>
-<td>PI()</td>
+<td><code>PI()</code></td>
 <td>Return the value of pi</td>
 </tr>
 <tr>
-<td>POW()</td>
+<td><code>POW()</code></td>
 <td>Return the argument raised to the specified power</td>
 </tr>
 <tr>
-<td>POWER()</td>
+<td><code>POWER()</code></td>
 <td>Return the argument raised to the specified power</td>
 </tr>
 <tr>
-<td>RADIANS()</td>
+<td><code>RADIANS()</code></td>
 <td>Return argument converted to radians</td>
 </tr>
 <tr>
-<td>RAND()</td>
+<td><code>RAND()</code></td>
 <td>Return a random floating-point value</td>
 </tr>
 <tr>
-<td>ROUND()</td>
+<td><code>ROUND()</code></td>
 <td>Round the argument</td>
 </tr>
 <tr>
-<td>SIGN()</td>
+<td><code>SIGN()</code></td>
 <td>Return the sign of the argument</td>
 </tr>
 <tr>
-<td>SIN()</td>
+<td><code>SIN()</code></td>
 <td>Return the sine of the argument</td>
 </tr>
 <tr>
-<td>SQRT()</td>
+<td><code>SQRT()</code></td>
 <td>Return the square root of the argument</td>
 </tr>
 <tr>
-<td>TAN()</td>
+<td><code>TAN()</code></td>
 <td>Return the tangent of the argument</td>
 </tr>
 <tr>
-<td>TRUNCATE()</td>
+<td><code>TRUNCATE()</code></td>
 <td>Truncate to specified number of decimal places</td>
 </tr>
 </tbody></table>
@@ -854,37 +943,37 @@ gtag('config', 'UA-164555720-1');
 </tr>
 </thead>
 <tbody><tr>
-<td>select</td>
+<td><code>select</code></td>
 <td>要返回的列或表达式</td>
 <td>是</td>
 </tr>
 <tr>
-<td>from</td>
+<td><code>from</code></td>
 <td>从中检索的数据表</td>
 <td>仅在从表中选择数据时使用</td>
 </tr>
 <tr>
-<td>where</td>
+<td><code>where</code></td>
 <td>行级过滤</td>
 <td>否</td>
 </tr>
 <tr>
-<td>group by</td>
+<td><code>group by</code></td>
 <td>分组说明</td>
 <td>仅在按组计算聚集时使用</td>
 </tr>
 <tr>
-<td>having</td>
+<td><code>having</code></td>
 <td>组级过滤</td>
 <td>否</td>
 </tr>
 <tr>
-<td>order by</td>
+<td><code>order by</code></td>
 <td>输出排序顺序</td>
 <td>否</td>
 </tr>
 <tr>
-<td>limit</td>
+<td><code>limit</code></td>
 <td>限制检索的行数</td>
 <td>否</td>
 </tr>
