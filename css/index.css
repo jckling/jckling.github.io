@@ -2135,6 +2135,16 @@ figure.highlight pre .javascript .function {
     width: 100% !important;
   }
 }
+@media screen and (min-width: 900px) {
+  .layout > div:first-child {
+    -webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -o-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;
+  }
+}
 .layout.hide-aside {
   max-width: 1000px;
 }
@@ -2450,7 +2460,7 @@ h1.page-title + .tag-cloud-list {
 }
 @media screen and (min-width: 900px) {
   #aside-content {
-    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 @media screen and (max-width: 900px) {
@@ -2471,6 +2481,11 @@ h1.page-title + .tag-cloud-list {
   overflow: hidden;
   margin-top: 20px;
   padding: 20px 24px;
+}
+@media screen and (max-width: 768px) {
+  #aside-content .card-widget:not(#card-toc) {
+    display: none;
+  }
 }
 #aside-content .card-info .author-info__name {
   font-weight: 500;
