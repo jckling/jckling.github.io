@@ -1,0 +1,596 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Java 自动单元测试生成框架 | Jckling's Blog</title><meta name="keywords" content="Java"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="调研 Java 开源测试框架，上手使用 Randoop 与 EvoSuite">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 自动单元测试生成框架">
+<meta property="og:url" content="https://jckling.github.io/2022/04/27/Other/Java%20%E8%87%AA%E5%8A%A8%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%94%9F%E6%88%90%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="调研 Java 开源测试框架，上手使用 Randoop 与 EvoSuite">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/04/27/Ha5SAYlXO9zpJmG.jpg">
+<meta property="article:published_time" content="2022-04-27T02:09:06.000Z">
+<meta property="article:modified_time" content="2022-04-27T03:23:47.447Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/04/27/Ha5SAYlXO9zpJmG.jpg"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2022/04/27/Other/Java%20%E8%87%AA%E5%8A%A8%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%94%9F%E6%88%90%E6%A1%86%E6%9E%B6/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google_site_verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?20b7797c0b5f4e821c1449cd4c6c98c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Java 自动单元测试生成框架',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-27 11:23:47'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar.jpg" onerror="onerror=null;src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">114</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">40</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2022/04/27/Ha5SAYlXO9zpJmG.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jckling's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-film"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Java 自动单元测试生成框架</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2022-04-27T02:09:06.000Z" title="发表于 2022-04-27 10:09:06">2022-04-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Other/">Other</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Java 自动单元测试生成框架"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/04/27/Other/Java%20%E8%87%AA%E5%8A%A8%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%94%9F%E6%88%90%E6%A1%86%E6%9E%B6/#post-comment"><span class="waline-comment-count" id="/2022/04/27/Other/Java%20%E8%87%AA%E5%8A%A8%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%94%9F%E6%88%90%E6%A1%86%E6%9E%B6/"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="测试框架"><a href="#测试框架" class="headerlink" title="测试框架"></a>测试框架</h1><ul>
+<li>BDD(Behaviour-Driven Development)：行为驱动开发</li>
+<li>TDD(Test-Driven Development)：测试驱动开发</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/junit-team/junit5/">JUnit</a></td>
+<td>TDD</td>
+<td>最基本的测试框架，可以与 Selenium 一同使用</td>
+</tr>
+<tr>
+<td>JBehave</td>
+<td>BDD</td>
+<td>主要与 Selenium WebDriver 一起使用</td>
+</tr>
+<tr>
+<td>Serenity</td>
+<td>BDD</td>
+<td>可以与 JBehave、JUnit 集成</td>
+</tr>
+<tr>
+<td>TestNG</td>
+<td>TDD</td>
+<td>主要使用 XML 配置，集成端到端测试</td>
+</tr>
+<tr>
+<td>Mockito</td>
+<td>TDD</td>
+<td>通过反射模拟对象，可以与 TestNG、JUnit 集成</td>
+</tr>
+<tr>
+<td>HttpUnit</td>
+<td>BDD</td>
+<td>基于 JUnit 开发，网站测试</td>
+</tr>
+<tr>
+<td>JWebUnit</td>
+<td>BDD</td>
+<td>网站测试</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/getgauge/gauge">Gauge</a></td>
+<td>BDD</td>
+<td>网站测试</td>
+</tr>
+<tr>
+<td>Geb</td>
+<td>BDD</td>
+<td>网站测试</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/selenide/selenide">Selenide</a></td>
+<td>BDD</td>
+<td>由 Selenium 提供支持，网站测试</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/spockframework/spock">Spock</a></td>
+<td>BDD</td>
+<td>网站测试</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/cucumber/cucumber-jvm">Cucumber</a></td>
+<td>BDD</td>
+<td>支持 Java、JS、Ruby 等多种言</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/EvoSuite/evosuite/tree/v1.2.0">EvoSuite</a></td>
+<td></td>
+<td>自动生成 JUnit 单元测试</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/randoop/randoop">Randoop</a></td>
+<td></td>
+<td>自动生成 JUnit 单元测试</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/ksen007/janala2">CATG</a></td>
+<td></td>
+<td>concolic 测试引擎，使用 ASM 进行插桩，依赖 python2.7，18 年停止更新</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/konveyor/tackle-test-generator-cli">Tackle-test</a></td>
+<td></td>
+<td>集成 EvoSuite 和 Randoop</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/vorpal-research/kex/tree/sbst-contest">Kex</a></td>
+<td></td>
+<td>用于 Java 字节码的白盒模糊测试工具</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/ilebrero/evosuite/releases/tag/DSE.SBSTToolCompetition2021">EvoSuite DSE</a></td>
+<td></td>
+<td>支持 concolic 测试</td>
+</tr>
+</tbody></table>
+<p>除了开源框架之外，也有些软件支持自动化单元测试（Automated Unit Testing），包括 Devmate、Diffblue、Ponicode、Symflower 等等。</p>
+<h1 id="Randoop"><a href="#Randoop" class="headerlink" title="Randoop"></a>Randoop</h1><h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>大部分脚本使用 Perl 编写，无法在 Windows 环境中编译</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/randoop/randoop/issues/165">Generating user manual fails on Windows #165</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载源码</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/randoop/randoop.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译 Randoop、编译 Java 代理、运行所有测试、构建 jar 文件并从源 Javadoc 更新手册</span></span><br><span class="line">./gradlew build manual</span><br></pre></td></tr></table></figure>
+
+<p>Windows 中可以使用编译好的文件：<a target="_blank" rel="noopener" href="https://github.com/randoop/randoop/releases/download/v4.3.0/randoop-4.3.0.zip">randoop-4.3.0.zip</a></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置环境变量（powershell）</span></span><br><span class="line"><span class="variable">$Env:RANDOOP_JAR</span> = <span class="string">&quot;D:\Study\Github\Java-Deserialization\实验\UnitTest\randoop-all-4.3.0.jar&quot;</span></span><br><span class="line"><span class="variable">$Env:RANDOOP_JAR</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 帮助信息</span></span><br><span class="line">java <span class="literal">-classpath</span> <span class="variable">$Env:RANDOOP_JAR</span> randoop.main.Main help gentests</span><br><span class="line"></span><br><span class="line">java <span class="literal">-classpath</span> randoop<span class="literal">-all-4</span>.<span class="number">3.0</span>.jar randoop.main.Main help gentests</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，Randoop 生成并输出两种单元测试，写入单独的文件。</p>
+<ul>
+<li>错误显示测试（<code>error-revealing-tests</code>）是在执行时失败的测试，表明一个或多个被测类中存在潜在错误。<ul>
+<li>当 Randoop 调用创建对象的方法时，Randoop 会验证该对象的格式是否正确。</li>
+<li>检查：<code>Object.equals()</code>、<code>Object.hashCode()</code>、<code>Object.clone()</code>、<code>Object.toString()</code>、<code>Comparable.compareTo()</code>、<code>Comparator.compare()</code>、使用 <code>@CheckRep</code> 注释的空方法</li>
+</ul>
+</li>
+<li>回归测试（<code>regression-tests</code>）是在执行时通过的测试，可用于扩充回归测试套件。<ul>
+<li>在程序更改&#x2F;重构之前实施的测试在代码更新后应该仍然成功，否则就可能在代码中引入了新错误。</li>
+</ul>
+</li>
+</ul>
+<p>Randoop 支持对 jar 文件、指定类、指定方法生成 JUnit 测试。</p>
+<h3 id="指定多个类"><a href="#指定多个类" class="headerlink" title="指定多个类"></a>指定多个类</h3><p>创建 myclasses.txt 文件，指定被测类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java.util.Collections</span><br><span class="line">java.util.TreeSet</span><br></pre></td></tr></table></figure>
+
+<p>调用 randoop 并将执行时间限制为 60 秒</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java <span class="literal">-classpath</span> <span class="variable">$Env:RANDOOP_JAR</span> randoop.main.Main gentests <span class="literal">--classlist</span>=myclasses.txt <span class="literal">--time-limit</span>=<span class="number">60</span></span><br></pre></td></tr></table></figure>
+
+<p>输出结果，只生成了 RegressionTest，没有 ErrorTest</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">Randoop for Java version 4.3.0.</span><br><span class="line"></span><br><span class="line">Will try to generate tests for 2 classes.</span><br><span class="line">PUBLIC MEMBERS=112</span><br><span class="line">Explorer = ForwardGenerator(steps: 0, null steps: 0, num_sequences_generated: 0;</span><br><span class="line">    allSequences: 0, regresson seqs: 0, error seqs: 0=0=0, invalid seqs: 0, subsumed_sequences: 0, num_failed_output_test: 0;</span><br><span class="line">    runtimePrimitivesSeen:38)</span><br><span class="line"></span><br><span class="line">Progress update: steps=1, test inputs generated=0, failing inputs=0      (2022-02-28T02:36:46.426Z     43.5M used)</span><br><span class="line">Progress update: steps=1000, test inputs generated=823, failing inputs=0      (2022-02-28T02:37:03.368Z     419M used)</span><br><span class="line">Progress update: steps=2000, test inputs generated=1630, failing inputs=0      (2022-02-28T02:37:19.685Z     528M used)</span><br><span class="line">Progress update: steps=3000, test inputs generated=2440, failing inputs=0      (2022-02-28T02:37:35.947Z     339M used)</span><br><span class="line">Progress update: steps=3690, test inputs generated=2960, failing inputs=0      (2022-02-28T02:37:46.426Z     225M used)</span><br><span class="line">Normal method executions: 4962090</span><br><span class="line"></span><br><span class="line">Exceptional method executions: 534</span><br><span class="line"></span><br><span class="line">Average method execution time (normal termination):      0.000157                                              </span><br><span class="line">Average method execution time (exceptional termination): 0.0369                                      </span><br><span class="line">Approximate memory usage 225M</span><br><span class="line"></span><br><span class="line">Explorer = ForwardGenerator(steps: 3690, null steps: 730, num_sequences_generated: 2960;</span><br><span class="line">    allSequences: 2960, regresson seqs: 1254, error seqs: 0=0=0, invalid seqs: 0, subsumed_sequences: 0, num_failed_output_test: 1706;</span><br><span class="line">    runtimePrimitivesSeen:47)</span><br><span class="line"></span><br><span class="line">No error-revealing tests to output.</span><br><span class="line"></span><br><span class="line">About to look for failing assertions in 831 regression sequences.</span><br><span class="line"></span><br><span class="line">Regression test output:</span><br><span class="line">Regression test count: 831</span><br><span class="line">Writing regression JUnit tests...</span><br><span class="line">Created file D:\Study\Github\randoop\RegressionTest0.java </span><br><span class="line">Created file D:\Study\Github\randoop\RegressionTest1.java</span><br><span class="line">Created file D:\Study\Github\randoop\RegressionTest.java</span><br><span class="line">Wrote regression JUnit tests.</span><br><span class="line">About to look for flaky methods.</span><br><span class="line"></span><br><span class="line">Invalid tests generated: 0</span><br><span class="line"></span><br><span class="line">Uncompilable sequences generated (count: 1705).</span><br><span class="line">Please report uncompilable sequences at https://github.com/randoop/randoop/issues ,</span><br><span class="line">providing the information requested at https://randoop.github.io/randoop/manual/index.html#bug-reporting .</span><br></pre></td></tr></table></figure>
+
+<h3 id="指定类文件"><a href="#指定类文件" class="headerlink" title="指定类文件"></a>指定类文件</h3><p>创建文件 Message.java 并编译为 .class 文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Message</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> String message;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Message</span><span class="params">(String message)</span>&#123;</span><br><span class="line">		<span class="built_in">this</span>.message = message;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">printMessage</span><span class="params">()</span>&#123;</span><br><span class="line">		System.out.println(message);</span><br><span class="line">		<span class="keyword">return</span> message;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用参数 <code>--testclass</code> 指定被测类，注意需要添加 classpath</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编译</span></span><br><span class="line">javac Message.java</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成测试</span></span><br><span class="line">java -classpath <span class="string">&quot;.;<span class="variable">$Env</span>:RANDOOP_JAR&quot;</span> randoop.main.Main gentests --testclass=Message --time-limit=60</span><br></pre></td></tr></table></figure>
+
+<p>生成 199 个回归测试，直接将相关文件都拖到 test 目录下，执行测试，全部通过</p>
+<img src="https://s2.loli.net/2022/04/27/5J6w4st93zOim2a.jpg" >
+
+<p>创建 Sum.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Sum</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">multiply</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; b; i++) &#123;</span><br><span class="line">            result = add(result, a);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译为 .class 文件，并生成测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编译</span></span><br><span class="line">javac Sum.java</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成测试</span></span><br><span class="line">java -classpath <span class="string">&quot;.;<span class="variable">$Env</span>:RANDOOP_JAR&quot;</span> randoop.main.Main gentests --testclass=Sum --time-limit=60</span><br></pre></td></tr></table></figure>
+
+<p>生成 1360 个测试，更改代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Sum</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> a + b + <span class="number">1</span>;  <span class="comment">// 修改</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">multiply</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; b; i++) &#123;</span><br><span class="line">            result = add(result, a);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重新运行刚才生成的回归测试，1357 个测试失败</p>
+<img src="https://s2.loli.net/2022/04/27/k3JyxITYrBjsPce.jpg" style="zoom: 65%;">
+
+<h3 id="指定方法"><a href="#指定方法" class="headerlink" title="指定方法"></a>指定方法</h3><p>可能用到的参数</p>
+<ul>
+<li>指定测试范围的常见度依次递减，同时出错的概率递增：指定 jar，指定类，指定方法</li>
+<li><a target="_blank" rel="noopener" href="https://randoop.github.io/randoop/manual/class_list_example.txt">classlist.txt 示例</a></li>
+<li><a target="_blank" rel="noopener" href="https://randoop.github.io/randoop/manual/method_list_example.txt">methodlist.txt 示例</a></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--testjar=filename</code></td>
+<td>将给定 jar 文件中的每个类作为待测类</td>
+</tr>
+<tr>
+<td><code>--classlist=filename</code></td>
+<td>列出要测试的类，所有的方法都将作为被测方法</td>
+</tr>
+<tr>
+<td><code>--testclass=string</code></td>
+<td>指定待测类（完全限定名）</td>
+</tr>
+<tr>
+<td><code>--methodlist=filename</code></td>
+<td>测试中调用的方法和构造函数列表（完全限定名）</td>
+</tr>
+<tr>
+<td><code>--omit-classes=regex</code></td>
+<td>正则表达式，指定不在测试中使用的类</td>
+</tr>
+<tr>
+<td><code>--omit-classes-file=filename</code></td>
+<td>列出正则表达式，指定不在测试中使用的类</td>
+</tr>
+<tr>
+<td><code>--omit-methods=regex</code></td>
+<td>正则表达式，指定不在测试中使用的方法。不会阻止其他方法对其的间接调用</td>
+</tr>
+<tr>
+<td><code>--omit-methods-file=filename</code></td>
+<td>列出正则表达式，指定不在测试中使用的方法</td>
+</tr>
+<tr>
+<td><code>--require-classname-in-test=regex</code></td>
+<td>正则表达式，指定必须在测试中出现的类。</td>
+</tr>
+<tr>
+<td><code>--require-covered-classes=filename</code></td>
+<td>列出测试必须直接或间接使用的类，包含其中一个即输出</td>
+</tr>
+<tr>
+<td><code>--no-regression-tests=boolean</code></td>
+<td>禁用回归测试输出</td>
+</tr>
+<tr>
+<td><code>--deterministic=boolean</code></td>
+<td>确定性，相同输入相同输出</td>
+</tr>
+<tr>
+<td><code>--log=filename</code></td>
+<td>日志记录</td>
+</tr>
+<tr>
+<td><code>--time-limit=int</code></td>
+<td>0 表示没有限制，如果非零则不确定。总体限制，默认值 100 秒</td>
+</tr>
+<tr>
+<td><code>--method-selection=&lt;enum&gt; </code></td>
+<td>通过从一组被测方法中进行选择来生成新的测试。默认均匀随机（UNIFORM），可选优先考虑分支覆盖率较低的方法（BLOODHOUND）</td>
+</tr>
+<tr>
+<td><code>--input-selection=&lt;enum&gt; </code></td>
+<td>通过组合以前生成的旧测试来生成新测试。默认均匀随机（UNIFORM），可选短序列偏好（SMALL_TESTS）</td>
+</tr>
+</tbody></table>
+<p>Randoop 项目想法中包括方法选择策略的优化，其中就提到了让用户指定关键方法，目前似乎还没有具体实现。</p>
+<ol>
+<li><p>考虑修改 Randoop 的默认生成器（ForwardGenerator）</p>
+<ul>
+<li>生成策略</li>
+<li>满足特定条件时，向标准错误进行输出，应该会存储在 ErrorTest 中</li>
+</ul>
+</li>
+<li><p>使用方法规范（<code>--specifications=file</code>）设置特定方法的预期行为，将其归类到错误显示测试中</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://randoop.github.io/randoop/manual/net_connection_spec.json">spec.json 示例</a></li>
+</ul>
+</li>
+</ol>
+<h3 id="问题与解决"><a href="#问题与解决" class="headerlink" title="问题与解决"></a>问题与解决</h3><ol>
+<li><p>乱码</p>
+<ul>
+<li><code>Settings - Editor -File Encodings</code> 将编码全部改为 UTF-8</li>
+<li>在 <code>idea64.exe.vmoptions</code> 末尾添加 <code>-Dfile.encoding=UTF-8</code></li>
+<li>重启 IDEA</li>
+</ul>
+</li>
+<li><p>rawtypes</p>
+<ul>
+<li>泛型类缺少类参数，添加 <code>&lt;?&gt;</code> 即可</li>
+</ul>
+</li>
+<li><p>程序包不存在</p>
+</li>
+<li><p>cast</p>
+</li>
+</ol>
+<img src="https://s2.loli.net/2022/04/27/c9vaBTLw63Eq2CD.png" >
+
+<h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><p>在 Randoop 中，测试输入表示为 Sequence，测试检查使用 Checks 表示。每个序列由一个或多个 Statement 对象组成。</p>
+<p>Randoop 的生成算法创建 Sequence，为每个序列添加适当的 Checks，并将结果作为单元测试输出。</p>
+<h3 id="Sequence"><a href="#Sequence" class="headerlink" title="Sequence"></a>Sequence</h3><p>Randoop 生成 Sequence 对象，通过添加检查来构造单元测试的输入。在 Randoop 中，所有测试输入都是使用被测类的方法和构造函数的操作序列。</p>
+<p>每条语句包含三个元素：</p>
+<ul>
+<li>正在被调用的特定方法（或构造函数）</li>
+<li>每次调用返回的值（原始值或对象）</li>
+<li>调用的输入，来自先前语句中产生的值</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">                  Result      Operation        Inputs</span><br><span class="line">                  ======      =============        ======</span><br><span class="line">statement 0:      l       =   new LinkedList       ()</span><br><span class="line">statement 1:      str     =   &quot;hi!&quot;                ()</span><br><span class="line">statement 2:                  addFirst             (l, str)</span><br><span class="line">statement 3:      i       =   size                 (l)</span><br><span class="line">statement 4:      t       =   new TreeSet          (l)</span><br><span class="line">statement 5:      s       =   synchronizedSet      (t)</span><br></pre></td></tr></table></figure>
+
+<p>语句的三个元素映射到 Randoop 中的以下类：</p>
+<ul>
+<li><p>Operation 表示语句执行的操作类型</p>
+<ul>
+<li>MethodCall 表示特定的方法调用。该类与 Java 反射 Method 类相似，添加了对 Randoop 有用的附加功能。</li>
+<li>ConstructorCall 表示构造函数调用。</li>
+<li>FieldGet 和 FieldSet 表示获取和设置公共字段。字段由实现 AccessibleField 的类的实例表示。</li>
+<li>EnumConstant 表示一个枚举常量值。</li>
+<li>NonreceiverTerm 表示将变量声明和初始化为原始值、字符串或空值的语句。</li>
+<li>ArrayCreation 表示声明并初始化一个数组的语句，该数组由之前语句中创建的值组成。</li>
+</ul>
+</li>
+<li><p>Variables 代表语句的输入和输出</p>
+<ul>
+<li>Variable 只是序列中索引的包装器：给定序列 s，变量 s.getVariable(i) 表示序列中第 i 个语句产生的值。</li>
+</ul>
+</li>
+</ul>
+<p>创建 sequence</p>
+<ol>
+<li>通过扩展（extension）：获取一个序列并在底部添加一个新语句</li>
+<li>使用串联（concatenation）：给的序列 s1、s2、s3，创建串联的新序列<ul>
+<li>Randoop 组合创建新序列的方法</li>
+</ul>
+</li>
+<li>从字符串中解析（parseable）出序列</li>
+</ol>
+<p>注意：Sequence 是不可变的，扩展操作返回新序列。</p>
+<p>如果代码涉及参数化类型，那就需要实例化使用的泛型类类型，以便获得需要的类型替换。</p>
+<h3 id="ExecutableSequence"><a href="#ExecutableSequence" class="headerlink" title="ExecutableSequence"></a>ExecutableSequence</h3><p>ExecutableSequence 包装 Sequence 并添加两个功能：</p>
+<ul>
+<li>ExecutableSequence 可以通过对预期属性的检查来增强。 Check 是一个对象，表示序列的某些预期属性；例如，序列中的特定方法调用正常返回。当可执行序列被执行时，序列中存在的任何检查都会在运行时检查，并且检查的通过&#x2F;失败状态可供客户端检查。</li>
+<li>ExecutableSequence 可以执行。 Randoop 使用 Java 的反射机制来调用序列中的方法和构造函数，并使用底层 Sequence 的结构来确定要传递给它们的输入。</li>
+</ul>
+<p>执行 sequence</p>
+<ul>
+<li>在 execute 方法返回后，可以通过 getResult(int i) 方法访问执行过程中创建的运行时对象，该方法返回执行语句 i 的结果。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ExecutableSequence</span> <span class="variable">es</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ExecutableSequence</span>(s);</span><br><span class="line">es.execute(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">ExecutionOutcome</span> <span class="variable">resultAt3</span> <span class="operator">=</span> es.getResult(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>更多内容参见 Execution 和 ExecutionOutcome 类。</p>
+<h3 id="Check"><a href="#Check" class="headerlink" title="Check"></a>Check</h3><p>Check 是表示序列的预期属性的对象。就单元测试而言，Check 代表单元测试的一些检查代码。</p>
+<p>每个 Check 都与序列中的一个索引相关联，其中该索引表示应该执行检查的时间。</p>
+<p>Randoop 通过组合和扩展之前生成的序列来随机生成测试输入（Sequence）。另一方面，Randoop 确定性地执行其检查。对于创建的每个序列，它都会检查该序列的所有对象。</p>
+<h3 id="ForwardGenerator"><a href="#ForwardGenerator" class="headerlink" title="ForwardGenerator"></a>ForwardGenerator</h3><p>选择器有两个：</p>
+<ul>
+<li><code>inputSequenceSelector</code>：选择序列</li>
+<li><code>operationSelector</code>：选择方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** How to select sequences as input for creating new sequences. */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> InputSequenceSelector inputSequenceSelector;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** How to select the method to use for creating a new sequence. */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> TypedOperationSelector operationSelector;</span><br></pre></td></tr></table></figure>
+
+<p>执行序列，在该方法中可以获得序列每条语句的执行结果</p>
+<ul>
+<li>检查输出的文本信息</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@Nullable</span> ExecutableSequence <span class="title function_">step</span><span class="params">()</span> &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成序列，在该方法中可以选择下一条语句（Operation）并进行拼接</p>
+<ul>
+<li>默认使用随机均匀的选择器</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ExecutableSequence <span class="title function_">createNewUniqueSequence</span><span class="params">()</span> &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Operation 集合从哪里来？</p>
+<ul>
+<li>通过反射遍历类当中的方法，将访问信息输出到日志中</li>
+<li>reflection 目录下有多种不同的 Extractor，用于提取信息</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ForwardGenerator</span><br><span class="line">GenTests#handle</span><br><span class="line">OperationModel#createModel</span><br><span class="line">OperationModel#addOperationsFromClasses</span><br><span class="line">OperationExtractor#operations</span><br><span class="line">ReflectionManager#apply</span><br></pre></td></tr></table></figure>
+
+<h1 id="EvoSuite"><a href="#EvoSuite" class="headerlink" title="EvoSuite"></a>EvoSuite</h1><h2 id="实验-1"><a href="#实验-1" class="headerlink" title="实验"></a>实验</h2><p>相比 Randoop，EvoSuite 的说明就简陋了很多，但是输出的信息非常多。</p>
+<p>EvoSuite 的大量参数都放在了 <code>-D</code> 选项中，需要用键值的方式给出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 帮助信息</span></span><br><span class="line">java -jar evosuite-1.2.0.jar -<span class="built_in">help</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可用参数</span></span><br><span class="line">java -jar evosuite-1.2.0.jar -listParameters</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成测试，默认 -generateMOSuite，运行 40min 未完成</span></span><br><span class="line">java -jar evosuite-1.2.0.jar -target test.jar -generateMOSuite</span><br></pre></td></tr></table></figure>
+
+<p>报错</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR AgentLoader - Exception class java.lang.RuntimeException: AttachProvider.providers() failed to <span class="built_in">return</span> any provider. Tool classloader: java.net.FactoryURLClassLoader@2c537884</span><br></pre></td></tr></table></figure>
+
+<p>扔到 linux 环境下可以成功执行，执行将生成两个文件夹：</p>
+<ul>
+<li>evosuite-tests：生成的单元测试</li>
+<li>evosuite-report：包含 csv 统计数据和 html 报告，例如出参数、测试用例、覆盖率等信息</li>
+</ul>
+<img src="https://s2.loli.net/2022/04/27/LjWs8qkuvXh6M3b.png" >
+
+<p>从输出的测试来看，似乎是对每个类生成测试（而 Randoop 是随机导向测试）</p>
+<img src="https://s2.loli.net/2022/04/27/R9Ek6ZUlqFt4esM.png" >
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ol>
+<li><p>和时间相关的参数很多，可配置参数太多</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -D 可选参数</span></span><br><span class="line">search_budget	long	60	Maximum search duration</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计信息很多，但不一定都用得到</p>
+</li>
+<li><p>从可用参数帮助信息来看，可以最后进行过滤，或直接指定生成测试使用的方法</p>
+<ul>
+<li>没有说明如果存在依赖会是什么情况</li>
+<li>注：需要使用字节码签名</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-class &lt;arg&gt;	target class <span class="keyword">for</span> <span class="built_in">test</span> generation. A fully qualifying needs to be provided, e.g. org.foo.SomeClass</span><br><span class="line"><span class="comment"># -D 可选参数</span></span><br><span class="line">junit_strict		boolean		<span class="literal">false</span>	Only include <span class="built_in">test</span> files containing the target classname</span><br><span class="line">target_method		String				Method <span class="keyword">for</span> <span class="built_in">which</span> to generate tests</span><br><span class="line">target_method_list	String				A colon(:) separated list of methods <span class="keyword">for</span> <span class="built_in">which</span> to generate tests</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成的单元测试依赖 EvoSuite 框架本身，需要添加 evosuite-standalone-runtime.jar</p>
+</li>
+</ol>
+<h1 id="参阅"><a href="#参阅" class="headerlink" title="参阅"></a>参阅</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/JuYoungJeon/randoopTutorial">randoopTutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=FR89jtjBCEA">Generating JUnit test suites with Randoop</a></li>
+<li><a target="_blank" rel="noopener" href="https://qiita.com/taka_22/items/cd0a7ed1ed10635fc1a3">Java用JUnitテストクラスジェネレータRandoopについて調べてみた</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@marcus.jonssonewerbring/tutorial-an-introduction-to-unit-test-regression-test-and-code-coverage-with-intellij-b08be1268719">[Tutorial] An introduction to unit test, regression test and code coverage with IntelliJ</a></li>
+<li><a target="_blank" rel="noopener" href="https://randoop.github.io/randoop/manual/index.html">Randoop Manual</a></li>
+<li><a target="_blank" rel="noopener" href="https://randoop.github.io/randoop/manual/dev.html">Randoop Developer’s Manual</a></li>
+<li><a target="_blank" rel="noopener" href="https://randoop.github.io/randoop/projectideas.html">Randoop project ideas</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.evosuite.org/documentation/commandline/">Commandline | EvoSuite</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.evosuite.org/documentation/tutorial-part-1/">Tutorial Part 1: EvoSuite on the Command Line</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/EvoSuite/evosuite/issues/47">class com.sun.tools.attach.AttachNotSupportedException no providers installed #47</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2022/04/27/Other/Java%20%E8%87%AA%E5%8A%A8%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%94%9F%E6%88%90%E6%A1%86%E6%9E%B6/">https://jckling.github.io/2022/04/27/Other/Java 自动单元测试生成框架/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a></div><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_qzone"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/03/23/Game/FFXIV/FF14-Anamnesis%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"><img class="next-cover" src="https://s2.loli.net/2022/03/25/b42fKxSOlRtMBEU.jpg" onerror="onerror=null;src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">FF14 Anamnesis 使用教程</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/02/23/Other/Soot%20%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" title="Soot 使用记录"><img class="cover" src="https://cdn.jsdelivr.net/gh/soot-oss/soot@gh-pages/logo/soot-logo.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-23</div><div class="title">Soot 使用记录</div></div></a></div><div><a href="/2021/09/08/Security/%E7%99%BE%E5%BA%A6%20OpenRASP%20%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/" title="百度 OpenRASP 组成分析"><img class="cover" src="https://s2.loli.net/2022/03/10/iwzyYvM81fpWkUn.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-08</div><div class="title">百度 OpenRASP 组成分析</div></div></a></div><div><a href="/2021/12/17/Security/%E6%8C%87%E9%92%88%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%20Doop%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="指针分析工具 Doop 使用指南"><img class="cover" src="https://s2.loli.net/2021/12/17/IB8RSP4ksabDEU5.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-17</div><div class="title">指针分析工具 Doop 使用指南</div></div></a></div><div><a href="/2021/09/16/Security/Java%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%85%A5%E9%97%A8/" title="Java 反序列化漏洞入门"><img class="cover" src="https://cdn.jsdelivr.net/gh/frohoff/ysoserial/ysoserial.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-16</div><div class="title">Java 反序列化漏洞入门</div></div></a></div><div><a href="/2021/10/12/Security/Gadget%20Inspector%20%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" title="Gadget Inspector 源码解析"><img class="cover" src="https://i.loli.net/2021/06/14/oSn9dxfYhEHClIe.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-12</div><div class="title">Gadget Inspector 源码解析</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">114</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">40</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请不要重复提交~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6"><span class="toc-number">1.</span> <span class="toc-text">测试框架</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Randoop"><span class="toc-number">2.</span> <span class="toc-text">Randoop</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">2.1.</span> <span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-number">2.1.1.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E5%A4%9A%E4%B8%AA%E7%B1%BB"><span class="toc-number">2.1.2.</span> <span class="toc-text">指定多个类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E7%B1%BB%E6%96%87%E4%BB%B6"><span class="toc-number">2.1.3.</span> <span class="toc-text">指定类文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.4.</span> <span class="toc-text">指定方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3"><span class="toc-number">2.1.5.</span> <span class="toc-text">问题与解决</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-number">2.2.</span> <span class="toc-text">相关概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sequence"><span class="toc-number">2.2.1.</span> <span class="toc-text">Sequence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ExecutableSequence"><span class="toc-number">2.2.2.</span> <span class="toc-text">ExecutableSequence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check"><span class="toc-number">2.2.3.</span> <span class="toc-text">Check</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ForwardGenerator"><span class="toc-number">2.2.4.</span> <span class="toc-text">ForwardGenerator</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EvoSuite"><span class="toc-number">3.</span> <span class="toc-text">EvoSuite</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C-1"><span class="toc-number">3.1.</span> <span class="toc-text">实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">3.2.</span> <span class="toc-text">问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E9%98%85"><span class="toc-number">4.</span> <span class="toc-text">参阅</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/27/Other/Java%20%E8%87%AA%E5%8A%A8%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%94%9F%E6%88%90%E6%A1%86%E6%9E%B6/" title="Java 自动单元测试生成框架"><img src="https://s2.loli.net/2022/04/27/Ha5SAYlXO9zpJmG.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="Java 自动单元测试生成框架"/></a><div class="content"><a class="title" href="/2022/04/27/Other/Java%20%E8%87%AA%E5%8A%A8%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%94%9F%E6%88%90%E6%A1%86%E6%9E%B6/" title="Java 自动单元测试生成框架">Java 自动单元测试生成框架</a><time datetime="2022-04-27T02:09:06.000Z" title="发表于 2022-04-27 10:09:06">2022-04-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/23/Game/FFXIV/FF14-Anamnesis%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 Anamnesis 使用教程"><img src="https://s2.loli.net/2022/03/25/b42fKxSOlRtMBEU.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="FF14 Anamnesis 使用教程"/></a><div class="content"><a class="title" href="/2022/03/23/Game/FFXIV/FF14-Anamnesis%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 Anamnesis 使用教程">FF14 Anamnesis 使用教程</a><time datetime="2022-03-23T01:21:02.000Z" title="发表于 2022-03-23 09:21:02">2022-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/23/Other/Soot%20%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" title="Soot 使用记录"><img src="https://cdn.jsdelivr.net/gh/soot-oss/soot@gh-pages/logo/soot-logo.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="Soot 使用记录"/></a><div class="content"><a class="title" href="/2022/02/23/Other/Soot%20%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" title="Soot 使用记录">Soot 使用记录</a><time datetime="2022-02-23T11:40:17.000Z" title="发表于 2022-02-23 19:40:17">2022-02-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/09/Game/FFXIV/FF14-MakePlace%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 MakePlace 使用教程"><img src="https://img.itch.zone/aW1hZ2UvMTI2NTk2NC83NDc4OTIwLnBuZw==/original/6saD1e.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="FF14 MakePlace 使用教程"/></a><div class="content"><a class="title" href="/2022/02/09/Game/FFXIV/FF14-MakePlace%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 MakePlace 使用教程">FF14 MakePlace 使用教程</a><time datetime="2022-02-09T02:15:39.000Z" title="发表于 2022-02-09 10:15:39">2022-02-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/30/Security/Python%20%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" title="Python 程序分析工具调研"><img src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="Python 程序分析工具调研"/></a><div class="content"><a class="title" href="/2021/12/30/Security/Python%20%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" title="Python 程序分析工具调研">Python 程序分析工具调研</a><time datetime="2021-12-30T08:50:11.000Z" title="发表于 2021-12-30 16:50:11">2021-12-30</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2022/04/27/Ha5SAYlXO9zpJmG.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = new Waline(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      path: location.pathname,
+      visitor: false,
+      dark: 'html[data-theme="dark"]'
+    }, {"emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji"]}))
+  }
+
+  if (typeof Waline === 'function') initWaline()
+  else getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js').then(initWaline)
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script>((window.gitter = {}).chat = {}).options = {
+  disableDefaultChat: true,
+};
+document.addEventListener('gitter-sidecar-ready', (e) => {
+  const GitterChat = e.detail.Chat
+  let chat
+
+  function initGitter () {
+    chat = new GitterChat({
+      room: 'jckling-blog/community',
+      activationElement: '#chat_btn'
+    });
+  }
+
+  initGitter()
+
+  if (false) {
+    document.addEventListener('pjax:complete', () => {
+      chat.destroy()
+      initGitter()
+    })
+  }
+
+})</script><script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="async" defer="defer"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
