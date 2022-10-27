@@ -4330,19 +4330,8 @@ h1.page-title + .tag-cloud-list {
   --waline-theme-color: #49b1f5;
   --waline-active-color: #ff7242;
 }
-#waline-wrap .vuser {
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  -ms-transition: all 0.5s;
-  transition: all 0.5s;
-}
-#waline-wrap .vuser:hover {
-  -webkit-transform: rotate(360deg);
-  -moz-transform: rotate(360deg);
-  -o-transform: rotate(360deg);
-  -ms-transform: rotate(360deg);
-  transform: rotate(360deg);
+#waline-wrap .wl-comment-actions > button:not(last-child) {
+  padding-right: 4px;
 }
 #vcomment textarea {
   background: url("/img/jckling/comment_bg.png") 100% 100% no-repeat;

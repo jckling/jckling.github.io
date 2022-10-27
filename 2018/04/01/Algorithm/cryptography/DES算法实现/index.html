@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>DES 算法实现 | Jckling's Blog</title><meta name="keywords" content="密码学,Cryptography,C++"><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="简述DES 的代码网上一找一大堆，神奇的是用相同的明文和密钥加密出来的结果不一样，而且它们还都能解密出明文。这就有那么点尴尬了，本来是不打算写的，了解原理就好了（非常懒），然后就很不甘心地写了起来，虽然基本上就是在搬运代码（？） 实现的 DES 算法：  分组长度为 64 位，明文密文长度相同 密钥长度 64 位，有效密钥 56 位 8、16、24、40、48、56 和 64 位是奇偶校验位">
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>DES 算法实现 | Jckling's Blog</title><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="简述DES 的代码网上一找一大堆，神奇的是用相同的明文和密钥加密出来的结果不一样，而且它们还都能解密出明文。这就有那么点尴尬了，本来是不打算写的，了解原理就好了（非常懒），然后就很不甘心地写了起来，虽然基本上就是在搬运代码（？） 实现的 DES 算法：  分组长度为 64 位，明文密文长度相同 密钥长度 64 位，有效密钥 56 位 8、16、24、40、48、56 和 64 位是奇偶校验位">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DES 算法实现">
 <meta property="og:url" content="https://jckling.github.io/2018/04/01/Algorithm/cryptography/DES%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/index.html">
@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2021/06/14/oKxFG62yjhqRrJ9.jpg">
 <meta property="article:published_time" content="2018-04-01T07:55:57.000Z">
-<meta property="article:modified_time" content="2022-10-20T11:26:22.048Z">
+<meta property="article:modified_time" content="2022-10-27T12:49:34.315Z">
 <meta property="article:author" content="Jckling">
 <meta property="article:tag" content="密码学">
 <meta property="article:tag" content="Cryptography">
@@ -52,14 +52,14 @@ gtag('config', 'UA-164555720-1');
   },
   isPhotoFigcaption: true,
   islazyload: false,
-  isAnchor: false
+  isAnchor: 
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'DES 算法实现',
   isPost: true,
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-10-20 19:26:22'
+  postUpdate: '2022-10-27 20:49:34'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
