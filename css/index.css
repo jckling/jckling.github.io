@@ -4382,13 +4382,13 @@ h1.page-title + .tag-cloud-list {
   padding-right: 4px;
 }
 #vcomment textarea {
-  background: url("/img/jckling/comment_bg.png") 100% 100% no-repeat;
+  background: url("/img/BlynJU/comment_bg.png") 100% 100% no-repeat;
 }
 #vcomment textarea:focus {
   background-image: none;
 }
 #waline-wrap textarea {
-  background: url("https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/comment_bg.png") 100% 100% no-repeat;
+  background: url("https://cdn.jsdelivr.net/gh/BlynJU/BlynJU.github.io/img/BlynJU/comment_bg.png") 100% 100% no-repeat;
 }
 #waline-wrap textarea:focus {
   background-image: none;

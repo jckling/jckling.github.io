@@ -11,4 +11,4 @@ Disallow: /*.jpg$
 Disallow: /*.png$
 Disallow: /*.gif$
 
-Sitemap: https://jckling.github.io/sitemap.xml
+Sitemap: https://BlynJU.github.io/sitemap.xml
