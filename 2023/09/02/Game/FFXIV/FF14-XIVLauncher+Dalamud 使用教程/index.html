@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程 | Jckling's Blog</title><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="适用于国服的 FFXIVQuickLauncher 启动器，集成 Dalamud 卫月框架；国际服启动器请下载 goatcorp&#x2F;FFXIVQuickLauncher 安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程">
+<meta property="og:url" content="https://jckling.github.io/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="适用于国服的 FFXIVQuickLauncher 启动器，集成 Dalamud 卫月框架；国际服启动器请下载 goatcorp&#x2F;FFXIVQuickLauncher 安装">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/oSn9dxfYhEHClIe.jpg">
+<meta property="article:published_time" content="2023-09-02T08:48:08.000Z">
+<meta property="article:modified_time" content="2023-09-08T16:19:55.991Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="FFXIV">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/oSn9dxfYhEHClIe.jpg"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pZZt69mo0ndoxIJ1vjEe830lXbvD26aiVAZ-k0FWM5k"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-164555720-1');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-09 00:19:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar.jpg" onerror="onerror=null;src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">121</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/oSn9dxfYhEHClIe.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Jckling's Blog"><span class="site-name">Jckling's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2023-09-02T08:48:08.000Z" title="发表于 2023-09-02 16:48:08">2023-09-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Game/">Game</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/#post-comment"><span class="waline-comment-count" data-path="/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前看到 Textools 的上位替代工具 <a target="_blank" rel="noopener" href="https://github.com/xivdev/Penumbra">Penumbra</a> 需要通过 <a target="_blank" rel="noopener" href="https://github.com/goatcorp/Dalamud">Dalamud</a> 卫月框架安装，而卫月框架又和 <a target="_blank" rel="noopener" href="https://github.com/goatcorp/FFXIVQuickLauncher">FFXIVQuickLauncher</a> 启动器绑定，这些工具都只支持国际服。</p>
+<p>但是有开发者贡献了适用于国服的版本 <a target="_blank" rel="noopener" href="https://github.com/ottercorp/FFXIVQuickLauncher">ottercorp&#x2F;FFXIVQuickLauncher</a>，甚至还提供了汉化与插件支持（感恩），这就来体验一下！</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>从 Github 仓库 <a target="_blank" rel="noopener" href="https://github.com/ottercorp/FFXIVQuickLauncher">ottercorp&#x2F;FFXIVQuickLauncher</a> 下载安装程序，或从 <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1qIrelIy2zd4b3QU95CkXTw?pwd=zlyp">百度网盘</a> 下载：</p>
+<img src="https://s2.loli.net/2023/09/08/DTMqc3QAOy4kCGE.png" >
+
+<p>双击运行安装程序，定位 FF14 游戏目录</p>
+<img src="https://s2.loli.net/2023/09/08/72E4dTyGmhfbIxu.png" >
+
+<p>选择 DirectX 版本，选择语言，选择是否启用 Dalamud（卫月框架）</p>
+<div class="gallery">
+    <div class="fj-gallery  data" data-rowHeight="220" data-limit="10">
+    <span class="gallery-data">[{"url":"https://s2.loli.net/2023/09/08/XCLeOVnBgoDQcz1.png","alt":""},{"url":"https://s2.loli.net/2023/09/08/zdkXoIewPmujxJG.png","alt":""},{"url":"https://s2.loli.net/2023/09/08/7qm25ib39VOuPNA.png","alt":""}]</span>
+    </div>
+    <button class="gallery-load-more"><span>加载更多</span><i class="fa-solid fa-arrow-down"></i></button>
+    </div>
+
+<p>如果报错则说明权限不够，需要换个目录，右键 <code>以管理员身份运行</code> 似乎无法解决</p>
+<img src="https://s2.loli.net/2023/09/08/8t6duF47XvZNaUA.png" >
+
+<h1 id="使用启动器"><a href="#使用启动器" class="headerlink" title="使用启动器"></a>使用启动器</h1><p>左侧新闻列表，右侧登录框，地球图标是全服务器状况一览，齿轮图标是设置。</p>
+<img src="https://s2.loli.net/2023/09/08/aOBGxnMFiYSJcer.jpg" >
+
+<p>可以在设置界面的 <code>自动启动</code> 中添加跟随 FF14 游戏启动的软件，点击 <code>新增</code> 添加软件。</p>
+<img src="https://s2.loli.net/2023/09/08/LOSI8bge5fsajHr.jpg" >
+
+<p>还能在设置界面查看已安装的 Dalamud 插件，点击右下角的 √ 返回登录界面。</p>
+<img src="https://s2.loli.net/2023/09/08/zlgOBG2Wpuko5cU.png" >
+
+<p>右键登录按钮，可以进行修复和更新等设置。</p>
+<img src="https://s2.loli.net/2023/09/08/KylZj29GnxOD4WH.jpg" >
+
+<p>输入盛趣账号点击登录，登录时会弹出二维码，需要使用叨鱼扫描登录。</p>
+<img src="https://s2.loli.net/2023/09/08/WMFzuQHbl3Vw1rZ.jpg" >
+
+<p>选择 <code>快速登录</code>，仅在首次登录时需要扫描二维码，再次登录可以直接进入游戏。点击账号按钮，弹出所有已记录的账号。</p>
+<img src="https://s2.loli.net/2023/09/08/wNtupKEZTjO1QmG.jpg" >
+
+<p>账号末尾的标志表示可以直接进行快速登录，右键账号可以进行操作。</p>
+<img src="https://s2.loli.net/2023/09/08/XrYT7Vszx6LPvIB.jpg" >
+
+<p>启动游戏时，如果安装了 GShade 还会进行兼容性修复，这个选择是或否都可以。</p>
+<img src="https://s2.loli.net/2023/09/08/aGCU7Jlyb4MAN83.png" >
+
+<h1 id="使用卫月框架（Dalamud）"><a href="#使用卫月框架（Dalamud）" class="headerlink" title="使用卫月框架（Dalamud）"></a>使用卫月框架（Dalamud）</h1><h2 id="进入游戏前"><a href="#进入游戏前" class="headerlink" title="进入游戏前"></a>进入游戏前</h2><p>登录后游戏界面左侧会显示 Dalamud 图标，点击后展开两项</p>
+<ol>
+<li>插件安装器</li>
+<li>Dalamud 设置</li>
+</ol>
+<img src="https://s2.loli.net/2023/09/08/tvFbyGJHDIhUci8.jpg" >
+
+<p>插件安装器用于安装和更新插件，默认情况下插件不是自动更新的。</p>
+<img src="https://s2.loli.net/2023/09/08/Gj9zhMaA8ofYenI.jpg" >
+
+<p>Dalamud 设置，在这里可以启用插件的自动更新，设置何时隐藏等。</p>
+<img src="https://s2.loli.net/2023/09/08/oQtLlF51k4AP28e.jpg" >
+
+<h2 id="xl-命令"><a href="#xl-命令" class="headerlink" title="xl 命令"></a>xl 命令</h2><p>在输入框中键入 <code>/xlhelp</code> 查看帮助信息，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/xlhelp: 显示可用命令列表。</span><br><span class="line">/xlmute: 屏蔽聊天里出现的单词或句子。用法：/xlmute &lt;单词或句子&gt;</span><br><span class="line">/xlmutelist: 列出屏蔽单词或句子。</span><br><span class="line">/xlunmute: 取消屏蔽单词或句子。用法：/xlunmute &lt;单词或句子&gt;</span><br><span class="line">/ll: 在您的默认浏览器中打开上次接收到的链接。</span><br><span class="line">/xlbgmset: 设置游戏背景音乐。用法：/xlbgmset &lt;BGM ID&gt;</span><br><span class="line">/xlplugins: 打开插件安装器</span><br><span class="line">/xllanguage: 设置 Dalamud 和插件的语言。可用语言： en, de, ja, fr, it, es, zh</span><br><span class="line">/xlsettings: 更改不同的游戏内附加组件设置，如聊天频道和 Discord 机器人设置。</span><br><span class="line">/xlversion: Dalamud version info</span><br><span class="line">/xlui: Toggle Dalamud UI display modes. Native UI modifications may also be affected by this, but that depends on the plugin.</span><br></pre></td></tr></table></figure>
+
+<p>如果安装了插件，则会显示插件相关的指令，例如安装了 <a target="_blank" rel="noopener" href="https://github.com/fmauNeko/MarketBoardPlugin">Market Board</a> 插件，会额外显示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/pmb: Open the market board window.</span><br></pre></td></tr></table></figure>
+
+<h2 id="从设置打开"><a href="#从设置打开" class="headerlink" title="从设置打开"></a>从设置打开</h2><p>插件安装器和 Dalamud 设置可以从 FF14 的设置面板打开。</p>
+<p><a href="https://smms.app/image/wJgKHZvpAVROC9y" target="_blank"><img src="https://s2.loli.net/2023/09/08/wJgKHZvpAVROC9y.jpg" ></p>
+<h2 id="其他插件"><a href="#其他插件" class="headerlink" title="其他插件"></a>其他插件</h2><p>插件安装器面板中可能找不到一些插件，比如演奏插件 <a target="_blank" rel="noopener" href="https://github.com/reckhou/MidiBard/blob/api6/README%20-%20CN.md">reckhou&#x2F;MidiBard</a> 就需要手动添加。</p>
+<p>在 Dalamud 设置的测试版选项中，添加自定义插件仓库，还可以配置代理，修改完记得点击保存！</p>
+<img src="https://s2.loli.net/2023/09/08/FkxSTjvqh5MsGCB.jpg" >
+
+<p>插件安装器会重新加载，等待加载完毕后就可以搜索到添加的插件了。</p>
+<img src="https://s2.loli.net/2023/09/08/uIWOrT5f7389npM.jpg" >
+
+<p>其他插件列表可以查看：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://ottercorp.github.io/DalamudPlugins/plugins.html">CN Neat Plugins</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.littlenightmare.top/2021/05/18/%E5%8D%AB%E6%9C%88%E4%BB%93%E5%BA%93%E9%93%BE%E6%8E%A5/">卫月仓库链接整理</a></li>
+</ul>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>有时候进入游戏会弹窗提示卫月框架更新。</p>
+<img src="https://s2.loli.net/2023/09/08/vuHzbtLDw8S4iFB.jpg" >
+
+<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><ul>
+<li>国服启动器：<a target="_blank" rel="noopener" href="https://github.com/ottercorp/FFXIVQuickLauncher">ottercorp&#x2F;FFXIVQuickLauncher</a></li>
+<li>国际服启动器：<a target="_blank" rel="noopener" href="https://github.com/goatcorp/FFXIVQuickLauncher">goatcorp&#x2F;FFXIVQuickLauncher</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv18623774/">[FF14]关于FF14卫月第三方登录器FFXIVQuickLauncher（蓝鹊）的使用方法：wegame不适用</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/jckling">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">https://jckling.github.io/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud 使用教程/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/FFXIV/">FFXIV</a></div><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_wechat"></a><a class="a2a_button_sina_weibo"></a><a class="a2a_button_qzone"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/jckling/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/08/30/Game/FFXIV/FF14-ReShade%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 ReShade 使用教程"><img class="cover" src="https://s2.loli.net/2023/08/31/YywZPAqSUhDkbOW.jpg" onerror="onerror=null;src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">FF14 ReShade 使用教程</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/23/Game/FFXIV/FF14-Anamnesis%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 Anamnesis 使用教程"><img class="cover" src="https://s2.loli.net/2022/03/25/b42fKxSOlRtMBEU.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-23</div><div class="title">FF14 Anamnesis 使用教程</div></div></a></div><div><a href="/2021/04/26/Game/FFXIV/FF14-CMTool%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 CMTool 使用教程"><img class="cover" src="https://i.loli.net/2021/06/06/Yurzqd2CsQviTt6.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-26</div><div class="title">FF14 CMTool 使用教程</div></div></a></div><div><a href="/2021/05/02/Game/FFXIV/FF14-GShade%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 GShade 使用教程"><img class="cover" src="https://i.loli.net/2021/06/06/dgfbjE4oxIcRBDt.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-02</div><div class="title">FF14 GShade 使用教程</div></div></a></div><div><a href="/2022/02/09/Game/FFXIV/FF14-MakePlace%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 MakePlace 使用教程"><img class="cover" src="https://img.itch.zone/aW1hZ2UvMTI2NTk2NC83NDc4OTIwLnBuZw==/original/6saD1e.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-09</div><div class="title">FF14 MakePlace 使用教程</div></div></a></div><div><a href="/2023/08/30/Game/FFXIV/FF14-ReShade%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 ReShade 使用教程"><img class="cover" src="https://s2.loli.net/2023/08/31/YywZPAqSUhDkbOW.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-30</div><div class="title">FF14 ReShade 使用教程</div></div></a></div><div><a href="/2021/04/29/Game/FFXIV/FF14-TexTools%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 TexTools 使用教程"><img class="cover" src="https://i.loli.net/2021/06/14/fEgCTaVKJX6eN3L.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-29</div><div class="title">FF14 TexTools 使用教程</div></div></a></div><div><a href="/2021/06/24/Game/FFXIV/FF14-%E5%85%89%E4%B9%8B%E6%91%84%E5%BD%B1%E5%B8%88%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/" title="FF14 光之摄影师养成计划✨"><img class="cover" src="https://i.loli.net/2021/06/24/kzGsZ3T8wWDReE5.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-24</div><div class="title">FF14 光之摄影师养成计划✨</div></div></a></div><div><a href="/2020/05/11/Game/FFXIV/FF14-%E5%AE%8F%E8%AE%B0%E5%BD%95/" title="FF14 宏记录"><img class="cover" src="https://i.loli.net/2021/06/14/SZXtIyRYzjqoh6D.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-11</div><div class="title">FF14 宏记录</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">121</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请不要重复提交~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%90%AF%E5%8A%A8%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">使用启动器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%8D%AB%E6%9C%88%E6%A1%86%E6%9E%B6%EF%BC%88Dalamud%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">使用卫月框架（Dalamud）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E6%B8%B8%E6%88%8F%E5%89%8D"><span class="toc-number">4.1.</span> <span class="toc-text">进入游戏前</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xl-%E5%91%BD%E4%BB%A4"><span class="toc-number">4.2.</span> <span class="toc-text">xl 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E8%AE%BE%E7%BD%AE%E6%89%93%E5%BC%80"><span class="toc-number">4.3.</span> <span class="toc-text">从设置打开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%8F%92%E4%BB%B6"><span class="toc-number">4.4.</span> <span class="toc-text">其他插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0"><span class="toc-number">4.5.</span> <span class="toc-text">更新</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="toc-number">5.</span> <span class="toc-text">相关链接</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程"><img src="https://i.loli.net/2021/06/14/oSn9dxfYhEHClIe.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程"/></a><div class="content"><a class="title" href="/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程">FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程</a><time datetime="2023-09-02T08:48:08.000Z" title="发表于 2023-09-02 16:48:08">2023-09-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/30/Game/FFXIV/FF14-ReShade%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 ReShade 使用教程"><img src="https://s2.loli.net/2023/08/31/YywZPAqSUhDkbOW.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="FF14 ReShade 使用教程"/></a><div class="content"><a class="title" href="/2023/08/30/Game/FFXIV/FF14-ReShade%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 ReShade 使用教程">FF14 ReShade 使用教程</a><time datetime="2023-08-30T14:11:14.000Z" title="发表于 2023-08-30 22:11:14">2023-08-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/18/Other/Github%20Action%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20Hexo%20%E5%8D%9A%E5%AE%A2/" title="Github Action 自动部署 Hexo 博客"><img src="https://s2.loli.net/2023/02/18/om3X4KTMkjOysiJ.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="Github Action 自动部署 Hexo 博客"/></a><div class="content"><a class="title" href="/2023/02/18/Other/Github%20Action%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20Hexo%20%E5%8D%9A%E5%AE%A2/" title="Github Action 自动部署 Hexo 博客">Github Action 自动部署 Hexo 博客</a><time datetime="2023-02-18T13:00:25.000Z" title="发表于 2023-02-18 21:00:25">2023-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/30/Notes/23%20%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" title="23 届秋招面试总结"><img src="https://i.loli.net/2021/06/14/oSn9dxfYhEHClIe.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="23 届秋招面试总结"/></a><div class="content"><a class="title" href="/2022/11/30/Notes/23%20%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" title="23 届秋招面试总结">23 届秋招面试总结</a><time datetime="2022-11-30T08:40:05.000Z" title="发表于 2022-11-30 16:40:05">2022-11-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/14/Game/NS/%E6%97%A5%E5%8C%BA%20eshop%20%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8%20PayPal/" title="日区 eshop 无法使用 PayPal"><img src="https://s2.loli.net/2022/08/14/cFealAQUSg7ZRqm.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="日区 eshop 无法使用 PayPal"/></a><div class="content"><a class="title" href="/2022/08/14/Game/NS/%E6%97%A5%E5%8C%BA%20eshop%20%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8%20PayPal/" title="日区 eshop 无法使用 PayPal">日区 eshop 无法使用 PayPal</a><time datetime="2022-08-14T10:12:52.000Z" title="发表于 2022-08-14 18:12:52">2022-08-14</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/oSn9dxfYhEHClIe.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: true,
+    }, {"emoji":["https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"]}))
+  }
+
+  if (typeof Waline === 'object') initWaline()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css').then(() => {
+      getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+    })
+  }
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><div class="fb-customerchat" id="fb-customer-chat" page_id="122755964255342" attribution="biz_inbox"></div><script>(() => {
+  document.getElementById('fb-root') ? '' : document.body.insertAdjacentHTML('afterend', '<div id="fb-root"></div>')
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      xfbml: true,
+      version: 'v16.0'
+    });
+  };
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/zh_CN/sdk/xfbml.customerchat.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  const isChatBtn = true
+  const isChatHideShow = false
+
+  if (isChatBtn) {
+    window.chatBtnFn = () => {
+      const isShow = document.querySelector('.fb_customer_chat_bounce_in_v2')
+      isShow ? FB.CustomerChat.hide() : FB.CustomerChat.show()
+    }
+  } else if (isChatHideShow) {
+    window.chatBtn = {
+      hide: () => {
+        FB.CustomerChat.hide()
+      },
+      show: () => {
+        FB.CustomerChat.show(false)
+      }
+    }
+  }
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
