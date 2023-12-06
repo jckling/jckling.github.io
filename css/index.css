@@ -4445,14 +4445,15 @@ h1.page-title + .tag-cloud-list {
   margin: 20px auto;
 }
 #sidebar #sidebar-menus .menus_items {
-  padding: 0 5px;
+  padding: 0 10px;
 }
 #sidebar #sidebar-menus .menus_items .site-page {
   position: relative;
   display: block;
-  padding: 6px 30px 6px 22px;
+  padding: 3px 28px 3px 20px;
   color: var(--font-color);
   font-size: 1.15em;
+  border-radius: 6px;
 }
 #sidebar #sidebar-menus .menus_items .site-page:hover {
   background: var(--text-bg-hover);
