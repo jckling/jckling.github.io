@@ -3472,16 +3472,9 @@ h1.page-title + .tag-cloud-list {
 }
 #page-header #post-info {
   position: absolute;
-  bottom: 100px;
+  bottom: 30px;
   padding: 0 8%;
   width: 100%;
-  text-align: center;
-}
-@media screen and (max-width: 900px) {
-  #page-header #post-info {
-    bottom: 30px;
-    text-align: left;
-  }
 }
 @media screen and (max-width: 768px) {
   #page-header #post-info {
