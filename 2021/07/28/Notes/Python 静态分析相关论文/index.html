@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png">
 <meta property="article:published_time" content="2021-07-28T11:01:13.000Z">
-<meta property="article:modified_time" content="2024-06-02T02:02:32.415Z">
+<meta property="article:modified_time" content="2024-06-04T03:25:59.177Z">
 <meta property="article:author" content="Jckling">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -60,7 +60,7 @@ gtag('config', 'UA-164555720-1');
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-06-02 10:02:32'
+  postUpdate: '2024-06-04 11:25:59'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -159,41 +159,50 @@ gtag('config', 'UA-164555720-1');
       detectApple()
     })(window)</script><meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Jckling's Blog" type="application/rss+xml">
-</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar.jpg" onerror="onerror=null;src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">124</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">46</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Jckling's Blog"><span class="site-name">Jckling's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python 静态分析相关论文</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-07-28T11:01:13.000Z" title="发表于 2021-07-28 19:01:13">2021-07-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Notes/">Notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python 静态分析相关论文"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/07/28/Notes/Python%20%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/#post-comment"><span class="waline-comment-count" data-path="/2021/07/28/Notes/Python%20%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>翻了几篇 Python 静态分析相关的论文，看看有什么比较好的分析工具。</p>
-<h2 id="静态分析工具"><a href="#静态分析工具" class="headerlink" title="静态分析工具"></a>静态分析工具</h2><h3 id="1-Survey-on-Static-Analysis-Tools-of-Python-Programs"><a href="#1-Survey-on-Static-Analysis-Tools-of-Python-Programs" class="headerlink" title="1. Survey on Static Analysis Tools of Python Programs"></a>1. Survey on Static Analysis Tools of Python Programs</h3><blockquote>
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar.jpg" onerror="onerror=null;src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">124</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">46</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Jckling's Blog"><span class="site-name">Jckling's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python 静态分析相关论文</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-07-28T11:01:13.000Z" title="发表于 2021-07-28 19:01:13">2021-07-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Notes/">Notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python 静态分析相关论文"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/07/28/Notes/Python%20%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/#post-comment"><span class="waline-comment-count" data-path="/2021/07/28/Notes/Python%20%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言">前言</h2>
+<p>翻了几篇 Python 静态分析相关的论文，看看有什么比较好的分析工具。</p>
+<h2 id="静态分析工具">静态分析工具</h2>
+<h3 id="1-Survey-on-Static-Analysis-Tools-of-Python-Programs">1. Survey on Static Analysis Tools of Python Programs</h3>
+<blockquote>
 <p>SQAMIA 2019</p>
 </blockquote>
 <p>概述了 Python 代码库静态分析的现有方法和工具，并介绍了一些新的研究方向。</p>
 <p>总结了常见的 Python 静态分析工具之间的关系，简单介绍了（几行概述） <a target="_blank" rel="noopener" href="https://github.com/PyCQA/pylint">Pylint</a>、<a target="_blank" rel="noopener" href="https://github.com/PyCQA/pyflakes">Pyflakes</a>、<a target="_blank" rel="noopener" href="https://github.com/PyCQA/flake8">flake8</a>、<a target="_blank" rel="noopener" href="https://github.com/timothycrosley/deprecated.frosted">Frosted</a>、<a target="_blank" rel="noopener" href="https://github.com/PyCQA/pycodestyle">Pycodestyle</a>、<a target="_blank" rel="noopener" href="https://github.com/python/mypy">Mypy</a>、<a target="_blank" rel="noopener" href="https://github.com/bjodah/pysym">PySym</a>、<a target="_blank" rel="noopener" href="https://github.com/thomasjball/PyExZ3">PyExZ3</a>。</p>
 <img src="https://i.loli.net/2021/07/29/qpvM1iYNFXhLgTe.jpg" style="zoom:70%;" />
-
 <p>设计并测试了 6 种典型的逻辑漏洞（logical errors），用 PyLint、Pyflakes、Flake8、Mypy、Frosted 检测</p>
 <ul>
 <li>使用默认配置</li>
 <li>逻辑错误会产生意外的输出或结果，但不一定会导致崩溃</li>
 </ul>
 <img src="https://i.loli.net/2021/07/29/G1Q8ETPtCyKoSxA.png" style="zoom:70%;" />
-
 <ol>
-<li><p>引用未定义变量</p>
+<li>
+<p>引用未定义变量</p>
  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">message = <span class="string">&quot;Hello there!&quot;</span></span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;greetMe&quot;</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">	<span class="built_in">print</span>(mesage) <span class="comment"># 变量名打错</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;This code is fine, no problems.&quot;</span>)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>太多位置参数</p>
+<li>
+<p>太多位置参数</p>
   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys <span class="comment"># 未使用的导入</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, first_name, last_name, age</span>):</span><br><span class="line">        self.first_name = first_name</span><br><span class="line">        self.last_name = last_name</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;Windows&quot;</span> <span class="keyword">in</span> platform.platform(): <span class="comment"># 未定义的 platform 变量</span></span><br><span class="line">    	<span class="built_in">print</span>(<span class="string">&quot;You’ re using Windows !&quot;</span>)</span><br><span class="line"></span><br><span class="line">    self.age = self.getAge(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>) <span class="comment"># 太多位置参数</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getAge</span>(<span class="params">this</span>): <span class="comment"># 没有 self 参数</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;18&quot;</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>传递类型错误的参数</p>
+<li>
+<p>传递类型错误的参数</p>
  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">sum</span>(<span class="params">x:<span class="built_in">int</span>, y:<span class="built_in">int</span></span>): <span class="comment"># 类型注释</span></span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>(<span class="number">3</span>, <span class="number">4</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>(<span class="number">3</span>, <span class="string">&quot;4&quot;</span>)) <span class="comment"># 传递错误类型的参数</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>引用不存在的类属性</p>
+<li>
+<p>引用不存在的类属性</p>
  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line">PERSON1 = Person(<span class="string">&quot;Hristina&quot;</span>, <span class="number">23</span>)</span><br><span class="line"><span class="built_in">print</span>(PERSON1.age)</span><br><span class="line"><span class="built_in">print</span>(PERSON1.height) <span class="comment"># 引用不存在的属性</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>调用嵌套函数</p>
+<li>
+<p>调用嵌套函数</p>
  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">outer</span>():</span><br><span class="line">    x=<span class="number">3</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>():</span><br><span class="line">        <span class="built_in">print</span>(x)</span><br><span class="line">    inner()</span><br><span class="line">outer()</span><br><span class="line">inner() <span class="comment"># 调用 outer 内部定义的函数</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>闭包错误</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 闭包</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">outer</span>():</span><br><span class="line">    x = <span class="number">3</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>():</span><br><span class="line">        y = <span class="number">3</span></span><br><span class="line">        result = x + y</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line">a = outer()</span><br><span class="line"><span class="built_in">print</span>(a()) <span class="comment"># 调用 inner()</span></span><br><span class="line"><span class="built_in">print</span>(a.__name__) <span class="comment"># 打印 inner</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 闭包错误，非预期结果</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">greet</span>(<span class="params">greet_word, name</span>) :</span><br><span class="line">	<span class="built_in">print</span>(greet_word, name)</span><br><span class="line">greeters = <span class="built_in">list</span>()</span><br><span class="line">names = [<span class="string">&quot;Kiki&quot;</span>, <span class="string">&quot;Riki&quot;</span>, <span class="string">&quot;Joe&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	greeters.append(<span class="keyword">lambda</span> x : greet(x, name))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> greeter <span class="keyword">in</span> greeters:</span><br><span class="line">	greeter(<span class="string">&quot;Hi&quot;</span>)</span><br><span class="line"><span class="comment"># 打印</span></span><br><span class="line"><span class="comment"># Hi Joe</span></span><br><span class="line"><span class="comment"># Hi Joe</span></span><br><span class="line"><span class="comment"># Hi Joe</span></span><br></pre></td></tr></table></figure></li>
+<li>
+<p>闭包错误</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 闭包</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">outer</span>():</span><br><span class="line">    x = <span class="number">3</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>():</span><br><span class="line">        y = <span class="number">3</span></span><br><span class="line">        result = x + y</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line">a = outer()</span><br><span class="line"><span class="built_in">print</span>(a()) <span class="comment"># 调用 inner()</span></span><br><span class="line"><span class="built_in">print</span>(a.__name__) <span class="comment"># 打印 inner</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 闭包错误，非预期结果</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">greet</span>(<span class="params">greet_word, name</span>) :</span><br><span class="line">	<span class="built_in">print</span>(greet_word, name)</span><br><span class="line">greeters = <span class="built_in">list</span>()</span><br><span class="line">names = [<span class="string">&quot;Kiki&quot;</span>, <span class="string">&quot;Riki&quot;</span>, <span class="string">&quot;Joe&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	greeters.append(<span class="keyword">lambda</span> x : greet(x, name))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> greeter <span class="keyword">in</span> greeters:</span><br><span class="line">	greeter(<span class="string">&quot;Hi&quot;</span>)</span><br><span class="line"><span class="comment"># 打印</span></span><br><span class="line"><span class="comment"># Hi Joe</span></span><br><span class="line"><span class="comment"># Hi Joe</span></span><br><span class="line"><span class="comment"># Hi Joe</span></span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<h3 id="2-Towards-More-Sophisticated-Static-Analysis-Methods-of-Python-Programs"><a href="#2-Towards-More-Sophisticated-Static-Analysis-Methods-of-Python-Programs" class="headerlink" title="2. Towards More Sophisticated Static Analysis Methods of Python Programs"></a>2. Towards More Sophisticated Static Analysis Methods of Python Programs</h3><blockquote>
+<h3 id="2-Towards-More-Sophisticated-Static-Analysis-Methods-of-Python-Programs">2. Towards More Sophisticated Static Analysis Methods of Python Programs</h3>
+<blockquote>
 <p>Informatics 2019 • IEEE 15th International Scientific Conference on Informatics</p>
 </blockquote>
 <p>和上一篇同样的作者，探讨了为 Python 开发更强大的静态分析工具的可能研究方向。</p>
@@ -209,7 +218,8 @@ gtag('config', 'UA-164555720-1');
 <th>mini-mc</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>引用未定义变量</td>
 <td>x</td>
 <td>√</td>
@@ -219,20 +229,27 @@ gtag('config', 'UA-164555720-1');
 <td>x</td>
 <td>√</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <ol>
-<li><p>引用未定义变量</p>
+<li>
+<p>引用未定义变量</p>
  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">1</span>== arg):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;branch11 &quot;</span>, os.getpid())</span><br><span class="line">        z = <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="number">1</span>!=arg):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;branch21 &quot;</span>, os.getpid())</span><br><span class="line">        x = z</span><br><span class="line"></span><br><span class="line">arg = BitVec(arg, <span class="number">32</span>)</span><br><span class="line">func(arg)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>可能的除零异常</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">if</span> arg == <span class="number">41</span> :</span><br><span class="line">    	<span class="built_in">print</span>(<span class="string">&quot;branch21 &quot;</span>, os.getpid())</span><br><span class="line">    <span class="keyword">else</span>:  <span class="comment"># 输入为 42 时确实会引起异常，但其他情况下没有问题</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;branch22 &quot;</span>, os.getpid())</span><br><span class="line">        z = arg - <span class="number">42</span></span><br><span class="line">        z = <span class="number">99</span> / z</span><br></pre></td></tr></table></figure></li>
+<li>
+<p>可能的除零异常</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">if</span> arg == <span class="number">41</span> :</span><br><span class="line">    	<span class="built_in">print</span>(<span class="string">&quot;branch21 &quot;</span>, os.getpid())</span><br><span class="line">    <span class="keyword">else</span>:  <span class="comment"># 输入为 42 时确实会引起异常，但其他情况下没有问题</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;branch22 &quot;</span>, os.getpid())</span><br><span class="line">        z = arg - <span class="number">42</span></span><br><span class="line">        z = <span class="number">99</span> / z</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<h3 id="3-Static-Value-Analysis-of-Python-Programs-by-Abstract-Interpretation"><a href="#3-Static-Value-Analysis-of-Python-Programs-by-Abstract-Interpretation" class="headerlink" title="3. Static Value Analysis of Python Programs by Abstract Interpretation"></a>3. Static Value Analysis of Python Programs by Abstract Interpretation</h3><blockquote>
+<h3 id="3-Static-Value-Analysis-of-Python-Programs-by-Abstract-Interpretation">3. Static Value Analysis of Python Programs by Abstract Interpretation</h3>
+<blockquote>
 <p>NASA Formal Methods Symposium</p>
 </blockquote>
 <p>通过 <strong>抽象解释</strong> 推断变量类型、运行时错误和未捕获异常，只支持一小部分内置对象和标准库的分析。</p>
-<h2 id="调用图工具"><a href="#调用图工具" class="headerlink" title="调用图工具"></a>调用图工具</h2><h3 id="1-Empirical-Study-of-Python-Call-Graph"><a href="#1-Empirical-Study-of-Python-Call-Graph" class="headerlink" title="1. Empirical Study of Python Call Graph"></a>1. Empirical Study of Python Call Graph</h3><blockquote>
-<p>2019 34th IEEE&#x2F;ACM International Conference on Automated Software Engineering (ASE)</p>
+<h2 id="调用图工具">调用图工具</h2>
+<h3 id="1-Empirical-Study-of-Python-Call-Graph">1. Empirical Study of Python Call Graph</h3>
+<blockquote>
+<p>2019 34th IEEE/ACM International Conference on Automated Software Engineering (ASE)</p>
 </blockquote>
 <p>对现有的 Python 程序调用图生成工具进行比对（<a target="_blank" rel="noopener" href="https://github.com/davidfraser/pyan">Pyan</a>、<a target="_blank" rel="noopener" href="https://github.com/scottrogowski/code2flow">Code2flow</a>、<a target="_blank" rel="noopener" href="https://github.com/gak/pycallgraph">Pycallgraph</a>、Understand），以 Pycallgraph 作为基准，用常见的模块源代码进行测试（scikit-learn、theano、networkx、numba、joblib、pandas）</p>
 <ul>
@@ -241,18 +258,16 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>针对 pandas 模块，各个工具生成的隐式节点数目有所不同，这造成了结果的巨大差异。</p>
 <img src="https://i.loli.net/2021/07/29/nzaZEiHlMJWAuwc.jpg" style="zoom:70%;" />
-
 <p>结论：现有的 Python 静态调用图工具在构建效果上存在较大差异，仍有改进的空间。</p>
-<h3 id="2-PyCG-Practical-Call-Graph-Generation-in-Python"><a href="#2-PyCG-Practical-Call-Graph-Generation-in-Python" class="headerlink" title="2. PyCG: Practical Call Graph Generation in Python"></a>2. PyCG: Practical Call Graph Generation in Python</h3><blockquote>
-<p>2021 IEEE&#x2F;ACM 43rd International Conference on Software Engineering (ICSE)</p>
+<h3 id="2-PyCG-Practical-Call-Graph-Generation-in-Python">2. PyCG: Practical Call Graph Generation in Python</h3>
+<blockquote>
+<p>2021 IEEE/ACM 43rd International Conference on Software Engineering (ICSE)</p>
 </blockquote>
 <p>提出了一种实用的、静态的 Python 调用图生成方法。涉及上下文敏感的过程间分析，不动点迭代算法等。没有分析循环和条件语句，也不使用变量类型信息，只能分析有源码的模块。</p>
 <p>编写如下 crypto 模块进行测试：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cryptops</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Crypto</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key</span>):</span><br><span class="line">        self.key = key</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">apply</span>(<span class="params">self, msg, func</span>):</span><br><span class="line">	<span class="keyword">return</span> func(self.key, msg)</span><br><span class="line"></span><br><span class="line">crp = Crypto(<span class="string">&quot;secretkey&quot;</span>)</span><br><span class="line">encrypted = crp.apply(<span class="string">&quot;hello world&quot;</span>, cryptops.encrypt)</span><br><span class="line">decrypted = crp.apply(encrypted, cryptops.decrypt)</span><br></pre></td></tr></table></figure>
-
-<p>(a) 是实际的调用图（人工绘制），(b) Pyan 没有进行过程间分析，(c) Depends 的策略非常保守，只有预期信息足够才生成调用边</p>
+<p>(a) 是实际的调用图（人工绘制），(b) Pyan 没有进行过程间分析，© Depends 的策略非常保守，只有预期信息足够才生成调用边</p>
 <img src="https://i.loli.net/2021/07/29/eoSfyqKCXFDuZwh.jpg" style="zoom:70%;" />
-
 <p>使用 PyCG 分析 crypto 模块，可以看到完整且正确的名称解析和调用</p>
 <ul>
 <li>橙色：模块</li>
@@ -261,25 +276,19 @@ gtag('config', 'UA-164555720-1');
 <li>蓝色：变量</li>
 </ul>
 <img src="https://i.loli.net/2021/07/29/O7IoGZtEjwXup3A.jpg" style="zoom:70%;" />
-
 <p>微观基准测试套件（Micro-benchmark Suite）包含 112 个独特的小型代码，涵盖 Python 语言的各种特性，分为 16 个类别。</p>
 <img src="https://i.loli.net/2021/07/29/pnfacBJVRN3TISA.jpg" style="zoom:70%;" />
-
 <p>宏观基准测试（Macro-benchmarks）使用 5 个流行的开源 Python 软件，平均用了 10h 为每个项目生成调用图</p>
 <img src="https://i.loli.net/2021/07/29/Sqnl6K27FUxhcPk.jpg" style="zoom:70%;" />
-
-<p>PyCG 和 Pyan 对比，PyCG 基本为所有代码生成了完整的调用图（111&#x2F;112），Sound 只覆盖了 103 是因为没有覆盖 Python 的星号赋值；Pyan 整体比较残念，在赋值相关的测试中表现良好。</p>
+<p>PyCG 和 Pyan 对比，PyCG 基本为所有代码生成了完整的调用图（111/112），Sound 只覆盖了 103 是因为没有覆盖 Python 的星号赋值；Pyan 整体比较残念，在赋值相关的测试中表现良好。</p>
 <img src="https://i.loli.net/2021/07/29/tq5ijGV2YyULTNP.jpg" style="zoom:70%;" />
-
 <p>这里的 complete 和 sound 是静态分析中的概念：</p>
 <img src="https://i.loli.net/2021/07/29/MbHyi6CXpPJ4aTq.jpg" style="zoom:50%;" />
-
 <p>PyCG 和 Pyan、Depends 对比，在真实的 Python 项目上，PyCG 能够生成高精度的调用图，Recall 值较低是因为方法的局限和缺乏对 Python 某些功能特性的支持。</p>
 <p>另外还比较了一下时间和内存的消耗（取 20 次的平均值）</p>
 <img src="https://i.loli.net/2021/07/29/4jBnk5lyiJxMouS.jpg" style="zoom:70%;" />
-
-
-<h3 id="3-Qualitative-and-Quantitative-Analysis-of-Callgraph-Algorithms-for-Python"><a href="#3-Qualitative-and-Quantitative-Analysis-of-Callgraph-Algorithms-for-Python" class="headerlink" title="3. Qualitative and Quantitative Analysis of Callgraph Algorithms for Python"></a>3. Qualitative and Quantitative Analysis of Callgraph Algorithms for Python</h3><blockquote>
+<h3 id="3-Qualitative-and-Quantitative-Analysis-of-Callgraph-Algorithms-for-Python">3. Qualitative and Quantitative Analysis of Callgraph Algorithms for Python</h3>
+<blockquote>
 <p>2021 International Conference on Code Quality (ICCQ)</p>
 </blockquote>
 <p>提出了一个可扩展的 Python 调用图比较分析框架 eval_CG，包含微观测试和宏观测试</p>
@@ -293,7 +302,8 @@ gtag('config', 'UA-164555720-1');
 <li>动态调用图（PyCallGraph）通过动态分析执行路径生成 Python 调用图，这种分析应该用另一种方法（例如模糊测试）来获得有意义的结果，否则会产生许多误报</li>
 </ul>
 <p>结论：这些工具生成的静态调用图都包含虚假边，而且都没有生成 sound 的调用图（没有漏报）</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>整理了几个可以用于生成调用图的工具，之后试试看：</p>
+<h2 id="结语">结语</h2>
+<p>整理了几个可以用于生成调用图的工具，之后试试看：</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/davidfraser/pyan">Pyan3</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/vitsalis/pycg">PyCG</a></li>

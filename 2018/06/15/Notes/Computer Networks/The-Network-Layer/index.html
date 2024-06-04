@@ -167,14 +167,11 @@ gtag('config', 'UA-164555720-1');
 <p>为了实现这个目标，网络层必须知道网络拓扑结构（即所有路由器和链路的集合），并从中选择适当的路径。同时，网络层还必修仔细选择路由器。避免某些通信线路和路由器负载过重，而其他线路和路由器空闲。最后，当源端和接收方位于不同网络时，网络层还需要再解决些问题</p>
 <p>OSI 参考模型</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-1.png" width="65%">
-
-
 <p>通信子网</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-2.png" width="65%">
-
-
-<h1 id="网络层设计问题"><a href="#网络层设计问题" class="headerlink" title="网络层设计问题"></a>网络层设计问题</h1><h2 id="存储-转发数据包交换"><a href="#存储-转发数据包交换" class="headerlink" title="存储-转发数据包交换"></a>存储-转发数据包交换</h2><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-3.png" width="65%">
-
+<h1>网络层设计问题</h1>
+<h2 id="存储-转发数据包交换">存储-转发数据包交换</h2>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-3.png" width="65%">
 <p>机制</p>
 <ul>
 <li>如果一台主机要发送一个数据包，它就将数据包传输给最近的路由器，路由器可能在它自己的 LAN 上，也可能在一条通向 ISP 的点到点链路上</li>
@@ -187,7 +184,8 @@ gtag('config', 'UA-164555720-1');
 <li>路由算法是决定数据包接下来去哪里的软件的一部分（例如，哪个输出线路，广播信道上的哪个节点）</li>
 <li>对于无线网络，路由决策是针对每个数据报进行的。对于面向连接的网络，路由决策在电路建立时设置一次</li>
 </ul>
-<h2 id="提供给传输层的服务"><a href="#提供给传输层的服务" class="headerlink" title="提供给传输层的服务"></a>提供给传输层的服务</h2><p>网络层通过网络层&#x2F;传输层接口向传输层提供服务</p>
+<h2 id="提供给传输层的服务">提供给传输层的服务</h2>
+<p>网络层通过网络层/传输层接口向传输层提供服务</p>
 <p>网络层服务的目标</p>
 <ol>
 <li>向上提供的服务应该独立于路由器技术</li>
@@ -197,27 +195,29 @@ gtag('config', 'UA-164555720-1');
 <p>问题</p>
 <ul>
 <li>网络层应该提供面向连接的服务还是无连接的服务</li>
-<li>错误 &#x2F; 流量控制是网络层还是传输层的事？</li>
+<li>错误 / 流量控制是网络层还是传输层的事？</li>
 </ul>
 <p>Internet 社团</p>
 <ul>
 <li>路由器的任务仅仅是传送数据包</li>
 <li>网络（子网）从本质上讲总是不可靠的</li>
 <li>主机需要自己来完成错误控制（错误检测和纠正）和流量控制任务</li>
-<li>网络层再做一遍不会带来更大的好处<ul>
+<li>网络层再做一遍不会带来更大的好处
+<ul>
 <li>端-端论点，每个数据包必须携带完整的目标地址，因为每个数据包的运送独立于它前面的那些数据包（如果有的话）</li>
 </ul>
 </li>
-<li>TCP&#x2F;IP 互联网在实现时是无连接的，但为用户提供连接</li>
+<li>TCP/IP 互联网在实现时是无连接的，但为用户提供连接</li>
 </ul>
 <p>电话公司</p>
 <ul>
 <li>面向连接的方法是正确的</li>
-<li>用户不需要主机中的错误&#x2F;流量控制协议</li>
+<li>用户不需要主机中的错误/流量控制协议</li>
 <li>用户需要可靠、无故障的服务</li>
 <li>服务质量是主要因素</li>
 </ul>
-<h2 id="无连接服务的实现"><a href="#无连接服务的实现" class="headerlink" title="无连接服务的实现"></a>无连接服务的实现</h2><p>如果提供的是无连接的服务，那么所有的数据包都被独立地注入到网络中，并且每个数据包独立路由，不需要提前建立任何设置</p>
+<h2 id="无连接服务的实现">无连接服务的实现</h2>
+<p>如果提供的是无连接的服务，那么所有的数据包都被独立地注入到网络中，并且每个数据包独立路由，不需要提前建立任何设置</p>
 <ul>
 <li>数据包通常称为数据报（datagram），对应的网络称为数据报网络</li>
 </ul>
@@ -226,28 +226,28 @@ gtag('config', 'UA-164555720-1');
 <li>这个连接称为虚电路（VC, virtuall circuit），对应的网络称为虚电路网络</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-4.png" width="65%">
-
-
-<p>每一台路由器都有一个内部表，指明了针对每一个可能的目标地址应该将数据包发送到哪里<br>每个表项由两部分组成：目标地址、通往目标地址所用的出境线路（直连线路）</p>
+<p>每一台路由器都有一个内部表，指明了针对每一个可能的目标地址应该将数据包发送到哪里<br>
+每个表项由两部分组成：目标地址、通往目标地址所用的出境线路（直连线路）</p>
 <p>管理这些路由表并做出路由选择的算法称为路由算法（routing algorithm）</p>
 <p>IP 协议（Internet Protocol）是整个Internet的基础，它是无连接网络服务的重要范例</p>
 <ul>
 <li>每个数据包携带一个目标 IP 地址，路由器使用该地址来单独转发每一个数据包</li>
 <li>IPv4 数据包的地址是 32 位，IPv6 数据包的地址是 128 位</li>
 </ul>
-<h2 id="面向连接服务的实现"><a href="#面向连接服务的实现" class="headerlink" title="面向连接服务的实现"></a>面向连接服务的实现</h2><ul>
+<h2 id="面向连接服务的实现">面向连接服务的实现</h2>
+<ul>
 <li>当建立一个连接时，从源机器到目标机器之间的一条路径就被当作这个连接的一部分确定了下来，并且保存在这些中间路由器的表中</li>
 <li>所有需要在这个连接上通过的流量，都使用这条路径</li>
 <li>当连接被释放之后，虚电路也随之消失</li>
 <li>在面向连接的服务中，每个数据包包含一个标识符，指明了它属于哪一条虚电路</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-5.png" width="65%">
-
 <ul>
 <li>连接标识符 1 的数据包来自于 H1，将被发送到路由器 C，并赋予连接标识符 1</li>
 <li>H3 也希望与 H2 建立连接，新增第二行，因为 A 可以区分数据包来自 H1 还是 H3 但 C 无法区分，基于这个原因，A 给第二个连接的出境流量分配一个不同的连接标识符</li>
 </ul>
-<h3 id="标签交换（label-switching）"><a href="#标签交换（label-switching）" class="headerlink" title="标签交换（label switching）"></a>标签交换（label switching）</h3><p>虚电路</p>
+<h3 id="标签交换（label-switching）">标签交换（label switching）</h3>
+<p>虚电路</p>
 <ul>
 <li>请求连接，在每个数据可以传输前请求</li>
 <li>每个数据包携带一个 VC 标识符（不是目标主机ID）</li>
@@ -261,20 +261,23 @@ gtag('config', 'UA-164555720-1');
 <li>MPLS 往往对客户端是隐藏的，客户看不到这些标签，ISP 用它来为超大流量建立长期的连接</li>
 <li>但是，当服务质量变得很重要而且还需要协助其他 ISP 完成流量管理任务时，ISP 的作用越来越突出</li>
 </ul>
-<h2 id="虚电路与数据报网络的比较"><a href="#虚电路与数据报网络的比较" class="headerlink" title="虚电路与数据报网络的比较"></a>虚电路与数据报网络的比较</h2><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-6.png" width="65%">
-
+<h2 id="虚电路与数据报网络的比较">虚电路与数据报网络的比较</h2>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-6.png" width="65%">
 <p>在网络内部，数据报和虚电路网络之间存在着几个方面的权衡</p>
 <ul>
-<li>建立时间和地址解析时间<ul>
+<li>建立时间和地址解析时间
+<ul>
 <li>使用虚电路需要一个建立阶段，这个阶段计划费时间也消耗资源</li>
 <li>在数据报网络中，不需要建立电路，但路由器需要执行一个更为复杂的查找过程以便找到目标表项</li>
 </ul>
 </li>
-<li>开销和带宽<ul>
+<li>开销和带宽
+<ul>
 <li>如果数据包相当短，在每个数据包中都包括完整的目标地址可能意味着大量的协议开销，因而造成带宽资源的浪费</li>
 </ul>
 </li>
-<li>路由器内存所要求的表空间的数量<ul>
+<li>路由器内存所要求的表空间的数量
+<ul>
 <li>数据报网络中，针对每一个可能的目标地址都要求有一个表项</li>
 <li>虚电路网络中，只要为每一条虚电路提供一个表项即可</li>
 </ul>
@@ -286,10 +289,12 @@ gtag('config', 'UA-164555720-1');
 <li>路由器崩溃，虚电路网络中，经过该路由器的连接都不得不中断，而在数据报网络中，丢失的数据包可以立即重传</li>
 <li>数据报还允许路由器平衡网络流量，因为一个长序列数据包的传输路径可以在序列传输的中途改变</li>
 </ul>
-<h1 id="路由算法"><a href="#路由算法" class="headerlink" title="路由算法"></a>路由算法</h1><p><strong>路由和转发</strong></p>
+<h1>路由算法</h1>
+<p><strong>路由和转发</strong></p>
 <p>路由即对使用哪一条路径做出决策，而转发则是当一个数据包到达时应该采取什么动作</p>
 <ul>
-<li>可以把路由器想象成内部有两个进程<ul>
+<li>可以把路由器想象成内部有两个进程
+<ul>
 <li>一个进程在每个数据包到达的时候对其进行处理，它在路由表中查找该数据包所对应的出境线路，这个进程即为转发（forwarding）</li>
 <li>另一个进程负责生成和更新路由表，<em>这正是路由算法发挥作用的地方</em></li>
 </ul>
@@ -305,16 +310,19 @@ gtag('config', 'UA-164555720-1');
 <p>路由算法的特性</p>
 <ul>
 <li>正确性（correctness）、简单性（simplicity）</li>
-<li>鲁棒性（robustness）<ul>
+<li>鲁棒性（robustness）
+<ul>
 <li>一旦一个重要网络投入运行，它有可能需要连续运行数年而不能出现波及系统范围的失败，部分组件可能失败（链路、路由器）</li>
 <li>路由算法应该能够处理各种各样的硬件和软件发生故障，还有拓扑结构和流量方面的各种变化，而且不能要求所有主机都停止所有的工作</li>
 </ul>
 </li>
-<li>稳定性（stability）<ul>
+<li>稳定性（stability）
+<ul>
 <li>一个稳定的路由算法能达到平衡，并且保持平衡状态。因此它应该迅速收敛，在路由器算法到达平衡之前，通信可能无法正常运行</li>
 </ul>
 </li>
-<li>公平性（fairness）、有效性（efficiency）<ul>
+<li>公平性（fairness）、有效性（efficiency）
+<ul>
 <li>时常是矛盾的</li>
 </ul>
 </li>
@@ -330,39 +338,43 @@ gtag('config', 'UA-164555720-1');
 <ul>
 <li>使用动态信息（当前流量、拓补结构、延迟等）来选择路由</li>
 <li>改变路由决策以便反映出拓扑结构的变化，通常也会反映出流量的变化情况</li>
-<li>在多个方面有所不同<ul>
+<li>在多个方面有所不同
+<ul>
 <li>获取信息的来源（本地，相邻路由器，所有路由器）</li>
 <li>改变路径的时间（每当拓扑发生变化时，每隔△t秒随负载变化）</li>
 <li>路由优化度量（距离，跳数，估计的传输时间）</li>
 </ul>
 </li>
 </ul>
-<h2 id="优化原则（optimality-principle）"><a href="#优化原则（optimality-principle）" class="headerlink" title="优化原则（optimality principle）"></a>优化原则（optimality principle）</h2><p>如果路由器 J 在从路由器 I 到路由器 K 的最优路径上，那么从 J 到 K 的最优路径也必定遵循同样的路由</p>
+<h2 id="优化原则（optimality-principle）">优化原则（optimality principle）</h2>
+<p>如果路由器 J 在从路由器 I 到路由器 K 的最优路径上，那么从 J 到 K 的最优路径也必定遵循同样的路由</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-7.png" width="65%">
-
-
-<h3 id="汇集树"><a href="#汇集树" class="headerlink" title="汇集树"></a>汇集树</h3><p>作为优化原则的一个直接结果，从所有的源到一个制定目标的最优路径的集合构成了一棵以目标节点为根的汇集树（sink tree）</p>
+<h3 id="汇集树">汇集树</h3>
+<p>作为优化原则的一个直接结果，从所有的源到一个制定目标的最优路径的集合构成了一棵以目标节点为根的汇集树（sink tree）</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-8.png" width="65%">
-
 <ul>
 <li>图中的距离度量是跳数</li>
 <li>所有路由算法的目标是为所有路由器找到这样的汇集树，并根据汇集树来转发数据包</li>
 </ul>
 <p>汇集树不一定是唯一的：有可能存在具有相同路径长度的其他汇集树</p>
-<h3 id="图抽象"><a href="#图抽象" class="headerlink" title="图抽象"></a>图抽象</h3><p>由算法的图抽象：</p>
+<h3 id="图抽象">图抽象</h3>
+<p>由算法的图抽象：</p>
 <ul>
 <li>图中的每个节点代表一个路由器</li>
-<li>图的每条边是代表一条通信线路或物理链路<ul>
+<li>图的每条边是代表一条通信线路或物理链路
+<ul>
 <li>链路成本：延迟，成本，拥塞等级</li>
 </ul>
 </li>
-<li>选择给定路由器对之间的路由：找到“好”路径<ul>
+<li>选择给定路由器对之间的路由：找到“好”路径
+<ul>
 <li>通常意味着最小成本路径</li>
 <li>其他可能的定义</li>
 </ul>
 </li>
 </ul>
-<h2 id="最短路径算法"><a href="#最短路径算法" class="headerlink" title="最短路径算法"></a>最短路径算法</h2><p>常用，因为简单易懂</p>
+<h2 id="最短路径算法">最短路径算法</h2>
+<p>常用，因为简单易懂</p>
 <p>最短路径度量（路径长度）</p>
 <ul>
 <li>跳数（hop）</li>
@@ -372,27 +384,30 @@ gtag('config', 'UA-164555720-1');
 <li>平均流量</li>
 <li>通信成本</li>
 </ul>
-<h3 id="Dijkstra-算法"><a href="#Dijkstra-算法" class="headerlink" title="Dijkstra 算法"></a>Dijkstra 算法</h3><p>这种算法能找出网络中一个源节点到全部目标节点的最短路径</p>
+<h3 id="Dijkstra-算法">Dijkstra 算法</h3>
+<p>这种算法能找出网络中一个源节点到全部目标节点的最短路径</p>
 <p>迪杰斯特拉算法（或变体，SPF 最短路径优先算法）的基本思路是</p>
 <ul>
 <li>选择源，并将列表中连接到源的节点考虑进来</li>
 <li>选择距离最近的节点</li>
 </ul>
-<h3 id="加权无向图上的算法"><a href="#加权无向图上的算法" class="headerlink" title="加权无向图上的算法"></a>加权无向图上的算法</h3><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-9.png" width="65%">
-
-
-<h2 id="泛洪（flooding）"><a href="#泛洪（flooding）" class="headerlink" title="泛洪（flooding）"></a>泛洪（flooding）</h2><p>泛洪是孤立路由的一种形式，不选择特定的路线。将每一个入境数据包发送到除了该数据包到达的那条线路以外的每条出境线路</p>
+<h3 id="加权无向图上的算法">加权无向图上的算法</h3>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-9.png" width="65%">
+<h2 id="泛洪（flooding）">泛洪（flooding）</h2>
+<p>泛洪是孤立路由的一种形式，不选择特定的路线。将每一个入境数据包发送到除了该数据包到达的那条线路以外的每条出境线路</p>
 <p>为了防止数据包永久循环，每个路由器递减包头中包含的跳计数器。只要跳计数器递减到零，路由器就丢弃该数据包</p>
 <p>减少循环</p>
 <ul>
 <li>让每个源路由器在接收到来自数据的数据包时设置一个序号</li>
 <li>每个路由器为每个源路由器准备一张表，记录已经观察到的来自源路由器的序号</li>
-<li>如果入境数据包在这张表中，它就不能再被泛洪到其他路由器<ul>
+<li>如果入境数据包在这张表中，它就不能再被泛洪到其他路由器
+<ul>
 <li>为防止表无限膨胀，每个表使用一个计数器 k 作为参数，表示直到 k 的所有序号都已经观察到了</li>
 </ul>
 </li>
 </ul>
-<h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p>确保数据包能被传送到网络中的每个节点</p>
+<h3 id="用途">用途</h3>
+<p>确保数据包能被传送到网络中的每个节点</p>
 <ul>
 <li>有效的广播手段，一些无线路由算法利用了这个特性</li>
 </ul>
@@ -407,34 +422,38 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>发送路由更新，因为更新不能依赖路由器表的正确性</p>
 <p>理论上选择所有的路径，选出最短的那条路径</p>
-<h2 id="距离矢量路由"><a href="#距离矢量路由" class="headerlink" title="距离矢量路由"></a>距离矢量路由</h2><p>也被称为分布式 Bellman-Ford 路由算法，最初 APPANET 使用的路由算法，也曾被用于 Internet，相应的协议名为 RIP 协议</p>
-<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><ul>
+<h2 id="距离矢量路由">距离矢量路由</h2>
+<p>也被称为分布式 Bellman-Ford 路由算法，最初 APPANET 使用的路由算法，也曾被用于 Internet，相应的协议名为 RIP 协议</p>
+<h3 id="工作原理">工作原理</h3>
+<ul>
 <li>每个路由器维护一张表（即一个矢量），表中列出了当前已知的到每个目标的最佳距离，以及所使用的链路。这些表通过领居之间相互交换信息而不断被更新，最终每个路由器都了解到达每个目的地的最佳链路</li>
-<li>每个路由器知道自己到邻居的距离（成本）<ul>
+<li>每个路由器知道自己到邻居的距离（成本）
+<ul>
 <li>跳数：1 跳</li>
 <li>传播延迟：通过发送回应请求（ECHO request），返回加上时间戳的数据包</li>
 </ul>
 </li>
 <li>路由器周期性地和邻居交换路由表</li>
-<li>接收到路由表更新后，对表中的每个目的地<ul>
+<li>接收到路由表更新后，对表中的每个目的地
+<ul>
 <li>用邻居表的值加上本地到邻居表的成本和本地的表比较</li>
 <li>如果通过邻居的路径成本更低，那么路由器更新本地表以将数据包转发给邻居</li>
 </ul>
 </li>
 </ul>
-<h3 id="D-V-路由例子"><a href="#D-V-路由例子" class="headerlink" title="D-V 路由例子"></a>D-V 路由例子</h3><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-10.png" width="65%">
-
-
-<h3 id="无穷计数问题"><a href="#无穷计数问题" class="headerlink" title="无穷计数问题"></a>无穷计数问题</h3><p>整个网络最佳路径的寻找过程称为收敛（convergence）</p>
+<h3 id="D-V-路由例子">D-V 路由例子</h3>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-10.png" width="65%">
+<h3 id="无穷计数问题">无穷计数问题</h3>
+<p>整个网络最佳路径的寻找过程称为收敛（convergence）</p>
 <p>距离矢量路由总是能够收敛到正确的答案，但速度可能非常慢</p>
 <ul>
 <li>好消息传得快，坏消息传得慢（无穷计数问题）</li>
 </ul>
 <p>无穷计数问题（count-to-infinity）</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-11.png" width="65%">
-
 <ul>
-<li>（a）假定 A 最初处于停机状态，所有其他路由器都知道这一点；当 A 启动时，其他的路由器通过矢量交换知道了这一点<ul>
+<li>（a）假定 A 最初处于停机状态，所有其他路由器都知道这一点；当 A 启动时，其他的路由器通过矢量交换知道了这一点
+<ul>
 <li>如果一个网络中最长路径是 N 跳，那么经过 N 次交换后，每个路由器都将知道新恢复的链路和路由器</li>
 </ul>
 </li>
@@ -449,13 +468,15 @@ gtag('config', 'UA-164555720-1');
 <ul>
 <li>带有染毒逆向的水平分裂法（Split horizon with poisoned reverse）RFC 1058</li>
 </ul>
-<h2 id="链路状态路由"><a href="#链路状态路由" class="headerlink" title="链路状态路由"></a>链路状态路由</h2><p>1979 年以前 APPANET 一直使用距离矢量路由算法，而在此之后则改为使用链路状态路由算法</p>
+<h2 id="链路状态路由">链路状态路由</h2>
+<p>1979 年以前 APPANET 一直使用距离矢量路由算法，而在此之后则改为使用链路状态路由算法</p>
 <p>距离矢量算法的问题</p>
 <ul>
 <li>当网络拓扑结构发生变化后距离矢量路由算法需要太长时间才能收敛到稳定状态（无穷计数问题）</li>
 <li>高优先级路由更新数据包很大，对流量造成不利影响</li>
 <li>网络适应拥塞的速度太慢，对小变化的反应太快</li>
-<li>平均队列长度用于估计延迟<ul>
+<li>平均队列长度用于估计延迟
+<ul>
 <li>仅当所有线路具有相同的容量（capacity）和传输延迟（propagation delay）时才有效</li>
 <li>不考虑数据包大小的不同</li>
 </ul>
@@ -463,7 +484,8 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>每个路由器维护一个数据库，描述每个路由器之间的的拓扑结构和链路延迟。也就是说，每个路由器都会跟踪链接和节点的完整图形</p>
 <ul>
-<li>避免由于所有路由器获取其他路由器的信息而导致无穷计数问题<br>每个路由器都使用 SPF 算法根据数据库中的当前值计算最短路径</li>
+<li>避免由于所有路由器获取其他路由器的信息而导致无穷计数问题<br>
+每个路由器都使用 SPF 算法根据数据库中的当前值计算最短路径</li>
 <li>因为每个路由器都使用相同的信息进行计算，所以可以做出更好的路由决策</li>
 </ul>
 <p>每一个路由器必须完成以下事情，算法才能正常工作</p>
@@ -475,23 +497,25 @@ gtag('config', 'UA-164555720-1');
 <li>计算出到每个其他路由器的最短路径</li>
 </ol>
 <p>实际上，算法将完整的拓扑结构分发给了每一个路由器。然后每个路由器运行 Dijkstra 算法就可以找出从本地到每一个其他路由器的最短路径</p>
-<h3 id="发现邻居"><a href="#发现邻居" class="headerlink" title="发现邻居"></a>发现邻居</h3><p>当一个路由器启动时，它的第一个任务是找出哪些路由器时它的邻居</p>
+<h3 id="发现邻居">发现邻居</h3>
+<p>当一个路由器启动时，它的第一个任务是找出哪些路由器时它的邻居</p>
 <ul>
 <li>为了实现这个目标，它只需在每一条点到点线路上发送一个特殊的 HELLO 数据包</li>
 </ul>
 <p>线路另一端的路由器应该返回一个应答说明自己是谁，这些名字必须是全局唯一的</p>
 <p>当两个或多个路由器通过一个广播链路（比如一个交换机、环或经典以太网）</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-12.png" width="65%">
-
 <ul>
-<li>（a）一个广播 LAN 直接与三个路由器 A、C、F 连接。每个路由器都连接到一个或多个其他的路由器上<ul>
+<li>（a）一个广播 LAN 直接与三个路由器 A、C、F 连接。每个路由器都连接到一个或多个其他的路由器上
+<ul>
 <li>广播 LAN 为连接到其上的任何一对路由器提供了彼此的连通性</li>
 <li>然而，把 LAN 建模成许多个点到点链路会增大拓扑结构，从而导致浪费消息</li>
 </ul>
 </li>
 <li>（b）引入节点 N 和 A、C、F 连接，LAN 上的一个指定路由器（designated router）被选中替代 N 运行路由协议</li>
 </ul>
-<h3 id="设置链路成本"><a href="#设置链路成本" class="headerlink" title="设置链路成本"></a>设置链路成本</h3><p>到邻居的成本可自动设置或由网络运营商配置的度量</p>
+<h3 id="设置链路成本">设置链路成本</h3>
+<p>到邻居的成本可自动设置或由网络运营商配置的度量</p>
 <ul>
 <li>一种常用的选择是使成本与链路带宽成反比</li>
 <li>1Gbps-1，100Mbps-10</li>
@@ -501,31 +525,35 @@ gtag('config', 'UA-164555720-1');
 <li>确定这种延迟的最直接方法是通过线路给另一边发送一个特殊的 ECHO 数据包，要求对方立即发回</li>
 <li>通过测量往返时间再除以 2，发送路由器可以得到一个合理的延迟估算值</li>
 </ul>
-<h3 id="构造链路状态包"><a href="#构造链路状态包" class="headerlink" title="构造链路状态包"></a>构造链路状态包</h3><p>数据包的内容：发送方的标识符（ID）、序号（Seq）、年龄（Age）、邻居列表</p>
+<h3 id="构造链路状态包">构造链路状态包</h3>
+<p>数据包的内容：发送方的标识符（ID）、序号（Seq）、年龄（Age）、邻居列表</p>
 <ul>
 <li>对每个邻居，同时给出到这个邻居的延迟</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-13.png" width="65%">
-
 <p>构造链路状态包很容易，难确定的是什么时候构造</p>
 <ul>
 <li>周期性地创建数据包</li>
-<li>每当发生重要事情时才创建数据包<ul>
+<li>每当发生重要事情时才创建数据包
+<ul>
 <li>比如当一条线路断掉或一个邻居节点停机</li>
 </ul>
 </li>
 </ul>
-<h3 id="分发链路状态包"><a href="#分发链路状态包" class="headerlink" title="分发链路状态包"></a>分发链路状态包</h3><p>基本思路是使用泛洪将链路状态数据包分发给所有路由器</p>
+<h3 id="分发链路状态包">分发链路状态包</h3>
+<p>基本思路是使用泛洪将链路状态数据包分发给所有路由器</p>
 <ul>
 <li>为了控制泛洪规模，每个数据包都包含一个序号，序号随着每一个新数据包发送而逐一递增</li>
-<li>路由器记录下它所看到的所有（源路由器、序号）对。当一个新的链路状态数据包到达时，路由器检查这个新来的数据包是否已经出现在列表中<ul>
+<li>路由器记录下它所看到的所有（源路由器、序号）对。当一个新的链路状态数据包到达时，路由器检查这个新来的数据包是否已经出现在列表中
+<ul>
 <li>如果是新数据包，则把它转发到除入境线路之外的所有其它线路上</li>
 <li>如果是重复数据包，则把它丢弃</li>
 <li>如果数据包的序号小于当前所有看到过的来自该源路由器的最大序号，则它将被当作过时数据包而拒绝接受，因为路由器已经有了更新的数据</li>
 </ul>
 </li>
 </ul>
-<h4 id="年龄（age）字段"><a href="#年龄（age）字段" class="headerlink" title="年龄（age）字段"></a>年龄（age）字段</h4><p>问题</p>
+<h4 id="年龄（age）字段">年龄（age）字段</h4>
+<p>问题</p>
 <ul>
 <li>如果序号绕回，可能会产生混淆</li>
 <li>如果一个路由器崩溃了，它将丢失所有的序号记录表</li>
@@ -538,7 +566,8 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>改进</p>
 <ul>
-<li>当一个链路状态数据包被泛洪到一个路由器时，它并没有立即被排入队列等待传输。相反，它首先被放到一个保留区中等待一段时间，如果在这个数据包被转发出去之前，另一个来自于同一个源路由器的链路状态数据包也到来了，那么就比较它们的序号。<ul>
+<li>当一个链路状态数据包被泛洪到一个路由器时，它并没有立即被排入队列等待传输。相反，它首先被放到一个保留区中等待一段时间，如果在这个数据包被转发出去之前，另一个来自于同一个源路由器的链路状态数据包也到来了，那么就比较它们的序号。
+<ul>
 <li>如果两个数据包的序号相等，则丢弃重读数据包</li>
 <li>如果两者不相等，则丢弃老的数据包</li>
 </ul>
@@ -546,18 +575,19 @@ gtag('config', 'UA-164555720-1');
 <li>为了防止线路产生错误导致丢包和错包，所有的链路状态数据包都要被确认</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-14.png" width="65%">
-
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-15.png" width="65%">
-
-
-<h3 id="计算新路由"><a href="#计算新路由" class="headerlink" title="计算新路由"></a>计算新路由</h3><p>一旦路由器已经积累了全部的链路状态数据包之后，它就可以构造出完整的网络图，因为每条链路都已经被表示出来了。事实上，每条链路被表示了两次，每个方向各表示一次。不同方向的链路可能有不同的成本。最短路径计算可找到从 A 到 B 与从 B 到 A 不同的路径</p>
+<h3 id="计算新路由">计算新路由</h3>
+<p>一旦路由器已经积累了全部的链路状态数据包之后，它就可以构造出完整的网络图，因为每条链路都已经被表示出来了。事实上，每条链路被表示了两次，每个方向各表示一次。不同方向的链路可能有不同的成本。最短路径计算可找到从 A 到 B 与从 B 到 A 不同的路径</p>
 <p>现在可以在路由器本地运行 Dijkstra 算法，以便构建出从本地出发到所有可能目标的最短路径。这个算法的运行结果告诉路由器到达每个目的地能够走哪条链路。这个信息被安装在路由表中，而且恢复正常操作</p>
-<h3 id="链路状态路由总结"><a href="#链路状态路由总结" class="headerlink" title="链路状态路由总结"></a>链路状态路由总结</h3><ul>
-<li>需要更多的内存和计算<ul>
+<h3 id="链路状态路由总结">链路状态路由总结</h3>
+<ul>
+<li>需要更多的内存和计算
+<ul>
 <li>在大型网络中运行这个算法依然是个问题</li>
 </ul>
 </li>
-<li>没有慢收敛问题<ul>
+<li>没有慢收敛问题
+<ul>
 <li>在许多实际场合，链路状态路由算法工作地很好</li>
 </ul>
 </li>
@@ -567,28 +597,33 @@ gtag('config', 'UA-164555720-1');
 <li>许多 ISP 使用中间系统到中间系统（IS-IS, Intermediate System-Intermediate System）链路状态协议</li>
 <li>开放最短路径优先（OSPF, Open Shortest Path First）</li>
 </ul>
-<h2 id="层次路由（hierarchical-hierarchy）"><a href="#层次路由（hierarchical-hierarchy）" class="headerlink" title="层次路由（hierarchical&#x2F;hierarchy）"></a>层次路由（hierarchical&#x2F;hierarchy）</h2><p>区域（reigon）-簇（cluster）-区（zone）-群（group）-…</p>
+<h2 id="层次路由（hierarchical-hierarchy）">层次路由（hierarchical/hierarchy）</h2>
+<p>区域（reigon）-簇（cluster）-区（zone）-群（group）-…</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-16.png" width="65%">
-
-
-<h2 id="广播路由（broadcast）"><a href="#广播路由（broadcast）" class="headerlink" title="广播路由（broadcast）"></a>广播路由（broadcast）</h2><p>同时给全部目标地址发送一个数据包称为广播（braodcasting）</p>
+<h2 id="广播路由（broadcast）">广播路由（broadcast）</h2>
+<p>同时给全部目标地址发送一个数据包称为广播（braodcasting）</p>
 <p>实现广播</p>
 <ul>
-<li>广播网络<ul>
+<li>广播网络
+<ul>
 <li>设置一个特殊的地址作为“所有主机地址”</li>
 </ul>
 </li>
-<li>非广播网络<ul>
-<li>给每个目标地址单独发送数据包（单播unicast）<ul>
+<li>非广播网络
+<ul>
+<li>给每个目标地址单独发送数据包（单播unicast）
+<ul>
 <li>浪费带宽</li>
 </ul>
 </li>
-<li>泛洪<ul>
+<li>泛洪
+<ul>
 <li>产生太多数据包，浪费带宽</li>
 </ul>
 </li>
 <li>多目标路由（multidestination outing）</li>
-<li>生成树（spanning tree）<ul>
+<li>生成树（spanning tree）
+<ul>
 <li>网络的一个子集，包含所有的路由器，但没有任何环路</li>
 <li>汇集树是生成树的一种</li>
 </ul>
@@ -598,32 +633,27 @@ gtag('config', 'UA-164555720-1');
 </li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-17.png" width="65%">
-
-
-<h2 id="组播路由（multicast）"><a href="#组播路由（multicast）" class="headerlink" title="组播路由（multicast）"></a>组播路由（multicast）</h2><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-18.png" width="65%">
-
-
+<h2 id="组播路由（multicast）">组播路由（multicast）</h2>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-18.png" width="65%">
 <p>距离矢量组播路由协议（DVMRP）</p>
 <ul>
 <li>基于核心树（core-based trees）的技术</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-19.png" width="65%">
-
-
-<h2 id="任播路由（anycast）"><a href="#任播路由（anycast）" class="headerlink" title="任播路由（anycast）"></a>任播路由（anycast）</h2><p>也叫选播</p>
-<h2 id="移动主机路由（mobile-host）"><a href="#移动主机路由（mobile-host）" class="headerlink" title="移动主机路由（mobile host）"></a>移动主机路由（mobile host）</h2><ul>
+<h2 id="任播路由（anycast）">任播路由（anycast）</h2>
+<p>也叫选播</p>
+<h2 id="移动主机路由（mobile-host）">移动主机路由（mobile host）</h2>
+<ul>
 <li>家乡位置（home location）</li>
 <li>家乡地址（home address）</li>
 <li>家乡代理（home agent）</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-20.png" width="65%">
-
-
-<h2 id="自组织网络路由（ad-hoc-network）"><a href="#自组织网络路由（ad-hoc-network）" class="headerlink" title="自组织网络路由（ad hoc network）"></a>自组织网络路由（ad hoc network）</h2><p>Ad hoc 按需距离矢量路由算法（AODV）</p>
+<h2 id="自组织网络路由（ad-hoc-network）">自组织网络路由（ad hoc network）</h2>
+<p>Ad hoc 按需距离矢量路由算法（AODV）</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-21.png" width="65%">
-
-
-<h1 id="网络互联（internetwork）"><a href="#网络互联（internetwork）" class="headerlink" title="网络互联（internetwork）"></a>网络互联（internetwork）</h1><p>internet</p>
+<h1>网络互联（internetwork）</h1>
+<p>internet</p>
 <ul>
 <li>将两个或多个网络连接起来</li>
 </ul>
@@ -633,27 +663,30 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>存在着许多不同的网络</p>
 <ul>
-<li>PAN、LAN、MAN、WAN<ul>
+<li>PAN、LAN、MAN、WAN
+<ul>
 <li>以太网（Ethernet）、802.11、802.16、固定和移动电话网络</li>
 </ul>
 </li>
 </ul>
 <p>梅特卡夫定律（Metcalfe）</p>
 <ul>
-<li>一个具有 $N$ 个结点的网络的价值等于节点之间的连接数，或者 $N^2$</li>
+<li>一个具有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> 个结点的网络的价值等于节点之间的连接数，或者 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>N</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">N^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></li>
 <li>这意味着大型网络比小型网络更有价值，因为它们允许更多的连接，所以始终有将小型网络联结起来的激励</li>
 </ul>
-<h2 id="网络如何不同"><a href="#网络如何不同" class="headerlink" title="网络如何不同"></a>网络如何不同</h2><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-22.png" width="65%">
-
-
-<h2 id="何以连接网络"><a href="#何以连接网络" class="headerlink" title="何以连接网络"></a>何以连接网络</h2><p>两种基本选择</p>
+<h2 id="网络如何不同">网络如何不同</h2>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-22.png" width="65%">
+<h2 id="何以连接网络">何以连接网络</h2>
+<p>两种基本选择</p>
 <ul>
 <li>可以制造设备，它能将每种网络的数据包翻译或转换成每个其他类别网络的数据包</li>
-<li>尝试在不同网络的上面加一个间接层，并且构造一个公共层来解决这个问题<br>两种情况下，新设备被放置在网络之间的边界上</li>
+<li>尝试在不同网络的上面加一个间接层，并且构造一个公共层来解决这个问题<br>
+两种情况下，新设备被放置在网络之间的边界上</li>
 </ul>
 <p>Cerf 和 Kahn 提出用一个公共层来隐藏所有网络的差异</p>
 <ul>
-<li>IP 提供了一种通用的数据包格式，所有路由器都认识这种数据包，因而这种数据包几乎可以通过所有的网络传递<ul>
+<li>IP 提供了一种通用的数据包格式，所有路由器都认识这种数据包，因而这种数据包几乎可以通过所有的网络传递
+<ul>
 <li>计算机网络、电话（telephone）网络、传感器（sensor）网络</li>
 </ul>
 </li>
@@ -669,7 +702,8 @@ gtag('config', 'UA-164555720-1');
 <li>网桥（bridge）、交换机（switch） —— 数据链路层</li>
 </ol>
 <ul>
-<li>可以被用来构建网络，只能处理轻微的协议转换<ul>
+<li>可以被用来构建网络，只能处理轻微的协议转换
+<ul>
 <li>例如，在 10、100、1000 Mbps 以太网交换机之间传递帧</li>
 </ul>
 </li>
@@ -682,23 +716,19 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>用一个公共的网络层来互连不同的网络</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-23.png" width="65%">
-
-
 <p>帧结构</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-24.png" width="65%">
-
-
 <p>网络协议操作</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-25.png" width="65%">
-
-
 <p>路由情况和交换（或桥接）的本质区别</p>
 <ul>
-<li>在路由器上，数据包被从帧中提取出来，数据包中的网络地址被用来决定把它转发到哪里<ul>
+<li>在路由器上，数据包被从帧中提取出来，数据包中的网络地址被用来决定把它转发到哪里
+<ul>
 <li>路由器不必了解交换机所使用的链路层协议</li>
 </ul>
 </li>
-<li>在交换机（或网桥）上，整个帧是根据其MAC地址传送的<ul>
+<li>在交换机（或网桥）上，整个帧是根据其MAC地址传送的
+<ul>
 <li>交换机不必了解正在被交换的数据包所采用的网络层协议</li>
 </ul>
 </li>
@@ -707,7 +737,8 @@ gtag('config', 'UA-164555720-1');
 <ul>
 <li>把一个LAN的帧翻译成另一个LAN的帧，这样工作并不理想</li>
 </ul>
-<p>现在，网桥主要用于在数据链路层连接相同类型的网络<br>路由器在网络层连接不同的网络</p>
+<p>现在，网桥主要用于在数据链路层连接相同类型的网络<br>
+路由器在网络层连接不同的网络</p>
 <p>仅当有一个公共网络层时，网络互联才能工作</p>
 <ul>
 <li>IP、IPX、SNA、AppleTalk</li>
@@ -718,25 +749,23 @@ gtag('config', 'UA-164555720-1');
 <li>但是具有不同网络协议的网络很难在两者之间进行转换</li>
 <li>隧道是一个常见的特例</li>
 </ul>
-<h2 id="隧道（tunneling）"><a href="#隧道（tunneling）" class="headerlink" title="隧道（tunneling）"></a>隧道（tunneling）</h2><p>源主机和目标主机所在的网络类型完全相同，但中间却隔着一个不同类型的网络</p>
+<h2 id="隧道（tunneling）">隧道（tunneling）</h2>
+<p>源主机和目标主机所在的网络类型完全相同，但中间却隔着一个不同类型的网络</p>
 <ul>
 <li>整个数据包被封装在中间不同类型的网络协议中，之后在另一侧被恢复</li>
 <li>避免了翻译数据包</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-26.png" width="65%">
-
-
 <p>隧道类比</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-27.png" width="65%">
-
-
 <p>隧道被广泛用于连接那些因使用其他网络而被隔离的主机和网络。结果生成的网络就是所谓的覆盖（overlay）网络，因为它有效地覆盖在基础网络之上</p>
 <p>隧道的缺点是无法到达位于隧道之下网络的主机，因为数据包无法送隧道中间逃生</p>
 <ul>
 <li>这个限制变成了虚拟专用网络（VPN, Virtual Private Networks）的优势</li>
 <li>VPN 就是一个提供安全措施的简单覆盖网络</li>
 </ul>
-<h2 id="互联网路由"><a href="#互联网路由" class="headerlink" title="互联网路由"></a>互联网路由</h2><p>互联网络的路由所面临的问题</p>
+<h2 id="互联网路由">互联网路由</h2>
+<p>互联网络的路由所面临的问题</p>
 <ul>
 <li>内部网络可能使用不同的路由算法</li>
 <li>网络由不同的运营商运行，运营商对于什么是通过网络的好路径有不同的想法</li>
@@ -745,33 +774,39 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>两级路由算法</p>
 <ul>
-<li>在每个网络中，使用一个域内（intradomain）或内部网关协议（interior gateway protocol）进行路由<ul>
+<li>在每个网络中，使用一个域内（intradomain）或内部网关协议（interior gateway protocol）进行路由
+<ul>
 <li>链路状态路由、距离矢量路由</li>
 </ul>
 </li>
-<li>为了让数据包跨越构成互联网的网络，就需要用到域间（interdomain）或外部网关协议（exterior protocol），边界网关路由协议（BGP, Border Gateway Protocol）<br>网络可能全部使用不同的域内协议，但必须使用相同的域间协议</li>
+<li>为了让数据包跨越构成互联网的网络，就需要用到域间（interdomain）或外部网关协议（exterior protocol），边界网关路由协议（BGP, Border Gateway Protocol）<br>
+网络可能全部使用不同的域内协议，但必须使用相同的域间协议</li>
 </ul>
 <p>自治系统 AS（Autonomous System）</p>
 <ul>
 <li>每个网络独立于所有其他网络运营，因此这样的网络通常称为一个自治系统 AS（Autonomous System）</li>
-<li>AS 的良好默认模型是 ISP 网络<ul>
+<li>AS 的良好默认模型是 ISP 网络
+<ul>
 <li>事实上，一个 ISP 网络或许由多个 AS 组成</li>
 </ul>
 </li>
 </ul>
 <p>路由策略（routing policy）</p>
 <ul>
-<li>在 Internet 上，一大决定因素是 ISP 之间的商业安排<ul>
+<li>在 Internet 上，一大决定因素是 ISP 之间的商业安排
+<ul>
 <li>每个 ISP 可能因替其他 ISP 承载流量而收取或接收相应的费用</li>
 </ul>
 </li>
-<li>另一个因素在于，如果国际互联网络的路由需要跨越国界<ul>
+<li>另一个因素在于，如果国际互联网络的路由需要跨越国界
+<ul>
 <li>各国的法律可能会突然开始发挥作用</li>
 </ul>
 </li>
 <li>所有这些非技术因素都包裹在一个路由策略概念中，控制着自治网络自主选择所用的路由</li>
 </ul>
-<h2 id="数据包分段"><a href="#数据包分段" class="headerlink" title="数据包分段"></a>数据包分段</h2><p>每个网络或者链路都会限制其数据包的最大长度，这种限制来自多方面的原因</p>
+<h2 id="数据包分段">数据包分段</h2>
+<p>每个网络或者链路都会限制其数据包的最大长度，这种限制来自多方面的原因</p>
 <ol>
 <li>硬件（比如以太网帧的长度限制）</li>
 <li>操作系统（比如所有的缓冲区都是 512 字节）</li>
@@ -780,38 +815,44 @@ gtag('config', 'UA-164555720-1');
 <li>期望将错误引入的重传次数减少到某种程度</li>
 <li>期望防止数据包占用信道时间太长</li>
 </ol>
-<h3 id="路径-MTU"><a href="#路径-MTU" class="headerlink" title="路径 MTU"></a>路径 MTU</h3><p>路径上的最大的数据包大小称为路径最大传输单元（MTU, Path Maximun Transmission Unit）</p>
+<h3 id="路径-MTU">路径 MTU</h3>
+<p>路径上的最大的数据包大小称为路径最大传输单元（MTU, Path Maximun Transmission Unit）</p>
 <ul>
 <li>源端通常不知道数据包通过网络到达接收方的路径，因此也不知道路径 MTU 的大小</li>
 <li>即使源端知道路径 MTU，数据包在无连接网络中也是独立路由的，比如 Internet。这种路由意味着路径可能会突然改变，因而意外地更改路径 MTU</li>
 </ul>
-<h3 id="分段（Fragment）"><a href="#分段（Fragment）" class="headerlink" title="分段（Fragment）"></a>分段（Fragment）</h3><p>允许路由器将数据包拆分成段，将每个段作为一个独立的网络层数据包发送</p>
+<h3 id="分段（Fragment）">分段（Fragment）</h3>
+<p>允许路由器将数据包拆分成段，将每个段作为一个独立的网络层数据包发送</p>
 <p>数据包交换网络把段重新整合起来非常麻烦</p>
 <ul>
-<li>两种对立策略<ul>
+<li>两种对立策略
+<ul>
 <li>透明分段（non-Transparent Fragment）</li>
 <li>非透明分段（Transparent Fragment）</li>
 </ul>
 </li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-28.png" width="65%">
-
-<h4 id="透明分段"><a href="#透明分段" class="headerlink" title="透明分段"></a>透明分段</h4><p>从该网络一直到最终的目标途中的每个网络都感觉不到曾经发生过分段</p>
+<h4 id="透明分段">透明分段</h4>
+<p>从该网络一直到最终的目标途中的每个网络都感觉不到曾经发生过分段</p>
 <p>一个网络中，进入路由器对一个数据包进行分段，同一网络中的出口路由器将这些分段重新组装成原始数据包</p>
 <p>问题</p>
 <ul>
-<li>出口路由器必须知道什么时候它已经接收到了全部的段<ul>
-<li>每个分段中必须提供一个计数字段 &#x2F; 结束标志位</li>
+<li>出口路由器必须知道什么时候它已经接收到了全部的段
+<ul>
+<li>每个分段中必须提供一个计数字段 / 结束标志位</li>
 </ul>
 </li>
-<li>所有的数据包必须经过同一个出口路由器才能进行重组<ul>
+<li>所有的数据包必须经过同一个出口路由器才能进行重组
+<ul>
 <li>路由收到了限制</li>
 </ul>
 </li>
 <li>需要缓冲</li>
 <li>开销（当一个数据包需要通过一系列的小数据包网络时，需要多次被分段和重组）</li>
 </ul>
-<h4 id="非透明分段"><a href="#非透明分段" class="headerlink" title="非透明分段"></a>非透明分段</h4><p>避免在任何一个中间路由器上重新组合分段。一旦一个数据包已经被分段，则每个段都被当做原始的数据包一样来对待，重组过程只在目标主机上进行</p>
+<h4 id="非透明分段">非透明分段</h4>
+<p>避免在任何一个中间路由器上重新组合分段。一旦一个数据包已经被分段，则每个段都被当做原始的数据包一样来对待，重组过程只在目标主机上进行</p>
 <p>路由器所做的工作比较少，IP 就是以这种方式工作的</p>
 <p>缺点</p>
 <ul>
@@ -821,13 +862,13 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>一个完整的设计要求分段可以重新构建原数据流的方式编号</p>
 <ul>
-<li>IP 采用的设计思想是<ul>
+<li>IP 采用的设计思想是
+<ul>
 <li>给每一个段一个数据包序号（所有的数据包都携带）、一个数据包内的绝对字节偏移量、和一个指明是否到达数据包末尾的标志位</li>
 </ul>
 </li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-29.png" width="65%">
-
 <ul>
 <li>段到达目的地后可以被放置在一个缓冲区中以便重组，即使这些分段到达的顺序凌乱不堪</li>
 <li>当段要穿过一个 MTU 更小的网络时，还可以被路由器再次进行分段</li>
@@ -840,15 +881,18 @@ gtag('config', 'UA-164555720-1');
 <li>因为段的存在，开销可能比透明分段高</li>
 <li>分段不利于性能，因为除了增加头开销，数据包的丢失概率也增加了；任何一个段的丢失都将导致整个数据包的丢失；而且对于主机而言，分比不分带来了更大的突发</li>
 </ul>
-<h3 id="路径-MTU-发现（path-MTU-discovery）"><a href="#路径-MTU-发现（path-MTU-discovery）" class="headerlink" title="路径 MTU 发现（path MTU discovery）"></a>路径 MTU 发现（path MTU discovery）</h3><p>工作原理</p>
+<h3 id="路径-MTU-发现（path-MTU-discovery）">路径 MTU 发现（path MTU discovery）</h3>
+<p>工作原理</p>
 <ul>
 <li>每个 IP 数据包发出时在它的头设置一个比特，指示不允许对该数据包实施分段操作</li>
-<li>如果一个路由器接收的数据包太大，它就生成一个报错数据包并发给源端，然后丢弃该数据包<ul>
+<li>如果一个路由器接收的数据包太大，它就生成一个报错数据包并发给源端，然后丢弃该数据包
+<ul>
 <li>ICMP [Type 3, Code 4] 消息包含了 MTU</li>
 </ul>
 </li>
 <li>当源端收到报错数据包它就使用报错数据包携带的信息重新将出错数据包分段，每个段足够小到报错路由器能够处理</li>
-<li>如果沿着路径前进又遇到一个 MTU 更小的路由器，那么重复上述过程<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-30.png" width="65%"></li>
+<li>如果沿着路径前进又遇到一个 MTU 更小的路由器，那么重复上述过程<br>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-30.png" width="65%"></li>
 </ul>
 <p>路径 MTU 发现的优点是源端知道应该发送多长的数据包了</p>
 <ul>
@@ -856,12 +900,14 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>缺点是有可能增加发送数据包的启动延迟</p>
 <ul>
-<li>在任何数据被传递到目的地之前，探讨路径并且找出该路径 MTU 所花的时间可能需要不止一个往返延迟<ul>
+<li>在任何数据被传递到目的地之前，探讨路径并且找出该路径 MTU 所花的时间可能需要不止一个往返延迟
+<ul>
 <li>更好的设计：每个路由器把那些超出其 MTU 的数据包简单地拦腰截断，这样一来将确保接收方尽可能快地了解MTU（从传递过来的数据量），同时接收到了部分数据</li>
 </ul>
 </li>
 </ul>
-<h1 id="Internet-的网络层"><a href="#Internet-的网络层" class="headerlink" title="Internet 的网络层"></a>Internet 的网络层</h1><p>10 大原则 RFC 1958</p>
+<h1>Internet 的网络层</h1>
+<p>10 大原则 RFC 1958</p>
 <ol>
 <li>保证工作（make sure it works）</li>
 <li>保持简单（keep it simple）</li>
@@ -877,7 +923,6 @@ gtag('config', 'UA-164555720-1');
 <hr>
 <p>在网络层，可以把 Internet 看作是一种相互关联的网络或自治域（自治系统）集合。没有真正的结构，但存在几个主要骨干网。这些都是由高带宽线路和快速路由器组成。这些骨干网中最大的一个称为一级网络（Tier 1 networks），每个骨干网都与它连接，进而到达其他骨干网。连接到骨干网上的是 Internet 服务提供商（ISP, Internet Service Provider），它为家庭和企业、数据中心和服务器托管设施，以及区域（中级）网络提供 Internet 接入服务。</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-31.png" width="65%">
-
 <p>将整个 Internet 黏合在一起的正是网络层协议，即 Internet 协议（IP, Internet Protocol）</p>
 <ul>
 <li>IP 在设计之初就把网络互联作为目标</li>
@@ -885,32 +930,26 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>Internet 中的通信过程</p>
 <ul>
-<li>传输层获取数据流，并且将数据流拆分成段，以便作为IP数据包发送<ul>
+<li>传输层获取数据流，并且将数据流拆分成段，以便作为IP数据包发送
+<ul>
 <li>理论上，每个数据包最多可容纳 64 KB ，但实际上，数据包通常不超过 1500 字节（以太网帧）</li>
 </ul>
 </li>
 <li>IP 路由器转发每个数据包穿过 Internet ，沿着一条路径把数据包从一个路由器转发到下一个路由器，直到数据包到达目的地</li>
 <li>当所有的数据段最终都抵达目标机器，它们被网络层重新组装还原成最初的数据报</li>
-<li>然后该数据报被网络层传给传输层<ul>
+<li>然后该数据报被网络层传给传输层
+<ul>
 <li>在接收方，网络层将数据交给应用层，再由传输层交给接收进程</li>
 </ul>
 </li>
 </ul>
-<p>TCP&#x2F;IP 协议栈</p>
+<p>TCP/IP 协议栈</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-32.png" width="65%">
-
-
 <p>Internet 体系结构沙漏</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-33.png" width="65%">
-
-
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-34.png" width="65%">
-
-
 <p>协议数据单元封装</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-35.png" width="65%">
-
-
 <p><strong>网络字节序</strong></p>
 <p>经常出现的一个问题是不同的机器以不同的方式表示整数</p>
 <ul>
@@ -919,15 +958,15 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>与所有网络协议一样，标准指定每个字段中所有位的含义，根据字节和位的顺序</p>
 <p>Internet 定义大端序为标准字节序，用于指向 Internet 数据报的字段</p>
-<h2 id="IPv4-协议"><a href="#IPv4-协议" class="headerlink" title="IPv4 协议"></a>IPv4 协议</h2><p>每个 IP 数据报包含两个部分：一个头和一个正文（有效载荷）</p>
+<h2 id="IPv4-协议">IPv4 协议</h2>
+<p>每个 IP 数据报包含两个部分：一个头和一个正文（有效载荷）</p>
 <p>头由一个 20 字节的定长部分和一个可选的变长部分组成</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-36.png" width="65%">
-
 <ol>
 <li>4 bit 版本（version）</li>
 </ol>
 <ul>
-<li>记录了数据报属于协议哪个版本，IPv4 &#x2F; IPv6</li>
+<li>记录了数据报属于协议哪个版本，IPv4 / IPv6</li>
 </ul>
 <ol start="2">
 <li>4 bit IHL</li>
@@ -963,7 +1002,7 @@ gtag('config', 'UA-164555720-1');
 </ol>
 <ul>
 <li>不允许路由器分割该数据报</li>
-<li>路径 MTU（完整到达&#x2F;返回报错消息）</li>
+<li>路径 MTU（完整到达/返回报错消息）</li>
 </ul>
 <ol start="8">
 <li>1 bit MF （More Fragment）</li>
@@ -978,7 +1017,7 @@ gtag('config', 'UA-164555720-1');
 <ul>
 <li>指明了该段在当前数据报中的位置</li>
 <li>除了数据报的最后一个段以外，其他所有段的长度必须是 8 字节的倍数</li>
-<li>每个数据报最多有 $2^{13} &#x3D; 8192$ 个段，支持 <code>total length</code> 字段限制的最大数据包</li>
+<li>每个数据报最多有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>13</mn></msup><mo>=</mo><mn>8192</mn></mrow><annotation encoding="application/x-tex">2^{13} = 8192</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">13</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">8192</span></span></span></span> 个段，支持 <code>total length</code> 字段限制的最大数据包</li>
 <li>identification、MF、fragemnt offset 协同工作，实现分段操作</li>
 </ul>
 <ol start="10">
@@ -1022,12 +1061,11 @@ gtag('config', 'UA-164555720-1');
 <li>每个选项字段的第一个字节是一个标识码，标明了该选项类别。有的选项后面跟着 1 字节的选项长度字段，然后是一个或多个数据字节</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-37.png" width="65%">
-
-
 <p>IP 嵌入式数据报包含源发送端（不是转发网关）和目标的唯一地址</p>
-<h3 id="分段举例"><a href="#分段举例" class="headerlink" title="分段举例"></a>分段举例</h3><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-38.png" width="65%">
-
-<h2 id="IP-地址"><a href="#IP-地址" class="headerlink" title="IP 地址"></a>IP 地址</h2><p>IPv4 的一个明确特征是它的 32 位地址</p>
+<h3 id="分段举例">分段举例</h3>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-38.png" width="65%">
+<h2 id="IP-地址">IP 地址</h2>
+<p>IPv4 的一个明确特征是它的 32 位地址</p>
 <p>Internet 上的每台主机和每个路由器都有一个 IP 地址，可用在 IP 数据包的 <code>source address</code> 和 <code>destination address</code> 字段</p>
 <p>一个 IP 地址并不真正指向一台主机，而是指向一个网络接口</p>
 <p>每个 IP 地址都是唯一的</p>
@@ -1038,9 +1076,8 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>IPv4 地址举例</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-39.png" width="65%">
-
-
-<h3 id="前缀（prefix）"><a href="#前缀（prefix）" class="headerlink" title="前缀（prefix）"></a>前缀（prefix）</h3><p>点分十进制表示法（dotted decimal notation）</p>
+<h3 id="前缀（prefix）">前缀（prefix）</h3>
+<p>点分十进制表示法（dotted decimal notation）</p>
 <ul>
 <li>4 个字节中的每个写成十进制，取值范围从 0 到 255</li>
 <li>32 位 16 进制地址 <code>80D00297</code> 写成 <code>128.208.2.151</code></li>
@@ -1050,7 +1087,8 @@ gtag('config', 'UA-164555720-1');
 <ul>
 <li>每个 32 位地址由高位的可变长网络和低位的主机两部分数据组成</li>
 <li>同一网络上（比如以太局域网）的所有主机，其地址的网络值是相同的，这意味着一个网络对应一块连续的IP地址空间，这块地址空间就称为地址的前缀（prefix）</li>
-<li>前缀的书写给出了块的最低 IP 地址和块的大小<ul>
+<li>前缀的书写给出了块的最低 IP 地址和块的大小
+<ul>
 <li>块大小由网络部分的位数决定；地址中主机部分的剩余位数可以有所变化</li>
 <li>这意味着，块的大小必须是 2 的幂次方</li>
 </ul>
@@ -1058,20 +1096,21 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>按照惯例，网络地址的书写格式是前缀IP地址后跟一个斜线，斜线后是网络部分的位长度</p>
 <ul>
-<li>如果前缀包含 $2^8$ 个地址，留下了 24 位用于网络部分，写成 <code>128.208.0.0/24</code></li>
+<li>如果前缀包含 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>8</mn></msup></mrow><annotation encoding="application/x-tex">2^8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span></span></span></span> 个地址，留下了 24 位用于网络部分，写成 <code>128.208.0.0/24</code></li>
 <li>斜线读作 slash</li>
 <li>因为前缀长度仅从 IP 地址无法判断出来，路由协议必须把前缀携带给路由器</li>
 <li>前缀长度相当于网络部分中 1 的二进制掩码，以这格式书写时称为子网掩码（subnet mask），它可以与一个 IP 地址进行 AND 操作，以便提取出该 IP 地址的网络部分</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-40.png" width="65%">
-
 <ul>
 <li>IP 前缀为 <code>128.208.0.0/24</code></li>
 <li>子网掩码为 <code>255.255.55.0</code></li>
 </ul>
-<h3 id="层次化地址"><a href="#层次化地址" class="headerlink" title="层次化地址"></a>层次化地址</h3><p>优点</p>
+<h3 id="层次化地址">层次化地址</h3>
+<p>优点</p>
 <ul>
-<li>路由器仅仅根据地址的网络部分即可转发数据包，只要每个网络都有一个唯一的地址块<ul>
+<li>路由器仅仅根据地址的网络部分即可转发数据包，只要每个网络都有一个唯一的地址块
+<ul>
 <li>对路由器来说网络地址的主机部分并不重要，因为同一网络上的所有主机都在同一个方向，只有当数据包到达它们的目的地网络后才被转发到正确的主机</li>
 <li>需要维护的路由表的大小减少</li>
 </ul>
@@ -1079,16 +1118,19 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>缺点</p>
 <ul>
-<li>一个主机的 IP 地址取决于它位于网络上的位置<ul>
+<li>一个主机的 IP 地址取决于它位于网络上的位置
+<ul>
 <li>以太网地址可用于世界上任何地方，但每个 IP 地址属于一个特定的网络，路由器只能传递注定要到该网络上某个地址的数据包。比如移动IP这样的设计必须支持主机在网络之间移动，但同时保持相同的 IP 地址</li>
 </ul>
 </li>
-<li>层次结构浪费了地址，除非精心管理地址空间<ul>
+<li>层次结构浪费了地址，除非精心管理地址空间
+<ul>
 <li>如果给网络分配大块的地址，将有很多被分配但不会使用</li>
 </ul>
 </li>
 </ul>
-<h3 id="子网（subnet）"><a href="#子网（subnet）" class="headerlink" title="子网（subnet）"></a>子网（subnet）</h3><p>地址分配</p>
+<h3 id="子网（subnet）">子网（subnet）</h3>
+<p>地址分配</p>
 <ul>
 <li>为了避免冲突，网络地址的管理由一个称为Internet域名和地址分配机构（ICANN, Internet Corporation for Assigned Names and Number）的非营利性公司负责</li>
 <li>ICANN 一次把部分地址空间授权给各区域机构，这些机构再把 IP 地址发放给 ISP 和其他公司</li>
@@ -1100,23 +1142,21 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>子网划分例子</p>
 <ul>
-<li>一个&#x2F;16地址空间被分割成几片</li>
+<li>一个/16地址空间被分割成几片</li>
 <li>这种分割并不要求均匀，但每片必须对齐以便可以把较低的任何位用作地址的主机部分</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-41.png" width="65%">
-
 <ul>
-<li>块的一半（&#x2F;17）分配给了艺术系</li>
-<li>四分之一（&#x2F;18）分配给了电机工程学系</li>
-<li>八分之一（&#x2F;19）分配给了艺术系</li>
+<li>块的一半（/17）分配给了艺术系</li>
+<li>四分之一（/18）分配给了电机工程学系</li>
+<li>八分之一（/19）分配给了艺术系</li>
 </ul>
 <p>子网成分（properties）</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-42.png" width="65%">
-
-
 <p>路由器决定将数据包转发到哪个子网</p>
 <ul>
-<li>当数据报到达时，路由器会查看该数据包的目标地址，并检查它属于哪个子网<ul>
+<li>当数据报到达时，路由器会查看该数据包的目标地址，并检查它属于哪个子网
+<ul>
 <li>路由器把数据包的目标地址与每个子网的掩码进行 AND 操作，看结果是否对应于某个前缀</li>
 </ul>
 </li>
@@ -1126,22 +1166,19 @@ gtag('config', 'UA-164555720-1');
 <li>哪个子网</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-43.png" width="65%">
-
-
 <p>例子</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-44.png" width="65%">
-
 <p>在网络外面，子网的划分是不可见的，因此分配一个新的子网不需要联系ICANN或者改变任何外部数据库</p>
 <p>决定出境数据包</p>
 <ul>
 <li>本地（local）还是远端（remote）网络</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-45.png" width="65%">
-
-
-<h3 id="CIDR-——-无类域间路由"><a href="#CIDR-——-无类域间路由" class="headerlink" title="CIDR —— 无类域间路由"></a>CIDR —— 无类域间路由</h3><p>路由表爆炸</p>
+<h3 id="CIDR-——-无类域间路由">CIDR —— 无类域间路由</h3>
+<p>路由表爆炸</p>
 <ul>
-<li>ISP 和骨干路由器之间的路由必须知道通过哪些方式可到达每个网络，这里没有简单的默认路由可用。这些核心路由器处在一个 Internet 默认自由区（default-free zone）<br> Internet 包含上百万的网络，产生一个巨大的路由表</li>
+<li>ISP 和骨干路由器之间的路由必须知道通过哪些方式可到达每个网络，这里没有简单的默认路由可用。这些核心路由器处在一个 Internet 默认自由区（default-free zone）<br>
+Internet 包含上百万的网络，产生一个巨大的路由表</li>
 <li>此外，路由算法要求每个路由器与其他路由器交换有关它能到达的地址信息。表越大，需要通信和处理的信息量也越大</li>
 </ul>
 <p>路由聚合（aggregation）</p>
@@ -1153,15 +1190,17 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>无类域间路由（CIDR） RFC 4632</p>
 <ul>
-<li>有了地址聚合，IP 地址可包含大小不等的前缀，同样一个 IP 地址，一台路由器把它当做 <code>/22</code> 的一部分对待（其中包含 $2^{10}$ 个地址），另一台路由器把它当做一个更大的 <code>/20</code> 一部分对待（其中包含 $2^{12}$ 个地址）。这是因为每个路由器有相应的前缀信息，这个设计和子网划分协同工作，统称为无类域间路由（CIDR, Classless Inter-Domain Routing）</li>
+<li>有了地址聚合，IP 地址可包含大小不等的前缀，同样一个 IP 地址，一台路由器把它当做 <code>/22</code> 的一部分对待（其中包含 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>10</mn></msup></mrow><annotation encoding="application/x-tex">2^{10}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span></span></span></span> 个地址），另一台路由器把它当做一个更大的 <code>/20</code> 一部分对待（其中包含 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>12</mn></msup></mrow><annotation encoding="application/x-tex">2^{12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">12</span></span></span></span></span></span></span></span></span></span></span></span> 个地址）。这是因为每个路由器有相应的前缀信息，这个设计和子网划分协同工作，统称为无类域间路由（CIDR, Classless Inter-Domain Routing）</li>
 </ul>
 <p>工作原理</p>
 <ul>
-<li>路由表由（IP 地址, 子网掩码, 出境线路）的三元组组成<ul>
+<li>路由表由（IP 地址, 子网掩码, 出境线路）的三元组组成
+<ul>
 <li>当一个数据包到达时，路由器扫描路由表以便确定目的地是否在前缀的地址块内</li>
 </ul>
 </li>
-<li>当一个数据包到达时，首先提取其目标 IP 地址。然后（在概念上）路由表按照条目进行扫描，对目标地址作掩码操作并与路由表条目进行比较以寻找匹配<ul>
+<li>当一个数据包到达时，首先提取其目标 IP 地址。然后（在概念上）路由表按照条目进行扫描，对目标地址作掩码操作并与路由表条目进行比较以寻找匹配
+<ul>
 <li>真正一个表项一个表项地扫描表，将会相当冗长乏味</li>
 <li>人们设计了复杂的算法来加快地址匹配过程（Ruiz-Sanchez）；商用路由器使用了定制的 VLSI。这些算法被嵌入到了硬件中</li>
 </ul>
@@ -1171,27 +1210,20 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>例子</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-46.png" width="65%">
-
-
 <p>伦敦路由器示意图</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-47.png" width="65%">
-
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-48.png" width="65%">
-
-
 <p>最长匹配前缀（longest matching prefix）</p>
 <ul>
 <li>前缀允许重叠，规则是数据包按最具体路由器的方向发送，即具有最少IP地址的最长匹配前缀（longest matching prefix）</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-49.png" width="65%">
-
-
-<h3 id="分配和特殊寻址"><a href="#分配和特殊寻址" class="headerlink" title="分配和特殊寻址"></a>分配和特殊寻址</h3><p>分类寻址</p>
+<h3 id="分配和特殊寻址">分配和特殊寻址</h3>
+<p>分类寻址</p>
 <ul>
 <li>IP 被分为 5 个类别，这种分配称为分类寻址（classful addressing）</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-50.png" width="65%">
-
 <ul>
 <li>A 类地址：128 个网络，每个网络 1600 万台主机</li>
 <li>B 类地址：16384 个网络，每个网络 65536 台主机</li>
@@ -1206,26 +1238,30 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>特殊 IP 地址</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-51.png" width="65%">
-
 <ul>
 <li><code>0.0.0.0</code> 最低的地址，代表本机，指的是当前网络</li>
 <li><code>255.255.255.255</code> 最高的地址，用来标识指定网络中的所有主机，允许在本地网络上广播，通常是局域网</li>
 <li><code>127.xx.yy.zz</code> 保留给回环测试用，测试网络软件</li>
 </ul>
-<h2 id="NAT-——-网络地址转换"><a href="#NAT-——-网络地址转换" class="headerlink" title="NAT —— 网络地址转换"></a>NAT —— 网络地址转换</h2><h3 id="动态-IP-地址"><a href="#动态-IP-地址" class="headerlink" title="动态 IP 地址"></a>动态 IP 地址</h3><p>为一台连在网上并使用网络的计算机动态分配一个 IP 地址，而且在该主机不活跃时收回分配给它的 IP 地址；然后该 IP 地址可以被分配给另一台活跃的计算机</p>
+<h2 id="NAT-——-网络地址转换">NAT —— 网络地址转换</h2>
+<h3 id="动态-IP-地址">动态 IP 地址</h3>
+<p>为一台连在网上并使用网络的计算机动态分配一个 IP 地址，而且在该主机不活跃时收回分配给它的 IP 地址；然后该 IP 地址可以被分配给另一台活跃的计算机</p>
 <ul>
-<li>对于使用拨号连接的家庭用户，解决 IP 地址问题的一个方法是在电话呼叫并登陆时动态分配 IP 地址，并在会话结束时将 IP 地址返还<ul>
+<li>对于使用拨号连接的家庭用户，解决 IP 地址问题的一个方法是在电话呼叫并登陆时动态分配 IP 地址，并在会话结束时将 IP 地址返还
+<ul>
 <li>客户希望持续在线</li>
 <li>ADSL 或线缆上的 Internet 服务（永久 IP 地址和月租费）</li>
 </ul>
 </li>
 </ul>
-<h3 id="网络地址转换-NAT（RFC-3022）"><a href="#网络地址转换-NAT（RFC-3022）" class="headerlink" title="网络地址转换 NAT（RFC 3022）"></a>网络地址转换 NAT（RFC 3022）</h3><p>NAT 的基本思想是 ISP 为每个家庭或每个公司分配一个或少量 IP 地址，用这个 IP 地址来传输 Internet 流量</p>
+<h3 id="网络地址转换-NAT（RFC-3022）">网络地址转换 NAT（RFC 3022）</h3>
+<p>NAT 的基本思想是 ISP 为每个家庭或每个公司分配一个或少量 IP 地址，用这个 IP 地址来传输 Internet 流量</p>
 <ul>
 <li>在客户网络内部，每台计算机有唯一的 IP 地址，该地址主要用来路由内部流量</li>
 <li>当一个数据包需要离开客户网络，发向其他 ISP 时，它必须执行一个地址转换，把唯一的内部 IP 地址转换成那个共享的公共 IP 地址</li>
 </ul>
-<h3 id="保留的-IP-地址（reserved）"><a href="#保留的-IP-地址（reserved）" class="headerlink" title="保留的 IP 地址（reserved）"></a>保留的 IP 地址（reserved）</h3><p>地址转换使用了 IP 地址的三个范围，这些地址已经被声明为私有化。任何网络可以在内部随意地使用这些地址。仅有的规则是不允许包含这些地址的数据包出现在 Internet 上</p>
+<h3 id="保留的-IP-地址（reserved）">保留的 IP 地址（reserved）</h3>
+<p>地址转换使用了 IP 地址的三个范围，这些地址已经被声明为私有化。任何网络可以在内部随意地使用这些地址。仅有的规则是不允许包含这些地址的数据包出现在 Internet 上</p>
 <table>
 <thead>
 <tr>
@@ -1233,20 +1269,23 @@ gtag('config', 'UA-164555720-1');
 <th>hosts</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>1.0.0.0        – 10.255.255.255 &#x2F;8</td>
+<tbody>
+<tr>
+<td>1.0.0.0        – 10.255.255.255 /8</td>
 <td>16,777,216 hosts</td>
 </tr>
 <tr>
-<td>172.16.0.0      – 172.31.255.255 &#x2F;12</td>
+<td>172.16.0.0      – 172.31.255.255 /12</td>
 <td>1,048,576 hosts</td>
 </tr>
 <tr>
-<td>192.168.0.0     – 192.168.255.255&#x2F;16</td>
+<td>192.168.0.0     – 192.168.255.255/16</td>
 <td>65,536 hosts</td>
 </tr>
-</tbody></table>
-<h3 id="NAT-操作过程"><a href="#NAT-操作过程" class="headerlink" title="NAT 操作过程"></a>NAT 操作过程</h3><p>每台机器都有一个形如 <code>10.x.y.z</code> 的地址</p>
+</tbody>
+</table>
+<h3 id="NAT-操作过程">NAT 操作过程</h3>
+<p>每台机器都有一个形如 <code>10.x.y.z</code> 的地址</p>
 <p>当一个数据包离开客户端时，它首先要通过一个 NAT 盒子（NAT box）</p>
 <ul>
 <li>NAT 盒子将内部的IP源地址转换成该客户所拥有的真实IP地址</li>
@@ -1254,19 +1293,20 @@ gtag('config', 'UA-164555720-1');
 <li>NAT 盒子还有可能集成到路由器或者 ADSL 调制解调器中</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-52.png" width="65%">
-
-
-<h3 id="NAT-应答问题"><a href="#NAT-应答问题" class="headerlink" title="NAT 应答问题"></a>NAT 应答问题</h3><p>当应答数据包返回时，NAT盒子如何知道该用哪一个地址来替代？</p>
+<h3 id="NAT-应答问题">NAT 应答问题</h3>
+<p>当应答数据包返回时，NAT盒子如何知道该用哪一个地址来替代？</p>
 <ul>
-<li>TCP&#x2F;UDP 端口（port）<ul>
-<li>大多数 IP 数据包携带 TCP&#x2F;UDP 有效载荷</li>
+<li>TCP/UDP 端口（port）
+<ul>
+<li>大多数 IP 数据包携带 TCP/UDP 有效载荷</li>
 <li>两个协议的头都包含了一个源端口和一个目标端口字段</li>
 <li>端口是 16 位整数，指示 TCP 连接从哪里开始以及到哪里结束</li>
 <li>这些端口字段为 NAT 提供了工作所需的字段</li>
 </ul>
 </li>
 </ul>
-<h3 id="TCP-连接建立"><a href="#TCP-连接建立" class="headerlink" title="TCP 连接建立"></a>TCP 连接建立</h3><p>当一个进程希望与另一个远程进程建立 TCP 连接时，它把自己绑定到一个本地机器尚未使用的 TCP 端口上</p>
+<h3 id="TCP-连接建立">TCP 连接建立</h3>
+<p>当一个进程希望与另一个远程进程建立 TCP 连接时，它把自己绑定到一个本地机器尚未使用的 TCP 端口上</p>
 <ul>
 <li>该端口称为源端口（source port），它告诉 TCP 代码凡是属于该连接的入境数据包都应该发送给该端口。</li>
 </ul>
@@ -1279,18 +1319,21 @@ gtag('config', 'UA-164555720-1');
 <ul>
 <li>这两个端口合起来标识了客户机和服务器两端正在使用该连接的一对进程</li>
 </ul>
-<h3 id="映射源端口"><a href="#映射源端口" class="headerlink" title="映射源端口"></a>映射源端口</h3><p>利用源端口（source port）字段，可以解决映射问题。任何时候当出境数据包进入 NAT 盒子，其源地址 <code>10.x.y.z</code> 被客户的真实IP地址所取代，而且 TCP 的源端口字段被一个索引值取代，该索引值指向 NAT 盒子的地址转换表中的 65536 个表项之一</p>
+<h3 id="映射源端口">映射源端口</h3>
+<p>利用源端口（source port）字段，可以解决映射问题。任何时候当出境数据包进入 NAT 盒子，其源地址 <code>10.x.y.z</code> 被客户的真实IP地址所取代，而且 TCP 的源端口字段被一个索引值取代，该索引值指向 NAT 盒子的地址转换表中的 65536 个表项之一</p>
 <p>该表项包含了原来的IP地址和原来的源端口</p>
-<p>最后，NAT 盒子重新计算 IP 头和 TCP 头的校验和，并将校验和插入到数据包中<br>之所以要替换 <code>source port</code> 域，是因为来自机器 <code>10.0.0.1</code> 和 <code>10.0.0.2</code> 连接可能碰巧使用了同一个端口，比如都使用了 5000，所以仅使用 <code>source port</code> 还不足以唯一性地标识发送进程</p>
+<p>最后，NAT 盒子重新计算 IP 头和 TCP 头的校验和，并将校验和插入到数据包中<br>
+之所以要替换 <code>source port</code> 域，是因为来自机器 <code>10.0.0.1</code> 和 <code>10.0.0.2</code> 连接可能碰巧使用了同一个端口，比如都使用了 5000，所以仅使用 <code>source port</code> 还不足以唯一性地标识发送进程</p>
 <p>当一个数据包从 ISP 到达 NAT 盒子时，<code>source port</code> 从TCP头中提取出来，并被用作为索引值查找 NAT 盒子的映射表。找到对应的表项后，从该表项提取出内部 IP 地址和原来的TCP <code>source port</code>，并将它们插入到数据包中。然后重新计算 IP 和 TCP 校验和，并插入到数据包中。最后将该数据包传递给客户内部的路由器，它使用 <code>10.x.y.z</code> 地址进行正常的路由。</p>
 <p><em>类比为电话和接线员</em></p>
-<h3 id="NAT-问题"><a href="#NAT-问题" class="headerlink" title="NAT 问题"></a>NAT 问题</h3><ol>
+<h3 id="NAT-问题">NAT 问题</h3>
+<ol>
 <li>NAT 违反了 IP 的结构模型</li>
 <li>NAT 打破了 Internet 的端-端的连接模型，即任何一个主机可在任何时间给任何一台其他主机发送数据包</li>
 <li>NAT 将 Internet 从一个无连接网络改变成一个面向连接网络特有的形式</li>
-<li>NAT 违反了最基本的协议分层规则：第 $k$ 层不应该对第 $k+1$ 层在本层的有效载荷字段中放什么作任何假设</li>
+<li>NAT 违反了最基本的协议分层规则：第 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> 层不应该对第 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 层在本层的有效载荷字段中放什么作任何假设</li>
 <li>Internet 上的进程并不一定必须使用 TCP 或 UDP</li>
-<li>有些应用以规定的方式使用多个 TCP&#x2F;IP 连接或者 UDP 端口</li>
+<li>有些应用以规定的方式使用多个 TCP/IP 连接或者 UDP 端口</li>
 </ol>
 <ul>
 <li>标准的文件传输协议（FTP, File Transfer Protocol）在数据包正文插入 IP 地址，接收方正文中提取出这些地址，并使用它们。NAT 对此一无所知</li>
@@ -1298,7 +1341,8 @@ gtag('config', 'UA-164555720-1');
 <ol start="7">
 <li>由于 TCP <code>source port</code> 字段 16 位长，至多只有 65536 台机器可以被映射到同一个 IP 地址上（前 4096 个端口被保留用作特殊的用途）</li>
 </ol>
-<h2 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h2><p>目标</p>
+<h2 id="IPv6">IPv6</h2>
+<p>目标</p>
 <ol>
 <li>即使地址空间的分配效率不高，也能支持几十亿台主机（Support billions of hosts, even with inefficient address allocation）</li>
 <li>降低路由表大小（Reduce the size of the routing tables）</li>
@@ -1310,8 +1354,8 @@ gtag('config', 'UA-164555720-1');
 <li>允许协议向未来演进（Allow the protocol to evolve in the future）</li>
 <li>允许新老协议共存多年（Permit the old and new protocols to coexist for years）</li>
 </ol>
-<h3 id="主要的-IPv6-头"><a href="#主要的-IPv6-头" class="headerlink" title="主要的 IPv6 头"></a>主要的 IPv6 头</h3><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-53.png" width="65%">
-
+<h3 id="主要的-IPv6-头">主要的 IPv6 头</h3>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-53.png" width="65%">
 <ul>
 <li>4 bit 版本（Version）：IPv6 是 6 （<code>0110</code>），IPv4 是 4</li>
 <li>8 bit 区分服务（Differentiated services）</li>
@@ -1322,7 +1366,8 @@ gtag('config', 'UA-164555720-1');
 <li>128 bit 源地址（Source address）</li>
 <li>128 bit 目标地址（Destination address）</li>
 </ul>
-<h3 id="IPv6-地址"><a href="#IPv6-地址" class="headerlink" title="IPv6 地址"></a>IPv6 地址</h3><p>16 个字节被分成 8 组 4 个十六进制数字，组之间用冒号隔开</p>
+<h3 id="IPv6-地址">IPv6 地址</h3>
+<p>16 个字节被分成 8 组 4 个十六进制数字，组之间用冒号隔开</p>
 <ul>
 <li><code>8000:0000:0000:0000:0123:4567:89AB:CDEF</code></li>
 <li>十六进制不区分大小写</li>
@@ -1333,30 +1378,27 @@ gtag('config', 'UA-164555720-1');
 <li>16 个 0 构成的一个或多个组可以用一对冒号来代替，但 <code>::</code> 只能出现一次，<code>8000:123:4567:89AB:CDEF</code></li>
 <li>IPv4 地址现在可以写成一对冒号再加上老式的点分十进制数，比如 <code>::192.31.20.46</code></li>
 </ul>
-<h4 id="扩展头"><a href="#扩展头" class="headerlink" title="扩展头"></a>扩展头</h4><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-54.png" width="65%">
-
-
+<h4 id="扩展头">扩展头</h4>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-54.png" width="65%">
 <p>用于大型数据报（巨型报）的逐跳扩展头</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-55.png" width="65%">
-
-
 <p>路由扩展头</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-56.png" width="65%">
-
-
-<h3 id="IPv4-和-IPv6-的转换"><a href="#IPv4-和-IPv6-的转换" class="headerlink" title="IPv4 和 IPv6 的转换"></a>IPv4 和 IPv6 的转换</h3><ul>
+<h3 id="IPv4-和-IPv6-的转换">IPv4 和 IPv6 的转换</h3>
+<ul>
 <li>双栈路由器（dual stack）</li>
 <li>隧道（tunelling）</li>
 </ul>
-<h2 id="Internet-控制协议"><a href="#Internet-控制协议" class="headerlink" title="Internet 控制协议"></a>Internet 控制协议</h2><p>IP 协议依靠多种辅助协议来实现必要的控制和路由功能：</p>
+<h2 id="Internet-控制协议">Internet 控制协议</h2>
+<p>IP 协议依靠多种辅助协议来实现必要的控制和路由功能：</p>
 <ul>
 <li>控制功能 ICMP</li>
 <li>组管理 IGMP</li>
 <li>设置路由表 RIP, OSPF, BGP, PIM, …</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-57.png" width="65%">
-
-<h3 id="ICMP-——-Internet-控制消息协议"><a href="#ICMP-——-Internet-控制消息协议" class="headerlink" title="ICMP —— Internet 控制消息协议"></a>ICMP —— Internet 控制消息协议</h3><p>Internet Control Message Protocol</p>
+<h3 id="ICMP-——-Internet-控制消息协议">ICMP —— Internet 控制消息协议</h3>
+<p>Internet Control Message Protocol</p>
 <p>路由器严密监视 Internet 操作，当路由器在处理一个数据包的过程中发生了意外，可通过 ICMP 向数据包的源端报告有关时间</p>
 <p>ICMP 还可以用来测试 Internet</p>
 <p>每一种 ICMP 消息类型都被封装在一个 IP 数据包中</p>
@@ -1372,23 +1414,19 @@ gtag('config', 'UA-164555720-1');
 <li>ICMP 数据报封装在 IP 数据报中，IP 按照与 TCP 和 UDP 数据报相同的方式处理 ICMP</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-58.png" width="65%">
-
-
 <p>消息封装</p>
 <ul>
 <li>ICMP 消息被封装为 IP 数据报</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-59.png" width="45%">
-
-
 <p>ICMP 消息格式</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-60.png" width="65%">
-
 <p>4 byte 头（header）</p>
 <ul>
 <li>1 byte  类型（Type）: ICMP 消息的类型</li>
 <li>1 byte  码（Code）: ICMP 的子类型</li>
-<li>2 bytes 校验和（Checksum）: 和 IP 头校验和类似，校验和计算整个 ICMP 消息<ul>
+<li>2 bytes 校验和（Checksum）: 和 IP 头校验和类似，校验和计算整个 ICMP 消息
+<ul>
 <li>如果没有格外的数据，4 bytes 将被设置为 0</li>
 <li>每个 ICMP 消息至少 8 bytes 长</li>
 </ul>
@@ -1396,29 +1434,28 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>ICMP 消息类型</p>
 <ul>
-<li>信息消息，发送方向另一台机器（主机或网关）发送请求并且期待回答<ul>
+<li>信息消息，发送方向另一台机器（主机或网关）发送请求并且期待回答
+<ul>
 <li>例如，主机可能想知道网关是否还活着</li>
 </ul>
 </li>
-<li>错误指示消息，主机或网关上的IP软件在处理 IP 数据报时遇到问题<ul>
+<li>错误指示消息，主机或网关上的IP软件在处理 IP 数据报时遇到问题
+<ul>
 <li>例如，它可能无法将数据报路由到其目的地，或者可能不得不丢弃一个帧</li>
 </ul>
 </li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-61.png" width="65%">
-
-
 <p>ICMP 请求消息</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-62.png" width="65%">
-
 <ul>
 <li>Request 主机发送给路由或另一个主机</li>
 <li>Reply 返回给发送请求的主机</li>
 </ul>
 <p>ICMP 请求举例</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-63.png" width="65%">
-
-<h4 id="ICMP-的请求-响应目的"><a href="#ICMP-的请求-响应目的" class="headerlink" title="ICMP 的请求 &#x2F; 响应目的"></a>ICMP 的请求 &#x2F; 响应目的</h4><p>ICMP请求回显（echo request）和回显响应（echo reply）对网络调试很有用</p>
+<h4 id="ICMP-的请求-响应目的">ICMP 的请求 / 响应目的</h4>
+<p>ICMP请求回显（echo request）和回显响应（echo reply）对网络调试很有用</p>
 <ul>
 <li>如果机器 A 向机器 B 发送请求回显消息，机器 B 需要用回显响应来响应请求</li>
 <li>大多数系统提供发送和接收 ICMP 回显消息的应用程序</li>
@@ -1427,13 +1464,13 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>请求举例 —— Echo</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-64.png" width="65%">
-
 <ul>
 <li><code>ping</code> 由内核直接处理</li>
 <li>每个 <code>ping</code> 都被转换成 ICMP Echo Request</li>
 <li>每个被 <code>ping</code> 的主机都回应一个 ICMP Echo Reply</li>
 </ul>
-<h4 id="时间戳消息"><a href="#时间戳消息" class="headerlink" title="时间戳消息"></a>时间戳消息</h4><p>ICMP 时间戳消息用于估计机器之间的传输延迟并同步时钟</p>
+<h4 id="时间戳消息">时间戳消息</h4>
+<p>ICMP 时间戳消息用于估计机器之间的传输延迟并同步时钟</p>
 <ul>
 <li>包括接受和发送时间戳允许发送主机确定发送和处理请求的事件比例</li>
 <li>通过对几条消息的测量值进行平均，发送方可以估计本地时钟和远程机器之间的偏移量</li>
@@ -1442,7 +1479,6 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>请求举例 —— 时间戳</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-65.png" width="65%">
-
 <ul>
 <li>系统（主机或路由器）询问另一个系统当前时间</li>
 <li>时间以当天凌晨UTC（协调世界时）后的毫秒为单位测量</li>
@@ -1450,11 +1486,8 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>消息格式</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-66.png" width="65%">
-
-
 <p>错误消息</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-67.png" width="65%">
-
 <ul>
 <li>ICMP错误消息报告错误状况</li>
 <li>通常在丢其数据报时发送</li>
@@ -1462,83 +1495,68 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>消息格式</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-68.png" width="65%">
-
 <ul>
-<li>ICMP 错误消息包含整个 IP 头和有效载荷的前 8 个字节（通常为 UDP&#x2F;TCP ）</li>
+<li>ICMP 错误消息包含整个 IP 头和有效载荷的前 8 个字节（通常为 UDP/TCP ）</li>
 </ul>
 <p>经常使用的 ICMP 错误消息</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-69.png" width="65%">
-
-
 <p>目的不可达的子类型</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-70.png" width="65%">
-
-
 <p>错误消息举例 —— 端口不可达</p>
 <p>RFC 792：如果在目标主机中，IP 模块由于指定的协议模块或进程端口未处于活动状态而无法传送数据报，目标主机可能会向源主机发送目标不可达消息</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-71.png" width="65%">
-
-
 <p>Windows控制台命令 —— <code>tracert</code></p>
 <ul>
 <li>TTL 递增，发现从主机到目的地的路径上的 IP 地址</li>
 <li>路由器返回超时消息</li>
 </ul>
-<h3 id="ARP-——-地址解析协议"><a href="#ARP-——-地址解析协议" class="headerlink" title="ARP —— 地址解析协议"></a>ARP —— 地址解析协议</h3><p>Address Resolution Protocol</p>
+<h3 id="ARP-——-地址解析协议">ARP —— 地址解析协议</h3>
+<p>Address Resolution Protocol</p>
 <p>每一块网络接口卡（NIC）在出厂时配置了一个唯一的 48 位以太网地址</p>
 <p>协议数据单元封装</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-72.png" width="65%">
-
-
-<p>以太网II 中的 TCP&#x2F;IP 数据包</p>
+<p>以太网II 中的 TCP/IP 数据包</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-73.png" width="65%">
-
-<h4 id="ARP-与-RARP"><a href="#ARP-与-RARP" class="headerlink" title="ARP 与 RARP"></a>ARP 与 RARP</h4><ul>
+<h4 id="ARP-与-RARP">ARP 与 RARP</h4>
+<ul>
 <li>Internet 基于 IP</li>
 <li>数据链路协议（以太网，FDDI，ATM）可能有不同的（MAC）地址</li>
 </ul>
 <p>ARP 和 RARP 协议执行 IP 地址和 MAC 地址之间的转换</p>
 <p>讨论广播 LAN 的 ARP，特别是以太网 LAN</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-74.png" width="65%">
-
-
-<h4 id="映射问题"><a href="#映射问题" class="headerlink" title="映射问题"></a>映射问题</h4><p>将 Internet 地址映射到物理地址的问题称为地址解析问题</p>
+<h4 id="映射问题">映射问题</h4>
+<p>将 Internet 地址映射到物理地址的问题称为地址解析问题</p>
 <ul>
 <li>每个以太网设备有自己唯一号码，更换网卡就更换了物理地址</li>
 <li>物理地址 6 bytes 长，太大而无法在 Internet 地址内复用</li>
 <li>可以在不中断服务的情况下降新机器添加到网络中</li>
 <li>但是，添加主机不应该要求现有重新配置现有主机以通知新机器的加入</li>
 </ul>
-<h4 id="ARP-地址转换"><a href="#ARP-地址转换" class="headerlink" title="ARP 地址转换"></a>ARP 地址转换</h4><p>ARP 请求（Request）</p>
+<h4 id="ARP-地址转换">ARP 地址转换</h4>
+<p>ARP 请求（Request）</p>
 <ul>
 <li>广播询问哪个路由137的硬件地址</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-75.png" width="65%">
-
-
 <p>ARP 回应（Reply）</p>
 <ul>
 <li>路由137响应请求，返回的数据中包含自己的硬件地址</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-76.png" width="65%">
-
-
-<h4 id="ARP-包格式"><a href="#ARP-包格式" class="headerlink" title="ARP 包格式"></a>ARP 包格式</h4><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-77.png" width="65%">
-
-
-<h4 id="ARP-举例"><a href="#ARP-举例" class="headerlink" title="ARP 举例"></a>ARP 举例</h4><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-78.png" width="65%">
-
+<h4 id="ARP-包格式">ARP 包格式</h4>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-77.png" width="65%">
+<h4 id="ARP-举例">ARP 举例</h4>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-78.png" width="65%">
 <p>ARP 缓存</p>
 <ul>
-<li>由于为每个 IP 数据报发送 ARP 请求&#x2F;回应效率低下，主机维护当前 ARP 缓存，20 分钟后过期</li>
+<li>由于为每个 IP 数据报发送 ARP 请求/回应效率低下，主机维护当前 ARP 缓存，20 分钟后过期</li>
 </ul>
 <p>ARP 代理</p>
 <ul>
 <li>主机或路由器响应从连接的另一个网络上的主机的 ARP 请求</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-79.png" width="65%">
-
-
 <p>关于 ARP</p>
 <ul>
 <li>一些系统（包括Linux）上，主机定期根据 ARP 缓存发送 ARP 请求，刷新 ARP 缓存内容，但也增加了流量</li>
@@ -1553,7 +1571,8 @@ gtag('config', 'UA-164555720-1');
 <ol>
 <li>由于 ARP 没有对请求或响应进行认证，因此可以伪造 ARP 请求和响应</li>
 <li>ARP 是无状态的：可以在没有相应的 ARP 请求的情况下发送 ARP 响应</li>
-<li>根据 ARP 协议规范，接收 ARP 数据包的节点（请求或响应）必须使用源字段中的信息更新其本地 ARP 缓存，如果接收节点已在其ARP缓存中具有源IP地址的条目。（适用于 ARP 请求数据包和 ARP 响应数据包）<br>利用</li>
+<li>根据 ARP 协议规范，接收 ARP 数据包的节点（请求或响应）必须使用源字段中的信息更新其本地 ARP 缓存，如果接收节点已在其ARP缓存中具有源IP地址的条目。（适用于 ARP 请求数据包和 ARP 响应数据包）<br>
+利用</li>
 </ol>
 <ul>
 <li>一个伪造的 ARP 请求或响应可以用来更新伪造远程系统中的 ARP 缓存条目（ARP Poisoning 中毒）</li>
@@ -1561,14 +1580,13 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>分层：不同的视角</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-80.png" width="65%">
-
-
 <p>Windows控制台命令 —— <code>arp</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-a   显示所有ARP缓存</span><br><span class="line">-d * 删除所有ARP缓存</span><br><span class="line">-s   加入一条静态条目</span><br></pre></td></tr></table></figure>
-
-<h3 id="DHCP-——-动态主机配置协议"><a href="#DHCP-——-动态主机配置协议" class="headerlink" title="DHCP —— 动态主机配置协议"></a>DHCP —— 动态主机配置协议</h3><p>Dynamic Host Configuration Protocol</p>
+<h3 id="DHCP-——-动态主机配置协议">DHCP —— 动态主机配置协议</h3>
+<p>Dynamic Host Configuration Protocol</p>
 <p>采用 DHCP 时，每个网络必须有一个 DHCP 服务器负责地址配置</p>
-<h4 id="手动配置-TCP-IP-的问题"><a href="#手动配置-TCP-IP-的问题" class="headerlink" title="手动配置 TCP&#x2F;IP 的问题"></a>手动配置 TCP&#x2F;IP 的问题</h4><p>管理开销</p>
+<h4 id="手动配置-TCP-IP-的问题">手动配置 TCP/IP 的问题</h4>
+<p>管理开销</p>
 <ul>
 <li>需要跟踪所有 IP 分配</li>
 <li>需要手动输入 IP 设置</li>
@@ -1581,7 +1599,8 @@ gtag('config', 'UA-164555720-1');
 <ul>
 <li>需要手动更改 IP 设置</li>
 </ul>
-<h4 id="用-DHCP-来配置-TCP-IP"><a href="#用-DHCP-来配置-TCP-IP" class="headerlink" title="用 DHCP 来配置 TCP&#x2F;IP"></a>用 DHCP 来配置 TCP&#x2F;IP</h4><p>DHCP 的好处</p>
+<h4 id="用-DHCP-来配置-TCP-IP">用 DHCP 来配置 TCP/IP</h4>
+<p>DHCP 的好处</p>
 <ul>
 <li>集中管理</li>
 <li>自动为客户端提供地址信息</li>
@@ -1594,24 +1613,29 @@ gtag('config', 'UA-164555720-1');
 <li>默认网关</li>
 <li>其他参数 —— DNS, WINS, …</li>
 </ul>
-<h4 id="BOOTP-RFC-951-1048-1084"><a href="#BOOTP-RFC-951-1048-1084" class="headerlink" title="BOOTP RFC 951&#x2F;1048&#x2F;1084"></a>BOOTP RFC 951&#x2F;1048&#x2F;1084</h4><p>bootstrap 协议（BOOTP）</p>
+<h4 id="BOOTP-RFC-951-1048-1084">BOOTP RFC 951/1048/1084</h4>
+<p>bootstrap 协议（BOOTP）</p>
 <ul>
 <li>从 1985 年起</li>
 <li>主机可以在启动时配置其 IP 参数</li>
-<li>3 个服务<ul>
+<li>3 个服务
+<ul>
 <li>IP 地址分配</li>
 <li>检测服务器的 IP 地址</li>
 <li>由客户机加载和执行的文件的名称（启动文件名）</li>
 </ul>
 </li>
 </ul>
-<p>不仅分配 IP 地址，还分配默认路由器、网络掩码等<br>作为 UDP 消息发送（UDP 端口 67（服务器）和 68（主机））</p>
-<h4 id="DHCP"><a href="#DHCP" class="headerlink" title="DHCP"></a>DHCP</h4><p>动态主机配置协议</p>
+<p>不仅分配 IP 地址，还分配默认路由器、网络掩码等<br>
+作为 UDP 消息发送（UDP 端口 67（服务器）和 68（主机））</p>
+<h4 id="DHCP">DHCP</h4>
+<p>动态主机配置协议</p>
 <ul>
 <li>从 1993 年起</li>
 <li>BOOTP 的扩展</li>
 <li>使用和 BOOTP 相同的的端口</li>
-<li>扩展<ul>
+<li>扩展
+<ul>
 <li>支持 IP 地址的临时分配（租赁lease）</li>
 <li>DHCP 客户端可以获取操作所需的所有的 IP 配置参数</li>
 </ul>
@@ -1622,7 +1646,7 @@ gtag('config', 'UA-164555720-1');
 <p>路由器的 DHCP 中继</p>
 <ul>
 <li>DHCP 利用了 BOOTP 定义的消息协议和配置技术，包括分配 IP 地址的能力</li>
-<li>这种相似性允许现有路由器在子网之间中继 DHCP 消息 &#x2F; BOOTP 消息</li>
+<li>这种相似性允许现有路由器在子网之间中继 DHCP 消息 / BOOTP 消息</li>
 <li>因为这个，单个 DHCP 服务器可以处理多个子网的 IP 寻址</li>
 </ul>
 <p>BOOTP 交互</p>
@@ -1631,31 +1655,22 @@ gtag('config', 'UA-164555720-1');
 <li>分配给主机的 IP 地址是静态的</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-81.png" width="65%">
-
-
 <p>简化的 DHCP 交互</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-82.png" width="65%">
-
-
-<h4 id="BOOTP-DHCP-消息格式"><a href="#BOOTP-DHCP-消息格式" class="headerlink" title="BOOTP&#x2F;DHCP 消息格式"></a>BOOTP&#x2F;DHCP 消息格式</h4><p>许多 DHCP 信息是以选项的形式被发送的</p>
+<h4 id="BOOTP-DHCP-消息格式">BOOTP/DHCP 消息格式</h4>
+<p>许多 DHCP 信息是以选项的形式被发送的</p>
 <ul>
-<li>子网掩码、名称服务器，路由器，主机名，域名，转发开&#x2F;关，默认 IP TTL，广播地址，静态路由，以太网封装，DHCP 消息类型，DHCP 更新时间，DHCP 重新绑定，时间 SMTP 服务器，SMTP 服务器，…</li>
+<li>子网掩码、名称服务器，路由器，主机名，域名，转发开/关，默认 IP TTL，广播地址，静态路由，以太网封装，DHCP 消息类型，DHCP 更新时间，DHCP 重新绑定，时间 SMTP 服务器，SMTP 服务器，…</li>
 </ul>
 <p>DHCP 选项域格式</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-83.png" width="65%">
-
-
 <p>客户机-服务器通信</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-84.png" width="65%">
-
-
 <p>IP 租赁</p>
 <ul>
 <li>发现（Discover）和提供（Offer）</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-85.png" width="65%">
-
-
 <p>当没有 DHCP 服务器在线时</p>
 <ul>
 <li>客户机等待 1 秒钟</li>
@@ -1664,12 +1679,14 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>IP 租赁更新</p>
 <ul>
-<li>客户机广播 DHCP REQUEST 消息<ul>
+<li>客户机广播 DHCP REQUEST 消息
+<ul>
 <li>当租赁期过了 50% 的时候</li>
 </ul>
 </li>
 <li>DHCP 服务器返回 DHCP ACK</li>
-<li>当客户机尝试租先前的 IP 地址时，就会出现 DHCP ACK<ul>
+<li>当客户机尝试租先前的 IP 地址时，就会出现 DHCP ACK
+<ul>
 <li>IP 地址不再可用</li>
 <li>客户机移动到另一个子网</li>
 <li>如果收到了一个 DHCP ACK，客户机就进入请求 IP 租赁的过程</li>
@@ -1682,41 +1699,41 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>分层视角</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-86.png" width="45%">
-
 <ul>
 <li>确定配置选项</li>
 <li>IP 地址和掩码始终是 IP 配置的一部分</li>
-<li>其他选项包括<ul>
+<li>其他选项包括
+<ul>
 <li>默认网关</li>
 <li>域名系统（DNS）服务器</li>
 <li>Windows Internet 名称（WINS）服务器</li>
-<li>基于 TCP&#x2F;IP 名称解析的 NetBIOS</li>
+<li>基于 TCP/IP 名称解析的 NetBIOS</li>
 </ul>
 </li>
 </ul>
 <p>Windows命令行 —— <code>ipconfig</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/?           Display help message</span><br><span class="line">/all         Display full configuration information</span><br><span class="line">/release     Release the IP address for the specified adapter</span><br><span class="line">/renew       Renew the IP address for the specified adapter</span><br><span class="line">/flushdns    Purges the DNS Resolver cache</span><br><span class="line">/registerdns Refreshes all DHCP leases and re-registers DNS names</span><br><span class="line">/displaydns  Display the contents of the DNS Resolver Cache.</span><br></pre></td></tr></table></figure>
-
-<h2 id="标签交换和-MPLS"><a href="#标签交换和-MPLS" class="headerlink" title="标签交换和 MPLS *"></a>标签交换和 MPLS *</h2><p>ISP 用来在它们的网络之间移动 Internet 流量</p>
+<h2 id="标签交换和-MPLS">标签交换和 MPLS *</h2>
+<p>ISP 用来在它们的网络之间移动 Internet 流量</p>
 <p>多协议标签交换（MPLS）在每个数据包前面增加一个标签，路由器根据数据包标签而不是数据包目的地址实施转发</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-87.png" width="65%">
-
-
-<h3 id="2-5-层协议"><a href="#2-5-层协议" class="headerlink" title="2.5 层协议"></a>2.5 层协议</h3><p>MPLS 介于 IP 网络层协议和 PPP 链路层协议之间</p>
+<h3 id="2-5-层协议">2.5 层协议</h3>
+<p>MPLS 介于 IP 网络层协议和 PPP 链路层协议之间</p>
 <ul>
 <li>不是一个真正的第 3 层协议，因为它依赖 IP 或其他网络层地址来建立标签路径</li>
 <li>不是一个真正的第 2 层协议，因为它既可以在多跳之间转发数据包，也不是一条单一链路</li>
 </ul>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-88.png" width="65%">
-
 <ul>
 <li>标签交换路由器（LSR, Label Switched Router）</li>
 <li>标签边缘路由器（LER, Label Edge Router）</li>
 <li>转发等价类（FEC, Forwarding Equivalence Class）</li>
 </ul>
-<h2 id="OSPF-——-内部网关路由协议"><a href="#OSPF-——-内部网关路由协议" class="headerlink" title="OSPF —— 内部网关路由协议"></a>OSPF —— 内部网关路由协议</h2><p>域内路由（intradomain routing） - 内部网关协议（IGP, interior gateway protocol）</p>
+<h2 id="OSPF-——-内部网关路由协议">OSPF —— 内部网关路由协议</h2>
+<p>域内路由（intradomain routing） - 内部网关协议（IGP, interior gateway protocol）</p>
 <p>域间路由（interdomain routing） - 外部网关协议（EGP, exterior gateway protocol）</p>
-<h3 id="Internet-上的内部网关协议"><a href="#Internet-上的内部网关协议" class="headerlink" title="Internet 上的内部网关协议"></a>Internet 上的内部网关协议</h3><p>RIP 路由信息协议（Routing Information Protocol）</p>
+<h3 id="Internet-上的内部网关协议">Internet 上的内部网关协议</h3>
+<p>RIP 路由信息协议（Routing Information Protocol）</p>
 <ul>
 <li>采用距离矢量的设计思想，基于分布式 Bellman-Ford 算法，继承自 APPANET</li>
 <li>在小型网络中运作良好</li>
@@ -1727,7 +1744,8 @@ gtag('config', 'UA-164555720-1');
 <li>一个链路状态协议，1990 年成为标准，IETF</li>
 <li>借鉴了 IS-IS （中间系统到中间系统，已成为 ISO 标准）</li>
 </ul>
-<h3 id="设计要求"><a href="#设计要求" class="headerlink" title="设计要求"></a>设计要求</h3><ol>
+<h3 id="设计要求">设计要求</h3>
+<ol>
 <li>算法必须发表在公开文献中</li>
 <li>新的协议必须支持多种距离度量，包括物理距离、延迟等</li>
 <li>必须是一个动态算法，能够自动而且快速地适应网络拓扑变化</li>
@@ -1743,9 +1761,8 @@ gtag('config', 'UA-164555720-1');
 <li>多路访问广播网络（大多数局域网）</li>
 <li>多路访问网络（包交换的广域网）（multiaccess）</li>
 </ul>
-<p><em>这里的多路访问网络是一个拥有多个路由器的网络，每个路由器都可以直接与其他路由器通信，这是一种常见的 LAN&#x2F;WAN 属性</em></p>
+<p><em>这里的多路访问网络是一个拥有多个路由器的网络，每个路由器都可以直接与其他路由器通信，这是一种常见的 LAN/WAN 属性</em></p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-89.png" width="75%">
-
 <ul>
 <li>OSPF 的工作方式本质上是对一张图进行操作：将一组实际网络、路由器和线路抽象到一个有向图中，图中的每条弧有一个权值（距离、延迟）</li>
 <li>两台路由器之间的点到点连接可以用一对弧来标识，每个方向上一个，两个方向上的权值可以不同。广播（multiaccess）网络用一个节点表示，加上网络上每台路由器用一个节点表示</li>
@@ -1767,7 +1784,8 @@ gtag('config', 'UA-164555720-1');
 <li>每个 AS 有一个骨干区域，称为 0 号区域</li>
 <li>该区域中的路由器称为骨干路由器（backbone router）</li>
 <li>所有的区域都必须连接到骨干区域，连接方式有可能会通过隧道进行</li>
-<li>每个连接到两个或更多区域的路由器称为区域边界路由器（border router），它必须是骨干区域的一部分<ul>
+<li>每个连接到两个或更多区域的路由器称为区域边界路由器（border router），它必须是骨干区域的一部分
+<ul>
 <li>区域边界路由器的工作任务：概括本区域的目的地信息并注入到与自己连接的其他区域。这种概括包括成本信息，但不包括区域内部的所有拓扑细节</li>
 <li>传递成本信息可以使得其他区域内的主机找到进入本区域的最好区域边界路由器</li>
 <li>不传递拓扑信息可以减少流量和简化其他区域路由器的最短路径计算</li>
@@ -1788,11 +1806,10 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>自治域、区域和各种路由器之间的关系</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-90.png" width="65%">
-
-
 <p>链路状态算法</p>
 <ul>
-<li>每个区域内的路由器由相同的链路状态数据库，并运行相同的最短路径算法<ul>
+<li>每个区域内的路由器由相同的链路状态数据库，并运行相同的最短路径算法
+<ul>
 <li>其主要工作是计算从自身出发到每个其他路由器和整个AS内网络的最短路径</li>
 <li>根据距离或其他属性进行计算</li>
 </ul>
@@ -1801,7 +1818,8 @@ gtag('config', 'UA-164555720-1');
 <p>OSPF 路由</p>
 <ul>
 <li>区域内（intra-area）</li>
-<li>区域间（inter-area）<ul>
+<li>区域间（inter-area）
+<ul>
 <li>从源所在区域到骨干区域</li>
 <li>穿过骨干区域到目标区域</li>
 <li>到达目的地</li>
@@ -1823,11 +1841,13 @@ gtag('config', 'UA-164555720-1');
 <li>路由状态更新</li>
 </ol>
 <ul>
-<li>每台路由器周期性地泛洪 <code>LINK STATE UPDATE</code> 消息到它的每台邻接路由器<ul>
+<li>每台路由器周期性地泛洪 <code>LINK STATE UPDATE</code> 消息到它的每台邻接路由器
+<ul>
 <li>这些消息给出了它的状态信息，并提供了拓扑数据库用到的成本信息</li>
 </ul>
 </li>
-<li>这些泛洪消息需要被确认，以保证它们的传输可靠性<ul>
+<li>这些泛洪消息需要被确认，以保证它们的传输可靠性
+<ul>
 <li>每条消息都有一个序号，路由器据此判断一条入境 <code>LINK STATE UPDATE</code> 消息的新旧</li>
 </ul>
 </li>
@@ -1843,19 +1863,18 @@ gtag('config', 'UA-164555720-1');
 </ul>
 <p>OSPF 数据包的头格式</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-91.png" width="65%">
-
-
 <p>OSPF 的 5 类消息</p>
 <img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-92.png" width="65%">
-
-
-<h2 id="BGP-——-边界网关路由协议"><a href="#BGP-——-边界网关路由协议" class="headerlink" title="BGP —— 边界网关路由协议*"></a>BGP —— 边界网关路由协议*</h2><p>在一个 AS 内部，推荐使用的路由协议是 OSPF 和 IS-IS</p>
+<h2 id="BGP-——-边界网关路由协议">BGP —— 边界网关路由协议*</h2>
+<p>在一个 AS 内部，推荐使用的路由协议是 OSPF 和 IS-IS</p>
 <p>在 AS 之间，则可以使用 BGP（Border Gateway Protocol, 边界网关协议）</p>
 <ul>
 <li>在自治域之间路由（interdomain routing）</li>
 <li>BGP 考虑政治、安全和经济因素</li>
 </ul>
-<h3 id="BGP-政策"><a href="#BGP-政策" class="headerlink" title="BGP 政策"></a>BGP 政策</h3><p>政策通常被手动配置到每个 BGP 路由器中（或包含某种脚本）。它们不是协议本身的一部分<br>可能的路由限制</p>
+<h3 id="BGP-政策">BGP 政策</h3>
+<p>政策通常被手动配置到每个 BGP 路由器中（或包含某种脚本）。它们不是协议本身的一部分<br>
+可能的路由限制</p>
 <ol>
 <li>教育网路不承载商业流量</li>
 <li>五角大楼发出的流量永远不要走经过伊拉克的路径</li>
@@ -1863,13 +1882,14 @@ gtag('config', 'UA-164555720-1');
 <li>不要使用澳大利亚的 AT&amp;T，因为它的性能太差</li>
 <li>起止于苹果的流量不应该经过谷歌中转</li>
 </ol>
-<h3 id="路由策略"><a href="#路由策略" class="headerlink" title="路由策略"></a>路由策略</h3><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-93.png" width="65%">
-
-
-<h3 id="BGP-基础"><a href="#BGP-基础" class="headerlink" title="BGP 基础"></a>BGP 基础</h3><p>BGP 是距离矢量协议的一种形式，但它与域内距离矢量协议（如 RIP ）有很大的不同</p>
+<h3 id="路由策略">路由策略</h3>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-93.png" width="65%">
+<h3 id="BGP-基础">BGP 基础</h3>
+<p>BGP 是距离矢量协议的一种形式，但它与域内距离矢量协议（如 RIP ）有很大的不同</p>
 <ul>
 <li>用策略而不是最小距离来选择使用哪些路由</li>
-<li>BGP 不仅维护到每个目的地的成本，而且每个 BGP 路由器还跟踪所使用的路径<ul>
+<li>BGP 不仅维护到每个目的地的成本，而且每个 BGP 路由器还跟踪所使用的路径
+<ul>
 <li>路径由下一跳路由器和一系列 AS 或 AS 路径组成，这些自治系统或者相应的路径序列是该路由器必须遵守的</li>
 <li>这种方法称为路径矢量协议（path vector protocol）</li>
 </ul>
@@ -1879,22 +1899,25 @@ gtag('config', 'UA-164555720-1');
 <ul>
 <li>这种方法既提供了可靠的通信，也隐藏了正在穿越的网络细节</li>
 </ul>
-<h3 id="BGP-路由通告的传播"><a href="#BGP-路由通告的传播" class="headerlink" title="BGP 路由通告的传播"></a>BGP 路由通告的传播</h3><img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-94.png" width="65%">
-
+<h3 id="BGP-路由通告的传播">BGP 路由通告的传播</h3>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/5/5-94.png" width="65%">
 <ul>
 <li>中间的 ISP 为左右两个 ISP 提供中转服务</li>
 </ul>
-<h3 id="路由器如何为每个目的地选择使用哪条路由"><a href="#路由器如何为每个目的地选择使用哪条路由" class="headerlink" title="路由器如何为每个目的地选择使用哪条路由"></a>路由器如何为每个目的地选择使用哪条路由</h3><p>三种策略</p>
+<h3 id="路由器如何为每个目的地选择使用哪条路由">路由器如何为每个目的地选择使用哪条路由</h3>
+<p>三种策略</p>
 <ul>
 <li>优先选择通过对等网络的路由，而不是通过中转提供商的路由</li>
 <li>将“短路径更好”作为默认规则</li>
-<li>优先选择具有 ISP 内最小成本的路由<ul>
+<li>优先选择具有 ISP 内最小成本的路由
+<ul>
 <li>称为提前退出（early exit）或热土豆路由（hot-potato routing）</li>
 <li>副作用是使得路由呈现不对称性</li>
 </ul>
 </li>
 </ul>
-<h2 id="Internet-组播"><a href="#Internet-组播" class="headerlink" title="Internet 组播*"></a>Internet 组播*</h2><p>IP 用 D 类 IP 地址来支持一对多通信，或组播（multicasting）</p>
+<h2 id="Internet-组播">Internet 组播*</h2>
+<p>IP 用 D 类 IP 地址来支持一对多通信，或组播（multicasting）</p>
 <ul>
 <li>每个 D 类地址标识了一组主机</li>
 <li>总共有 28 位可用于标识组播组，因此网络中可同时并存 250 万个组</li>
@@ -1907,7 +1930,8 @@ gtag('config', 'UA-164555720-1');
 <th>description</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>224.0.0.1</td>
 <td>All systems on a LAN</td>
 </tr>
@@ -1923,40 +1947,49 @@ gtag('config', 'UA-164555720-1');
 <td>224.0.0.251</td>
 <td>All DNS servers on a LAN</td>
 </tr>
-</tbody></table>
-<h3 id="IGMP-RFC-3376"><a href="#IGMP-RFC-3376" class="headerlink" title="IGMP (RFC 3376)"></a>IGMP (RFC 3376)</h3><p>Internet 组管理协议（IGMP, Internet Group Management Protocol）</p>
+</tbody>
+</table>
+<h3 id="IGMP-RFC-3376">IGMP (RFC 3376)</h3>
+<p>Internet 组管理协议（IGMP, Internet Group Management Protocol）</p>
 <ul>
 <li>一个进程要求它的主机加入到某个指定的组中，它也可以要求它的主机离开该组</li>
-<li>每台主机跟踪记录当前它的哪些进程属于哪些组<ul>
+<li>每台主机跟踪记录当前它的哪些进程属于哪些组
+<ul>
 <li>当一台主机上的最后一个进程离开一个组时，该主机就不再属于这个组</li>
 </ul>
 </li>
-<li>大约每分钟一次，每个组播路由器向它所在LAN上的所有主机发送一个查询数据包（使用本地组播地址 <code>224.0.0.1</code> ），要求这些主机报告自己当前属于哪些组<ul>
+<li>大约每分钟一次，每个组播路由器向它所在LAN上的所有主机发送一个查询数据包（使用本地组播地址 <code>224.0.0.1</code> ），要求这些主机报告自己当前属于哪些组
+<ul>
 <li>组播路由器可能与标准的路由器在同一台机器上，也可能分属两台机器</li>
 </ul>
 </li>
-<li>每个主机收到查询消息后，返回一个响应包，其中包括了自己感兴趣的所有 D 类地址<ul>
+<li>每个主机收到查询消息后，返回一个响应包，其中包括了自己感兴趣的所有 D 类地址
+<ul>
 <li>查询包和响应包都使用了 IGMP 协议</li>
 </ul>
 </li>
 </ul>
-<h3 id="PIM"><a href="#PIM" class="headerlink" title="PIM"></a>PIM</h3><p>协议独立组播协议（PIM, Protocol Independent Protocol）</p>
+<h3 id="PIM">PIM</h3>
+<p>协议独立组播协议（PIM, Protocol Independent Protocol）</p>
 <ul>
 <li>几个组播路由协议中的任何一个都可用于建立组播生成树，该树给出了一条从发送方到组内所有成员的路径</li>
 <li>AS 内主要使用 PIM</li>
-<li>密集模式 PIM<ul>
+<li>密集模式 PIM
+<ul>
 <li>修剪的逆向路径转发树</li>
 <li>成员分布在网络各处，如数据中心把文件分发给多个服务器</li>
 </ul>
 </li>
-<li>稀疏模式 PIM<ul>
+<li>稀疏模式 PIM
+<ul>
 <li>类似于核心树</li>
 <li>内容提供商向它 IP 网络上的用户组播 TV</li>
 <li>变体：特定源组播 PIM（Source-Specific Multicast PIM）可用来优化只有一个发送方的情况</li>
 </ul>
 </li>
 </ul>
-<h2 id="移动-IP"><a href="#移动-IP" class="headerlink" title="移动 IP *"></a>移动 IP *</h2><p>目标</p>
+<h2 id="移动-IP">移动 IP *</h2>
+<p>目标</p>
 <ol>
 <li>每台移动主机必须能在任何地方使用它的家乡 IP 地址</li>
 <li>不允许修改固定主机的软件</li>
@@ -1964,7 +1997,7 @@ gtag('config', 'UA-164555720-1');
 <li>发给移动主机的大多数数据包不应该绕道而行</li>
 <li>移动主机在家时不应该有任何开销</li>
 </ol>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/jckling">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2018/06/15/Notes/Computer%20Networks/The-Network-Layer/">https://jckling.github.io/2018/06/15/Notes/Computer Networks/The-Network-Layer/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="post-meta__tags" href="/tags/Computer-Networks/">Computer Networks</a></div><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_wechat"></a><a class="a2a_button_sina_weibo"></a><a class="a2a_button_facebook_messenger"></a><a class="a2a_button_email"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/jckling/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/06/22/Notes/Computer%20Networks/The-Transport-Layer/" title="《计算机网络（英文版·第5版）》 The Transport Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" onerror="onerror=null;src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《计算机网络（英文版·第5版）》 The Transport Layer</div></div></a></div><div class="next-post pull-right"><a href="/2018/06/14/Notes/Computer%20Networks/The-Data-Link-Layer/" title="《计算机网络（英文版·第5版）》 The Data Link Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" onerror="onerror=null;src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《计算机网络（英文版·第5版）》 The Data Link Layer</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/06/25/Notes/Computer%20Networks/The-Application-Layer/" title="《计算机网络（英文版·第5版）》 The Application Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-25</div><div class="title">《计算机网络（英文版·第5版）》 The Application Layer</div></div></a></div><div><a href="/2018/06/14/Notes/Computer%20Networks/The-Data-Link-Layer/" title="《计算机网络（英文版·第5版）》 The Data Link Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-14</div><div class="title">《计算机网络（英文版·第5版）》 The Data Link Layer</div></div></a></div><div><a href="/2018/06/13/Notes/Computer%20Networks/The-Introduction/" title="《计算机网络（英文版·第5版）》 The Introduction"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-13</div><div class="title">《计算机网络（英文版·第5版）》 The Introduction</div></div></a></div><div><a href="/2018/06/14/Notes/Computer%20Networks/The-Medium-Access-Control-Sublayer/" title="《计算机网络（英文版·第5版）》 The Medium Access Control Sublayer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-14</div><div class="title">《计算机网络（英文版·第5版）》 The Medium Access Control Sublayer</div></div></a></div><div><a href="/2018/06/13/Notes/Computer%20Networks/The-Physical-Layer/" title="《计算机网络（英文版·第5版）》 The Physical Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-13</div><div class="title">《计算机网络（英文版·第5版）》 The Physical Layer</div></div></a></div><div><a href="/2018/06/22/Notes/Computer%20Networks/The-Transport-Layer/" title="《计算机网络（英文版·第5版）》 The Transport Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-22</div><div class="title">《计算机网络（英文版·第5版）》 The Transport Layer</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">124</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">46</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请不要重复提交~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">网络层设计问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8-%E8%BD%AC%E5%8F%91%E6%95%B0%E6%8D%AE%E5%8C%85%E4%BA%A4%E6%8D%A2"><span class="toc-number">1.1.</span> <span class="toc-text">存储-转发数据包交换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E4%BE%9B%E7%BB%99%E4%BC%A0%E8%BE%93%E5%B1%82%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.2.</span> <span class="toc-text">提供给传输层的服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.</span> <span class="toc-text">无连接服务的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.</span> <span class="toc-text">面向连接服务的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E4%BA%A4%E6%8D%A2%EF%BC%88label-switching%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">标签交换（label switching）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E7%94%B5%E8%B7%AF%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">1.5.</span> <span class="toc-text">虚电路与数据报网络的比较</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E7%AE%97%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">路由算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%8E%9F%E5%88%99%EF%BC%88optimality-principle%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">优化原则（optimality principle）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E9%9B%86%E6%A0%91"><span class="toc-number">2.1.1.</span> <span class="toc-text">汇集树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E6%8A%BD%E8%B1%A1"><span class="toc-number">2.1.2.</span> <span class="toc-text">图抽象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">最短路径算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra-%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.1.</span> <span class="toc-text">Dijkstra 算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E6%9D%83%E6%97%A0%E5%90%91%E5%9B%BE%E4%B8%8A%E7%9A%84%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.2.</span> <span class="toc-text">加权无向图上的算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E6%B4%AA%EF%BC%88flooding%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">泛洪（flooding）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E9%80%94"><span class="toc-number">2.3.1.</span> <span class="toc-text">用途</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%9D%E7%A6%BB%E7%9F%A2%E9%87%8F%E8%B7%AF%E7%94%B1"><span class="toc-number">2.4.</span> <span class="toc-text">距离矢量路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">2.4.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-V-%E8%B7%AF%E7%94%B1%E4%BE%8B%E5%AD%90"><span class="toc-number">2.4.2.</span> <span class="toc-text">D-V 路由例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E7%A9%B7%E8%AE%A1%E6%95%B0%E9%97%AE%E9%A2%98"><span class="toc-number">2.4.3.</span> <span class="toc-text">无穷计数问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E8%B7%AF%E7%94%B1"><span class="toc-number">2.5.</span> <span class="toc-text">链路状态路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E7%8E%B0%E9%82%BB%E5%B1%85"><span class="toc-number">2.5.1.</span> <span class="toc-text">发现邻居</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%93%BE%E8%B7%AF%E6%88%90%E6%9C%AC"><span class="toc-number">2.5.2.</span> <span class="toc-text">设置链路成本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E5%8C%85"><span class="toc-number">2.5.3.</span> <span class="toc-text">构造链路状态包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%8F%91%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E5%8C%85"><span class="toc-number">2.5.4.</span> <span class="toc-text">分发链路状态包</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B4%E9%BE%84%EF%BC%88age%EF%BC%89%E5%AD%97%E6%AE%B5"><span class="toc-number">2.5.4.1.</span> <span class="toc-text">年龄（age）字段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%96%B0%E8%B7%AF%E7%94%B1"><span class="toc-number">2.5.5.</span> <span class="toc-text">计算新路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E8%B7%AF%E7%94%B1%E6%80%BB%E7%BB%93"><span class="toc-number">2.5.6.</span> <span class="toc-text">链路状态路由总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E8%B7%AF%E7%94%B1%EF%BC%88hierarchical-hierarchy%EF%BC%89"><span class="toc-number">2.6.</span> <span class="toc-text">层次路由（hierarchical&#x2F;hierarchy）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%BF%E6%92%AD%E8%B7%AF%E7%94%B1%EF%BC%88broadcast%EF%BC%89"><span class="toc-number">2.7.</span> <span class="toc-text">广播路由（broadcast）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E6%92%AD%E8%B7%AF%E7%94%B1%EF%BC%88multicast%EF%BC%89"><span class="toc-number">2.8.</span> <span class="toc-text">组播路由（multicast）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E6%92%AD%E8%B7%AF%E7%94%B1%EF%BC%88anycast%EF%BC%89"><span class="toc-number">2.9.</span> <span class="toc-text">任播路由（anycast）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E4%B8%BB%E6%9C%BA%E8%B7%AF%E7%94%B1%EF%BC%88mobile-host%EF%BC%89"><span class="toc-number">2.10.</span> <span class="toc-text">移动主机路由（mobile host）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E7%BB%84%E7%BB%87%E7%BD%91%E7%BB%9C%E8%B7%AF%E7%94%B1%EF%BC%88ad-hoc-network%EF%BC%89"><span class="toc-number">2.11.</span> <span class="toc-text">自组织网络路由（ad hoc network）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E4%BA%92%E8%81%94%EF%BC%88internetwork%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">网络互联（internetwork）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%A6%82%E4%BD%95%E4%B8%8D%E5%90%8C"><span class="toc-number">3.1.</span> <span class="toc-text">网络如何不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%95%E4%BB%A5%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C"><span class="toc-number">3.2.</span> <span class="toc-text">何以连接网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%A7%E9%81%93%EF%BC%88tunneling%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">隧道（tunneling）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E8%B7%AF%E7%94%B1"><span class="toc-number">3.4.</span> <span class="toc-text">互联网路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%AE%B5"><span class="toc-number">3.5.</span> <span class="toc-text">数据包分段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84-MTU"><span class="toc-number">3.5.1.</span> <span class="toc-text">路径 MTU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%EF%BC%88Fragment%EF%BC%89"><span class="toc-number">3.5.2.</span> <span class="toc-text">分段（Fragment）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%8F%E6%98%8E%E5%88%86%E6%AE%B5"><span class="toc-number">3.5.2.1.</span> <span class="toc-text">透明分段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E9%80%8F%E6%98%8E%E5%88%86%E6%AE%B5"><span class="toc-number">3.5.2.2.</span> <span class="toc-text">非透明分段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84-MTU-%E5%8F%91%E7%8E%B0%EF%BC%88path-MTU-discovery%EF%BC%89"><span class="toc-number">3.5.3.</span> <span class="toc-text">路径 MTU 发现（path MTU discovery）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Internet-%E7%9A%84%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-number">4.</span> <span class="toc-text">Internet 的网络层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IPv4-%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.1.</span> <span class="toc-text">IPv4 协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%E4%B8%BE%E4%BE%8B"><span class="toc-number">4.1.1.</span> <span class="toc-text">分段举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP-%E5%9C%B0%E5%9D%80"><span class="toc-number">4.2.</span> <span class="toc-text">IP 地址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%EF%BC%88prefix%EF%BC%89"><span class="toc-number">4.2.1.</span> <span class="toc-text">前缀（prefix）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E5%8C%96%E5%9C%B0%E5%9D%80"><span class="toc-number">4.2.2.</span> <span class="toc-text">层次化地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E7%BD%91%EF%BC%88subnet%EF%BC%89"><span class="toc-number">4.2.3.</span> <span class="toc-text">子网（subnet）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CIDR-%E2%80%94%E2%80%94-%E6%97%A0%E7%B1%BB%E5%9F%9F%E9%97%B4%E8%B7%AF%E7%94%B1"><span class="toc-number">4.2.4.</span> <span class="toc-text">CIDR —— 无类域间路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E5%92%8C%E7%89%B9%E6%AE%8A%E5%AF%BB%E5%9D%80"><span class="toc-number">4.2.5.</span> <span class="toc-text">分配和特殊寻址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NAT-%E2%80%94%E2%80%94-%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.3.</span> <span class="toc-text">NAT —— 网络地址转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81-IP-%E5%9C%B0%E5%9D%80"><span class="toc-number">4.3.1.</span> <span class="toc-text">动态 IP 地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2-NAT%EF%BC%88RFC-3022%EF%BC%89"><span class="toc-number">4.3.2.</span> <span class="toc-text">网络地址转换 NAT（RFC 3022）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E7%95%99%E7%9A%84-IP-%E5%9C%B0%E5%9D%80%EF%BC%88reserved%EF%BC%89"><span class="toc-number">4.3.3.</span> <span class="toc-text">保留的 IP 地址（reserved）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NAT-%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-number">4.3.4.</span> <span class="toc-text">NAT 操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NAT-%E5%BA%94%E7%AD%94%E9%97%AE%E9%A2%98"><span class="toc-number">4.3.5.</span> <span class="toc-text">NAT 应答问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP-%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B"><span class="toc-number">4.3.6.</span> <span class="toc-text">TCP 连接建立</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%A0%E5%B0%84%E6%BA%90%E7%AB%AF%E5%8F%A3"><span class="toc-number">4.3.7.</span> <span class="toc-text">映射源端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NAT-%E9%97%AE%E9%A2%98"><span class="toc-number">4.3.8.</span> <span class="toc-text">NAT 问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPv6"><span class="toc-number">4.4.</span> <span class="toc-text">IPv6</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%9A%84-IPv6-%E5%A4%B4"><span class="toc-number">4.4.1.</span> <span class="toc-text">主要的 IPv6 头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPv6-%E5%9C%B0%E5%9D%80"><span class="toc-number">4.4.2.</span> <span class="toc-text">IPv6 地址</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E5%A4%B4"><span class="toc-number">4.4.2.1.</span> <span class="toc-text">扩展头</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPv4-%E5%92%8C-IPv6-%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.4.3.</span> <span class="toc-text">IPv4 和 IPv6 的转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Internet-%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.5.</span> <span class="toc-text">Internet 控制协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ICMP-%E2%80%94%E2%80%94-Internet-%E6%8E%A7%E5%88%B6%E6%B6%88%E6%81%AF%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.5.1.</span> <span class="toc-text">ICMP —— Internet 控制消息协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ICMP-%E7%9A%84%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E7%9B%AE%E7%9A%84"><span class="toc-number">4.5.1.1.</span> <span class="toc-text">ICMP 的请求 &#x2F; 响应目的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E6%88%B3%E6%B6%88%E6%81%AF"><span class="toc-number">4.5.1.2.</span> <span class="toc-text">时间戳消息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ARP-%E2%80%94%E2%80%94-%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.5.2.</span> <span class="toc-text">ARP —— 地址解析协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ARP-%E4%B8%8E-RARP"><span class="toc-number">4.5.2.1.</span> <span class="toc-text">ARP 与 RARP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%A0%E5%B0%84%E9%97%AE%E9%A2%98"><span class="toc-number">4.5.2.2.</span> <span class="toc-text">映射问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ARP-%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.5.2.3.</span> <span class="toc-text">ARP 地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ARP-%E5%8C%85%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.5.2.4.</span> <span class="toc-text">ARP 包格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ARP-%E4%B8%BE%E4%BE%8B"><span class="toc-number">4.5.2.5.</span> <span class="toc-text">ARP 举例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DHCP-%E2%80%94%E2%80%94-%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.5.3.</span> <span class="toc-text">DHCP —— 动态主机配置协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E9%85%8D%E7%BD%AE-TCP-IP-%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">4.5.3.1.</span> <span class="toc-text">手动配置 TCP&#x2F;IP 的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8-DHCP-%E6%9D%A5%E9%85%8D%E7%BD%AE-TCP-IP"><span class="toc-number">4.5.3.2.</span> <span class="toc-text">用 DHCP 来配置 TCP&#x2F;IP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BOOTP-RFC-951-1048-1084"><span class="toc-number">4.5.3.3.</span> <span class="toc-text">BOOTP RFC 951&#x2F;1048&#x2F;1084</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DHCP"><span class="toc-number">4.5.3.4.</span> <span class="toc-text">DHCP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BOOTP-DHCP-%E6%B6%88%E6%81%AF%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.5.3.5.</span> <span class="toc-text">BOOTP&#x2F;DHCP 消息格式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E4%BA%A4%E6%8D%A2%E5%92%8C-MPLS"><span class="toc-number">4.6.</span> <span class="toc-text">标签交换和 MPLS *</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.6.1.</span> <span class="toc-text">2.5 层协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OSPF-%E2%80%94%E2%80%94-%E5%86%85%E9%83%A8%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.7.</span> <span class="toc-text">OSPF —— 内部网关路由协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Internet-%E4%B8%8A%E7%9A%84%E5%86%85%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.7.1.</span> <span class="toc-text">Internet 上的内部网关协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E8%A6%81%E6%B1%82"><span class="toc-number">4.7.2.</span> <span class="toc-text">设计要求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BGP-%E2%80%94%E2%80%94-%E8%BE%B9%E7%95%8C%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.8.</span> <span class="toc-text">BGP —— 边界网关路由协议*</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BGP-%E6%94%BF%E7%AD%96"><span class="toc-number">4.8.1.</span> <span class="toc-text">BGP 政策</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E7%AD%96%E7%95%A5"><span class="toc-number">4.8.2.</span> <span class="toc-text">路由策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BGP-%E5%9F%BA%E7%A1%80"><span class="toc-number">4.8.3.</span> <span class="toc-text">BGP 基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BGP-%E8%B7%AF%E7%94%B1%E9%80%9A%E5%91%8A%E7%9A%84%E4%BC%A0%E6%92%AD"><span class="toc-number">4.8.4.</span> <span class="toc-text">BGP 路由通告的传播</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%A6%82%E4%BD%95%E4%B8%BA%E6%AF%8F%E4%B8%AA%E7%9B%AE%E7%9A%84%E5%9C%B0%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8%E5%93%AA%E6%9D%A1%E8%B7%AF%E7%94%B1"><span class="toc-number">4.8.5.</span> <span class="toc-text">路由器如何为每个目的地选择使用哪条路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Internet-%E7%BB%84%E6%92%AD"><span class="toc-number">4.9.</span> <span class="toc-text">Internet 组播*</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IGMP-RFC-3376"><span class="toc-number">4.9.1.</span> <span class="toc-text">IGMP (RFC 3376)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PIM"><span class="toc-number">4.9.2.</span> <span class="toc-text">PIM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8-IP"><span class="toc-number">4.10.</span> <span class="toc-text">移动 IP *</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/02/24/Other/NVIDIA%20Omniverse%20Audio%20%E7%B3%BB%E5%88%97%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" title="NVIDIA Omniverse Audio 系列工具使用"><img src="https://www.nvidia.cn/content/dam/en-zz/Solutions/about-nvidia/logo-and-brand/02-nvidia-logo-color-blk-500x200-4c25-p@2x.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="NVIDIA Omniverse Audio 系列工具使用"/></a><div class="content"><a class="title" href="/2024/02/24/Other/NVIDIA%20Omniverse%20Audio%20%E7%B3%BB%E5%88%97%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" title="NVIDIA Omniverse Audio 系列工具使用">NVIDIA Omniverse Audio 系列工具使用</a><time datetime="2024-02-24T04:25:45.000Z" title="发表于 2024-02-24 12:25:45">2024-02-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/01/24/Other/%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%20Gitea%20Actions/" title="搭建本地 Gitea Actions"><img src="https://about.gitea.com/gitea-text.svg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="搭建本地 Gitea Actions"/></a><div class="content"><a class="title" href="/2024/01/24/Other/%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%20Gitea%20Actions/" title="搭建本地 Gitea Actions">搭建本地 Gitea Actions</a><time datetime="2024-01-24T09:02:46.000Z" title="发表于 2024-01-24 17:02:46">2024-01-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/12/Notes/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" title="工作总结"><img src="https://s2.loli.net/2024/01/06/aDmdihO2fwpQ1sS.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="工作总结"/></a><div class="content"><a class="title" href="/2023/12/12/Notes/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" title="工作总结">工作总结</a><time datetime="2023-12-12T03:47:30.000Z" title="发表于 2023-12-12 11:47:30">2023-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程"><img src="https://raw.githubusercontent.com/goatcorp/FFXIVQuickLauncher/master/misc/screenshot.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程"/></a><div class="content"><a class="title" href="/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程">FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程</a><time datetime="2023-09-02T08:48:08.000Z" title="发表于 2023-09-02 16:48:08">2023-09-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/30/Game/FFXIV/FF14-ReShade%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 ReShade 使用教程"><img src="https://s2.loli.net/2023/08/31/YywZPAqSUhDkbOW.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="FF14 ReShade 使用教程"/></a><div class="content"><a class="title" href="/2023/08/30/Game/FFXIV/FF14-ReShade%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 ReShade 使用教程">FF14 ReShade 使用教程</a><time datetime="2023-08-30T14:11:14.000Z" title="发表于 2023-08-30 22:11:14">2023-08-30</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/copy-tex.min.js"></script><script>(() => {
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/jckling">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/2018/06/15/Notes/Computer%20Networks/The-Network-Layer/">https://jckling.github.io/2018/06/15/Notes/Computer Networks/The-Network-Layer/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="post-meta__tags" href="/tags/Computer-Networks/">Computer Networks</a></div><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_wechat"></a><a class="a2a_button_sina_weibo"></a><a class="a2a_button_facebook_messenger"></a><a class="a2a_button_email"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/jckling/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/jckling/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/jckling/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/06/22/Notes/Computer%20Networks/The-Transport-Layer/" title="《计算机网络（英文版·第5版）》 The Transport Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" onerror="onerror=null;src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《计算机网络（英文版·第5版）》 The Transport Layer</div></div></a></div><div class="next-post pull-right"><a href="/2018/06/14/Notes/Computer%20Networks/The-Data-Link-Layer/" title="《计算机网络（英文版·第5版）》 The Data Link Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" onerror="onerror=null;src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《计算机网络（英文版·第5版）》 The Data Link Layer</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/06/25/Notes/Computer%20Networks/The-Application-Layer/" title="《计算机网络（英文版·第5版）》 The Application Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-25</div><div class="title">《计算机网络（英文版·第5版）》 The Application Layer</div></div></a></div><div><a href="/2018/06/14/Notes/Computer%20Networks/The-Data-Link-Layer/" title="《计算机网络（英文版·第5版）》 The Data Link Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-14</div><div class="title">《计算机网络（英文版·第5版）》 The Data Link Layer</div></div></a></div><div><a href="/2018/06/13/Notes/Computer%20Networks/The-Introduction/" title="《计算机网络（英文版·第5版）》 The Introduction"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-13</div><div class="title">《计算机网络（英文版·第5版）》 The Introduction</div></div></a></div><div><a href="/2018/06/14/Notes/Computer%20Networks/The-Medium-Access-Control-Sublayer/" title="《计算机网络（英文版·第5版）》 The Medium Access Control Sublayer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-14</div><div class="title">《计算机网络（英文版·第5版）》 The Medium Access Control Sublayer</div></div></a></div><div><a href="/2018/06/13/Notes/Computer%20Networks/The-Physical-Layer/" title="《计算机网络（英文版·第5版）》 The Physical Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-13</div><div class="title">《计算机网络（英文版·第5版）》 The Physical Layer</div></div></a></div><div><a href="/2018/06/22/Notes/Computer%20Networks/The-Transport-Layer/" title="《计算机网络（英文版·第5版）》 The Transport Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-22</div><div class="title">《计算机网络（英文版·第5版）》 The Transport Layer</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info__name">Jckling</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">124</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">46</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请不要重复提交~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">网络层设计问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8-%E8%BD%AC%E5%8F%91%E6%95%B0%E6%8D%AE%E5%8C%85%E4%BA%A4%E6%8D%A2"><span class="toc-number">1.1.</span> <span class="toc-text">存储-转发数据包交换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E4%BE%9B%E7%BB%99%E4%BC%A0%E8%BE%93%E5%B1%82%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.2.</span> <span class="toc-text">提供给传输层的服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.</span> <span class="toc-text">无连接服务的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.</span> <span class="toc-text">面向连接服务的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E4%BA%A4%E6%8D%A2%EF%BC%88label-switching%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">标签交换（label switching）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E7%94%B5%E8%B7%AF%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">1.5.</span> <span class="toc-text">虚电路与数据报网络的比较</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">路由算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%8E%9F%E5%88%99%EF%BC%88optimality-principle%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">优化原则（optimality principle）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E9%9B%86%E6%A0%91"><span class="toc-number">2.1.1.</span> <span class="toc-text">汇集树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E6%8A%BD%E8%B1%A1"><span class="toc-number">2.1.2.</span> <span class="toc-text">图抽象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">最短路径算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra-%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.1.</span> <span class="toc-text">Dijkstra 算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E6%9D%83%E6%97%A0%E5%90%91%E5%9B%BE%E4%B8%8A%E7%9A%84%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.2.</span> <span class="toc-text">加权无向图上的算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E6%B4%AA%EF%BC%88flooding%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">泛洪（flooding）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E9%80%94"><span class="toc-number">2.3.1.</span> <span class="toc-text">用途</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%9D%E7%A6%BB%E7%9F%A2%E9%87%8F%E8%B7%AF%E7%94%B1"><span class="toc-number">2.4.</span> <span class="toc-text">距离矢量路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">2.4.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-V-%E8%B7%AF%E7%94%B1%E4%BE%8B%E5%AD%90"><span class="toc-number">2.4.2.</span> <span class="toc-text">D-V 路由例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E7%A9%B7%E8%AE%A1%E6%95%B0%E9%97%AE%E9%A2%98"><span class="toc-number">2.4.3.</span> <span class="toc-text">无穷计数问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E8%B7%AF%E7%94%B1"><span class="toc-number">2.5.</span> <span class="toc-text">链路状态路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E7%8E%B0%E9%82%BB%E5%B1%85"><span class="toc-number">2.5.1.</span> <span class="toc-text">发现邻居</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%93%BE%E8%B7%AF%E6%88%90%E6%9C%AC"><span class="toc-number">2.5.2.</span> <span class="toc-text">设置链路成本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E5%8C%85"><span class="toc-number">2.5.3.</span> <span class="toc-text">构造链路状态包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%8F%91%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E5%8C%85"><span class="toc-number">2.5.4.</span> <span class="toc-text">分发链路状态包</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B4%E9%BE%84%EF%BC%88age%EF%BC%89%E5%AD%97%E6%AE%B5"><span class="toc-number">2.5.4.1.</span> <span class="toc-text">年龄（age）字段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%96%B0%E8%B7%AF%E7%94%B1"><span class="toc-number">2.5.5.</span> <span class="toc-text">计算新路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E8%B7%AF%E7%94%B1%E6%80%BB%E7%BB%93"><span class="toc-number">2.5.6.</span> <span class="toc-text">链路状态路由总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E8%B7%AF%E7%94%B1%EF%BC%88hierarchical-hierarchy%EF%BC%89"><span class="toc-number">2.6.</span> <span class="toc-text">层次路由（hierarchical&#x2F;hierarchy）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%BF%E6%92%AD%E8%B7%AF%E7%94%B1%EF%BC%88broadcast%EF%BC%89"><span class="toc-number">2.7.</span> <span class="toc-text">广播路由（broadcast）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E6%92%AD%E8%B7%AF%E7%94%B1%EF%BC%88multicast%EF%BC%89"><span class="toc-number">2.8.</span> <span class="toc-text">组播路由（multicast）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E6%92%AD%E8%B7%AF%E7%94%B1%EF%BC%88anycast%EF%BC%89"><span class="toc-number">2.9.</span> <span class="toc-text">任播路由（anycast）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E4%B8%BB%E6%9C%BA%E8%B7%AF%E7%94%B1%EF%BC%88mobile-host%EF%BC%89"><span class="toc-number">2.10.</span> <span class="toc-text">移动主机路由（mobile host）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E7%BB%84%E7%BB%87%E7%BD%91%E7%BB%9C%E8%B7%AF%E7%94%B1%EF%BC%88ad-hoc-network%EF%BC%89"><span class="toc-number">2.11.</span> <span class="toc-text">自组织网络路由（ad hoc network）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">网络互联（internetwork）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%A6%82%E4%BD%95%E4%B8%8D%E5%90%8C"><span class="toc-number">3.1.</span> <span class="toc-text">网络如何不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%95%E4%BB%A5%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C"><span class="toc-number">3.2.</span> <span class="toc-text">何以连接网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%A7%E9%81%93%EF%BC%88tunneling%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">隧道（tunneling）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E8%B7%AF%E7%94%B1"><span class="toc-number">3.4.</span> <span class="toc-text">互联网路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%AE%B5"><span class="toc-number">3.5.</span> <span class="toc-text">数据包分段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84-MTU"><span class="toc-number">3.5.1.</span> <span class="toc-text">路径 MTU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%EF%BC%88Fragment%EF%BC%89"><span class="toc-number">3.5.2.</span> <span class="toc-text">分段（Fragment）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%8F%E6%98%8E%E5%88%86%E6%AE%B5"><span class="toc-number">3.5.2.1.</span> <span class="toc-text">透明分段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E9%80%8F%E6%98%8E%E5%88%86%E6%AE%B5"><span class="toc-number">3.5.2.2.</span> <span class="toc-text">非透明分段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84-MTU-%E5%8F%91%E7%8E%B0%EF%BC%88path-MTU-discovery%EF%BC%89"><span class="toc-number">3.5.3.</span> <span class="toc-text">路径 MTU 发现（path MTU discovery）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">Internet 的网络层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IPv4-%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.1.</span> <span class="toc-text">IPv4 协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%E4%B8%BE%E4%BE%8B"><span class="toc-number">4.1.1.</span> <span class="toc-text">分段举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP-%E5%9C%B0%E5%9D%80"><span class="toc-number">4.2.</span> <span class="toc-text">IP 地址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%EF%BC%88prefix%EF%BC%89"><span class="toc-number">4.2.1.</span> <span class="toc-text">前缀（prefix）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E5%8C%96%E5%9C%B0%E5%9D%80"><span class="toc-number">4.2.2.</span> <span class="toc-text">层次化地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E7%BD%91%EF%BC%88subnet%EF%BC%89"><span class="toc-number">4.2.3.</span> <span class="toc-text">子网（subnet）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CIDR-%E2%80%94%E2%80%94-%E6%97%A0%E7%B1%BB%E5%9F%9F%E9%97%B4%E8%B7%AF%E7%94%B1"><span class="toc-number">4.2.4.</span> <span class="toc-text">CIDR —— 无类域间路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E5%92%8C%E7%89%B9%E6%AE%8A%E5%AF%BB%E5%9D%80"><span class="toc-number">4.2.5.</span> <span class="toc-text">分配和特殊寻址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NAT-%E2%80%94%E2%80%94-%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.3.</span> <span class="toc-text">NAT —— 网络地址转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81-IP-%E5%9C%B0%E5%9D%80"><span class="toc-number">4.3.1.</span> <span class="toc-text">动态 IP 地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2-NAT%EF%BC%88RFC-3022%EF%BC%89"><span class="toc-number">4.3.2.</span> <span class="toc-text">网络地址转换 NAT（RFC 3022）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E7%95%99%E7%9A%84-IP-%E5%9C%B0%E5%9D%80%EF%BC%88reserved%EF%BC%89"><span class="toc-number">4.3.3.</span> <span class="toc-text">保留的 IP 地址（reserved）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NAT-%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-number">4.3.4.</span> <span class="toc-text">NAT 操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NAT-%E5%BA%94%E7%AD%94%E9%97%AE%E9%A2%98"><span class="toc-number">4.3.5.</span> <span class="toc-text">NAT 应答问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP-%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B"><span class="toc-number">4.3.6.</span> <span class="toc-text">TCP 连接建立</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%A0%E5%B0%84%E6%BA%90%E7%AB%AF%E5%8F%A3"><span class="toc-number">4.3.7.</span> <span class="toc-text">映射源端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NAT-%E9%97%AE%E9%A2%98"><span class="toc-number">4.3.8.</span> <span class="toc-text">NAT 问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPv6"><span class="toc-number">4.4.</span> <span class="toc-text">IPv6</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%9A%84-IPv6-%E5%A4%B4"><span class="toc-number">4.4.1.</span> <span class="toc-text">主要的 IPv6 头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPv6-%E5%9C%B0%E5%9D%80"><span class="toc-number">4.4.2.</span> <span class="toc-text">IPv6 地址</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E5%A4%B4"><span class="toc-number">4.4.2.1.</span> <span class="toc-text">扩展头</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPv4-%E5%92%8C-IPv6-%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.4.3.</span> <span class="toc-text">IPv4 和 IPv6 的转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Internet-%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.5.</span> <span class="toc-text">Internet 控制协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ICMP-%E2%80%94%E2%80%94-Internet-%E6%8E%A7%E5%88%B6%E6%B6%88%E6%81%AF%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.5.1.</span> <span class="toc-text">ICMP —— Internet 控制消息协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ICMP-%E7%9A%84%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E7%9B%AE%E7%9A%84"><span class="toc-number">4.5.1.1.</span> <span class="toc-text">ICMP 的请求 &#x2F; 响应目的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E6%88%B3%E6%B6%88%E6%81%AF"><span class="toc-number">4.5.1.2.</span> <span class="toc-text">时间戳消息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ARP-%E2%80%94%E2%80%94-%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.5.2.</span> <span class="toc-text">ARP —— 地址解析协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ARP-%E4%B8%8E-RARP"><span class="toc-number">4.5.2.1.</span> <span class="toc-text">ARP 与 RARP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%A0%E5%B0%84%E9%97%AE%E9%A2%98"><span class="toc-number">4.5.2.2.</span> <span class="toc-text">映射问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ARP-%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.5.2.3.</span> <span class="toc-text">ARP 地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ARP-%E5%8C%85%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.5.2.4.</span> <span class="toc-text">ARP 包格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ARP-%E4%B8%BE%E4%BE%8B"><span class="toc-number">4.5.2.5.</span> <span class="toc-text">ARP 举例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DHCP-%E2%80%94%E2%80%94-%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.5.3.</span> <span class="toc-text">DHCP —— 动态主机配置协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E9%85%8D%E7%BD%AE-TCP-IP-%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">4.5.3.1.</span> <span class="toc-text">手动配置 TCP&#x2F;IP 的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8-DHCP-%E6%9D%A5%E9%85%8D%E7%BD%AE-TCP-IP"><span class="toc-number">4.5.3.2.</span> <span class="toc-text">用 DHCP 来配置 TCP&#x2F;IP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BOOTP-RFC-951-1048-1084"><span class="toc-number">4.5.3.3.</span> <span class="toc-text">BOOTP RFC 951&#x2F;1048&#x2F;1084</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DHCP"><span class="toc-number">4.5.3.4.</span> <span class="toc-text">DHCP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BOOTP-DHCP-%E6%B6%88%E6%81%AF%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.5.3.5.</span> <span class="toc-text">BOOTP&#x2F;DHCP 消息格式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E4%BA%A4%E6%8D%A2%E5%92%8C-MPLS"><span class="toc-number">4.6.</span> <span class="toc-text">标签交换和 MPLS *</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.6.1.</span> <span class="toc-text">2.5 层协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OSPF-%E2%80%94%E2%80%94-%E5%86%85%E9%83%A8%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.7.</span> <span class="toc-text">OSPF —— 内部网关路由协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Internet-%E4%B8%8A%E7%9A%84%E5%86%85%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.7.1.</span> <span class="toc-text">Internet 上的内部网关协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E8%A6%81%E6%B1%82"><span class="toc-number">4.7.2.</span> <span class="toc-text">设计要求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BGP-%E2%80%94%E2%80%94-%E8%BE%B9%E7%95%8C%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.8.</span> <span class="toc-text">BGP —— 边界网关路由协议*</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BGP-%E6%94%BF%E7%AD%96"><span class="toc-number">4.8.1.</span> <span class="toc-text">BGP 政策</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E7%AD%96%E7%95%A5"><span class="toc-number">4.8.2.</span> <span class="toc-text">路由策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BGP-%E5%9F%BA%E7%A1%80"><span class="toc-number">4.8.3.</span> <span class="toc-text">BGP 基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BGP-%E8%B7%AF%E7%94%B1%E9%80%9A%E5%91%8A%E7%9A%84%E4%BC%A0%E6%92%AD"><span class="toc-number">4.8.4.</span> <span class="toc-text">BGP 路由通告的传播</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%A6%82%E4%BD%95%E4%B8%BA%E6%AF%8F%E4%B8%AA%E7%9B%AE%E7%9A%84%E5%9C%B0%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8%E5%93%AA%E6%9D%A1%E8%B7%AF%E7%94%B1"><span class="toc-number">4.8.5.</span> <span class="toc-text">路由器如何为每个目的地选择使用哪条路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Internet-%E7%BB%84%E6%92%AD"><span class="toc-number">4.9.</span> <span class="toc-text">Internet 组播*</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IGMP-RFC-3376"><span class="toc-number">4.9.1.</span> <span class="toc-text">IGMP (RFC 3376)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PIM"><span class="toc-number">4.9.2.</span> <span class="toc-text">PIM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8-IP"><span class="toc-number">4.10.</span> <span class="toc-text">移动 IP *</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/02/24/Other/NVIDIA%20Omniverse%20Audio%20%E7%B3%BB%E5%88%97%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" title="NVIDIA Omniverse Audio 系列工具使用"><img src="https://www.nvidia.cn/content/dam/en-zz/Solutions/about-nvidia/logo-and-brand/02-nvidia-logo-color-blk-500x200-4c25-p@2x.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="NVIDIA Omniverse Audio 系列工具使用"/></a><div class="content"><a class="title" href="/2024/02/24/Other/NVIDIA%20Omniverse%20Audio%20%E7%B3%BB%E5%88%97%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" title="NVIDIA Omniverse Audio 系列工具使用">NVIDIA Omniverse Audio 系列工具使用</a><time datetime="2024-02-24T04:25:45.000Z" title="发表于 2024-02-24 12:25:45">2024-02-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/01/24/Other/%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%20Gitea%20Actions/" title="搭建本地 Gitea Actions"><img src="https://about.gitea.com/gitea-text.svg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="搭建本地 Gitea Actions"/></a><div class="content"><a class="title" href="/2024/01/24/Other/%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%20Gitea%20Actions/" title="搭建本地 Gitea Actions">搭建本地 Gitea Actions</a><time datetime="2024-01-24T09:02:46.000Z" title="发表于 2024-01-24 17:02:46">2024-01-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/12/Notes/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" title="工作总结"><img src="https://s2.loli.net/2024/01/06/aDmdihO2fwpQ1sS.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="工作总结"/></a><div class="content"><a class="title" href="/2023/12/12/Notes/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" title="工作总结">工作总结</a><time datetime="2023-12-12T03:47:30.000Z" title="发表于 2023-12-12 11:47:30">2023-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程"><img src="https://raw.githubusercontent.com/goatcorp/FFXIVQuickLauncher/master/misc/screenshot.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程"/></a><div class="content"><a class="title" href="/2023/09/02/Game/FFXIV/FF14-XIVLauncher+Dalamud%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程">FF14 XIVLauncher 启动器与 Dalamud 卫月框架使用教程</a><time datetime="2023-09-02T08:48:08.000Z" title="发表于 2023-09-02 16:48:08">2023-09-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/30/Game/FFXIV/FF14-ReShade%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 ReShade 使用教程"><img src="https://s2.loli.net/2023/08/31/YywZPAqSUhDkbOW.jpg" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/jckling/jckling.github.io/img/jckling/404.jpg'" alt="FF14 ReShade 使用教程"/></a><div class="content"><a class="title" href="/2023/08/30/Game/FFXIV/FF14-ReShade%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="FF14 ReShade 使用教程">FF14 ReShade 使用教程</a><time datetime="2023-08-30T14:11:14.000Z" title="发表于 2023-08-30 22:11:14">2023-08-30</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Jckling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/copy-tex.min.js"></script><script>(() => {
   document.querySelectorAll('#article-container span.katex-display').forEach(item => {
     btf.wrap(item, 'div', { class: 'katex-wrap'})
   })
