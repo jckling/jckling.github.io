@@ -2494,6 +2494,7 @@ figure.highlight pre .javascript .function {
 }
 #recent-posts .recent-post-item >.recent-post-info > .content {
   -webkit-line-clamp: 2;
+  word-break: break-word;
 }
 #article-container .shuoshuo-item {
   margin-bottom: 20px;
@@ -3414,26 +3415,96 @@ figure.highlight pre .javascript .function {
   background-color: var(--mark-bg);
   content: '';
 }
-#footer-wrap {
+#footer > * {
   position: relative;
-  padding: 40px 20px;
-  color: var(--light-grey);
-  text-align: center;
-}
-#footer-wrap a {
   color: var(--light-grey);
 }
-#footer-wrap a:hover {
-  text-decoration: underline;
+#footer a {
+  color: var(--light-grey);
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
-#footer-wrap .footer-separator {
+#footer a:hover {
+  color: #49b1f5;
+}
+#footer .footer-separator {
   margin: 0 4px;
 }
-#footer-wrap .icp-icon {
+#footer .icp-icon {
   padding: 0 4px;
   max-height: 1.4em;
   width: auto;
   vertical-align: text-bottom;
+}
+#footer .footer-flex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -o-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-lines: multiple;
+  -moz-box-lines: multiple;
+  -o-box-lines: multiple;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -o-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 40px 60px;
+  max-width: 1200px;
+  width: 100%;
+  text-align: left;
+  gap: 13px;
+}
+@media screen and (max-width: 768px) {
+  #footer .footer-flex {
+    padding: 30px;
+    gap: 10px;
+  }
+}
+#footer .footer-flex .footer-flex-items {
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+  min-width: 100px;
+  text-align: left;
+  white-space: nowrap;
+}
+#footer .footer-flex .footer-flex-title {
+  margin-bottom: 5px;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 1.4em;
+}
+#footer .footer-flex .footer-flex-item {
+  margin: 10px 0;
+  white-space: nowrap;
+}
+#footer .footer-flex a {
+  display: block;
+  white-space: nowrap;
+}
+#footer .footer-other {
+  padding: 40px 20px;
+  width: 100%;
+  text-align: center;
+}
+#footer .footer-other .framework-info {
+  display: block;
 }
 #page-header {
   position: relative;
@@ -3933,6 +4004,52 @@ figure.highlight pre .javascript .function {
 }
 #nav .site-page:not(.child):hover:after {
   width: 100%;
+}
+#nav .nav-page-title {
+  position: relative;
+  overflow: hidden;
+}
+#nav .nav-page-title > :first-child,
+#nav .nav-page-title > :last-child {
+  display: inline-block;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+#nav .nav-page-title > :last-child {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -webkit-transform: translateY(-50%) translateY(-10px);
+  -moz-transform: translateY(-50%) translateY(-10px);
+  -o-transform: translateY(-50%) translateY(-10px);
+  -ms-transform: translateY(-50%) translateY(-10px);
+  transform: translateY(-50%) translateY(-10px);
+}
+#nav .nav-page-title:hover > :last-child {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  -webkit-transform: translateY(-50%) translateY(0);
+  -moz-transform: translateY(-50%) translateY(0);
+  -o-transform: translateY(-50%) translateY(0);
+  -ms-transform: translateY(-50%) translateY(0);
+  transform: translateY(-50%) translateY(0);
+}
+#nav .nav-page-title:hover > :first-child {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -webkit-transform: translateY(10px);
+  -moz-transform: translateY(10px);
+  -o-transform: translateY(10px);
+  -ms-transform: translateY(10px);
+  transform: translateY(10px);
 }
 #pagination .pagination {
   margin-top: 20px;
