@@ -219,7 +219,7 @@ template {
 .note:not(.no-icon)::before {
   display: inline-block;
   font-weight: 600;
-  font-family: 'Font Awesome 6 Free';
+  font-family: 'Font Awesome 7 Free', 'Font Awesome 6 Free';
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
 }
@@ -1503,6 +1503,10 @@ blockquote footer cite:before {
 blockquote > :last-child {
   margin-bottom: 0 !important;
 }
+.fa-fw {
+  width: 1.25em;
+  text-align: center;
+}
 :root {
   --hl-color: #90a4ae;
   --hl-bg: #f6f8fa;
@@ -2667,9 +2671,6 @@ figure.highlight pre .javascript .function {
   #aside-content .card-widget:not(#card-toc) {
     display: none;
   }
-}
-#aside-content .card-widget:last-child {
-  margin-bottom: 0;
 }
 #aside-content .card-info .author-info-name {
   font-weight: 500;
