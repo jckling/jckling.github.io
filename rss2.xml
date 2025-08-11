@@ -9,8 +9,35 @@
     <atom:link href="https://jckling.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Sun, 03 Aug 2025 13:43:46 GMT</pubDate>
+    <pubDate>Mon, 11 Aug 2025 05:04:25 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>本地部署 Open WebUI 使用 DeepSeek/QWEN</title>
+      <link>https://jckling.github.io/2025/08/11/Notes/openwebui+deepseek/</link>
+      <guid>https://jckling.github.io/2025/08/11/Notes/openwebui+deepseek/</guid>
+      <pubDate>Mon, 11 Aug 2025 02:57:10 GMT</pubDate>
+      
+      <description>流水账记录一下部署流程</description>
+      
+      
+      
+      <content:encoded><![CDATA[<h1>前言</h1><p>以前摸鱼的时候本地部署过 <a href="https://ollama.com/">Ollama</a> 和 <a href="https://github.com/open-webui/open-webui">open-webui</a>，不过由于机器性能不行，能跑的模型都不咋样，还不如直接使用网页版 chatgpt 或者用 cursor。最近公司部署了 deepseek-r1-0528，给的示例是用 curl 请求 API 和用 python openai 库调用…… 本懒狗记起来用过 Open WebUI，翻了圈发现可以用 Function 连接。</p><p>模型换成了 Qwen，更新 Open WebUI 后发现直接设置 connection 就可以了，也记录一下。</p><h1>部署流程</h1><p>首先需要有 API 相关信息（以下为示例值）</p><ul><li><strong>BASE_URL</strong>：<code>https://example.com/v1</code></li><li><strong>API_KEY</strong>：<code>your_secret_key</code></li><li><strong>MODEL</strong>: <code>deepseek-r1-0528</code></li></ul><p>然后在本地用 docker 运行 Open WebUI</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main</span><br></pre></td></tr></table></figure><p>访问 <a href="http://localhost:3000/">http://localhost:3000/</a> 创建管理员账号</p><p><img src="https://s2.loli.net/2025/07/15/XnLZaMF9gipcfGQ.jpg" alt=""><br><img src="https://s2.loli.net/2025/07/15/RlOQfTrpW57yYgu.jpg" alt=""></p><p>访问 <a href="https://openwebui.com/">https://openwebui.com/</a> 创建账号</p><p><img src="https://s2.loli.net/2025/07/15/mNRpaQ6dDAekKjY.jpg" alt=""><br><img src="https://s2.loli.net/2025/07/15/9RsQp4T2XhdGw8Y.jpg" alt=""></p><h2 id="Function-接入-DeepSeek">Function 接入 DeepSeek</h2><p>将 <a href="https://openwebui.com/f/zgccrui/deepseek_r1">DeepSeek R1 Function</a> 导入本地</p><p><img src="https://s2.loli.net/2025/07/15/913zXJ2NIRbMHGc.jpg" alt=""></p><p>设置 DEEPSEEK_API_BASE_URL、DEEPSEEK_API_KEY 和 DEEPSEEK_API_MODEL，并保存</p><p><img src="https://s2.loli.net/2025/07/15/LbGIvOCrzMkfdQs.jpg" alt=""></p><p>启用 Function，同时这里还可以更改设置</p><p><img src="https://s2.loli.net/2025/07/15/a1bngfV5KDNdU4k.jpg" alt=""><br><img src="https://s2.loli.net/2025/07/15/ONRkytlqI84iMzW.jpg" alt=""></p><p>点击左上角 New Chat 即可使用</p><p><img src="https://s2.loli.net/2025/07/15/H5qErBvOexd83NK.jpg" alt=""></p><h2 id="Connection-接入-QWEN">Connection 接入 QWEN</h2><p>在 Admin Panel 的 Settings-Connections 面板新增 OpenAI API 设置，填入 URL 和 KEY 即可</p><p><img src="https://s2.loli.net/2025/08/11/cE74VaiBH6wtdQO.jpg" alt=""></p><h1>参阅</h1><ul><li><a href="https://api-docs.deepseek.com/zh-cn">首次调用 API | DeepSeek API Docs</a></li><li><a href="https://openwebui.com/f/zgccrui/deepseek_r1">DeepSeek R1 Function Code</a></li></ul>]]></content:encoded>
+      
+      
+      <category domain="https://jckling.github.io/categories/Notes/">Notes</category>
+      
+      
+      <category domain="https://jckling.github.io/tags/OpenAI/">OpenAI</category>
+      
+      <category domain="https://jckling.github.io/tags/DeepSeek/">DeepSeek</category>
+      
+      <category domain="https://jckling.github.io/tags/QWEN/">QWEN</category>
+      
+      
+      <comments>https://jckling.github.io/2025/08/11/Notes/openwebui+deepseek/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>Qwen3-Coder 接入 VS Code</title>
@@ -36,31 +63,6 @@
     </item>
     
     <item>
-      <title>本地部署 Open WebUI 使用 DeepSeek API</title>
-      <link>https://jckling.github.io/2025/07/15/Notes/openwebui+deepseek/</link>
-      <guid>https://jckling.github.io/2025/07/15/Notes/openwebui+deepseek/</guid>
-      <pubDate>Tue, 15 Jul 2025 06:28:50 GMT</pubDate>
-      
-      <description>流水账记录一下部署流程</description>
-      
-      
-      
-      <content:encoded><![CDATA[<h1>前言</h1><p>以前摸鱼的时候本地部署过 <a href="https://ollama.com/">Ollama</a> 和 <a href="https://github.com/open-webui/open-webui">open-webui</a>，不过由于机器性能不行，能跑的模型都不咋样，还不如直接使用网页版 chatgpt 或者用 cursor。最近公司部署了 deepseek-r1-0528，给的示例是用 curl 请求 API 和用 python openai 库调用…… 本懒狗记起来用过 Open WebUI，翻了圈发现可以用 Function 连接。</p><h1>部署流程</h1><p>首先需要有 API 相关信息（以下为示例值）</p><ul><li><strong>BASE_URL</strong>：<code>https://example.com/v1</code></li><li><strong>API_KEY</strong>：<code>your_secret_key</code></li><li><strong>MODEL</strong>: <code>deepseek-r1-0528</code></li></ul><p>然后在本地用 docker 运行 Open WebUI</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main</span><br></pre></td></tr></table></figure><p>访问 <a href="http://localhost:3000/">http://localhost:3000/</a> 创建管理员账号</p><p><img src="https://s2.loli.net/2025/07/15/XnLZaMF9gipcfGQ.jpg" alt=""><br><img src="https://s2.loli.net/2025/07/15/RlOQfTrpW57yYgu.jpg" alt=""></p><p>访问 <a href="https://openwebui.com/">https://openwebui.com/</a> 创建账号</p><p><img src="https://s2.loli.net/2025/07/15/mNRpaQ6dDAekKjY.jpg" alt=""><br><img src="https://s2.loli.net/2025/07/15/9RsQp4T2XhdGw8Y.jpg" alt=""></p><p>将 <a href="https://openwebui.com/f/zgccrui/deepseek_r1">DeepSeek R1 Function</a> 导入本地</p><p><img src="https://s2.loli.net/2025/07/15/913zXJ2NIRbMHGc.jpg" alt=""></p><p>设置 DEEPSEEK_API_BASE_URL、DEEPSEEK_API_KEY 和 DEEPSEEK_API_MODEL，并保存</p><p><img src="https://s2.loli.net/2025/07/15/LbGIvOCrzMkfdQs.jpg" alt=""></p><p>启用 Function，同时这里还可以更改设置</p><p><img src="https://s2.loli.net/2025/07/15/a1bngfV5KDNdU4k.jpg" alt=""><br><img src="https://s2.loli.net/2025/07/15/ONRkytlqI84iMzW.jpg" alt=""></p><p>点击左上角 New Chat 即可使用</p><p><img src="https://s2.loli.net/2025/07/15/H5qErBvOexd83NK.jpg" alt=""></p><h1>参阅</h1><ul><li><a href="https://api-docs.deepseek.com/zh-cn">首次调用 API | DeepSeek API Docs</a></li><li><a href="https://openwebui.com/f/zgccrui/deepseek_r1">DeepSeek R1 Function Code</a></li></ul>]]></content:encoded>
-      
-      
-      <category domain="https://jckling.github.io/categories/Notes/">Notes</category>
-      
-      
-      <category domain="https://jckling.github.io/tags/OpenAI/">OpenAI</category>
-      
-      <category domain="https://jckling.github.io/tags/DeepSeek/">DeepSeek</category>
-      
-      
-      <comments>https://jckling.github.io/2025/07/15/Notes/openwebui+deepseek/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
       <title>NVIDIA Omniverse Audio 系列工具使用</title>
       <link>https://jckling.github.io/2024/02/24/Other/NVIDIA%20Omniverse%20Audio%20%E7%B3%BB%E5%88%97%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</link>
       <guid>https://jckling.github.io/2024/02/24/Other/NVIDIA%20Omniverse%20Audio%20%E7%B3%BB%E5%88%97%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</guid>
@@ -78,11 +80,11 @@
       
       <category domain="https://jckling.github.io/tags/Python/">Python</category>
       
+      <category domain="https://jckling.github.io/tags/Unity/">Unity</category>
+      
       <category domain="https://jckling.github.io/tags/NVIDIA/">NVIDIA</category>
       
       <category domain="https://jckling.github.io/tags/C/">C#</category>
-      
-      <category domain="https://jckling.github.io/tags/Unity/">Unity</category>
       
       
       <comments>https://jckling.github.io/2024/02/24/Other/NVIDIA%20Omniverse%20Audio%20%E7%B3%BB%E5%88%97%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/#disqus_thread</comments>
