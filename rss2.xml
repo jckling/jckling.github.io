@@ -9,7 +9,7 @@
     <atom:link href="https://jckling.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Thu, 14 Aug 2025 09:55:54 GMT</pubDate>
+    <pubDate>Thu, 14 Aug 2025 09:56:57 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -28,11 +28,11 @@
       <category domain="https://jckling.github.io/categories/Notes/">Notes</category>
       
       
+      <category domain="https://jckling.github.io/tags/Qwen/">Qwen</category>
+      
       <category domain="https://jckling.github.io/tags/OpenAI/">OpenAI</category>
       
       <category domain="https://jckling.github.io/tags/DeepSeek/">DeepSeek</category>
-      
-      <category domain="https://jckling.github.io/tags/Qwen/">Qwen</category>
       
       
       <comments>https://jckling.github.io/2025/08/11/Notes/openwebui+deepseek/#disqus_thread</comments>
