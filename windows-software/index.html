@@ -1,0 +1,364 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Windows 平台软件推荐 | Jckling's Blog</title><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Windows 平台使用频率较高的软件推荐，包含系统优化、开发工具、办公软件等分类推荐">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows 平台软件推荐">
+<meta property="og:url" content="https://jckling.github.io/windows-software/">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="Windows 平台使用频率较高的软件推荐，包含系统优化、开发工具、办公软件等分类推荐">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png">
+<meta property="article:published_time" content="2020-09-08T04:54:36.000Z">
+<meta property="article:modified_time" content="2025-10-01T06:22:00.000Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="productivity">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="software">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Windows 平台软件推荐",
+  "url": "https://jckling.github.io/windows-software/",
+  "image": "https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png",
+  "datePublished": "2020-09-08T04:54:36.000Z",
+  "dateModified": "2025-10-01T06:22:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jckling",
+      "url": "https://github.com/jckling"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/windows-software/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="lfjhmONZuO834dnjVuGulU6croTwfNMGSgNV5vNkf60"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'UA-164555720-1')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'UA-164555720-1', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":600,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Windows 平台软件推荐',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Jckling's Blog" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jckling's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Windows 平台软件推荐</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Windows 平台软件推荐</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-09-08T04:54:36.000Z" title="发表于 2020-09-08 12:54:36">2020-09-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tech/">tech</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/windows-software/#post-comment"><span class="waline-comment-count" data-path="/windows-software/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>0x00 前言</h1>
+<p>每当拿到一台新电脑或者重装系统之后，首先要做的就是卸载程序，出厂自带的应用（例如某些影音软件）先给卸载了。然后规划一下应用程序的安装路径，通常不会安装在 C 盘（系统盘），此外，也需要规划应用程序的数据存储路径，同样不会放在系统盘。</p>
+<p>例如，磁盘分为了 C 盘和 D 盘，那么就在 D 盘创建以下目录，作用见注释。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">D:.</span><br><span class="line">├─Program Data			<span class="comment"># 应用程序数据</span></span><br><span class="line">│  ├─BaiduNetdiskDownload	<span class="comment"># 百度云</span></span><br><span class="line">│  ├─CloudMusic			<span class="comment"># 网易云</span></span><br><span class="line">│  ├─Oracle			<span class="comment"># VirtualBox</span></span><br><span class="line">│  ├─QQ				<span class="comment"># 腾讯 QQ</span></span><br><span class="line">│  ├─Wechat Files		<span class="comment"># 微信</span></span><br><span class="line">│  └─迅雷下载</span><br><span class="line">├─Program Files		<span class="comment"># 64 位应用程序</span></span><br><span class="line">└─Program Files (x86)	<span class="comment"># 32 位应用程序</span></span><br></pre></td></tr></table></figure>
+<p>以上是本人的看法，接下来的内容是个人推荐的软件清单。</p>
+<h1>0x01 通讯社交</h1>
+<h2 id="微信"><a target="_blank" rel="noopener" href="https://weixin.qq.com/">微信</a></h2>
+<p>虽然微信真的难用，而且 PC 微信真的丑，但鉴于亲人、老师、同学等等都在使用，所以还是得用…</p>
+<p>手机端和电脑端的消息同步不及时不准确，经常出现“断档”，此外，手机上存储的数据和电脑上存储的数据无法互通整合（自己折腾倒是可以）。</p>
+<p>还有自带的迷之浏览器真难用 ↓</p>
+<img src="https://i.loli.net/2021/06/06/il14esfKTobJLdE.jpg" width="45%">
+<h2 id="腾讯-QQ"><a target="_blank" rel="noopener" href="https://im.qq.com/">腾讯 QQ</a></h2>
+<p>小学就开始用了，应用程序越来越臃肿（功能越加越多），对于文件的各种支持比微信好得多，个人最喜欢的功能就是本地表情导入，消息同步也比微信好很多，非会员支持 7 天消息漫游。</p>
+<img src="https://i.loli.net/2021/06/06/kFDIOW2n8jigcps.png" width="50%">
+<h2 id="Telegram"><a target="_blank" rel="noopener" href="https://telegram.org/">Telegram</a></h2>
+<p>telegram yes!</p>
+<p>历史消息同步，输入同步，文件支持友好，提供语音聊天功能，消息记录可以导出备份，账号可以注销。作为一款通讯软件来说，功能强大不冗余，缺点是不能搜索中文消息记录。</p>
+<img src="https://i.loli.net/2021/06/06/KfmdjGqHspkoTCg.png" width="80%">
+<h2 id="Discord"><a target="_blank" rel="noopener" href="https://discord.com/">Discord</a></h2>
+<p>下 <a target="_blank" rel="noopener" href="https://gposers.com/gshade/">GShade</a> 的时候顺便加了一下 Discord 群组，但是基本没用过，最近追 VTuber 感觉国外还挺火的，留着了。</p>
+<p>更新：Discord 真好用！！！相对而言网页版用得更多了……</p>
+<img src="https://i.loli.net/2021/06/06/wRTBOv5s1o9Pep3.png" width="35%">
+<h1>0x02 必备工具</h1>
+<h2 id="火绒安全软件"><a target="_blank" rel="noopener" href="https://www.huorong.cn/">火绒安全软件</a></h2>
+<p>轻巧的安全软件，（个人）最常用的是弹窗拦截、垃圾清理。</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/software/huorong.png" width="90%">
+<h2 id="Honeyview"><a target="_blank" rel="noopener" href="https://cn.bandisoft.com/honeyview/">Honeyview</a></h2>
+<p>图片查看器，个人认为控制栏有点丑，别的方面都很赞，查看 EXIF 信息，快速预览等等功能，好像还可以预览 Photoshop 文件。</p>
+<img src="https://i.loli.net/2021/09/27/CQ49zBEKwGhAm2W.png" width="80%">
+<h2 id="Bandizip"><a target="_blank" rel="noopener" href="https://cn.bandisoft.com/bandizip/">Bandizip</a></h2>
+<p>功能完善又轻巧的压缩软件，和 Honeyview 同出处。</p>
+<img src="https://i.loli.net/2021/06/06/R3kyBG2oQKqrAL7.png" width="80%">
+<h2 id="PotPlayer"><a target="_blank" rel="noopener" href="https://potplayer.daum.net/">PotPlayer</a></h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://potplayer.org/">中文版</a></li>
+</ul>
+<p>简洁美观，功能齐全，支持多种视频、字幕文件格式，不弹广告。</p>
+<img src="https://i.loli.net/2021/06/06/zMJ1AZDwmdCqPSy.png" width="80%">
+<h2 id="ScreenToGif"><a target="_blank" rel="noopener" href="https://www.screentogif.com/">ScreenToGif</a></h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/NickeManarin/ScreenToGif">Github 仓库</a></li>
+</ul>
+<p>录制屏幕或摄像 gif 的工具，简洁易用。</p>
+<img src="https://i.loli.net/2021/06/06/CkYgHVqrbTQh16s.png" width="60%">
+<h2 id="Snipaste"><a target="_blank" rel="noopener" href="https://zh.snipaste.com/">Snipaste</a></h2>
+<p>功能齐全的截屏工具，简单上手，本文插图都是使用该工具截图。</p>
+<img src="https://i.loli.net/2021/06/06/fYOnHJjZ6gMvUQa.png" width="60%">
+<h2 id="f-lux"><a target="_blank" rel="noopener" href="https://justgetflux.com/">f.lux</a></h2>
+<p>电脑屏幕色温调节，根据时间段调整色温。自带一系列配置方案，也可以自定义，调节之后看电脑再也不刺眼了。</p>
+<img src="https://i.loli.net/2021/06/06/xiA4a6FmnN37Izu.png" width="75%">
+<h2 id="Digital-Clock-4"><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/digitalclock4/">Digital Clock 4</a></h2>
+<p>找了很久找到的一款桌面时钟软件，简洁易用。美中不足之处是数字宽度不同会导致肉眼可见的位置变动，所以我是关闭秒数使用的x</p>
+<img src="https://i.loli.net/2021/09/27/SKosRcwHuE2xYqe.png" width="35%">
+<h2 id="TranslucentTB"><a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/p/translucenttb/9pf4kz2vn4w9">TranslucentTB</a></h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/TranslucentTB/TranslucentTB">Github 仓库</a></li>
+</ul>
+<p>任务栏模糊/透明工具~</p>
+<h2 id="Everything"><a target="_blank" rel="noopener" href="https://www.voidtools.com/">Everything</a></h2>
+<p>文件搜索神器，结合 Wox 更上一层楼。</p>
+<h2 id="Git"><a target="_blank" rel="noopener" href="https://git-scm.com/">Git</a></h2>
+<p>使用 Github 必备，而且也可以用于在本地管理文件，非常厉害的工具。</p>
+<h2 id="Git-LFS"><a target="_blank" rel="noopener" href="https://git-lfs.github.com/">Git LFS</a></h2>
+<p>git 的大文件扩展，支持图像、音视频、数据集等数据的上传。</p>
+<h2 id="Github-CLI"><a target="_blank" rel="noopener" href="https://cli.github.com/">Github CLI</a></h2>
+<p>本地 checkout pr 很方便。</p>
+<h2 id="Cmder"><a target="_blank" rel="noopener" href="http://cmder.net/">Cmder</a></h2>
+<p>除了偶尔输入有错位之类的小毛病，总体来说我比较爱用。</p>
+<p>更新：现在用 PowerShell、Git Bash 多点，实在不好用的时候才会用 cmder</p>
+<img src="https://i.loli.net/2021/06/06/qU5SV7XaZAyoMNC.png" width="90%">
+<h2 id="Caesium"><a target="_blank" rel="noopener" href="https://saerasoft.com/caesium">Caesium</a></h2>
+<p>完整名称 Caesium Image Compressor，本地图片压缩工具，支持常见的 png、jpg/jpeg、bmp 等图片格式。好用！！</p>
+<img src="https://i.loli.net/2021/06/06/bvNgFaeCuVwHz1f.png" width="90%">
+<h2 id="MobaXterm"><a target="_blank" rel="noopener" href="https://mobaxterm.mobatek.net/">MobaXterm</a></h2>
+<p>为什么不早点下载来用！会话保存，还有各种工具，支持透明化，家庭版就挺够用的了，有需求可以找找破解版¿</p>
+<p>更新：因为没有远程连接的需求，也可以用其他工具实现，现在都没用了</p>
+<img src="https://i.loli.net/2021/09/27/oLEmFh6KfsjvM4n.jpg" width="90%">
+<h2 id="Fiddler"><a target="_blank" rel="noopener" href="https://www.telerik.com/fiddler">Fiddler</a></h2>
+<p>偶尔用来抓包写爬虫，<a target="_blank" rel="noopener" href="https://github.com/jckling/Daily-Bonus">签到脚本</a> 就是根据抓包结果写的，界面没有想象的那么美观，但是功能足够用了！</p>
+<img src="https://i.loli.net/2021/09/27/ioKJ4gU6f5c7qah.png" width="90%">
+<h2 id="VNC-Server"><a target="_blank" rel="noopener" href="https://www.realvnc.com/en/connect/download/vnc/">VNC Server</a></h2>
+<p>远程桌面软件，在被控制主机上打开 VNC Server，然后用另一台主机/iPad/手机打开 <a target="_blank" rel="noopener" href="https://www.realvnc.com/en/connect/download/viewer/">VNC Viewer</a> 进行远程操控，家庭版够用。</p>
+<img src="https://i.loli.net/2021/09/27/VOjvG38wNyIopRa.png" width="80%">
+<h1>0x03 下载工具</h1>
+<h2 id="qBittorrent"><a target="_blank" rel="noopener" href="https://github.com/qbittorrent/qBittorrent">qBittorrent</a></h2>
+<p>磁力链接下载器，强推。</p>
+<h2 id="迅雷"><a target="_blank" rel="noopener" href="https://www.xunlei.com/">迅雷</a></h2>
+<p>迅雷下东西还是很可以的（确信），缺点是自带烦人的广告，拦截一下就清爽了。</p>
+<p>偶尔还会有 bug 般的下载速度，剩余加速流量不变的 ↓</p>
+<img src="https://i.loli.net/2021/06/06/REmCAjUlnJVvtqg.gif" width="50%">
+<h2 id="百度网盘"><a target="_blank" rel="noopener" href="https://pan.baidu.com/download">百度网盘</a></h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/86f4a73e59bb3037d6526936.html">删除设备和驱动器中的PPS、百度云、360云盘图标</a></li>
+</ul>
+<p>虽然百度网盘比较一(la)般(ji)，但许多资源还是通过这个平台分享的，缺点是慢、文件有挂掉的风险。</p>
+<img src="https://i.loli.net/2021/06/06/ETCp9IyzB3hJqMF.png" width="80%">
+<h2 id="网易云音乐"><a target="_blank" rel="noopener" href="https://music.163.com/">网易云音乐</a></h2>
+<p>不知道什么时候突然有了个“网抑云”的梗，我看评论都当乐子看，不会有人真的全信吧？？？</p>
+<p>还有不得不吐槽一下网易云的私人FM，难道是定期重置的？不是推荐很早之前就收藏的歌，就是推荐之前 pass 过的歌，真的很让人迷惑和生气。</p>
+<p>暂时还没去发掘别的音乐软件，听歌听得不多所以还是蛮用着。</p>
+<img src="https://i.loli.net/2021/06/06/3AqZhFrJtvQWdsu.png" width="90%">
+<h1>0x04 学习工具</h1>
+<h2 id="Microsoft-便签"><a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/p/microsoft-%E4%BE%BF%E7%AC%BA/9nblggh4qghw">Microsoft 便签</a></h2>
+<p>当作备忘录使用了，pin 在桌面上，够用。</p>
+<img src="https://i.loli.net/2021/06/06/bY7rvWfywFGcRLT.png" width="40%">
+<h2 id="OneNote-for-Windows-10"><a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/p/onenote-for-windows-10/9wzdncrfhvjl">OneNote for Windows 10</a></h2>
+<p>个人认为这是 Windows 平台上最好的记笔记软件，OneNote yes!</p>
+<h2 id="Typora"><a target="_blank" rel="noopener" href="https://typora.io/">Typora</a></h2>
+<p>markdown 编辑器，实时渲染，可以下载主题或自定义，赏心悦目。</p>
+<img src="https://i.loli.net/2021/06/06/tr79XCESRi2dQhe.gif" width="90%">
+<h2 id="Oracle-VM-VirtualBox"><a target="_blank" rel="noopener" href="https://www.virtualbox.org/">Oracle VM VirtualBox</a></h2>
+<p>之前上课的时候用虚拟机做实验，现在还在用虚拟机做实验orz</p>
+<img src="https://i.loli.net/2021/06/06/mclTPH4Gg6iXLtD.png" width="90%">
+<h2 id="Resilio-Sync"><a target="_blank" rel="noopener" href="https://www.resilio.com/platforms/desktop/">Resilio Sync</a></h2>
+<p>文件同步软件，之前找电子书的时候偶然发现的，使用之后感觉确实好用。电脑、iPad、手机局域网同步电子书，下载之后可以直接在本地浏览和更改。</p>
+<img src="https://i.loli.net/2021/09/27/mgriPBToyNs9u1x.png" width="80%">
+<h1>0x05 游戏（平台）</h1>
+<h2 id="Steam"><a target="_blank" rel="noopener" href="https://store.steampowered.com/about/">Steam</a></h2>
+<p>买了不少游戏但是并没有打完多少… 下次一定下次一定</p>
+<img src="https://i.loli.net/2021/06/06/ji5tx4HRp1oNdhE.png" width="50%">
+<h2 id="Epic"><a target="_blank" rel="noopener" href="https://www.epicgames.com/store/zh-CN/">Epic</a></h2>
+<p>开局一个号，游戏全靠领。</p>
+<img src="https://i.loli.net/2021/06/06/drGuRK6qQ3V25lE.png" width="90%">
+<h2 id="Ubisoft-Connect"><a target="_blank" rel="noopener" href="https://zh-cn.ubisoft.com/ubisoftconnect">Ubisoft Connect</a></h2>
+<p>没怎么用过其实，我只知道刺客信条系列。</p>
+<p>碎碎念：看门狗2呢！为什么是光之子！</p>
+<img src="https://i.loli.net/2021/06/06/STXFhjovbgWIa2V.jpg" width="80%">
+<h2 id="Microsoft-Solitaire-Collection"><a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/p/microsoft-solitaire-collection/9wzdncrfhwd2">Microsoft Solitaire Collection</a></h2>
+<p>有一段时间沉迷微软纸牌系列，天天玩，还直播玩，现在就偶尔玩一玩，推荐！</p>
+<img src="https://i.loli.net/2021/06/06/JTdvnsHREBeDmVu.png" width="80%">
+<h2 id="最终幻想-XIV"><a target="_blank" rel="noopener" href="https://ff.web.sdo.com/web8/index.html#/index">最终幻想 XIV</a></h2>
+<p>玩了一年多的游戏，人物、剧情、副本等等都值得称赞，可玩性高。2021.9.24 野队把再生零式都打过了，又开始当咸鱼玩家了，不过想了想指挥官还没缝出来、钓鱼没咋钓、bzy 也没肝… 还是很多可以玩的，期待更新！</p>
+<p>更新：2025 别玩了，想来吃屎的可以玩</p>
+<img src="https://i.loli.net/2021/09/27/4FT3bBKmGpSZ78X.jpg" width="90%">
+<h1>0x06 结语</h1>
+<p>暂时列出这些软件，之后发现其他优秀的软件会更新这篇文章，欢迎推荐。（不想更新了）</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/jckling">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/windows-software/">https://jckling.github.io/windows-software/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/productivity/">productivity</a><a class="post-meta__tags" href="/tags/windows/">windows</a><a class="post-meta__tags" href="/tags/software/">software</a></div><div class="post-share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/first-day-school/" title="开学第一天上课体验"><img class="cover" src="https://i.loli.net/2021/06/14/2NXqsznriG8blc7.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">开学第一天上课体验</div></div><div class="info-2"><div class="info-item-1">英语跨文化交流、英语学术写作、现代密码学、中国特色社会主义理论与实践研究</div></div></div></a><a class="pagination-related" href="/fabric-test-network/" title="Fabric 测试网络"><img class="cover" src="https://i.loli.net/2021/06/14/uYIL1tjaQinr4My.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Fabric 测试网络</div></div><div class="info-2"><div class="info-item-1">部署测试网络，打包安装智能合约</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/tagspaces-guide/" title="文件标签工具 TagSpaces 使用"><img class="cover" src="https://cdn.jsdelivr.net/gh/tagspaces/documentation/static/media/v3/tagspaces-v3-themes.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-09</div><div class="info-item-2">文件标签工具 TagSpaces 使用</div></div><div class="info-2"><div class="info-item-1">给文件和文件夹打标签进行管理</div></div></div></a><a class="pagination-related" href="/chrome-extensions/" title="Chrome 插件推荐"><img class="cover" src="https://i.loli.net/2021/06/14/SKJsWtXpRB6lrCE.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-27</div><div class="info-item-2">Chrome 插件推荐</div></div><div class="info-2"><div class="info-item-1">Chrome 浏览器使用频率较高的插件推荐，包含开发工具、效率工具、广告拦截等分类推荐</div></div></div></a><a class="pagination-related" href="/docker-desktop-stopped-troubleshooting/" title="Docker Desktop stopped 问题解决"><img class="cover" src="https://i.loli.net/2021/06/14/aKl57xkrPEVzvGA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-05</div><div class="info-item-2">Docker Desktop stopped 问题解决</div></div><div class="info-2"><div class="info-item-1">Docker Desktop 4.7.1</div></div></div></a><a class="pagination-related" href="/win10-virtualbox-docker-machine/" title="如何在 Windows 10 家庭版上使用 Docker"><img class="cover" src="https://i.loli.net/2021/06/14/aKl57xkrPEVzvGA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-21</div><div class="info-item-2">如何在 Windows 10 家庭版上使用 Docker</div></div><div class="info-2"><div class="info-item-1">安装 VirtualBox 和 Docker Machine 在 Windows 10 家庭中文版上使用 Docker，不使用 Toolbox 或者 WSL 。</div></div></div></a><a class="pagination-related" href="/win10-wsl2-docker-desktop/" title="Windows 10 家庭版 + WSL 2 + Docker Desktop"><img class="cover" src="https://i.loli.net/2021/06/14/aKl57xkrPEVzvGA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-23</div><div class="info-item-2">Windows 10 家庭版 + WSL 2 + Docker Desktop</div></div><div class="info-2"><div class="info-item-1">在 Windows 10 家庭中文版中使用 WSL 2 和 Docker ，Docker Desktop 真香。</div></div></div></a><a class="pagination-related" href="/computer-hardware/" title="了解自己的电脑硬件"><img class="cover" src="https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-18</div><div class="info-item-2">了解自己的电脑硬件</div></div><div class="info-2"><div class="info-item-1">了解我自己的笔记本电脑（Y7000P-2019）的硬件配置，高级操作系统的课让我意识到我并不了解自己的电脑，而且还把计算机组成原理的知识忘得差不多了xd</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info-name">Jckling</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请勿重复提交<br/>联系作者：QQ2521390430</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">0x01 通讯社交</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E4%BF%A1"><span class="toc-text">微信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%85%BE%E8%AE%AF-QQ"><span class="toc-text">腾讯 QQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Telegram"><span class="toc-text">Telegram</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discord"><span class="toc-text">Discord</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">0x02 必备工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%81%AB%E7%BB%92%E5%AE%89%E5%85%A8%E8%BD%AF%E4%BB%B6"><span class="toc-text">火绒安全软件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Honeyview"><span class="toc-text">Honeyview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bandizip"><span class="toc-text">Bandizip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PotPlayer"><span class="toc-text">PotPlayer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ScreenToGif"><span class="toc-text">ScreenToGif</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Snipaste"><span class="toc-text">Snipaste</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#f-lux"><span class="toc-text">f.lux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Digital-Clock-4"><span class="toc-text">Digital Clock 4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TranslucentTB"><span class="toc-text">TranslucentTB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Everything"><span class="toc-text">Everything</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git"><span class="toc-text">Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-LFS"><span class="toc-text">Git LFS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Github-CLI"><span class="toc-text">Github CLI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cmder"><span class="toc-text">Cmder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caesium"><span class="toc-text">Caesium</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MobaXterm"><span class="toc-text">MobaXterm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fiddler"><span class="toc-text">Fiddler</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VNC-Server"><span class="toc-text">VNC Server</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">0x03 下载工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#qBittorrent"><span class="toc-text">qBittorrent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%85%E9%9B%B7"><span class="toc-text">迅雷</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98"><span class="toc-text">百度网盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90"><span class="toc-text">网易云音乐</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">0x04 学习工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Microsoft-%E4%BE%BF%E7%AD%BE"><span class="toc-text">Microsoft 便签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OneNote-for-Windows-10"><span class="toc-text">OneNote for Windows 10</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Typora"><span class="toc-text">Typora</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Oracle-VM-VirtualBox"><span class="toc-text">Oracle VM VirtualBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resilio-Sync"><span class="toc-text">Resilio Sync</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">0x05 游戏（平台）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Steam"><span class="toc-text">Steam</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Epic"><span class="toc-text">Epic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubisoft-Connect"><span class="toc-text">Ubisoft Connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Microsoft-Solitaire-Collection"><span class="toc-text">Microsoft Solitaire Collection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E5%B9%BB%E6%83%B3-XIV"><span class="toc-text">最终幻想 XIV</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">0x06 结语</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/text-generation/" title="文本生成"><img src="https://s2.loli.net/2025/09/10/KeRdvSwc5mBZTJI.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成"/></a><div class="content"><a class="title" href="/text-generation/" title="文本生成">文本生成</a><time datetime="2025-09-10T07:24:00.000Z" title="发表于 2025-09-10 15:24:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/text-to-image-generation/" title="文本生成图片"><img src="https://s2.loli.net/2025/09/10/gQ3MbUJctelzBam.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成图片"/></a><div class="content"><a class="title" href="/text-to-image-generation/" title="文本生成图片">文本生成图片</a><time datetime="2025-09-10T05:57:00.000Z" title="发表于 2025-09-10 13:57:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型"><img src="https://s2.loli.net/2025/08/29/EaAOJKSNWt4Tiw8.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本/图片生成 3D 模型"/></a><div class="content"><a class="title" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型">文本/图片生成 3D 模型</a><time datetime="2025-08-28T08:48:00.000Z" title="发表于 2025-08-28 16:48:00">2025-08-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code"><img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-Coder/qwen3-coder-main.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Qwen3-Coder 接入 VS Code"/></a><div class="content"><a class="title" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code">Qwen3-Coder 接入 VS Code</a><time datetime="2025-08-03T13:35:43.000Z" title="发表于 2025-08-03 21:35:43">2025-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen"><img src="https://s2.loli.net/2025/07/15/XnLZaMF9gipcfGQ.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="本地部署 Open WebUI 使用 DeepSeek/Qwen"/></a><div class="content"><a class="title" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen">本地部署 Open WebUI 使用 DeepSeek/Qwen</a><time datetime="2025-07-15T06:28:50.000Z" title="发表于 2025-07-15 14:28:50">2025-07-15</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url(https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Jckling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"emoji":["https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"]}
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

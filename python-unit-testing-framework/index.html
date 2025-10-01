@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Python 单元测试框架 | Jckling's Blog</title><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="unittest 和 pytest 的简单使用方式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 单元测试框架">
+<meta property="og:url" content="https://jckling.github.io/python-unit-testing-framework/">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="unittest 和 pytest 的简单使用方式。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png">
+<meta property="article:published_time" content="2021-03-18T01:02:57.000Z">
+<meta property="article:modified_time" content="2025-10-01T06:22:00.000Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="testing">
+<meta property="article:tag" content="unit-testing">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="uinttest">
+<meta property="article:tag" content="pytest">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Python 单元测试框架",
+  "url": "https://jckling.github.io/python-unit-testing-framework/",
+  "image": "https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png",
+  "datePublished": "2021-03-18T01:02:57.000Z",
+  "dateModified": "2025-10-01T06:22:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jckling",
+      "url": "https://github.com/jckling"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/python-unit-testing-framework/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="lfjhmONZuO834dnjVuGulU6croTwfNMGSgNV5vNkf60"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'UA-164555720-1')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'UA-164555720-1', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":600,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python 单元测试框架',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Jckling's Blog" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jckling's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Python 单元测试框架</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Python 单元测试框架</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-03-18T01:02:57.000Z" title="发表于 2021-03-18 09:02:57">2021-03-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tech/">tech</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/python-unit-testing-framework/#post-comment"><span class="waline-comment-count" data-path="/python-unit-testing-framework/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>前言</h1>
+<p>这几天在看 jaeger-client-python 的测试部分，主要使用 unittest 和 pytest 构造测试，使用 mock 辅助测试。以下内容主要包含 jaeger-client-python 涉及的一些使用方式，unittest 是 Python 自带的单元测试框架，pytest 兼容 unittest 和 nose 测试集，并有丰富的插件支持。</p>
+<h1>unittest</h1>
+<h2 id="构造测试">构造测试</h2>
+<p>继承 <code>unittest.TestCase</code> 就创建了测试样例，被测方法以 <code>test</code> 开头命名。使用 <code>assert*()</code> 方法能够聚合所有测试结果并产生报告，<code>unittest.main()</code> 提供了测试脚本的命令行接口。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TestStringMethods</span>(unittest.TestCase):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_upper</span>(<span class="params">self</span>):</span><br><span class="line">        self.assertEqual(<span class="string">&#x27;foo&#x27;</span>.upper(), <span class="string">&#x27;FOO&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_isupper</span>(<span class="params">self</span>):</span><br><span class="line">        self.assertTrue(<span class="string">&#x27;FOO&#x27;</span>.isupper())</span><br><span class="line">        self.assertFalse(<span class="string">&#x27;Foo&#x27;</span>.isupper())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_split</span>(<span class="params">self</span>):</span><br><span class="line">        s = <span class="string">&#x27;hello world&#x27;</span></span><br><span class="line">        self.assertEqual(s.split(), [<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>])</span><br><span class="line">        <span class="comment"># check that s.split fails when the separator is not a string</span></span><br><span class="line">        <span class="keyword">with</span> self.assertRaises(TypeError):</span><br><span class="line">            s.split(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    unittest.main()</span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/e7GKDn8AslFWH3P.png" width="80%"/>
+<h2 id="前置方法与后置方法">前置方法与后置方法</h2>
+<p>测试的前置操作可以实现在测试前置方法 <code>setUp()</code> 中，在运行测试时，测试框架会自动为每个单独测试调用前置方法。<code>tearDown()</code> 方法能够在测试方法运行后进行清理工作。</p>
+<img src="https://i.loli.net/2021/06/06/2Ccl8VhrkobxsMB.png" width="80%"/>
+<p>一个测试代码运行的环境被称为 <em>test fixture</em> 。一个新的 TestCase 实例作为一个测试脚手架，用于运行各个独立的测试方法。在运行每个测试时，<code>setUp()</code>、<code>tearDown()</code> 和 <code>__init__()</code> 会被调用一次。</p>
+<p><code>setUpClass()</code> 和 <code>tearDownClass()</code> 在测试类中只执行一次，而不是每个测试方法前后都执行。</p>
+<p><code>setupModule()</code> 和 <code>tearDownModule()</code> 在单个测试模块中只执行一次。</p>
+<h2 id="命令行界面">命令行界面</h2>
+<p>unittest 模块可以通过命令行运行模块、类和独立测试方法的测试。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试模块</span></span><br><span class="line">python -m unittest test_api.py</span><br><span class="line"><span class="comment"># 测试类</span></span><br><span class="line">python -m unittest test_api.APITest</span><br><span class="line"><span class="comment"># 测试方法</span></span><br><span class="line">python -m unittest test_api.APITest.test_active_span</span><br></pre></td></tr></table></figure>
+<p>test_api.py 是 <a target="_blank" rel="noopener" href="https://github.com/jaegertracing/jaeger-client-python">jaeger-python-client</a> 中的测试。</p>
+<img src="https://i.loli.net/2021/06/06/obncmBM6V2LuTq8.png" width="80%"/>
+<h2 id="组织测试">组织测试</h2>
+<p><em>test suite</em> 机制支持将测试用的 TestCase 实现集合起来，自定义测试套件可以参考以下方法组织测试</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">suite</span>():</span><br><span class="line">    suite = unittest.TestSuite()</span><br><span class="line">    suite.addTest(WidgetTestCase(<span class="string">&#x27;test_default_widget_size&#x27;</span>))</span><br><span class="line">    suite.addTest(WidgetTestCase(<span class="string">&#x27;test_widget_resize&#x27;</span>))</span><br><span class="line">    <span class="keyword">return</span> suite</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    runner = unittest.TextTestRunner()</span><br><span class="line">    runner.run(suite())</span><br></pre></td></tr></table></figure>
+<p>FunctionTestCase 类可用于打包已有的测试函数，并支持设置前置与后置函数，假定如下测试函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">testSomething</span>():</span><br><span class="line">    something = makeSomething()</span><br><span class="line">    <span class="keyword">assert</span> something.name <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span></span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<p>可以通过 FunctionTestCase 类创建等价的测试用例，其中前置与后置函数是可选的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">testcase = unittest.FunctionTestCase(testSomething,</span><br><span class="line">                                     setUp=makeSomethingDB,</span><br><span class="line">                                     tearDown=deleteSomethingDB)</span><br></pre></td></tr></table></figure>
+<h2 id="跳过测试">跳过测试</h2>
+<p>unittest 提供了几个装饰器用于跳过测试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyTestCase</span>(unittest.TestCase):</span><br><span class="line">    <span class="comment"># 跳过测试，参数为测试被跳过的原因</span></span><br><span class="line"><span class="meta">    @unittest.skip(<span class="params"><span class="string">&quot;demonstrating skipping&quot;</span></span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_nothing</span>(<span class="params">self</span>):</span><br><span class="line">        self.fail(<span class="string">&quot;shouldn&#x27;t happen&quot;</span>)</span><br><span class="line">	</span><br><span class="line">    <span class="comment"># 条件为真时，跳过测试</span></span><br><span class="line"><span class="meta">    @unittest.skipIf(<span class="params">mylib.__version__ &lt; (<span class="params"><span class="number">1</span>, <span class="number">3</span></span>),</span></span></span><br><span class="line"><span class="params"><span class="meta">                     <span class="string">&quot;not supported in this library version&quot;</span></span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_format</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># Tests that work for only a certain version of the library.</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">	</span><br><span class="line">    <span class="comment"># 除非条件为真，否则跳过测试</span></span><br><span class="line"><span class="meta">    @unittest.skipUnless(<span class="params">sys.platform.startswith(<span class="params"><span class="string">&quot;win&quot;</span></span>), <span class="string">&quot;requires Windows&quot;</span></span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_windows_support</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># windows specific testing code</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">	</span><br><span class="line">    <span class="comment"># 通过引发异常以跳过测试</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_maybe_skipped</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> external_resource_available():</span><br><span class="line">            self.skipTest(<span class="string">&quot;external resource not available&quot;</span>)</span><br><span class="line">        <span class="comment"># test code that depends on the external resource</span></span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h2 id="子测试">子测试</h2>
+<p>在一个测试中，传入不同的参数测试同一个方法，<code>subTest</code> 子测试可以满足这个需求，而且单个子测试的失败不影响后续子测试的执行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NumbersTest</span>(unittest.TestCase):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test_even</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Test that numbers between 0 and 5 are all even.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">6</span>):</span><br><span class="line">            <span class="keyword">with</span> self.subTest(i=i):</span><br><span class="line">                self.assertEqual(i % <span class="number">2</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/OEfWw2oT78cMGNs.png" width="80%"/>
+<h1>pytest</h1>
+<p>在测试函数中使用 <code>assert</code> 断言进行条件判断，然后使用 pytest 执行测试。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_passing</span>():</span><br><span class="line">    <span class="keyword">assert</span> (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>) == (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p><code>.</code> 表示 <code>PASSED</code>，<code>F</code> 表示 <code>FAILED</code>，使用 <code>-v</code> 显示测试的详细信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_failing</span>():</span><br><span class="line">    <span class="keyword">assert</span> (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>) == (<span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/puy3zrtVdAkoigO.png"/>
+<h2 id="捕获异常">捕获异常</h2>
+<p>使用 <code>pytest.raises()</code> 进行异常捕获：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_raises</span>():</span><br><span class="line">    <span class="keyword">with</span> pytest.raises(TypeError) <span class="keyword">as</span> e:</span><br><span class="line">        connect(<span class="string">&#x27;localhost&#x27;</span>, <span class="string">&#x27;6379&#x27;</span>)</span><br><span class="line">    exec_msg = e.value.args[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">assert</span> exec_msg == <span class="string">&#x27;port type must be int&#x27;</span></span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/OMrwcfPmB1Gsuze.png"/>
+<h2 id="执行测试">执行测试</h2>
+<p>默认情况下，pytest 会递归查找当前目录下所有以 <code>test</code> 开始或结尾的 Python 脚本，并执行文件内的所有以 <code>test</code> 开始或结束的函数和方法。直接执行测试脚本会同时执行所有测试函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pytest test_no_mark.py</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>.F</code> 表示第一个函数执行成功，第二个函数执行失败</p>
+<img src="https://i.loli.net/2021/06/06/Wcer4plTI6RL1Ja.png" />
+<p>如果想要指定测试函数，可以使用以下几种方法：</p>
+<ol>
+<li>显式指定函数名，通过 <code>::</code> 标记。缺点是一次只能执行一个测试函数。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pytest test_no_mark.py::test_func1 -v</span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/tv7VZBGcL4WPCqO.png" />
+<ol>
+<li>模糊匹配，使用 <code>-k</code> 选项标识。可以批量操作，但需要被测函数包含相同的模式。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pytest -k func1 test_no_mark.py -v</span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/NPVX9oMq65bTfi3.png" />
+<ol>
+<li>使用 <code>pytest.mark</code> 在函数上进行标记</li>
+</ol>
+<p>首先，需要对标记进行注册，在配置文件 pytest.ini 中注册标记</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[pytest]</span></span><br><span class="line"><span class="attr">markers</span> = </span><br><span class="line">    finished</span><br><span class="line">    unfinished</span><br></pre></td></tr></table></figure>
+<p>然后在代码中使用标记</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.mark.finished</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_func1</span>():</span><br><span class="line">    <span class="keyword">assert</span> <span class="number">1</span> == <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.mark.unfinished</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_func2</span>():</span><br><span class="line">    <span class="keyword">assert</span> <span class="number">1</span> != <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>测试时使用 <code>-m</code> 选择标记的函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pytest -m finished test_with_mark.py -v</span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/HeSGzdTjxoQcvh3.png" />
+<p>pytest 内置了一些标记：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.osgeo.cn/pytest/fixture.html#usefixtures">usefixtures</a> - 在测试函数或类上使用 fixture</li>
+<li><a target="_blank" rel="noopener" href="https://www.osgeo.cn/pytest/warnings.html#filterwarnings">filterwarnings</a> - 过滤测试函数的某些警告</li>
+<li><a target="_blank" rel="noopener" href="https://www.osgeo.cn/pytest/skipping.html#skip">skip</a> - 总是跳过测试函数</li>
+<li><a target="_blank" rel="noopener" href="https://www.osgeo.cn/pytest/skipping.html#skipif">skipif</a> - 如果满足某个条件，则跳过测试函数</li>
+<li><a target="_blank" rel="noopener" href="https://www.osgeo.cn/pytest/skipping.html#xfail">xfail</a> - 如果满足某个条件，则产生“预期失败”结果</li>
+<li><a target="_blank" rel="noopener" href="https://www.osgeo.cn/pytest/parametrize.html#parametrizemark">parametrize</a> - 对同一测试函数执行多个调用</li>
+</ul>
+<h2 id="固定装置-固件（fixture）">固定装置/固件（fixture）</h2>
+<p>使用 <code>@pytest.fixture</code> 将函数定义为固定装置（固件），最简单的使用方式是作为测试函数的参数 。使用固定装置的好处是可以重复使用、装置可以请求其他装置等。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Fruit</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name</span>):</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> self.name == other.name</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.fixture</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_fruit</span>():</span><br><span class="line">    <span class="keyword">return</span> Fruit(<span class="string">&quot;apple&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.fixture</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fruit_basket</span>(<span class="params">my_fruit</span>):</span><br><span class="line">    <span class="keyword">return</span> [Fruit(<span class="string">&quot;banana&quot;</span>), my_fruit]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_my_fruit_in_basket</span>(<span class="params">my_fruit, fruit_basket</span>):</span><br><span class="line">    <span class="keyword">assert</span> my_fruit <span class="keyword">in</span> fruit_basket</span><br></pre></td></tr></table></figure>
+<p>固定装置可以设置范围（scope），可能的值包括：</p>
+<ul>
+<li><code>function</code> ：默认范围，每个测试函数都会执行一次 fixture。</li>
+<li><code>class</code> ：每个测试类执行一次 fixture，所有方法都可以使用。</li>
+<li><code>module</code> ：每个模块执行一次 fixture，模块内函数和方法都可以使用。</li>
+<li><code>package</code> ：每个包执行一次 fixture，包内的模块、函数、方法都可以使用。</li>
+<li><code>session</code> ：一次测试只执行一次 fixture，所有被找到的函数和方法都可用。</li>
+</ul>
+<blockquote>
+<p>pytest 一次只缓存 fixture 的一个实例，这意味着当使用参数化 fixture 时，pytest 可以在给定范围内多次调用 fixture 。</p>
+</blockquote>
+<p>清理测试可以使用 pytest 提供的拆卸系统，允许自定义每个固定装置清理所需的具体步骤，通过以下两种方式使用：</p>
+<ol>
+<li>yield 语句</li>
+</ol>
+<p>pytest 使用 <code>yield</code> 关键词将固件分为两部分，<code>yield</code> 之前的代码属于预处理，会在测试前执行；<code>yield</code> 之后的代码属于后处理，将在测试完成后执行。</p>
+<p>使用 yield 语句执行拆卸，以前的写法是 <code>@pytest.yield_fixture</code> ，现在可以直接在 <code>@pytest.fixture</code> 装饰的函数中使用 yield 语句。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.fixture</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">db</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Connection successful&#x27;</span>)</span><br><span class="line">    <span class="keyword">yield</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Connection closed&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">search_user</span>(<span class="params">user_id</span>):</span><br><span class="line">    d = &#123;</span><br><span class="line">        <span class="string">&#x27;001&#x27;</span>: <span class="string">&#x27;xiaoming&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> d[user_id]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_search</span>(<span class="params">db</span>):</span><br><span class="line">    <span class="keyword">assert</span> search_user(<span class="string">&#x27;001&#x27;</span>) == <span class="string">&#x27;xiaoming&#x27;</span></span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/lr3omzDGFOkT58X.png" />
+<ol>
+<li>添加 finalizer</li>
+</ol>
+<p>接受 request 对象，通过 <code>addfinalizer</code> 方法添加拆卸函数，必须在完成必要的拆卸工作后再进行添加，否则可能引发异常。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.fixture</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">db</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Connection successful&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">search_user</span>(<span class="params">user_id</span>):</span><br><span class="line">    d = &#123;</span><br><span class="line">        <span class="string">&#x27;001&#x27;</span>: <span class="string">&#x27;xiaoming&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> d[user_id]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_search</span>(<span class="params">db, request</span>):</span><br><span class="line">    <span class="keyword">assert</span> search_user(<span class="string">&#x27;001&#x27;</span>) == <span class="string">&#x27;xiaoming&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">close_db</span>():</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Connection closed&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    request.addfinalizer(close_db)</span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/gpBKbnTrX6IvQLq.png" />
+<h2 id="参数化测试">参数化测试</h2>
+<p>使用 <code>@pytest.mark.parametrize</code> 装饰器实现参数化测试功能。这里定义了三个不同的 <code>(test_input,expected)</code> ，因此 test_eval 将运行三次。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.mark.parametrize(<span class="params"><span class="string">&quot;test_input,expected&quot;</span>, [(<span class="params"><span class="string">&quot;3+5&quot;</span>, <span class="number">8</span></span>), (<span class="params"><span class="string">&quot;2+4&quot;</span>, <span class="number">6</span></span>), (<span class="params"><span class="string">&quot;6*9&quot;</span>, <span class="number">42</span></span>)]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_eval</span>(<span class="params">test_input, expected</span>):</span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">eval</span>(test_input) == expected</span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/KYjdi79fGMazSp3.png" />
+<h2 id="其他">其他</h2>
+<p><code>@pytest.mark.gen_test</code>  由 <a target="_blank" rel="noopener" href="https://pypi.org/project/pytest-tornado">pytest-tornado</a> 提供，该标记允许编写协程风格的测试与 <a target="_blank" rel="noopener" href="http://tornado.readthedocs.org/en/latest/gen.html">tornado.gen</a> 模块一起使用，也支持 async/await（同步/阻塞）的语法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"><span class="keyword">import</span> tornado.web</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MainHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        self.write(<span class="string">&quot;Hello, world&quot;</span>)</span><br><span class="line"></span><br><span class="line">application = tornado.web.Application([</span><br><span class="line">    (<span class="string">r&quot;/&quot;</span>, MainHandler),</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.fixture</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">app</span>():</span><br><span class="line">    <span class="keyword">return</span> application</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.mark.gen_test</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_hello_world</span>(<span class="params">http_client, base_url</span>):</span><br><span class="line">    response = <span class="keyword">yield</span> http_client.fetch(base_url)</span><br><span class="line">    <span class="keyword">assert</span> response.code == <span class="number">200</span></span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/WtigGDmEq2IneAf.png" />
+<h1>参阅</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pythonguidecn.readthedocs.io/zh/latest/writing/tests.html">测试您的代码 — The Hitchhiker’s Guide to Python</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/unittest.html">unittest — 单元测试框架</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/unittest.html#classes-and-functions">类与函数 - unittest 的 API</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.osgeo.cn/pytest/contents.html">完整的Pytest文档</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/jckling">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/python-unit-testing-framework/">https://jckling.github.io/python-unit-testing-framework/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/testing/">testing</a><a class="post-meta__tags" href="/tags/unit-testing/">unit-testing</a><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/uinttest/">uinttest</a><a class="post-meta__tags" href="/tags/pytest/">pytest</a></div><div class="post-share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/openstack-overview/" title="OpenStack 整体介绍"><img class="cover" src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">OpenStack 整体介绍</div></div><div class="info-2"><div class="info-item-1">OpenStack 架构详解及组件交互逻辑</div></div></div></a><a class="pagination-related" href="/openstack-ansible-deployment/" title="OpenStack 单机部署 —— Ansible"><img class="cover" src="https://i.loli.net/2021/06/14/O6DgG2AzyvJfTso.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">OpenStack 单机部署 —— Ansible</div></div><div class="info-2"><div class="info-item-1">使用 Ansible 在 Ubuntu 18.04 上部署 OpenStack(Ussuri)</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/java-auto-unit-testing-framework/" title="Java 自动单元测试生成框架"><img class="cover" src="https://s2.loli.net/2022/04/27/Ha5SAYlXO9zpJmG.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-27</div><div class="info-item-2">Java 自动单元测试生成框架</div></div><div class="info-2"><div class="info-item-1">调研 Java 开源测试框架，上手使用 Randoop 与 EvoSuite</div></div></div></a><a class="pagination-related" href="/pyre-pysa-guide/" title="Pyre 污点分析工具 Pysa 使用教程"><img class="cover" src="https://i.loli.net/2021/07/08/mXj4AlCkFwEbSdR.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-07</div><div class="info-item-2">Pyre 污点分析工具 Pysa 使用教程</div></div><div class="info-2"><div class="info-item-1">做了做官方提供的 5 个练习教程</div></div></div></a><a class="pagination-related" href="/python-ast-module/" title="Python ast 模块使用"><img class="cover" src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-14</div><div class="info-item-2">Python ast 模块使用</div></div><div class="info-2"><div class="info-item-1">使用 ast 模块操作抽象语法树，修改/替换节点。</div></div></div></a><a class="pagination-related" href="/python-scrape-twitter/" title="Python 爬取 twitter 数据"><img class="cover" src="https://s2.loli.net/2022/03/10/5SM38iUjQWgVALb.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-11</div><div class="info-item-2">Python 爬取 twitter 数据</div></div><div class="info-2"><div class="info-item-1">挂代理爬取推文</div></div></div></a><a class="pagination-related" href="/python-static-analysis-tools/" title="Python 程序分析工具调研"><img class="cover" src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-30</div><div class="info-item-2">Python 程序分析工具调研</div></div><div class="info-2"><div class="info-item-1">Python 程序分析工具调研，包含一些开源和闭源工具的详细对比分析</div></div></div></a><a class="pagination-related" href="/python-static-analysis-papers/" title="Python 静态分析相关论文"><img class="cover" src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-28</div><div class="info-item-2">Python 静态分析相关论文</div></div><div class="info-2"><div class="info-item-1">概览</div></div></div></a><a class="pagination-related" href="/python-package-private-pypi/" title="Python 项目打包并发布到私有 PyPI 服务器"><img class="cover" src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-23</div><div class="info-item-2">Python 项目打包并发布到私有 PyPI 服务器</div></div><div class="info-2"><div class="info-item-1">使用 pypiserver 搭建本地服务器</div></div></div></a><a class="pagination-related" href="/jupyter-notebook-remote-server/" title="Jupyter Notebook 部署在服务器并使用外网访问"><img class="cover" src="https://i.loli.net/2021/06/14/FonW9v2gDsPSbVA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-04</div><div class="info-item-2">Jupyter Notebook 部署在服务器并使用外网访问</div></div><div class="info-2"><div class="info-item-1">在远程服务器上搭建 Jupyter Notebook ，安装在 virtualenv 创建的虚拟环境中。</div></div></div></a><a class="pagination-related" href="/jupyter-notebook-virtualenv/" title="jupyter notebook + virtualenv: ModuleNotFoundError"><img class="cover" src="https://i.loli.net/2021/06/14/FonW9v2gDsPSbVA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-13</div><div class="info-item-2">jupyter notebook + virtualenv: ModuleNotFoundError</div></div><div class="info-2"><div class="info-item-1">Jupyter Notebook 使用 virtualenv 创建的虚拟环境提示找不到模块</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info-name">Jckling</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请勿重复提交<br/>联系作者：QQ2521390430</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">unittest</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%B5%8B%E8%AF%95"><span class="toc-number">2.1.</span> <span class="toc-text">构造测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%96%B9%E6%B3%95%E4%B8%8E%E5%90%8E%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">前置方法与后置方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2"><span class="toc-number">2.3.</span> <span class="toc-text">命令行界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E7%BB%87%E6%B5%8B%E8%AF%95"><span class="toc-number">2.4.</span> <span class="toc-text">组织测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%B3%E8%BF%87%E6%B5%8B%E8%AF%95"><span class="toc-number">2.5.</span> <span class="toc-text">跳过测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E6%B5%8B%E8%AF%95"><span class="toc-number">2.6.</span> <span class="toc-text">子测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">pytest</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8"><span class="toc-number">3.1.</span> <span class="toc-text">捕获异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-number">3.2.</span> <span class="toc-text">执行测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E8%A3%85%E7%BD%AE-%E5%9B%BA%E4%BB%B6%EF%BC%88fixture%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">固定装置&#x2F;固件（fixture）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="toc-number">3.4.</span> <span class="toc-text">参数化测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">3.5.</span> <span class="toc-text">其他</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">参阅</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/text-generation/" title="文本生成"><img src="https://s2.loli.net/2025/09/10/KeRdvSwc5mBZTJI.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成"/></a><div class="content"><a class="title" href="/text-generation/" title="文本生成">文本生成</a><time datetime="2025-09-10T07:24:00.000Z" title="发表于 2025-09-10 15:24:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/text-to-image-generation/" title="文本生成图片"><img src="https://s2.loli.net/2025/09/10/gQ3MbUJctelzBam.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成图片"/></a><div class="content"><a class="title" href="/text-to-image-generation/" title="文本生成图片">文本生成图片</a><time datetime="2025-09-10T05:57:00.000Z" title="发表于 2025-09-10 13:57:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型"><img src="https://s2.loli.net/2025/08/29/EaAOJKSNWt4Tiw8.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本/图片生成 3D 模型"/></a><div class="content"><a class="title" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型">文本/图片生成 3D 模型</a><time datetime="2025-08-28T08:48:00.000Z" title="发表于 2025-08-28 16:48:00">2025-08-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code"><img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-Coder/qwen3-coder-main.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Qwen3-Coder 接入 VS Code"/></a><div class="content"><a class="title" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code">Qwen3-Coder 接入 VS Code</a><time datetime="2025-08-03T13:35:43.000Z" title="发表于 2025-08-03 21:35:43">2025-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen"><img src="https://s2.loli.net/2025/07/15/XnLZaMF9gipcfGQ.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="本地部署 Open WebUI 使用 DeepSeek/Qwen"/></a><div class="content"><a class="title" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen">本地部署 Open WebUI 使用 DeepSeek/Qwen</a><time datetime="2025-07-15T06:28:50.000Z" title="发表于 2025-07-15 14:28:50">2025-07-15</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url(https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Jckling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"emoji":["https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"]}
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

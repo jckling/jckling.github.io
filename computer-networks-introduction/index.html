@@ -1,0 +1,1213 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《计算机网络（英文版·第5版）》 The Introduction | Jckling's Blog</title><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《计算机网络》第五版（英文）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《计算机网络（英文版·第5版）》 The Introduction">
+<meta property="og:url" content="https://jckling.github.io/computer-networks-introduction/">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="《计算机网络》第五版（英文）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg">
+<meta property="article:published_time" content="2018-06-13T14:27:40.000Z">
+<meta property="article:modified_time" content="2025-10-01T07:36:00.000Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="computer-networks">
+<meta property="article:tag" content="networking">
+<meta property="article:tag" content="protocol">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "《计算机网络（英文版·第5版）》 The Introduction",
+  "url": "https://jckling.github.io/computer-networks-introduction/",
+  "image": "https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg",
+  "datePublished": "2018-06-13T14:27:40.000Z",
+  "dateModified": "2025-10-01T07:36:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jckling",
+      "url": "https://github.com/jckling"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/computer-networks-introduction/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="lfjhmONZuO834dnjVuGulU6croTwfNMGSgNV5vNkf60"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'UA-164555720-1')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'UA-164555720-1', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":600,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《计算机网络（英文版·第5版）》 The Introduction',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Jckling's Blog" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jckling's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">《计算机网络（英文版·第5版）》 The Introduction</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">《计算机网络（英文版·第5版）》 The Introduction</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2018-06-13T14:27:40.000Z" title="发表于 2018-06-13 22:27:40">2018-06-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tech/">tech</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/computer-networks-introduction/#post-comment"><span class="waline-comment-count" data-path="/computer-networks-introduction/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>计算机网络就是通过通信链路（communication link）相互连接（interconnect）的一组计算机</p>
+<ul>
+<li>一组通过单一技术相互连接的自主计算机集合</li>
+</ul>
+<p>如果两台计算机能够交换信息，则称这两台计算机是相互连接的（interconnected）</p>
+<p>一般来说，在用户看来，分布式系统只是一个模型或范型。通常在操作系统之上有一层软件负责实现这个模型，这个软件就称为中间件（middleware）</p>
+<p>最著名的分布式系统（distributed system）是万维网（World Wide Web）</p>
+<p>实际上，分布式系统是建立在网络之上的软件系统，因此，网络与分布式系统之间的区别在于软件（特别是操作系统）</p>
+<h1>使用计算机网络</h1>
+<h2 id="商业应用">商业应用</h2>
+<p>资源共享（resource sharing）</p>
+<ul>
+<li>目标是让网络中的任何人都可以访问所有的程序、设备，尤其是数据，并且这些资源和用户所处的物理位置无关</li>
+<li>设备
+<ul>
+<li>打印机、扫描仪、…</li>
+</ul>
+</li>
+<li>信息
+<ul>
+<li>客户记录、产品信息、库存数据、财务决算、缴税信息、…</li>
+</ul>
+</li>
+</ul>
+<p>通信媒介（communication medium）</p>
+<ul>
+<li>电子邮件（E-mail, electronic mail）、IP语音（VoIP, Voice over IP）、视频会议、桌面共享（desktop sharing）</li>
+</ul>
+<p>电子商务（e-commerce）</p>
+<ul>
+<li>B2B: Business to business</li>
+<li>B2C: Business to consumer</li>
+<li>C2C: Consumer to consumer</li>
+</ul>
+<p>虚拟专用网络（Virtual Private Networks, VPN）可以将不同地点的单个网络联结成一个扩展的网络</p>
+<p>客户机-服务器模型（client-server model）</p>
+<ul>
+<li>Web 应用的模型</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-1.png" width="65%">
+<p>客户 / 服务器机器</p>
+<ul>
+<li>客户机进程通过网络将一个消息发送给服务器进程，然后客户机进程等待应答消息</li>
+<li>当服务器进程获得了该请求后，它就执行客户所请求的工作，或查询客户所请求的数据，然后发回一个应答消息</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-2.png" width="65%">
+<h2 id="家庭应用">家庭应用</h2>
+<p>Internet 接入为家庭用户提供了到远程计算机的连通性（connectivity）</p>
+<ul>
+<li>访问远程信息（remote information）
+<ul>
+<li>浏览万维网 Web</li>
+</ul>
+</li>
+<li>对等通信（peer-to-peer communication）
+<ul>
+<li>E-mail、VoIP、即时消息（instant message）</li>
+<li>共享音乐和视频、远程学习（telelearning）</li>
+</ul>
+</li>
+<li>电子商务（e-commerce）
+<ul>
+<li>电子市场</li>
+</ul>
+</li>
+<li>娱乐（entertainment）
+<ul>
+<li>IPTV、电子游戏</li>
+</ul>
+</li>
+<li>普适计算（ubiquitous computing）
+<ul>
+<li>传感器（senser）、射频识别（RFID, Radio Frequency IDentification）</li>
+</ul>
+</li>
+</ul>
+<p>原则上每个人都可以与一个或多个其他人通信，客户端和服务器没有固定的分工</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-3.png" width="65%">
+<p>一些电子商务的形式</p>
+<ul>
+<li>企业、消费者、政府</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-4.png" width="65%">
+<h2 id="移动用户">移动用户</h2>
+<ul>
+<li>
+<p>无线网络和移动计算的结合</p>
+</li>
+<li>
+<p>可穿戴式计算机（wearable computer）</p>
+</li>
+<li>
+<p>SoLoMo —— Social,Local,Mobile</p>
+</li>
+<li>
+<p>全球定位系统（GPS, Global Positioning System）</p>
+</li>
+<li>
+<p>移动商务（m-commerce, mobile-commerce）</p>
+</li>
+<li>
+<p>近场通信（NFC, Near Field Communication）</p>
+</li>
+<li>
+<p>固定 / 移动无线</p>
+</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-5.png" width="65%">
+<h2 id="社会问题">社会问题</h2>
+<ul>
+<li>社交网络</li>
+<li>员工权益与用人单位权利</li>
+<li>政府和公民权</li>
+<li>黑客和犯罪</li>
+<li>位置隐私</li>
+<li>垃圾邮件</li>
+<li>钓鱼（phishing）</li>
+<li>电子赌博，法律问题</li>
+<li>版权保护</li>
+</ul>
+<p>完全自动图灵测试（CAPTCHA, Completely Automated Public Turing test to tell Computers and Humans Apart）</p>
+<ul>
+<li>区分人类和计算机</li>
+<li>要求一个人解决一个识别任务，根据对方的响应来判断是否是人类实体在响应</li>
+</ul>
+<h1>网络硬件</h1>
+<p>网络分类（Taxonomy of Networks）</p>
+<ul>
+<li>传输技术（transmission technology）</li>
+<li>网络尺度（scale）</li>
+</ul>
+<p><strong>传输技术（transmission technology）</strong></p>
+<p>广播式链路（broadcasting links）</p>
+<ul>
+<li>通信信道被网络上的所有机器所共享</li>
+<li>任何一台机器发出的数据包能被所有其他任何机器收到
+<ul>
+<li>每个数据包的地址字段指定了预期的接收方。当一台机器收到一个数据包时，它要检查地址字段。如果包的目的地就是接收机器，则该机器要处理此数据包；如果包的目的地址是其他机器，则该机器就忽略此数据包</li>
+</ul>
+</li>
+<li>例子，无线网络</li>
+</ul>
+<p>点到点链路（point-to-point links）</p>
+<ul>
+<li>将一对单独的机器连接起来</li>
+<li>数据包 / 包（packet）：短消息
+<ul>
+<li>在一个由点到点链路组成的网络中，为了从源端到达接收方，短消息必须首先访问一个或多个中间机器</li>
+<li>通常在网络中可能存在多条不同长度的路由，因此，找到一条好的路由对点到点网络非常重要</li>
+</ul>
+</li>
+<li>单播（unicasting）
+<ul>
+<li>点-点传输只有一个发送方和一个接收方</li>
+</ul>
+</li>
+</ul>
+<p>广播（broadcasting） / 组播（multicasting）</p>
+<ul>
+<li>广播是在地址字段中使用特殊的编码，发送给所有机器</li>
+<li>组播是支持给一组机器发送数据包的模式</li>
+</ul>
+<p><strong>网络拓扑（network topology）</strong></p>
+<p>将拓扑看作网络的虚拟形状或结构</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-6.png" width="65%">
+<ul>
+<li>环状、网状、星状、全连接、线形、树状、总线</li>
+</ul>
+<p><strong>网络尺度（scale）</strong></p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-7.png" width="65%">
+<ul>
+<li>个域网、局域网、城域网、广域网、互联网络（internetwork）</li>
+<li>星际互联网络（Interplantary Internet）: 跨越太空把网络连接起来</li>
+</ul>
+<h2 id="个域网（PAN-Personal-Area-Network）">个域网（PAN, Personal Area Network）</h2>
+<p>允许设备围绕着一个人进行通信</p>
+<p>常见例子</p>
+<ul>
+<li>计算机通过无线网络与其外围设备连接
+<ul>
+<li>蓝牙（bluetooth） IEEE 802.15</li>
+</ul>
+</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-8.png" width="65%">
+<h2 id="局域网（LAN-Local-Area-Network）">局域网（LAN, Local Area Network）</h2>
+<p>局域网是一种私有网络，一般在一座建筑物内或建筑物附近，比如家庭、办公室、工厂</p>
+<p>局域网被广泛用来连接个人计算机和消费类电子设备，使它们能够共享资源（比如打印机）和交换信息</p>
+<p>当局域网被用于公司时，它们就称为企业网络（enterprise network）</p>
+<p>无线局域网</p>
+<ul>
+<li>IEEE 802.11 （WiFi）</li>
+<li>在任何地方可以从 11 Mbps ~ 几百 Mbps 的速率运行</li>
+<li>每台计算机与接入点（AP, Access Point） / 无线路由器（wireless router） / 基站（base station）通信
+<ul>
+<li>负责中继无线计算机之间的数据包，还负责中继无线计算机和 Internet 之间的数据包</li>
+</ul>
+</li>
+</ul>
+<p>有线局域网</p>
+<ul>
+<li>使用铜线、光纤作为传输介质</li>
+<li>大小受到限制</li>
+<li>速度在 100 Mbps ~ 1 Gbps 之间</li>
+<li>延迟很低</li>
+<li>很少发生错误</li>
+</ul>
+<p>以太网（Ethernet）: IEEE 802.3</p>
+<ul>
+<li>最常见的一种有线局域网</li>
+<li>交换式以太网（switched Ethernet）
+<ul>
+<li>每台计算机按照以太网协议规定的方式运行，通过一条点到点链路连接到一个交换机（switch）</li>
+<li>一个交换机有多个端口（port），每个端口链接一台计算机</li>
+<li>交换机的工作是中继与之连接的计算机之间的数据包，根据每个数据包中的地址来确定这个数据包要发送给哪台机器</li>
+</ul>
+</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-9.png" width="65%">
+<h3 id="扩展（expand）和划分（divide）局域网">扩展（expand）和划分（divide）局域网</h3>
+<p>为了建立较大的局域网</p>
+<ul>
+<li>交换机必须插入到彼此的端口中</li>
+</ul>
+<p>将一个大的物理局域网分成两个较小的逻辑局域网</p>
+<ul>
+<li>虚拟局域网（VLAN, Virtual LAN）
+<ul>
+<li>每个端口都带有一个“彩色”标签，然后交换机在转发数据包时，将连接到不同颜色端口的计算机区别开来。就好像存在不同的局域网一样</li>
+</ul>
+</li>
+</ul>
+<h3 id="经典以太网（classic-Ethernet）">经典以太网（classic Ethernet）</h3>
+<p>在最初的以太网设计中，所有的数据包在一条线性电缆上广播，因而一次至多只有一台机器能够成功发送，为此需要一个分布式仲裁机制来解决冲突问题</p>
+<ul>
+<li>分布式仲裁机制的算法：只要电缆空闲计算机就可以传输；如果两个或两个以上的数据包发生冲突，每台计算机只是等待一个随机时间后再次尝试发送</li>
+</ul>
+<p>经典以太网的拓扑结构</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-10.png" width="65%">
+<h3 id="广播网络的信道分配">广播网络的信道分配</h3>
+<p>无线和有线广播网络可分为静态设计和动态设计，两种设计取决于如何分配信道</p>
+<p>静态分配（static allocation）</p>
+<ul>
+<li>将时间划分成离散的时间间隔（时间槽 time slot）并使用轮循算法，每台机器只能在分配给它的时间槽到来时广播</li>
+<li>当一台机器在分配给它的时间槽到来时没有数据要发送，这种方法就浪费了信道容量（此时其他计算机也不允许发送）</li>
+</ul>
+<p>动态分配（dynamic allocation）</p>
+<ul>
+<li>按需分配</li>
+<li>集中式（centralized）
+<ul>
+<li>有一个中心实体（entity）决定接下来谁使用信道</li>
+</ul>
+</li>
+<li>分散式（decentralized）
+<ul>
+<li>没有中心实体，每台机器必须自行决定是否可以传输</li>
+</ul>
+</li>
+</ul>
+<h2 id="城域网（MAN-Metropolitan-Area-Network）">城域网（MAN, Metropolitan Area Network）</h2>
+<p>范围可以覆盖一个城市</p>
+<p>无线城域网：IEEE802.16 WiMAX</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-11.png" width="65%">
+<ul>
+<li>基于有线电视的城域网</li>
+<li>接线盒（junction box）</li>
+</ul>
+<h2 id="广域网（WAN-Wide-Area-Network）">广域网（WAN, Wide Area Network）</h2>
+<p>范围很大，能跨越很大地理区域，通常是一个国家、地区、大陆</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-12.png" width="65%">
+<ul>
+<li>把机器称为主机（host）</li>
+<li>把连接这些主机的网络其余部分称为通信子网（communication subnet），简称子网（subnet）
+<ul>
+<li>子网的工作是把信息从一个主机携带到另一个主机</li>
+</ul>
+</li>
+</ul>
+<h3 id="通信子网">通信子网</h3>
+<p>传输线路（transmission line）</p>
+<ul>
+<li>负责在机器之间移动比特</li>
+<li>可以是铜线、光纤、无线链路</li>
+</ul>
+<p>交换元素（switching element），简称交换机（switch）</p>
+<ul>
+<li>是专用的计算机，负责连接两条或两条以上的传输线路</li>
+<li>当数据到达一条入境线路时，交换元素必须选择一条出境线路把数据转发出去</li>
+<li>现在常用的名称是路由器（router）<br>
+子网（subnet）</li>
+<li>一组路由器和通信线路的集合，主要负责将数据包从源主机移动到目标主机</li>
+</ul>
+<h3 id="广域网和局域网的区别">广域网和局域网的区别</h3>
+<ol>
+<li>线路长度</li>
+<li>在广域网中，主机和子网是由不同的人拥有和经营</li>
+<li>路由器通常连接不同类型的网络技术
+<ul>
+<li>意味着许多广域网是事实上的互联网络（internetwork）或复合网络，即由多个网络组成的网络<br>
+子网连接什么</li>
+<li>子网可以连接单个计算机，就像连接到局域网一样，或连接整个局域网</li>
+</ul>
+</li>
+</ol>
+<h3 id="虚拟专用网络（VPN-Virtual-Private-Network）">虚拟专用网络（VPN, Virtual Private Network）</h3>
+<p>相比租赁专线，VPN 具有虚拟化的一贯优势，提供了重用某种资源（Internet 连接）的灵活性；也有虚拟化的一般缺点，缺乏对底层资源的控制</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-13.png" width="65%">
+<ul>
+<li>灵活但缺少控制</li>
+</ul>
+<h3 id="ISP-网络（ISP-network）">ISP 网络（ISP network）</h3>
+<p>子网由不同的公司负责运营</p>
+<p>子网经营者称为网络服务提供商（network service provider）</p>
+<p>提供与Internet的其他网络相连的子网运营商称为Internet服务提供商（ISP, Internet Service Provider）</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-14.png" width="65%">
+<ul>
+<li>子网由 ISP 运营</li>
+</ul>
+<p>包（packet）</p>
+<ul>
+<li>消息在发送之前被分割成数据包</li>
+</ul>
+<p>包交换（packet-switched） / 存储-转发（store-and-forward）</p>
+<ul>
+<li>每个中间路由器接收整个包，然后等到出境线路空闲就转发出去</li>
+</ul>
+<p>路由算法（routing algorithm）</p>
+<ul>
+<li>网络中可能存在许多条路径连接两个计算机 / 路由器</li>
+<li>网络如何决定使用哪条路径的策略</li>
+</ul>
+<p>转发算法（forwarding algorithm）</p>
+<ul>
+<li>路由器如何决定把一个数据包发送到哪个位置的策略</li>
+</ul>
+<p>卫星网络在本质上是广播的</p>
+<p>蜂窝移动电话网络是采用无线技术的广域网例子</p>
+<h2 id="互联网络（Internetwork）">互联网络（Internetwork）</h2>
+<p>一组相互连接的网络称为互联网络（internetwork）或互联网（internet）</p>
+<ul>
+<li>这些术语一般更具有通用意义（generic）</li>
+</ul>
+<p>因特网（Internet）是一个特殊的互联网络</p>
+<ul>
+<li>使用 ISP 网络来连接各种各样的网络</li>
+</ul>
+<p>互联网络的定义</p>
+<ol>
+<li>网络的不同部分采用的不同的底层技术（广播技术与点到点链路及有线与无线）</li>
+<li>不同的组织出资构建了网络的不同部分，并且各自维持自己出资构建的那部分网络的运营</li>
+</ol>
+<p>将两个或多个网路连接起来并提供必要转换的机器，其硬件和软件方面的总称是网关（gateway）</p>
+<h1>网络软件</h1>
+<h2 id="协议层次结构">协议层次结构</h2>
+<p>分层</p>
+<ul>
+<li>为了降低网络设计的复杂性，绝大多数网络都组织成一个层次栈（a stack og layer）或分级栈（a stack of level），每一层都建立在其下一层的基础之上</li>
+</ul>
+<p>服务</p>
+<ul>
+<li>每一层的目的是向上一层提供特定的服务，而把如何实现这些服务的细节对上一层加以屏蔽</li>
+</ul>
+<p>第 n 层协议</p>
+<ul>
+<li>一台机器上的第 n 层与另一台机器上的第 n 层进行对话，该对话中使用的规则和约定统称为第 n 层协议</li>
+</ul>
+<p>协议（protocol）是指通信双方就如何进行通信的一种约定</p>
+<ul>
+<li>定义格式，网络实体之间发送和接收的消息的顺序、消息传输和接收所采取的行动</li>
+</ul>
+<p>协议分层</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-15.png" width="65%">
+<ul>
+<li>不同机器上构成相应层次的实体称为对等体（peer）
+<ul>
+<li>可能是软件过程、硬件设备、人类</li>
+<li>对等体为了实现彼此沟通才是用协议来进行通信</li>
+</ul>
+</li>
+<li>第 1 层下面是物理介质（physical medium），通过它进行实际的通信</li>
+<li>虚线表示虚拟通信，实线表示物理通信</li>
+<li>在每一对相邻层次之间的是接口（interface）
+<ul>
+<li>接口定义了下层向上层提供哪些原语操作和服务</li>
+</ul>
+</li>
+</ul>
+<p>KISS 原则（Keep It Simple, Stupid）</p>
+<ul>
+<li>保持简单和明确能够减少复杂性
+<ul>
+<li>层数、清楚的接口</li>
+</ul>
+</li>
+<li>要求每一层完成一组特定的有明确含义的功能</li>
+</ul>
+<p>网络体系结构（network architecture）</p>
+<ul>
+<li>层和协议的集合</li>
+</ul>
+<p>网络体系结构的规范必须包含足够的信息，以便实现者为每一层编写的程序或者涉及的硬件能遵守有关的协议</p>
+<p>实现细节和接口规范不属于网络体系结构的内容，因为它们隐藏在机器内部，对于外界是不可见的</p>
+<p>一个网络中所有机器上的接口也不必都一样，只要每台机器能够正确地使用所有的协议接即可</p>
+<p>协议栈（protocol stack）</p>
+<ul>
+<li>一个特定的系统所使用的一组协议，即每一层一个协议</li>
+</ul>
+<p>向 5 层网络的最顶端提供通信</p>
+<ul>
+<li>假设第 5 层上运行的一个应用进程产生了一条消息 M ，并将它传递给第 4 层以便传给对等进程</li>
+<li>第 4 层在消息的前面加上一个头（header），用来标识该消息，并且把结果传给第 3 层</li>
+<li>该头包含了一些控制信息，例如地址，主要被目标机器的第 4 层用来递交消息</li>
+<li>几乎所有第 3 层协议对消息大小有限制，因此第 3 层必须把入境消息分割成较小的单元，即数据包或包（packet），并且在每个数据包前面加上第 3 层的头</li>
+<li>第 3 层决定使用哪些输出线路，并且把分组传给第 2 层</li>
+<li>第 2 不仅在每一个消息上加上一个头信息还要加上一个尾，然后将结果传输单元送给第 1 层以便进行物理传输</li>
+<li>在接收端的机器上，消息自底向上逐层传递，在传递过程中各个头被剥离</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-16.png" width="65%">
+<ul>
+<li>支持第 5 层虚拟通信的信息流</li>
+</ul>
+<p>协议层次结构中的较低层往往由硬件或者固件实现。然而，即使它们被（全部或部分）嵌入到硬件中，仍然会涉及复杂的协议算法</p>
+<h2 id="层次设计问题">层次设计问题</h2>
+<h3 id="可靠性（reliability）">可靠性（reliability）</h3>
+<p>保证网络正常运行，即使网络由本身并不可靠的组件所构成</p>
+<p>机制（mechanisms）</p>
+<ul>
+<li>检错（error detection）
+<ul>
+<li>从接收到的信息中发现错误</li>
+</ul>
+</li>
+<li>纠错（error correction）
+<ul>
+<li>从接收到的可能不正确的比特中恢复正确的消息</li>
+</ul>
+</li>
+<li>路由（routing）
+<ul>
+<li>找到通过网络的工作路径</li>
+</ul>
+</li>
+</ul>
+<h3 id="网络演进（network-revolution）">网络演进（network revolution）</h3>
+<p>协议分层（protocol layering）</p>
+<ul>
+<li>支持变化</li>
+</ul>
+<p>寻址（addressing）和命名（naming）</p>
+<ul>
+<li>每一层在特定的消息中都需要一种机制来标识发送方和接收方</li>
+<li>在下层叫寻址，在上层叫命名</li>
+</ul>
+<p>网络互联（internetworking）</p>
+<ul>
+<li>不同的网络技术具有不同的限制</li>
+</ul>
+<p>可扩展的（scalable）</p>
+<ul>
+<li>网络规模变大时仍能工作良好的设计</li>
+</ul>
+<h3 id="资源分配（resource-allocation）">资源分配（resource allocation）</h3>
+<p>网络基于其底层的资源（比如传输线路的容量）向主机提供服务</p>
+<ul>
+<li>统计复用（statistical multiplexing）
+<ul>
+<li>根据统计需求来共享带宽</li>
+</ul>
+</li>
+<li>流量控制（flow control）
+<ul>
+<li>保持快速发送方不会用数据把慢速接收方淹没</li>
+</ul>
+</li>
+<li>拥塞（congestion）
+<ul>
+<li>网络超载</li>
+</ul>
+</li>
+<li>服务质量（quality of service）
+<ul>
+<li>实时（real-time）传递和其他的服务</li>
+</ul>
+</li>
+</ul>
+<h3 id="威胁（threats）">威胁（threats）</h3>
+<p>机密性（confidentiality）</p>
+<ul>
+<li>通信窃听（eavesdropping）</li>
+</ul>
+<p>完整性（integrity）</p>
+<ul>
+<li>防止消息的诡秘变化</li>
+</ul>
+<p>认证（authentication）</p>
+<ul>
+<li>假冒（impersonation）</li>
+</ul>
+<h2 id="面向连接与无连接服务">面向连接与无连接服务</h2>
+<p>下层可以向上层提供两种不同类型的服务：面向连接的服务和无连接的服务</p>
+<h3 id="面向连接的服务">面向连接的服务</h3>
+<p>面向连接的服务（connection-oriented service）是按照电话系统建模的</p>
+<p>用户必须建立连接，然后使用该连接传输数据，最后释放该连接</p>
+<p>最本质的方面在于像一个管道：发送方把对象（数据位）压入管道的一端，接收方在管道的另一端将它们取出来。在绝大多数情况下，数据位保持原来的顺序，所以数据位都会按照发送的顺序到达</p>
+<ul>
+<li>协商（negotiation）</li>
+<li>电路（circuit）</li>
+</ul>
+<h3 id="无连接的服务">无连接的服务</h3>
+<p>无连接服务（connectionless service）是按照邮政系统建模的</p>
+<p>每个报文都携带了完整的目标地址，每个报文都由系统中的中间节点路由，而且路由独立于后续报文。先发送的报文可能被延迟。</p>
+<p>报文（message）：数据包 / 包（packet）是网络层的报文</p>
+<p>存储-转发交换（store）</p>
+<ul>
+<li>如果中间节点只能在收到报文的全部内容之后再将该报文发送给下一个节点<br>
+直通式交换（cut-through switching）</li>
+<li>在报文还没有被全部接收完毕之前就向下一个节点传输</li>
+</ul>
+<p>服务质量（quality of service）<br>
+每个服务都可以用一个服务质量来表述其特征</p>
+<ul>
+<li>可靠的（reliability）
+<ul>
+<li>意味着从来不丢失数据</li>
+<li>用确认（acknowledgement）实现的</li>
+</ul>
+</li>
+<li>延迟（delay / latency）
+<ul>
+<li>确认过程引入额外的开销（overhead）和延迟</li>
+</ul>
+</li>
+</ul>
+<h3 id="补充">补充</h3>
+<p>可靠的面向连接服务</p>
+<ul>
+<li>报文序列（message sequence）
+<ul>
+<li>报文的边界始终得到保持</li>
+</ul>
+</li>
+<li>字节流（byte stream）
+<ul>
+<li>没有任何报文边界</li>
+</ul>
+</li>
+<li>典型情形：文件传输（file transfer）</li>
+</ul>
+<p>不可靠的无连接服务</p>
+<ul>
+<li>IP 语音（voice over IP）</li>
+<li>视频会议</li>
+<li>垃圾邮件（junk mail），不需要确认和连接</li>
+<li>通常称为数据报服务（datagram service）</li>
+</ul>
+<p>有确认的数据报服务（acknowledged datagram service）</p>
+<ul>
+<li>通过确认提高了可靠性</li>
+</ul>
+<p>请求-应答服务（request-replay service）</p>
+<ul>
+<li>发送方传输一个包含某个请求的数据报；接收方以一个包含了请求结果的应答数据报作为反馈</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-17.png" width="65%">
+<h2 id="服务原语">服务原语</h2>
+<p>一个服务由一组原语（primitive）正式说明，用户进程通过这些原语（操作）来访问该服务</p>
+<ul>
+<li>原语告诉服务要执行某个动作，或者将对等实体所执行的动作报告给用户</li>
+<li>如果协议栈位于操作系统中，则这些服务通常是一些系统调用</li>
+</ul>
+<p>可用的原语取决于底层所提供的服务，面向连接服务和无连接服务的原语是不同的</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-18.png" width="65%">
+<ul>
+<li>简单面向连接服务提供的 6 个服务原语</li>
+</ul>
+<p>在客户机-服务器环境下实现“请求-应答”交互式应用</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-19.png" width="65%">
+<ul>
+<li>使用有确认数据报的一个简单客户机-服务器交互过程</li>
+</ul>
+<h2 id="服务与协议的关系">服务与协议的关系</h2>
+<p>服务是指某一层向它上一层提供的一组原语（操作）。服务定义了该层准备代表其用户执行哪些操作，但是它并不涉及如何实现这些操作。服务与两层之间的接口有关，低层是服务提供者，而上层是服务用户</p>
+<p>协议是一组规则，规定了同一层上对等实体之间所交换的数据包或者报文的格式和含义。对等实体利用协议来实现它们的服务定义</p>
+<p>服务涉及层与层之间的接口</p>
+<p>协议涉及不同机器上两个对等实体之间发送的数据包</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-20.png" width="65%">
+<ul>
+<li>服务和协议之间的关系</li>
+</ul>
+<h1>参考模型</h1>
+<p>与 OSI 模型相关的协议没有被任何人所用，但实际上，该模型本身具有相当普遍的意义，并仍然有效；它对讨论网络体系结构中每一层的功能还是很重要</p>
+<p>TCP/IP 模型本身没有多大用处，但它的协议却已经广为流传</p>
+<h2 id="OSI-参考模型">OSI 参考模型</h2>
+<p>国际标准化组织（ISO, International Standards Organization）1983 的提案，1995 修订</p>
+<p>开放系统互连（OSI, Open Systems Interconnection）参考模型</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-21.png" width="65%">
+<p>OSI 模型有 7 层，适用于这 7 层的基本原则简要概括如下</p>
+<ol>
+<li>应该在需要一个不同抽象体的地方创建一层</li>
+<li>每一层都应该执行一个明确定义的功能</li>
+<li>每一层功能的选择应该向定义国际标准化协议的目标看齐</li>
+<li>层与层边界的选择应该使跨越接口的信息流最小</li>
+<li>层数应该足够多，保证不同的功能不会被混杂在同一层中，但同时层数又不能太多，以免体系结构变得过于庞大</li>
+</ol>
+<h3 id="物理层（physical-layer）">物理层（physical layer）</h3>
+<p>目的</p>
+<ul>
+<li>关注在一条通信信道上传输原始比特</li>
+</ul>
+<p>问题</p>
+<ul>
+<li>用什么电子信号表示 1 和 0</li>
+<li>一个比特持续多少纳秒</li>
+<li>传输是否可以在两个方向上同时进行</li>
+<li>初始连接如何建立</li>
+<li>当双方结束之后如何撤销连接</li>
+<li>网络连接器有多少针（pin）以及每一针的用途是什么等</li>
+</ul>
+<h3 id="数据链路层（data-link-layer）">数据链路层（data link layer）</h3>
+<p>目的</p>
+<ul>
+<li>将一个原始的传输线路转变成一条没有漏检传输错误的线路</li>
+</ul>
+<p>问题</p>
+<ul>
+<li>帧（framing）：将输入的数据拆分成数据帧（data frame），然后顺序发送这些数据帧</li>
+<li>错误处理（error handling）：如果服务是可靠的，则接收方必须确认正确收到的每一帧，即给发送方返回一个确认帧（acknowledgement frame）</li>
+<li>流量控制（flow control）：避免快速发送方用数据淹没慢速接收方</li>
+<li>介质访问控制子层（medium access control）：对于广播式网络，控制对共享信道的访问</li>
+</ul>
+<h3 id="网络层（network-layer）">网络层（network layer）</h3>
+<p>目的</p>
+<ul>
+<li>控制子网的运行，将数据包从源端路由到接收方<br>
+问题</li>
+</ul>
+<p>问题</p>
+<ul>
+<li>路由（routing）：路由可以建立在静态表的基础上，这些表相当于网络内部的“布线”，而且很少会改变；或者，更常见的情况是路由可以自动更新，以此来避免网络中的故障组件。路由也可以在每次会话开始时就确定下来，比如登录到一台远程机器上。最后，路由可以是高度动态的，针对每一个数据包都重新确定路径，以便反映网络当前的负载情况</li>
+<li>拥塞（congestion）：控制子网中的包的数量</li>
+<li>服务质量（QoS）：服务质量（延迟、传输时间、抖动等）</li>
+<li>异质 / 异构性（heterogeneity）：寻址、包大小、协议（允许异构网络相互连接称为互联网络）</li>
+</ul>
+<h3 id="传输层（transport-layer）">传输层（transport layer）</h3>
+<p>目的</p>
+<ul>
+<li>接受来自上一层的数据，在必要的时候把这些数据分割成较小的单元，然后把这些数据单元传递给网络层，并确保这些数据单元正确地到达另一端</li>
+</ul>
+<p>问题</p>
+<ul>
+<li>服务决定（service decisions）：决定提供哪种类型的服务：无错的点到点信道/数据报</li>
+<li>端到端（end-to-end）：将数据从源端携带到接收方</li>
+<li>可靠性（reliability）：确保数据包到达目的地，重组错序的消息</li>
+<li>隐藏网络（hide network）：允许网络细节对上层透明</li>
+<li>映射（mapping）：决定消息数据哪个连接</li>
+<li>流量控制（flow control）：防止快速发送方淹没慢速接收方</li>
+</ul>
+<h3 id="会话层（session-layer）">会话层（session layer）</h3>
+<p>目的</p>
+<ul>
+<li>允许不同机器上的用户监控会话</li>
+</ul>
+<p>问题</p>
+<ul>
+<li>对话控制（dialog control）：记录该由谁来传递数据</li>
+<li>令牌管理（token managment）：禁止双方同时执行统一个关键操作</li>
+<li>同步功能（synchronization）：在一个长传输过程中设置一些断点，以便在系统崩溃之后还能恢复到崩溃前的状态继续运行</li>
+</ul>
+<h3 id="表示层（presentation-layer）">表示层（presentation layer）</h3>
+<p>目的</p>
+<ul>
+<li>使具有不同数据表示的计算机可以进行通信</li>
+</ul>
+<p>问题</p>
+<ul>
+<li>所传递信息的语法和语义</li>
+<li>了解正在传输的数据的性质。转换 ASCII / EBCDIC，大端序 / 小端序</li>
+</ul>
+<h3 id="应用层（application-layer）">应用层（application layer）</h3>
+<p>目的</p>
+<ul>
+<li>包含了用户通常需要的各种各样的协议</li>
+<li>超文本传输协议（HTTP, HyperText Transfer Protocol）
+<ul>
+<li>万维网（WWW, World Wide Web）的基础</li>
+</ul>
+</li>
+<li>文件传输协议 FTP</li>
+<li>简单邮件传输协议 SMTP</li>
+</ul>
+<h2 id="TCP-IP-参考模型">TCP/IP 参考模型</h2>
+<p>APPANET 是由美国国防部（DoD, U.S Department of Defense）资助的一个研究性网络</p>
+<p>即使在损失子网硬件的情况下网络还能够继续工作，原有的会话不能被打断</p>
+<p>不同应用程序对网络的需求差别很大，从文件传输到实时的语音传输，需要一种灵活的网络体系结构</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-22.png" width="65%">
+<p>关键</p>
+<ul>
+<li>数据包交换网络，以一个可运行在不同网络之上的无连接网络层为基础</li>
+</ul>
+<h3 id="链路层（link-layer）">链路层（link layer）</h3>
+<p>描述了链路必须完成什么功能才能满足无连接的互联网络层的需求，比如串行线和经典以太网</p>
+<p>不是真正意义上的一个层，而是主机与传输线路之间的一个接口</p>
+<h3 id="互联网层（internet-layer）">互联网层（internet layer）</h3>
+<p>将整个网络体系结构贯穿在一起的关键层</p>
+<p>允许主机将数据包注入到任何网络，并且让这些数据包独立地到达接收方（可能在不同的网络上）</p>
+<p>路由和拥塞控制</p>
+<ul>
+<li>因特网协议（IP, Internet Protocol），定义了官方的数据包格式和协议</li>
+<li>因特网控制报文协议（ICMP, Internet Control Message Protocol）</li>
+</ul>
+<h3 id="传输层（transport-layer）-2">传输层（transport layer）</h3>
+<p>端到端（end-to-end）：允许源主机和目标主机上的对等实体进行对话</p>
+<p>传输控制协议（TCP, Transport Control Protocol）：是一个可靠的、面向连接的协议，允许从一台机器发出的字节流正确无误地交付到互联网上的另一台机器；保证传输，负责处理流量控制</p>
+<p>用户数据报协议（UDP, User Datagram Protocol）：是一个不可靠的、无连接协议，适用于那些自己提供有序性和流量控制功能的应用程序</p>
+<h3 id="应用层（application-layer）-2">应用层（application layer）</h3>
+<p>包含所有的高层协议</p>
+<ul>
+<li>虚拟终端协议（TELNET）</li>
+<li>文件传输协议（FTP）</li>
+<li>简单邮件传输协议（SMTP）</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-23.png" width="65%">
+<h2 id="书本使用的模型">书本使用的模型</h2>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-24.png" width="65%">
+<p>物理层规定了如何在不同的介质上以电气（或其他模拟）信号传输比特</p>
+<p>链路层关注的是如何在两台直接相连的计算机之间发送有限长度的消息，并具有指定级别的可靠性</p>
+<ul>
+<li>以太网和 802.11</li>
+</ul>
+<p>网络层主要处理如何把多条链路结合到网络中，以及如何把网络把与网络联结成互联网络，以便可以在相隔遥远的计算机之间发送数据包</p>
+<ul>
+<li>任务包括找到传递数据包所走的路径</li>
+<li>IP</li>
+</ul>
+<p>传输层增强了网络层的传递保证，通常具有更高的可靠性，而且提供了数据交付的抽象</p>
+<ul>
+<li>TCP</li>
+</ul>
+<p>应用层包含了使用网络的应用程序</p>
+<ul>
+<li>HTTP、DNS</li>
+</ul>
+<h2 id="OSI-参考模型与-TCP-IP-参考模型的比较">OSI 参考模型与 TCP/IP 参考模型的比较</h2>
+<p>OSI 模型的核心是</p>
+<ul>
+<li>服务（service）</li>
+<li>接口（interface）</li>
+<li>协议（protocol）</li>
+</ul>
+<p>OSI明确区分了这三个概念，这些思想与面向对象的程序设计思想非常吻合，协议被隐藏（隐蔽性）</p>
+<ul>
+<li>每一层都为它的上一层执行某些服务</li>
+<li>每一层的接口告诉它上面的进程如何访问本层</li>
+<li>每一层用到的对等协议是本层自己内部的事情</li>
+</ul>
+<p>TCP/IP 模型最初并没有明确区分服务、接口和协议</p>
+<p>TCP/IP 先有协议，模型只是协议的一个描述而已；但是 TCP/IP 模型并不适合任何其他协议栈</p>
+<p>区别</p>
+<ul>
+<li>层数不同：OSI 7 层，TCP/IP 4 层</li>
+<li>无连接和面向连接
+<ul>
+<li>OSI 模型的网络层同时支持无连接和面向连接的通信，但传输层只支持面向连接的通信</li>
+<li>TCP/IP 模型在网络层只支持无连接，但在传输层同时支持两种通信模式，这样可以给用户一个选择的机会</li>
+</ul>
+</li>
+</ul>
+<h2 id="OSI-模型和协议的评判">OSI 模型和协议的评判</h2>
+<p>糟糕的时机</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-25.png" width="65%">
+<ul>
+<li>两头大象的启示</li>
+</ul>
+<p>糟糕的技术</p>
+<ul>
+<li>复杂（complex），难以理解（flawed）</li>
+<li>7 层很大程度上是处于政策上的考虑</li>
+</ul>
+<p>糟糕的实现</p>
+<ul>
+<li>庞大（huge）、笨拙（unwieldy）、效率慢</li>
+</ul>
+<p>糟糕的政策</p>
+<ul>
+<li>学术（academia）与官僚（bureaucrats）</li>
+</ul>
+<h2 id="TCP-IP-参考模型的评判">TCP/IP 参考模型的评判</h2>
+<ul>
+<li>没有明确区分服务、接口和协议</li>
+<li>一点也不通用</li>
+<li>链路层不是真正意义上的一层</li>
+<li>没有区分物理层和数据链路层</li>
+<li>很多其他协议是自主形成的，一些协议根深蒂固难以取代</li>
+</ul>
+<h1>网络实例</h1>
+<h2 id="因特网">因特网</h2>
+<h3 id="APPANET">APPANET</h3>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-26.png" width="65%">
+<ul>
+<li>（a）电话系统结构   （b）分布式交换系统</li>
+</ul>
+<p>高级研究计划局（ARPA, Advanced Research Projects Agency）</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-27.png" width="65%">
+<ul>
+<li>IMP（Interface Message Processors, 接口报文处理器）</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-28.png" width="65%">
+<ul>
+<li>节点逐渐增加</li>
+</ul>
+<h3 id="NSFNET">NSFNET</h3>
+<p>美国国家科学基金会（NSF, U.S National Science Foundation）</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-29.png" width="65%">
+<ul>
+<li>整个网络，包括骨干网和区域网，合起来统称为 NSFNET</li>
+</ul>
+<h3 id="Internet-体系结构">Internet 体系结构</h3>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-30.png" width="65%">
+<ul>
+<li>数字用户线（DSL, Digital Subscriber Line）</li>
+<li>数字用户线接入复用器（DSLAM, Digital Subscriber Line Access Multiplexer）</li>
+<li>拨号（dial-up）</li>
+<li>线缆调制解调终端系统（CMTS, Cable Modem Termination System）</li>
+<li>Internet交换点（IXP, Internet eXchange Point）</li>
+</ul>
+<p>拨号速率 56 kbps，高于拨号速率接入 Internet 就被称为宽带（broadband）</p>
+<p>Ineternet 用途</p>
+<ul>
+<li>指数增长</li>
+<li>所有节点都基于 TCP/IP，意味着所有节点都有一个 IP 地址</li>
+<li>传统应用（1970-1990）
+<ul>
+<li>E-mail</li>
+<li>新闻</li>
+<li>远程登录</li>
+<li>文件传输</li>
+</ul>
+</li>
+<li>1990s
+<ul>
+<li>万维网（WWW, World Wide Web）</li>
+<li>浏览器（browser）</li>
+<li>Internet 服务提供商（ISP, Internet Service Providers）</li>
+</ul>
+</li>
+</ul>
+<h2 id="第三代移动电话网络（3G-Mobile-Phone-Networks）">第三代移动电话网络（3G Mobile Phone Networks）</h2>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-31.png" width="65%">
+<ul>
+<li>蜂窝、基站</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-32.png" width="65%">
+<ul>
+<li>无线网络控制器（RNC, Radio Network Controller）</li>
+<li>移动交换中心（MSC, Mobile Switching Center）</li>
+<li>网关移动交换中心（GMSC, Gateway Mobile Switching Center）</li>
+<li>媒体网关（MGW, Media Gateway）</li>
+<li>公共交换电话网络（PSTN, Public Switched Telephone Network）</li>
+<li>通用数据包业务（GPRS, Genernal Packet Radio Service）</li>
+<li>服务 GPRS 支撑节点（SGSN, Serving GPRS Support Node）</li>
+<li>网关 GPRS 支撑节点（CGSN, Gateway GPRS Support Node）</li>
+<li>归属用户服务器（HSS, Home Subscriber Server）</li>
+</ul>
+<p>移交（handover） / 切换（handoff）</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-33.png" width="65%">
+<ul>
+<li>软切换 / 硬切换（hard handover）</li>
+</ul>
+<p>SIM card</p>
+<ul>
+<li>用户识别模块（Subscriber Identity Module）</li>
+</ul>
+<h2 id="无线局域网：802-11-WiFi">无线局域网：802.11 WiFi</h2>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-34.png" width="65%">
+<ul>
+<li>接入点（AP, Access Point）</li>
+<li>自组织网络（ad hoc network）</li>
+</ul>
+<p>多径衰弱（multipath fading）</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-35.png" width="65%">
+<ul>
+<li>路径多样性（path diversity）</li>
+<li>正交频分复用（OFDM, Orthogonal Frequency Division Multiplexing）</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-36.png" width="65%">
+<ul>
+<li>载波侦听多路访问（CSMA, Carrier Sense Multiple Access）</li>
+</ul>
+<p>无线局域网标准</p>
+<ul>
+<li>802.11-1997: 1 Mbps, 2 Mbps (2.4 GHz)</li>
+<li>802.11a-1999: 54 Mbps (5 GHz band)</li>
+<li>802.11b-1999: 11 Mbps (2.4 GHz)</li>
+<li>802.11g-2003: 54 Mbps (2.4 GHz)</li>
+<li>802.11n-2009: upto 600 Mbps (operates on both the 2.4 GHz and the lesser used 5 GHz bands)</li>
+<li>802.11ac-2012: upto 1 Gbps (5 GHz)</li>
+</ul>
+<h2 id="RFID-和传感器网络">RFID 和传感器网络</h2>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-37.png" width="65%">
+<ul>
+<li>无线射频识别（RFID, Radio Frequency IDentification）</li>
+</ul>
+<p>相关内容</p>
+<ul>
+<li>有源 / 无源 RFID（active / passive）</li>
+<li>低频 / 高频 / 超高频 RFID（LF / HF / UHF）</li>
+<li>后向散射（backscatter）</li>
+</ul>
+<p>多跳网络（multihop network）</p>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-38.png" width="65%">
+<h1>网络标准化</h1>
+<p>事实（De facto） - 来自事实（from the fact）</p>
+<p>法定（De jure） - 依据法律（by law）</p>
+<h2 id="电信领域有影响力的组织">电信领域有影响力的组织</h2>
+<p>国际电信联盟（ITU, International Telecommunication Union）</p>
+<p>主要部门</p>
+<ul>
+<li>ITU-R: 无线通信部门（radio communications）</li>
+<li>ITU-D: 发展部门（development）</li>
+<li>ITU-T: 电信标准化部门（telecommunications standardization）
+<ul>
+<li>研究组 → 工作组 → 专家组 → 专案小组</li>
+</ul>
+</li>
+</ul>
+<p>成员分类</p>
+<ul>
+<li>国家政府（national governments）</li>
+<li>部门成员（sector members）</li>
+<li>准成员（associate members）</li>
+<li>监管机构（regulatory agencies）</li>
+</ul>
+<h2 id="国际标准领域有影响力的组织">国际标准领域有影响力的组织</h2>
+<p>国际标准化组织（ISO, International Standards Organization）</p>
+<ul>
+<li>制定和发布国际标准</li>
+<li>成员是 157 个成员国的国家标准组织，包括 ANSI（美国）、BSI（英国）、…</li>
+</ul>
+<p>国家标准和技术协会（NIST, National Institute of Standards and Technology）</p>
+<p>电气和电子工程师协会（IEEE, Institute of Electrical and Electronics Engineers）</p>
+<ul>
+<li>标准化组</li>
+<li>802 工作组</li>
+</ul>
+<img src="https://media.githubusercontent.com/media/jckling/Assets/master/computer%20networks/1/1-39.png" width="65%">
+<h2 id="Internet-标准领域有影响力的组织">Internet 标准领域有影响力的组织</h2>
+<p>Internet 体系结构委员会（Internet Architecture Board）</p>
+<ul>
+<li>Internet 研究任务组（IRTF, Internet Research Task Force）</li>
+<li>Internet 工程任务组（IETF, InternetEngineering Task Force）
+<ul>
+<li>请求注释（RFC, Request For Comments）</li>
+</ul>
+</li>
+</ul>
+<p>Internet 协会（Internet Society）</p>
+<p>万维网联盟（W3C, World Wide Web Consortium）</p>
+<h1>度量单位</h1>
+<p>8 bit = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> Byte<br>
+1 KB = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>10</mn></msup></mrow><annotation encoding="application/x-tex">2^{10}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span></span></span></span> B<br>
+1 MB = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>20</mn></msup></mrow><annotation encoding="application/x-tex">2^{20}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">20</span></span></span></span></span></span></span></span></span></span></span></span> B<br>
+1 GB = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>30</mn></msup></mrow><annotation encoding="application/x-tex">2^{30}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">30</span></span></span></span></span></span></span></span></span></span></span></span> B<br>
+1 TB = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>40</mn></msup></mrow><annotation encoding="application/x-tex">2^{40}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">40</span></span></span></span></span></span></span></span></span></span></span></span> B</p>
+<p>1 kbps = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">10^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span> bps<br>
+1 Mbps = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span> bps<br>
+1 Gbps = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span> bps<br>
+1 Tbps = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mn>12</mn></msup></mrow><annotation encoding="application/x-tex">10^{12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">12</span></span></span></span></span></span></span></span></span></span></span></span> bps</p>
+<p>1 ms（毫秒，千分之一秒） = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-3}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span> s<br>
+1 μs（微秒，百万分之一秒） = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-6}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span></span> s<br>
+1 ns（纳秒，十亿分之一秒） = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>9</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-9}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span></span> s</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/jckling">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/computer-networks-introduction/">https://jckling.github.io/computer-networks-introduction/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/computer-networks/">computer-networks</a><a class="post-meta__tags" href="/tags/networking/">networking</a><a class="post-meta__tags" href="/tags/protocol/">protocol</a></div><div class="post-share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/computer-networks-physical-layer/" title="《计算机网络（英文版·第5版）》 The Physical Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">《计算机网络（英文版·第5版）》 The Physical Layer</div></div><div class="info-2"><div class="info-item-1">《计算机网络》第五版（英文） 物理层</div></div></div></a><a class="pagination-related" href="/database-systems-course/" title="《数据库系统概论》笔记整理"><img class="cover" src="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">《数据库系统概论》笔记整理</div></div><div class="info-2"><div class="info-item-1">《数据库系统概论》第五版</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/computer-networks-application-layer/" title="《计算机网络（英文版·第5版）》 The Application Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-25</div><div class="info-item-2">《计算机网络（英文版·第5版）》 The Application Layer</div></div><div class="info-2"><div class="info-item-1">《计算机网络》第五版（英文） 应用层</div></div></div></a><a class="pagination-related" href="/computer-networks-data-link-layer/" title="《计算机网络（英文版·第5版）》 The Data Link Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-14</div><div class="info-item-2">《计算机网络（英文版·第5版）》 The Data Link Layer</div></div><div class="info-2"><div class="info-item-1">《计算机网络》第五版（英文） 数据链路层</div></div></div></a><a class="pagination-related" href="/computer-networks-medium-access-control-sublayer/" title="《计算机网络（英文版·第5版）》 The Medium Access Control Sublayer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-14</div><div class="info-item-2">《计算机网络（英文版·第5版）》 The Medium Access Control Sublayer</div></div><div class="info-2"><div class="info-item-1">《计算机网络》第五版（英文） 介质访问控制子层</div></div></div></a><a class="pagination-related" href="/computer-networks-physical-layer/" title="《计算机网络（英文版·第5版）》 The Physical Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-13</div><div class="info-item-2">《计算机网络（英文版·第5版）》 The Physical Layer</div></div><div class="info-2"><div class="info-item-1">《计算机网络》第五版（英文） 物理层</div></div></div></a><a class="pagination-related" href="/computer-networks-transport-layer/" title="《计算机网络（英文版·第5版）》 The Transport Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-22</div><div class="info-item-2">《计算机网络（英文版·第5版）》 The Transport Layer</div></div><div class="info-2"><div class="info-item-1">《计算机网络》第五版（英文） 传输层</div></div></div></a><a class="pagination-related" href="/computer-networks-network-layer/" title="《计算机网络（英文版·第5版）》 The Network Layer"><img class="cover" src="https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-15</div><div class="info-item-2">《计算机网络（英文版·第5版）》 The Network Layer</div></div><div class="info-2"><div class="info-item-1">《计算机网络》第五版（英文） 网络层</div></div></div></a><a class="pagination-related" href="/oauth-v2-1-draft/" title="RFC 草案 The OAuth 2.1 Authorization Framework 翻译"><img class="cover" src="https://i.loli.net/2021/06/14/Akr6osDLPtO4hjS.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-06</div><div class="info-item-2">RFC 草案 The OAuth 2.1 Authorization Framework 翻译</div></div><div class="info-2"><div class="info-item-1">课程作业，RFC 草案 OAuth 2.1 身份认证框架翻译</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info-name">Jckling</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请勿重复提交<br/>联系作者：QQ2521390430</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">使用计算机网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%95%86%E4%B8%9A%E5%BA%94%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">商业应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B6%E5%BA%AD%E5%BA%94%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">家庭应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E7%94%A8%E6%88%B7"><span class="toc-number">1.3.</span> <span class="toc-text">移动用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BE%E4%BC%9A%E9%97%AE%E9%A2%98"><span class="toc-number">1.4.</span> <span class="toc-text">社会问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">网络硬件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AA%E5%9F%9F%E7%BD%91%EF%BC%88PAN-Personal-Area-Network%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">个域网（PAN, Personal Area Network）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%80%E5%9F%9F%E7%BD%91%EF%BC%88LAN-Local-Area-Network%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">局域网（LAN, Local Area Network）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%EF%BC%88expand%EF%BC%89%E5%92%8C%E5%88%92%E5%88%86%EF%BC%88divide%EF%BC%89%E5%B1%80%E5%9F%9F%E7%BD%91"><span class="toc-number">2.2.1.</span> <span class="toc-text">扩展（expand）和划分（divide）局域网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E4%BB%A5%E5%A4%AA%E7%BD%91%EF%BC%88classic-Ethernet%EF%BC%89"><span class="toc-number">2.2.2.</span> <span class="toc-text">经典以太网（classic Ethernet）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%BF%E6%92%AD%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BF%A1%E9%81%93%E5%88%86%E9%85%8D"><span class="toc-number">2.2.3.</span> <span class="toc-text">广播网络的信道分配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%8E%E5%9F%9F%E7%BD%91%EF%BC%88MAN-Metropolitan-Area-Network%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">城域网（MAN, Metropolitan Area Network）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%BF%E5%9F%9F%E7%BD%91%EF%BC%88WAN-Wide-Area-Network%EF%BC%89"><span class="toc-number">2.4.</span> <span class="toc-text">广域网（WAN, Wide Area Network）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E5%AD%90%E7%BD%91"><span class="toc-number">2.4.1.</span> <span class="toc-text">通信子网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%BF%E5%9F%9F%E7%BD%91%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.4.2.</span> <span class="toc-text">广域网和局域网的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E4%B8%93%E7%94%A8%E7%BD%91%E7%BB%9C%EF%BC%88VPN-Virtual-Private-Network%EF%BC%89"><span class="toc-number">2.4.3.</span> <span class="toc-text">虚拟专用网络（VPN, Virtual Private Network）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ISP-%E7%BD%91%E7%BB%9C%EF%BC%88ISP-network%EF%BC%89"><span class="toc-number">2.4.4.</span> <span class="toc-text">ISP 网络（ISP network）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E7%BB%9C%EF%BC%88Internetwork%EF%BC%89"><span class="toc-number">2.5.</span> <span class="toc-text">互联网络（Internetwork）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">网络软件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">协议层次结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%98"><span class="toc-number">3.2.</span> <span class="toc-text">层次设计问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E6%80%A7%EF%BC%88reliability%EF%BC%89"><span class="toc-number">3.2.1.</span> <span class="toc-text">可靠性（reliability）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%BC%94%E8%BF%9B%EF%BC%88network-revolution%EF%BC%89"><span class="toc-number">3.2.2.</span> <span class="toc-text">网络演进（network revolution）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%EF%BC%88resource-allocation%EF%BC%89"><span class="toc-number">3.2.3.</span> <span class="toc-text">资源分配（resource allocation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A8%81%E8%83%81%EF%BC%88threats%EF%BC%89"><span class="toc-number">3.2.4.</span> <span class="toc-text">威胁（threats）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E4%B8%8E%E6%97%A0%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.3.</span> <span class="toc-text">面向连接与无连接服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.3.1.</span> <span class="toc-text">面向连接的服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.3.2.</span> <span class="toc-text">无连接的服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-number">3.3.3.</span> <span class="toc-text">补充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%8E%9F%E8%AF%AD"><span class="toc-number">3.4.</span> <span class="toc-text">服务原语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E4%B8%8E%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">3.5.</span> <span class="toc-text">服务与协议的关系</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">参考模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OSI-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.1.</span> <span class="toc-text">OSI 参考模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%EF%BC%88physical-layer%EF%BC%89"><span class="toc-number">4.1.1.</span> <span class="toc-text">物理层（physical layer）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%EF%BC%88data-link-layer%EF%BC%89"><span class="toc-number">4.1.2.</span> <span class="toc-text">数据链路层（data link layer）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%EF%BC%88network-layer%EF%BC%89"><span class="toc-number">4.1.3.</span> <span class="toc-text">网络层（network layer）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82%EF%BC%88transport-layer%EF%BC%89"><span class="toc-number">4.1.4.</span> <span class="toc-text">传输层（transport layer）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E5%B1%82%EF%BC%88session-layer%EF%BC%89"><span class="toc-number">4.1.5.</span> <span class="toc-text">会话层（session layer）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E5%B1%82%EF%BC%88presentation-layer%EF%BC%89"><span class="toc-number">4.1.6.</span> <span class="toc-text">表示层（presentation layer）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%88application-layer%EF%BC%89"><span class="toc-number">4.1.7.</span> <span class="toc-text">应用层（application layer）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-IP-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.2.</span> <span class="toc-text">TCP&#x2F;IP 参考模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E5%B1%82%EF%BC%88link-layer%EF%BC%89"><span class="toc-number">4.2.1.</span> <span class="toc-text">链路层（link layer）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E5%B1%82%EF%BC%88internet-layer%EF%BC%89"><span class="toc-number">4.2.2.</span> <span class="toc-text">互联网层（internet layer）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82%EF%BC%88transport-layer%EF%BC%89-2"><span class="toc-number">4.2.3.</span> <span class="toc-text">传输层（transport layer）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%88application-layer%EF%BC%89-2"><span class="toc-number">4.2.4.</span> <span class="toc-text">应用层（application layer）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A6%E6%9C%AC%E4%BD%BF%E7%94%A8%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.3.</span> <span class="toc-text">书本使用的模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OSI-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E4%B8%8E-TCP-IP-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">4.4.</span> <span class="toc-text">OSI 参考模型与 TCP&#x2F;IP 参考模型的比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OSI-%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%84%E5%88%A4"><span class="toc-number">4.5.</span> <span class="toc-text">OSI 模型和协议的评判</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-IP-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AF%84%E5%88%A4"><span class="toc-number">4.6.</span> <span class="toc-text">TCP&#x2F;IP 参考模型的评判</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">网络实例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%A0%E7%89%B9%E7%BD%91"><span class="toc-number">5.1.</span> <span class="toc-text">因特网</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APPANET"><span class="toc-number">5.1.1.</span> <span class="toc-text">APPANET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NSFNET"><span class="toc-number">5.1.2.</span> <span class="toc-text">NSFNET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Internet-%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">5.1.3.</span> <span class="toc-text">Internet 体系结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E4%BB%A3%E7%A7%BB%E5%8A%A8%E7%94%B5%E8%AF%9D%E7%BD%91%E7%BB%9C%EF%BC%883G-Mobile-Phone-Networks%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">第三代移动电话网络（3G Mobile Phone Networks）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E7%BA%BF%E5%B1%80%E5%9F%9F%E7%BD%91%EF%BC%9A802-11-WiFi"><span class="toc-number">5.3.</span> <span class="toc-text">无线局域网：802.11 WiFi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RFID-%E5%92%8C%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C"><span class="toc-number">5.4.</span> <span class="toc-text">RFID 和传感器网络</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">网络标准化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B5%E4%BF%A1%E9%A2%86%E5%9F%9F%E6%9C%89%E5%BD%B1%E5%93%8D%E5%8A%9B%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-number">6.1.</span> <span class="toc-text">电信领域有影响力的组织</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BD%E9%99%85%E6%A0%87%E5%87%86%E9%A2%86%E5%9F%9F%E6%9C%89%E5%BD%B1%E5%93%8D%E5%8A%9B%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-number">6.2.</span> <span class="toc-text">国际标准领域有影响力的组织</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Internet-%E6%A0%87%E5%87%86%E9%A2%86%E5%9F%9F%E6%9C%89%E5%BD%B1%E5%93%8D%E5%8A%9B%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-number">6.3.</span> <span class="toc-text">Internet 标准领域有影响力的组织</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">度量单位</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/text-generation/" title="文本生成"><img src="https://s2.loli.net/2025/09/10/KeRdvSwc5mBZTJI.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成"/></a><div class="content"><a class="title" href="/text-generation/" title="文本生成">文本生成</a><time datetime="2025-09-10T07:24:00.000Z" title="发表于 2025-09-10 15:24:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/text-to-image-generation/" title="文本生成图片"><img src="https://s2.loli.net/2025/09/10/gQ3MbUJctelzBam.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成图片"/></a><div class="content"><a class="title" href="/text-to-image-generation/" title="文本生成图片">文本生成图片</a><time datetime="2025-09-10T05:57:00.000Z" title="发表于 2025-09-10 13:57:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型"><img src="https://s2.loli.net/2025/08/29/EaAOJKSNWt4Tiw8.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本/图片生成 3D 模型"/></a><div class="content"><a class="title" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型">文本/图片生成 3D 模型</a><time datetime="2025-08-28T08:48:00.000Z" title="发表于 2025-08-28 16:48:00">2025-08-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code"><img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-Coder/qwen3-coder-main.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Qwen3-Coder 接入 VS Code"/></a><div class="content"><a class="title" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code">Qwen3-Coder 接入 VS Code</a><time datetime="2025-08-03T13:35:43.000Z" title="发表于 2025-08-03 21:35:43">2025-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen"><img src="https://s2.loli.net/2025/07/15/XnLZaMF9gipcfGQ.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="本地部署 Open WebUI 使用 DeepSeek/Qwen"/></a><div class="content"><a class="title" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen">本地部署 Open WebUI 使用 DeepSeek/Qwen</a><time datetime="2025-07-15T06:28:50.000Z" title="发表于 2025-07-15 14:28:50">2025-07-15</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url(https://i.loli.net/2021/06/14/z9KUc1FV7eaD8pi.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Jckling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (false) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"emoji":["https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"]}
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

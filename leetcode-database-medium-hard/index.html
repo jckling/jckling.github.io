@@ -1,0 +1,301 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LeetCode Database Medium &amp; Hard | Jckling's Blog</title><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="LeetCode 上 Database 分类 Medium 5 道和 Hard 3道的题目，做题顺序为由易到难，包含复杂SQL查询和数据库操作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode Database Medium &amp; Hard">
+<meta property="og:url" content="https://jckling.github.io/leetcode-database-medium-hard/">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="LeetCode 上 Database 分类 Medium 5 道和 Hard 3道的题目，做题顺序为由易到难，包含复杂SQL查询和数据库操作。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg">
+<meta property="article:published_time" content="2020-04-04T09:00:53.000Z">
+<meta property="article:modified_time" content="2025-10-01T04:24:00.000Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="database">
+<meta property="article:tag" content="sql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "LeetCode Database Medium & Hard",
+  "url": "https://jckling.github.io/leetcode-database-medium-hard/",
+  "image": "https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg",
+  "datePublished": "2020-04-04T09:00:53.000Z",
+  "dateModified": "2025-10-01T04:24:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jckling",
+      "url": "https://github.com/jckling"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/leetcode-database-medium-hard/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="lfjhmONZuO834dnjVuGulU6croTwfNMGSgNV5vNkf60"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'UA-164555720-1')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'UA-164555720-1', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":600,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'LeetCode Database Medium & Hard',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Jckling's Blog" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jckling's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">LeetCode Database Medium &amp; Hard</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">LeetCode Database Medium &amp; Hard</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-04-04T09:00:53.000Z" title="发表于 2020-04-04 17:00:53">2020-04-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tech/">tech</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/leetcode-database-medium-hard/#post-comment"><span class="waline-comment-count" data-path="/leetcode-database-medium-hard/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>前言</h1>
+<p>实验环境</p>
+<ul>
+<li>英文题面</li>
+<li>docker-machine with virtualbox drive
+<ul>
+<li>mysql 8.0.19</li>
+</ul>
+</li>
+</ul>
+<p>MYSQL Tips</p>
+<ul>
+<li><code>CRTL+L</code>：清屏</li>
+</ul>
+<p>常用网址</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/">MySQL Tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/">Stack Overflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://dba.stackexchange.com/">Database Administrators Stack Exchange</a></li>
+</ul>
+<h1>177. Nth Highest Salary</h1>
+<p>分类：数据库<br>
+难度：中等</p>
+<p>学数据库的时候貌似有写过函数（忘得差不多了），注意点是无法直接使用参数 <code>N</code>，还有需要使用 <code>DISTINCT</code> 去重。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> getNthHighestSalary(N <span class="type">INT</span>) <span class="keyword">RETURNS</span> <span class="type">INT</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">    <span class="keyword">SET</span> N <span class="operator">=</span> N<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">RETURN</span> (</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> Salary</span><br><span class="line">        <span class="keyword">FROM</span> Employee</span><br><span class="line">        <span class="keyword">ORDER</span> <span class="keyword">BY</span> Salary <span class="keyword">DESC</span></span><br><span class="line">        LIMIT N, <span class="number">1</span></span><br><span class="line">    );</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<h1>178. Rank Scores</h1>
+<p>分类：数据库<br>
+难度：中等</p>
+<p>针对样例，使用 <code>RANK()</code> 函数输出的 Rank 顺序是：1、1、3、4、4、6，不满足要求，因此得用 <code>DENSE_RANK()</code> 函数。</p>
+<p>以下语句在本地 mysql 8.0.19 环境下可以运行，LeetCode 暂不支持。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Score, <span class="built_in">DENSE_RANK</span>()</span><br><span class="line">    <span class="keyword">OVER</span> (<span class="keyword">ORDER</span> <span class="keyword">BY</span> Score <span class="keyword">DESC</span>)</span><br><span class="line">    <span class="keyword">AS</span> <span class="string">&#x27;Rank&#x27;</span></span><br><span class="line"><span class="keyword">FROM</span> Scores</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> Score <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+<p>为了过题就得换一种写法了x</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Score,(</span><br><span class="line">    <span class="comment">-- 去重计算 Rank</span></span><br><span class="line">    <span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="keyword">DISTINCT</span> Score)</span><br><span class="line">    <span class="keyword">FROM</span> Scores s2</span><br><span class="line">    <span class="keyword">WHERE</span> s1.Score<span class="operator">&lt;=</span>s2.Score)</span><br><span class="line">    <span class="keyword">AS</span> <span class="string">&#x27;Rank&#x27;</span></span><br><span class="line"><span class="keyword">FROM</span> Scores s1</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> Score <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+<p>评论区翻到的另一种写法，相比之下执行速度快多了。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Score,</span><br><span class="line">    <span class="keyword">CASE</span></span><br><span class="line">    <span class="comment">-- 比较，排名不变</span></span><br><span class="line">    <span class="keyword">WHEN</span> <span class="variable">@pre</span> <span class="operator">=</span> Score <span class="keyword">THEN</span> <span class="variable">@rk</span> <span class="operator">+</span> <span class="number">0</span></span><br><span class="line">    <span class="comment">-- 赋值，排名增加（CASE 语句第一次执行这句，返回 THEN 之后的 @rk，即 1）</span></span><br><span class="line">    <span class="keyword">WHEN</span> <span class="variable">@pre</span> :<span class="operator">=</span> Score <span class="keyword">THEN</span> <span class="variable">@rk</span> :<span class="operator">=</span> <span class="variable">@rk</span> <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">    <span class="comment">-- 排名增加</span></span><br><span class="line">    <span class="keyword">ELSE</span> <span class="variable">@rk</span> :<span class="operator">=</span> <span class="variable">@rk</span> <span class="operator">+</span> <span class="number">1</span> <span class="keyword">END</span></span><br><span class="line">    <span class="keyword">AS</span> <span class="string">&#x27;Rank&#x27;</span></span><br><span class="line"><span class="keyword">FROM</span> Scores, (</span><br><span class="line">    <span class="comment">-- 变量初始值</span></span><br><span class="line">    <span class="keyword">SELECT</span> <span class="variable">@pre</span> :<span class="operator">=</span> <span class="keyword">NULL</span>, <span class="variable">@rk</span> :<span class="operator">=</span> <span class="number">0</span></span><br><span class="line">    )<span class="keyword">AS</span> tmp</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> Score <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+<h1>180. Consecutive Numbers</h1>
+<p>分类：数据库<br>
+难度：中等</p>
+<p>不知道为什么想到了三联书店23333，这种写法要求 <code>Id</code> 连续。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> L1.Num</span><br><span class="line"><span class="keyword">AS</span> ConsecutiveNums </span><br><span class="line"><span class="keyword">FROM</span> Logs L1, Logs L2, Logs L3</span><br><span class="line"><span class="keyword">WHERE</span> L2.Id <span class="operator">=</span> L1.Id <span class="operator">+</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">AND</span> L2.Num <span class="operator">=</span> L1.Num</span><br><span class="line"><span class="keyword">AND</span> L3.Id <span class="operator">=</span> L1.Id <span class="operator">+</span> <span class="number">2</span></span><br><span class="line"><span class="keyword">AND</span> L3.Num <span class="operator">=</span> L1.Num;</span><br></pre></td></tr></table></figure>
+<p>仿照上题的写法，首先生成 res 临时表，统计数字和连续出现的次数，然后将连续出现次数大于等于 3 的数字去重输出。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> Num</span><br><span class="line"><span class="keyword">AS</span> ConsecutiveNums</span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> Num,</span><br><span class="line">    <span class="keyword">CASE</span></span><br><span class="line">    <span class="comment">-- 比较</span></span><br><span class="line">    <span class="keyword">WHEN</span> <span class="variable">@pre</span> <span class="operator">=</span> Num <span class="keyword">THEN</span> <span class="variable">@cnt</span> :<span class="operator">=</span> <span class="variable">@cnt</span> <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">    <span class="comment">-- 赋值</span></span><br><span class="line">    <span class="keyword">WHEN</span> <span class="variable">@pre</span> :<span class="operator">=</span> Num <span class="keyword">THEN</span> <span class="variable">@cnt</span> :<span class="operator">=</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">END</span></span><br><span class="line">    <span class="keyword">AS</span> Cnt</span><br><span class="line">    <span class="keyword">FROM</span> Logs, (</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="variable">@pre</span> :<span class="operator">=</span> <span class="keyword">NULL</span>, <span class="variable">@cnt</span> :<span class="operator">=</span> <span class="number">0</span>) <span class="keyword">AS</span> tmp</span><br><span class="line">)<span class="keyword">AS</span> res</span><br><span class="line"><span class="keyword">WHERE</span> res.Cnt <span class="operator">&gt;=</span> <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<h1>184. Department Highest Salary</h1>
+<p>分类：数据库<br>
+难度：中等</p>
+<p>先统计得出每个部门的最高薪水，将数据存储在临时表 tmp 中，然后将三个表进行连接，输出每个部门拥有最高薪水的职工信息。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> D.Name <span class="keyword">AS</span> Department,</span><br><span class="line">    E.Name <span class="keyword">AS</span> Employee,</span><br><span class="line">    Salary</span><br><span class="line"><span class="keyword">FROM</span> Employee <span class="keyword">AS</span> E, </span><br><span class="line">    Department <span class="keyword">AS</span> D, (</span><br><span class="line">    <span class="keyword">SELECT</span> DepartmentId, <span class="built_in">MAX</span>(Salary) <span class="keyword">AS</span> Salary</span><br><span class="line">    <span class="keyword">FROM</span> Employee</span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> DepartmentId</span><br><span class="line">    )<span class="keyword">AS</span> tmp</span><br><span class="line"><span class="keyword">WHERE</span> E.DepartmentId <span class="operator">=</span> D.Id</span><br><span class="line"><span class="keyword">AND</span> D.Id <span class="operator">=</span> tmp.DepartmentId</span><br><span class="line"><span class="keyword">AND</span> E.Salary <span class="operator">=</span> tmp.Salary;</span><br></pre></td></tr></table></figure>
+<p>官方题解是同样的思路，不过看起来可读性更强一些。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> D.name <span class="keyword">AS</span> Department,</span><br><span class="line">    E.Name <span class="keyword">AS</span> Employee,</span><br><span class="line">    Salary</span><br><span class="line"><span class="keyword">FROM</span> Employee <span class="keyword">AS</span> E</span><br><span class="line"><span class="keyword">JOIN</span> Department <span class="keyword">AS</span> D</span><br><span class="line"><span class="keyword">ON</span> E.DepartmentId <span class="operator">=</span> D.Id</span><br><span class="line"><span class="keyword">WHERE</span> (E.DepartmentId, Salary) <span class="keyword">IN</span>(</span><br><span class="line">    <span class="keyword">SELECT</span> DepartmentId, <span class="built_in">MAX</span>(Salary)</span><br><span class="line">    <span class="keyword">FROM</span> Employee</span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> DepartmentId);</span><br></pre></td></tr></table></figure>
+<h1>626. Exchange Seats</h1>
+<p>分类：数据库<br>
+难度：中等</p>
+<p>题目表示 <code>id</code> 是连续自增的，因此不用考虑不连续的情况。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> (</span><br><span class="line">    IF(s.id<span class="operator">%</span><span class="number">2</span><span class="operator">=</span><span class="number">0</span>, s.id<span class="number">-1</span>,</span><br><span class="line">        IF(s.id<span class="operator">=</span>(<span class="keyword">SELECT</span> <span class="built_in">MAX</span>(id) <span class="keyword">FROM</span> seat), s.id, s.id<span class="operator">+</span><span class="number">1</span>)</span><br><span class="line">    )</span><br><span class="line">) <span class="keyword">AS</span> id, student</span><br><span class="line"><span class="keyword">FROM</span> seat s</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> id;</span><br></pre></td></tr></table></figure>
+<p>学习一下官方题解使用 <code>COALESCE()</code> 函数，顺便根据题解里给出的函数说明链接可以推测 LeetCode 上使用的是 mysql 5.7 。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s1.id, <span class="built_in">COALESCE</span>(s2.student, s1.student) <span class="keyword">AS</span> student</span><br><span class="line"><span class="keyword">FROM</span> seat s1</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> seat s2</span><br><span class="line"><span class="keyword">ON</span> ((s1.id <span class="operator">+</span> <span class="number">1</span>) <span class="operator">^</span> <span class="number">1</span>) <span class="operator">-</span> <span class="number">1</span> <span class="operator">=</span> s2.id</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> s1.id;</span><br></pre></td></tr></table></figure>
+<h1>185. Department Top Three Salaries</h1>
+<p>分类：数据库<br>
+难度：困难</p>
+<p>根据 178 解题方法，先算出每个部门的工资排名，然后再把排名前三的员工信息输出。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> D.Name <span class="keyword">AS</span> Department,</span><br><span class="line">    E.Name <span class="keyword">AS</span> Employee,</span><br><span class="line">    E.Salary</span><br><span class="line"><span class="keyword">FROM</span> Department <span class="keyword">AS</span> D,(</span><br><span class="line">    <span class="keyword">SELECT</span> DepartmentId,  Name, Salary,(</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="keyword">DISTINCT</span> Salary)</span><br><span class="line">        <span class="keyword">FROM</span> Employee E2</span><br><span class="line">        <span class="keyword">WHERE</span> E1.Salary <span class="operator">&lt;=</span> E2.Salary</span><br><span class="line">        <span class="keyword">AND</span> E1.DepartmentId <span class="operator">=</span> E2.DepartmentId</span><br><span class="line">        )<span class="keyword">AS</span> <span class="string">&#x27;Rank&#x27;</span></span><br><span class="line">    <span class="keyword">FROM</span> Employee E1</span><br><span class="line">    )<span class="keyword">AS</span> E</span><br><span class="line"><span class="keyword">WHERE</span> D.Id <span class="operator">=</span> E.DepartmentId</span><br><span class="line"><span class="keyword">AND</span> E.Rank <span class="operator">&lt;=</span> <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<p>翻出官方题解，思路是判断比当前工资高的（去重）小于 3，相比之下执行速度较慢。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> D.Name <span class="keyword">AS</span> <span class="string">&#x27;Department&#x27;</span>,</span><br><span class="line">    E1.Name <span class="keyword">AS</span> <span class="string">&#x27;Employee&#x27;</span>,</span><br><span class="line">    E1.Salary</span><br><span class="line"><span class="keyword">FROM</span> Employee E1</span><br><span class="line"><span class="keyword">JOIN</span> Department D</span><br><span class="line"><span class="keyword">ON</span> E1.DepartmentId <span class="operator">=</span> D.Id</span><br><span class="line"><span class="keyword">WHERE</span> <span class="number">3</span> <span class="operator">&gt;</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="keyword">DISTINCT</span> E2.Salary)</span><br><span class="line">    <span class="keyword">FROM</span> Employee E2</span><br><span class="line">    <span class="keyword">WHERE</span> E2.Salary <span class="operator">&gt;</span> E1.Salary</span><br><span class="line">    <span class="keyword">AND</span> E1.DepartmentId <span class="operator">=</span> E2.DepartmentId);</span><br></pre></td></tr></table></figure>
+<h1>262. Trips and Users</h1>
+<p>分类：数据库<br>
+难度：困难</p>
+<p>先根据 <code>Id</code> 进行两次表连接，一次连接用户，一次连接司机，同时满足 <code>Banned</code> 为 <code>No</code>；然后筛选日期并根据日期分组；最后根据分组情况计算输出，保留两位小数。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> T.Request_at <span class="keyword">AS</span> <span class="keyword">Day</span>, </span><br><span class="line">	ROUND(<span class="built_in">SUM</span>(IF(T.Status <span class="keyword">LIKE</span> <span class="string">&#x27;%cancel%&#x27;</span>, <span class="number">1</span>, <span class="number">0</span>))<span class="operator">/</span><span class="built_in">COUNT</span>(T.Status), <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">AS</span> <span class="string">&#x27;Cancellation Rate&#x27;</span></span><br><span class="line"><span class="keyword">FROM</span> Trips <span class="keyword">AS</span> T</span><br><span class="line"><span class="keyword">JOIN</span> Users <span class="keyword">AS</span> U1</span><br><span class="line">    <span class="keyword">ON</span> (T.Client_Id <span class="operator">=</span> U1.Users_Id</span><br><span class="line">        <span class="keyword">AND</span> U1.Banned <span class="operator">=</span> <span class="string">&#x27;No&#x27;</span>)</span><br><span class="line"><span class="keyword">JOIN</span> Users <span class="keyword">AS</span> U2 </span><br><span class="line">    <span class="keyword">ON</span> (T.Driver_Id <span class="operator">=</span> U2.Users_Id</span><br><span class="line">        <span class="keyword">AND</span> U2.Banned <span class="operator">=</span> <span class="string">&#x27;No&#x27;</span>)</span><br><span class="line"><span class="keyword">WHERE</span> T.Request_at <span class="keyword">BETWEEN</span> <span class="string">&#x27;2013-10-01&#x27;</span><span class="keyword">AND</span> <span class="string">&#x27;2013-10-03&#x27;</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> Request_at;</span><br></pre></td></tr></table></figure>
+<h1>601. Human Traffic of Stadium</h1>
+<p>分类：数据库<br>
+难度：困难</p>
+<p>题目的意思不是<strong>连续三天</strong>，特指三条连续记录，所以得用 <code>id</code> 条件才能过（摊手），根据 180 的解题思路拓展，考虑到所有情况即可。</p>
+<p><code>s1 s2 s3</code> 和 <code>s1 s3 s2</code> 返回的结果是相同的，只是顺序不同，因为这三天都满足条件，因此 6 种情况只要列出三种。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> s1.id, s1.visit_date, s1.people</span><br><span class="line"><span class="keyword">FROM</span> stadium s1, stadium s2, stadium s3</span><br><span class="line"><span class="keyword">WHERE</span> s1.people <span class="operator">&gt;=</span> <span class="number">100</span></span><br><span class="line">    <span class="keyword">AND</span> s2.people <span class="operator">&gt;=</span> <span class="number">100</span></span><br><span class="line">    <span class="keyword">AND</span> s3.people <span class="operator">&gt;=</span> <span class="number">100</span></span><br><span class="line">    <span class="keyword">AND</span> (</span><br><span class="line">        <span class="comment">-- s1 s2 s3</span></span><br><span class="line">        (s1.id <span class="operator">=</span> s2.id <span class="operator">-</span> <span class="number">1</span> <span class="keyword">AND</span> s1.id <span class="operator">=</span> s3.id <span class="operator">-</span> <span class="number">2</span>) <span class="keyword">OR</span></span><br><span class="line">        <span class="comment">-- s3 s1 s2</span></span><br><span class="line">        (s1.id <span class="operator">=</span> s2.id <span class="operator">-</span> <span class="number">1</span> <span class="keyword">AND</span> s1.id <span class="operator">=</span> s3.id <span class="operator">+</span> <span class="number">1</span>) <span class="keyword">OR</span></span><br><span class="line">        <span class="comment">-- s2 s3 s1</span></span><br><span class="line">        (s1.id <span class="operator">=</span> s2.id <span class="operator">+</span> <span class="number">2</span> <span class="keyword">AND</span> s1.id <span class="operator">=</span> s3.id <span class="operator">+</span> <span class="number">1</span>)</span><br><span class="line">    )</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> s1.id;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/jckling">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/leetcode-database-medium-hard/">https://jckling.github.io/leetcode-database-medium-hard/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/leetcode/">leetcode</a><a class="post-meta__tags" href="/tags/database/">database</a><a class="post-meta__tags" href="/tags/sql/">sql</a></div><div class="post-share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/dsvw-writeup/" title="DSVW Writeup"><img class="cover" src="https://i.loli.net/2021/06/14/oSn9dxfYhEHClIe.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">DSVW Writeup</div></div><div class="info-2"><div class="info-item-1">Damn Small Vulnerable Web (DSVW)</div></div></div></a><a class="pagination-related" href="/leetcode-database-easy/" title="LeetCode Database Easy"><img class="cover" src="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">LeetCode Database Easy</div></div><div class="info-2"><div class="info-item-1">LeetCode 上 12 道 Database - Easy 分类的题目，做题顺序为由易到难，包含基础 SQL 查询和数据库操作。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/leetcode-database-easy/" title="LeetCode Database Easy"><img class="cover" src="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-03</div><div class="info-item-2">LeetCode Database Easy</div></div><div class="info-2"><div class="info-item-1">LeetCode 上 12 道 Database - Easy 分类的题目，做题顺序为由易到难，包含基础 SQL 查询和数据库操作。</div></div></div></a><a class="pagination-related" href="/leetcode-shell/" title="LeetCode Shell"><img class="cover" src="https://i.loli.net/2021/06/14/pEcaCGZdONelS1k.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-02</div><div class="info-item-2">LeetCode Shell</div></div><div class="info-2"><div class="info-item-1">LeetCode 上 4 道 Bash 分类的题目，做题顺序为由易到难。以下命令行工具在《Linux系统与网络管理》课程中都已经接触过，并不存在什么困难。</div></div></div></a><a class="pagination-related" href="/mysql-crash-course/" title="《MySQL 必知必会》实验"><img class="cover" src="https://i.loli.net/2021/06/14/wF3vNBjf1LH79Ss.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-22</div><div class="info-item-2">《MySQL 必知必会》实验</div></div><div class="info-2"><div class="info-item-1">英文原书标题《MySQL Crash Course》，文中存在大小写混用的情况，由于 MySQL 语句不区分大小写，暂时不改（其实是懒）。</div></div></div></a><a class="pagination-related" href="/database-systems-course/" title="《数据库系统概论》笔记整理"><img class="cover" src="https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2018-04-22</div><div class="info-item-2">《数据库系统概论》笔记整理</div></div><div class="info-2"><div class="info-item-1">《数据库系统概论》第五版</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info-name">Jckling</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请勿重复提交<br/>联系作者：QQ2521390430</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">177. Nth Highest Salary</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">178. Rank Scores</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">180. Consecutive Numbers</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">184. Department Highest Salary</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">626. Exchange Seats</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">185. Department Top Three Salaries</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">262. Trips and Users</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">601. Human Traffic of Stadium</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/text-generation/" title="文本生成"><img src="https://s2.loli.net/2025/09/10/KeRdvSwc5mBZTJI.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成"/></a><div class="content"><a class="title" href="/text-generation/" title="文本生成">文本生成</a><time datetime="2025-09-10T07:24:00.000Z" title="发表于 2025-09-10 15:24:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/text-to-image-generation/" title="文本生成图片"><img src="https://s2.loli.net/2025/09/10/gQ3MbUJctelzBam.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成图片"/></a><div class="content"><a class="title" href="/text-to-image-generation/" title="文本生成图片">文本生成图片</a><time datetime="2025-09-10T05:57:00.000Z" title="发表于 2025-09-10 13:57:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型"><img src="https://s2.loli.net/2025/08/29/EaAOJKSNWt4Tiw8.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本/图片生成 3D 模型"/></a><div class="content"><a class="title" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型">文本/图片生成 3D 模型</a><time datetime="2025-08-28T08:48:00.000Z" title="发表于 2025-08-28 16:48:00">2025-08-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code"><img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-Coder/qwen3-coder-main.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Qwen3-Coder 接入 VS Code"/></a><div class="content"><a class="title" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code">Qwen3-Coder 接入 VS Code</a><time datetime="2025-08-03T13:35:43.000Z" title="发表于 2025-08-03 21:35:43">2025-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen"><img src="https://s2.loli.net/2025/07/15/XnLZaMF9gipcfGQ.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="本地部署 Open WebUI 使用 DeepSeek/Qwen"/></a><div class="content"><a class="title" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen">本地部署 Open WebUI 使用 DeepSeek/Qwen</a><time datetime="2025-07-15T06:28:50.000Z" title="发表于 2025-07-15 14:28:50">2025-07-15</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url(https://i.loli.net/2021/06/14/CRcoAfdnJKvFNqW.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Jckling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"emoji":["https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"]}
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

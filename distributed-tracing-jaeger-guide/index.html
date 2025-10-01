@@ -1,0 +1,631 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>全链路追踪与 Jaeger 入门 | Jckling's Blog</title><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="全链路追踪及 OpenTracing 概念介绍，Jaeger Python 入门实验和部署教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="全链路追踪与 Jaeger 入门">
+<meta property="og:url" content="https://jckling.github.io/distributed-tracing-jaeger-guide/">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="全链路追踪及 OpenTracing 概念介绍，Jaeger Python 入门实验和部署教程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png">
+<meta property="article:published_time" content="2021-04-02T01:57:10.000Z">
+<meta property="article:modified_time" content="2025-10-01T04:24:00.000Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="observability">
+<meta property="article:tag" content="jaeger">
+<meta property="article:tag" content="tracing">
+<meta property="article:tag" content="opentracing">
+<meta property="article:tag" content="distributed-tracing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "全链路追踪与 Jaeger 入门",
+  "url": "https://jckling.github.io/distributed-tracing-jaeger-guide/",
+  "image": "https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png",
+  "datePublished": "2021-04-02T01:57:10.000Z",
+  "dateModified": "2025-10-01T04:24:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jckling",
+      "url": "https://github.com/jckling"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/distributed-tracing-jaeger-guide/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="lfjhmONZuO834dnjVuGulU6croTwfNMGSgNV5vNkf60"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'UA-164555720-1')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'UA-164555720-1', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":600,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '全链路追踪与 Jaeger 入门',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Jckling's Blog" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jckling's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">全链路追踪与 Jaeger 入门</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">全链路追踪与 Jaeger 入门</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-04-02T01:57:10.000Z" title="发表于 2021-04-02 09:57:10">2021-04-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tech/">tech</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/distributed-tracing-jaeger-guide/#post-comment"><span class="waline-comment-count" data-path="/distributed-tracing-jaeger-guide/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>全链路追踪</h1>
+<p>三个追踪级别：</p>
+<ul>
+<li>跨进程追踪（cross-process）：调用另一个微服务</li>
+<li>数据库追踪</li>
+<li>进程内部的追踪（in-process）：在一个函数内部的追踪</li>
+</ul>
+<h2 id="可观察性-Observability">可观察性 (Observability)</h2>
+<p>可观察性更关注的是从系统自身出发，去展现系统的运行状况，更像是一种对系统的自我审视。</p>
+<p>可观察性目前主要包含以下三大支柱：</p>
+<ul>
+<li>
+<p>日志（Logging）：Logging 主要记录一些离散的事件，应用往往通过将定义好格式的日志信息输出到文件，然后用日志收集程序收集起来用于分析和聚合。虽然可以用时间将所有日志点事件串联起来，但是却很难展示完整的调用关系路径；</p>
+</li>
+<li>
+<p>度量（Metrics）：Metric 往往是一些聚合的信息，相比 Logging 丧失了一些具体信息，但是占用的空间要比完整日志小的多，可以用于监控和报警，在这方面 Prometheus 已经基本上成为了事实上的标准；</p>
+</li>
+<li>
+<p>分布式追踪（Tracing）：Tracing 介于 Logging 和 Metric 之间， 以请求的维度来串联服务间的调用关系并记录调用耗时，即保留了必要的信息，又将分散的日志事件通过 Span 串联，帮助我们更好的理解系统的行为、辅助调试和排查性能问题。</p>
+</li>
+</ul>
+<blockquote>
+<p>CNCF 云原生计算基金会</p>
+</blockquote>
+<img src="https://i.loli.net/2021/06/06/hBaYSuePLqN8M3U.png" width="60%"/>
+<p>三大支柱有如下特点：</p>
+<ul>
+<li>Metric 的特点是，它是可累加的。具有原子性，每个都是一个逻辑计量单元，或者一个时间段内的柱状图。例如：队列的当前深度可以被定义为一个计量单元，在写入或读取时被更新统计；输入 HTTP 请求的数量可以被定义为一个计数器，用于简单累加；请求的执行时间可以被定义为一个柱状图，在指定时间片上更新和统计汇总。</li>
+<li>Logging 的特点是，它描述一些离散的（不连续的）事件。例如：应用通过一个滚动的文件输出 debug 或 error 信息，并通过日志收集系统，存储到 Elasticsearch 中；审批明细信息通过 Kafka，存储到数据库（BigTable）中；又或者，特定请求的元数据信息，从服务请求中剥离出来，发送给一个异常收集服务，如 NewRelic。</li>
+<li>Tracing 的最大特点就是，它在单次请求的范围内处理信息。任何的数据、元数据信息都被绑定到系统中的单个事务上。例如：一次调用远程服务的 RPC 执行过程；一次实际的SQL查询语句；一次 HTTP 请求的业务性 ID 。</li>
+</ul>
+<img src="https://i.loli.net/2021/06/06/hsE2IOxXn78amMp.jpg" width="80%"/>
+<h2 id="Tracing">Tracing</h2>
+<p>分布式追踪，也称为分布式请求追踪，是一种用于分析和监视应用程序的方法，特别是那些使用微服务体系结构构建的应用程序；分布式追踪有助于查明故障发生的位置以及导致性能低下的原因，开发人员可以使用分布式追踪来帮助调试和优化他们的代码，IT 和 DevOps 团队可以使用分布式追踪来监视应用程序。</p>
+<p>分布式追踪系统的核心步骤一般有三个：代码埋点，数据存储、查询展示。</p>
+<h1>OpenTracing</h1>
+<p>OpenTracing 旨在标准化 Trace 数据结构和格式，其目的是：</p>
+<ul>
+<li>不同语言开发的 Trace 客户端的互操作性。Java/.Net/PHP/Python/NodeJs 等语言开发的客户端，只要遵循 OpenTracing 规范，就都可以对接 OpenTracing 兼容的监控后端。</li>
+<li>Tracing 监控后端的互操作性。只要遵循 OpenTracing 规范，企业可以根据需要替换具体的 Tracing 监控后端产品，比如从 Zipkin 替换成 Jaeger/CAT/Skywalking 等后端。</li>
+</ul>
+<blockquote>
+<p>OpenTracing 与 OpenCensus 已合并为 OpenTelemetry 。</p>
+</blockquote>
+<p>OpenTracing 不是一个标准，OpenTracing API 提供了一个标准的、与供应商无关的框架，是对分布式链路中涉及到的一系列操作的高度抽象集合。这意味着如果开发者想要尝试一种不同的分布式追踪系统，开发者只需要简单地修改 Tracer 配置即可，而不需要替换整个分布式追踪系统。</p>
+<p>OpenTracing 是一个轻量级的标准化层，位于应用程序/类库和追踪或日志分析程序之间。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  +-------------+  +---------+  +----------+  +------------+</span><br><span class="line">  | Application |  | Library |  |   OSS    |  |  RPC/IPC   |</span><br><span class="line">  |    Code     |  |  Code   |  | Services |  | Frameworks |</span><br><span class="line">  +-------------+  +---------+  +----------+  +------------+</span><br><span class="line">         |              |             |             |</span><br><span class="line">         |              |             |             |</span><br><span class="line">         v              v             v             v</span><br><span class="line">    +-----------------------------------------------------+</span><br><span class="line">    | · · · · · · · · · · OpenTracing · · · · · · · · · · |</span><br><span class="line">    +-----------------------------------------------------+</span><br><span class="line">      |               |                |               |</span><br><span class="line">      |               |                |               |</span><br><span class="line">      v               v                v               v</span><br><span class="line">+-----------+  +-------------+  +-------------+  +-----------+</span><br><span class="line">|  Tracing  |  |   Logging   |  |   Metrics   |  |  Tracing  |</span><br><span class="line">| System A  |  | Framework B |  | Framework C |  | System D  |</span><br><span class="line">+-----------+  +-------------+  +-------------+  +-----------+</span><br></pre></td></tr></table></figure>
+<h2 id="OpenTracing-数据模型">OpenTracing 数据模型</h2>
+<p>基本概念</p>
+<ul>
+<li>
+<p>Trace (调用链/链路)：在广义上，一个 Trace 代表了一个事务或者流程在（分布式）系统中的执行过程。一个 Trace 是由多个 Span 组成的一个有向无环图（DAG），每一个 Span 代表 Trace 中被命名并计时的连续性的执行片段。</p>
+</li>
+<li>
+<p>Span (跨度)：一个 Span 代表系统中具有开始时间和执行时长的逻辑运行单元，即应用中的一个逻辑操作。Span 之间通过嵌套或者顺序排列建立逻辑因果关系。一个 Span 可以被理解为一次方法调用，一个程序块的调用，或者一次 RPC / 数据库访问，只要是一个具有完整时间周期的程序访问，都可以被认为是一个 Span。</p>
+</li>
+<li>
+<p>Logs：每个 Span 可以进行多次 Logs 操作，每一次 Logs 操作，都需要一个带时间戳的时间名称，以及可选的任意大小的存储结构。</p>
+</li>
+<li>
+<p>Tags：每个Span可以有多个键值对（key:value）形式的 Tags，Tags 是没有时间戳的，支持简单的对 Span 进行注解和补充。</p>
+</li>
+<li>
+<p>SpanContext：SpanContext 更像是一个“概念”，而不是通用 OpenTracing 层的有用功能。在创建 Span、向传输协议 Inject（注入）和从传输协议 中Extract（提取）调用链信息时，SpanContext 发挥着重要作用。</p>
+</li>
+</ul>
+<h3 id="Span">Span</h3>
+<p>表示分布式调用链条中的一个调用单元，其边界包含一个请求进到服务内部再由某种途径（例如：http）从当前服务出去。</p>
+<p>一个 Span 一般会记录这个调用单元内部的一些信息，例如每个 Span 包含的操作名称、开始和结束时间、附加额外信息的 Span Tag、可用于记录 Span 内特殊事件 Span Log 、用于传递 Span 上下文的 SpanContext 和定义 Span 之间关系的 References 。</p>
+<p>Span 状态</p>
+<ul>
+<li>操作名称 (An operation name)</li>
+<li>开始时间 (A start timestamp)</li>
+<li>结束时间 (A finish timestamp)</li>
+<li>标签信息 (Span Tag)：零个或多个键值对（keys:values）组成的 Span Tags。键必须是 string 类型，值可以是字符串，布尔，或者数字类型。</li>
+<li>日志信息 (Span Log)：零个或多个 Span Logs。每次 log 操作包含一个键值对和一个时间戳。 键值对中，键必须为 string 类型，值可以是任意类型。 但并不是所有的支持 OpenTracing 的 Tracer 都需要支持所有的值类型。</li>
+<li>Span 上下文对象 (SpanContext)</li>
+<li>Span 间关系 (References)：通过 SpanContext 可以指向零个或者多个因果相关的 Span 。</li>
+</ul>
+<p>SpanContext 状态</p>
+<ul>
+<li>任何一个 OpenTracing 实现都需要将当前调用链的状态（例如：Trace 和 Span 的 id）跨进程边界传输，依赖于一个独特的 Span</li>
+<li>Baggage Items，Trace 的随行数据，是一个键值对集合，存在于 Trace 中，也需要跨进程边界传输</li>
+</ul>
+<h3 id="Tracer">Tracer</h3>
+<p>Trace 描述在分布式系统中的一次&quot;事务&quot;。一个 Trace 通过归属于此调用链的 Span（跨度）隐性定义，可以被认为是由一个或多个 Span 组成的有向无环图（DAG）， Span 与 Span 的关系被命名为 References。</p>
+<blockquote>
+<p>Span 可以理解为一次方法调用， 一个程序块的调用，或者一次 RPC / 数据库访问。只要是一个具有完整时间周期的程序访问，都可以被认为是一个 Span 。</p>
+</blockquote>
+<p>Tracer 用于创建 Span，并理解如何跨进程边界注入（序列化）和提取（反序列化） Span。它有以下的职责：</p>
+<ul>
+<li>建立和开启一个 Span</li>
+<li>从某种媒介中提取/注入一个 SpanContext</li>
+</ul>
+<ol>
+<li>示例 Trace （由 8 个 Span 组成）</li>
+</ol>
+<p>单个 Trace 中，Span 间的因果关系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">       [Span A]  ←←←(the root Span)</span><br><span class="line">           |</span><br><span class="line">    +------+------+</span><br><span class="line">    |             |</span><br><span class="line">[Span B]      [Span C] ←←←(Span C 是 Span A 的孩子节点, ChildOf)</span><br><span class="line">    |             |</span><br><span class="line">[Span D]      +---+-------+</span><br><span class="line">              |           |</span><br><span class="line">          [Span E]    [Span F] &gt;&gt;&gt; [Span G] &gt;&gt;&gt; [Span H]</span><br><span class="line">                                      ↑</span><br><span class="line">                                      ↑</span><br><span class="line">                                      ↑</span><br><span class="line">                        (Span G 在 Span F 后被调用, FollowsFrom)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>基于时间轴的时序图</li>
+</ol>
+<p>单个 Trace 中，Span 间的时间关系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–&gt; time</span><br><span class="line"></span><br><span class="line"> [Span A···················································]</span><br><span class="line">   [Span B··············································]</span><br><span class="line">      [Span D··········································]</span><br><span class="line">    [Span C········································]</span><br><span class="line">         [Span E·······]        [Span F··] [Span G··] [Span H··]</span><br></pre></td></tr></table></figure>
+<h3 id="References">References</h3>
+<p>一个 Span 可以与一个或多个 Span 存在因果关系。OpenTracing 目前定义了两种关系：ChildOf（父子） 和 FollowsFrom（跟随）。</p>
+<ol>
+<li>ChildOf</li>
+</ol>
+<p>一个 Span 可能是一个父级 Span 的孩子，父级 Span 在某种程度上取决于子 Span。以下情况会构成 ChildOf 关系</p>
+<ul>
+<li>一个 RPC 调用的服务端的 Span，和 RPC 服务客户端的 Span 构成 ChildOf 关系</li>
+<li>一个 sql insert 操作的 Span，和 ORM 的 save 方法的 Span 构成 ChildOf 关系</li>
+<li>很多可以并行工作（或者分布式工作）的 Span 都可能是一个父级的 Span 的子项，父级 Span 会合并所有子 Span 的执行结果，并在指定期限内返回</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[-Parent Span---------]</span><br><span class="line">     [-Child Span----]</span><br><span class="line"></span><br><span class="line">[-Parent Span--------------]</span><br><span class="line">     [-Child Span A----]</span><br><span class="line">      [-Child Span B----]</span><br><span class="line">    [-Child Span C----]</span><br><span class="line">     [-Child Span D---------------]</span><br><span class="line">     [-Child Span E----]</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>FollowsFrom</li>
+</ol>
+<p>一些父级节点不以任何方式依赖他们子节点的执行结果，这种情况下子 Span 和父 Span 之间是 FollowsFrom 的因果关系。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[-Parent Span-]  [-Child Span-]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[-Parent Span--]</span><br><span class="line"> [-Child Span-]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[-Parent Span-]</span><br><span class="line">            [-Child Span-]</span><br></pre></td></tr></table></figure>
+<h3 id="SpanContext">SpanContext</h3>
+<p>表示一个 Span 对应的上下文，Span 和 SpanContext 基本上是一一对应的关系， SpanContext 可以通过某些媒介和方式传递给调用链的下游来做一些处理（例如子 Span 的 id 生成、信息的继承打印日志等等）。</p>
+<p>Span 上下文存储的是一些需要跨越边界的（传播追踪所需的）一些信息，例如：</p>
+<ul>
+<li>SpanId ：当前这个 Span 的 id</li>
+<li>TraceId ：这个 Span 所属的 TraceId （也就是这次调用链的唯一id）。
+<ul>
+<li>Trace_id 和 Span_id 用以区分 Trace 中的 Span；任何 OpenTraceing 实现相关的状态（比如 Trace 和 Span id）都需要被一个跨进程的 Span 所联系。</li>
+</ul>
+</li>
+<li>baggage ：其他的能过跨越多个调用单元的信息，即跨进程的 key value 对。Baggage Items 和 Span Tag 结构相同，唯一的区别是：Span Tag 只在当前 Span 中存在，并不在整个 Trace 中传递，而 Baggage Items 会随调用链传递。</li>
+</ul>
+<p>在跨界(跨服务或者协议）传输过程中实现调用关系的传递和关联，需要能够将 SpanContext 向下游介质注入，并在下游传输介质中提取 SpanContext。</p>
+<h3 id="Carrier">Carrier</h3>
+<p>Carrier 表示的是一个承载 SpanContext 的媒介，比方说在 http 调用场景中会有 HttpCarrier，在 dubbo 调用场景中也会有对应的 DubboCarrier 。</p>
+<h3 id="Formatter">Formatter</h3>
+<p>负责具体场景中序列化反序列化上下文的逻辑，例如在 HttpCarrier 使用中通常就会有一个对应的 HttpFormatter 。 Tracer 的注入和提取就是委托给了 Formatter 。</p>
+<h3 id="ScopeManager">ScopeManager</h3>
+<p>通过它能够获取当前线程中启用的 Span 信息，并且可以启用一些处于未启用状态的 Span 。在一些场景中，我们在一个线程中可能同时建立多个 Span ，但是同一时间同一线程只会有一个 Span 启用，其他 Span 可能处在下列的状态中：</p>
+<ul>
+<li>等待子 Span 完成</li>
+<li>等待某种阻塞方法</li>
+<li>创建但是并未开始</li>
+</ul>
+<h3 id="Reporter">Reporter</h3>
+<p>通过它来打印或者上报一些关键链路信息（例如 Span 创建和结束），只有把这些信息进行处理之后才能对全链路信息进行可视化和真正的监控。</p>
+<h1>开源分布式追踪系统</h1>
+<p>分布式追踪系统设计目标</p>
+<ol>
+<li>低侵入性</li>
+<li>灵活的应用策略：收集数据的范围和粒度</li>
+<li>时效性：从 agent 采样，到 collect、storage 和 display 尽可能快</li>
+<li>决策支持</li>
+<li>可视化</li>
+<li>低消耗：在 Web 请求链路中，对请求的响应影响尽可能小</li>
+<li>延展性：随着业务量的增长，分布式追踪系统依然具有高可用和高性能表现</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>厂商</th>
+<th>开发语言</th>
+<th>OpenTracing 兼容</th>
+<th>侵入性</th>
+<th>时效性</th>
+<th>可视化</th>
+<th>消耗</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/jaegertracing/jaeger">Jaeger</a></td>
+<td>Uber</td>
+<td>Go</td>
+<td>是</td>
+<td>中</td>
+<td>高</td>
+<td>中</td>
+<td>低</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/openzipkin/zipkin">Zipkin</a></td>
+<td>twitter</td>
+<td>Java</td>
+<td>是</td>
+<td>高</td>
+<td>高</td>
+<td>中</td>
+<td>低</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/pinpoint-apm/pinpoint">Pinpoint</a></td>
+<td>NAVER</td>
+<td>Java</td>
+<td>否</td>
+<td>低</td>
+<td>-</td>
+<td>高</td>
+<td>低</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/dianping/cat">CAT</a></td>
+<td>大众点评</td>
+<td>Java</td>
+<td>否</td>
+<td>高</td>
+<td>中</td>
+<td>高</td>
+<td>低</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/sourcegraph/appdash">Appdash</a></td>
+<td>sourcegraph</td>
+<td>Go</td>
+<td>是</td>
+<td>低</td>
+<td>高</td>
+<td>低</td>
+<td>不支持大规模部署</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/apache/incubator-skywalking">SkyWalking</a></td>
+<td>华为</td>
+<td>Java</td>
+<td>是</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+<td>低</td>
+</tr>
+</tbody>
+</table>
+<h1>Jaeger</h1>
+<p>Jaeger 主要有以下几个组成部分：</p>
+<ul>
+<li>Jaeger Client：为不同语言实现符合 OpenTracing 的 SDK。应用程序通过 API 写入数据，client library 把 trace 信息按照应用程序制定的采样策略传递给 jaeger-agent 。</li>
+<li>Agent：一个监听在 UDP 端口上接收 span 数据的网络守护进程，它会将数据批量发送给 collector 。它被设计成一个基础组件，部署到所有的宿主机上。Agent 将 client library 和 collector 解耦，为 client library 屏蔽了路由和发现 collector 的细节。</li>
+<li>Collector：接收 jaeger-agent 发送来的数据，然后将数据写入后端存储。Collector 被设计成无状态的组件，因此用户可以运行任意数量的 Collector。</li>
+<li>Data Store：后端存储被设计成一个可插拔的组件，支持数据写入 cassandra ， elastic search 等。</li>
+<li>Query：接收查询请求，从后端存储系统中检索 tarce 并通过 UI 进行展示。Query 是无状态的，可以启动多个实例并把它们部署在例如 nginx 这样的负载均衡器之后。</li>
+</ul>
+<h2 id="术语">术语</h2>
+<p>Span （跨度）表示 Jaeger 中具有操作名称、开始时间和持续时间的逻辑工作单元。Span 可以嵌套和排序，以建模因果关系。</p>
+<p>Trace （链路）是系统中的数据/执行路径，可以认为是由 Span 组成的的有向无环图。</p>
+<img src="https://i.loli.net/2021/06/06/j9SMp2HcFQfNLUd.png" width="80%"/>
+<p>对于一个组件来说，一次处理过程一般是产生一个 Span；这个 Span 的生命周期是从接收到请求到返回响应这段过程。</p>
+<p>这里需要考虑的问题是如何与上下游链路关联起来。在 Opentracing 规范中，可以在 Tracer 中 extract 出一个跨进程传递的 SpanContext 。然后通过这个 SpanContext 所携带的信息将当前节点关联到整个 Tracer 链路中去，当然有提取（extract）就会有对应的注入（inject）。</p>
+<p>链路的构建一般是 client-server-client-server 这种模式的，那就是会在 client 端进行注入（inject），然后再 server 端进行提取（extract），反复进行，然后一直传递下去。</p>
+<p>在拿到 SpanContext 之后，此时当前的 Span 就可以关联到这条链路中了，那么剩余的事情就是收集当前组件的一些数据；整个过程大概分为以下几个阶段：</p>
+<ul>
+<li>从请求中提取 SpanContext</li>
+<li>构建 Span，并将当前 Span 存入当前 tracer 上下文中</li>
+<li>设置一些信息到 Span 中</li>
+<li>返回响应</li>
+<li>Span 结束并上报</li>
+</ul>
+<h2 id="组件">组件</h2>
+<p>Jaeger 可以被部署为一个一体化的二进制文件，其中 Jaeger 的所有后端组件运行在一个单独的进程中；也可以被部署为一个可扩展的分布式系统，有两个主要的部署方式:</p>
+<ol>
+<li>Collector 直接写入存储</li>
+</ol>
+<img src="https://i.loli.net/2021/06/06/GYDWAdzw7t4PiCB.png" width="80%"/>
+<ol>
+<li>Collecter 写入 Kafka 作为初始缓冲区</li>
+</ol>
+<img src="https://i.loli.net/2021/06/06/N87rt1HTcqMkV4g.png" width="80%"/>
+<h3 id="Jaeger-Client（客户端）">Jaeger Client（客户端）</h3>
+<p>Jaeger 客户端是 OpenTracing API 特定语言的实现。它们可以用于手动或者通过与 OpenTracing 集成的各种现有的开源框架，比如 Flask、Dropwizard、gRPC 等等，来进行分布式追踪。</p>
+<p>被检测的服务在接收新请求时创建 Span，并将上下文信息（trace id、span id、baggage）附加到传出的请求。只有 id 和 baggage 会与请求一起传播；所有其他分析数据，如操作名称、时间、标记和日志，都不会传播。相反，它们在后台异步传输到 Jaeger 后端。</p>
+<p>该机制被设计为在生产环境中始终处于开启状态。为了减少开销，Jaeger 客户端使用了各种采样策略。对 trace 进行采样时，Span 分析数据被捕获并传输到 Jaeger 后端。当不对 trace 进行采样时，不会收集任何分析数据，对 OpenTracing API 的调用也会短路，使得开销最小。默认情况下，Jaeger 客户端采样 0.1% 的 trace ，并有能力从 Jaeger 后端检索采样策略。</p>
+<img src="https://i.loli.net/2021/06/06/2q6FmR7hgIzuUGx.png" width="80%"/>
+<h3 id="Agent（代理）">Agent（代理）</h3>
+<p>Jaeger 代理是一个网络守护进程，监听通过 UDP 发送的 Span，并将其批量发送给收集器。代理被设计成基础架构组件并部署到所有主机上，它将收集器的路由和发现从客户端抽象出来。</p>
+<h3 id="Collector（收集器）">Collector（收集器）</h3>
+<p>Jaeger 收集器接收来自 Jaeger 代理的 Trace 并通过处理管道运行它们。目前的管道支持对 trace 进行验证、索引、执行任何转换，最后存储它们。</p>
+<p>Jaeger 的存储是一个可插拔组件，目前支持 Cassandra ， Elasticsearch 和 Kafka 。</p>
+<h3 id="Query">Query</h3>
+<p>从存储中检索 trace 并提供 UI 进行展示。</p>
+<h3 id="Ingester">Ingester</h3>
+<p>从 Kafka Topic 中读取数据并写入到另一个存储后端（Cassandra, Elasticsearch）。</p>
+<h2 id="实验">实验</h2>
+<p>All-in-one 是为快速本地测试而设计的可执行程序，通过内存存储组件启动 Jaeger UI、收集器、查询和代理，这里使用 Docker 镜像启动。使用浏览器访问 <code>http://localhost:16686</code> Jaeger UI 。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name jaeger \</span><br><span class="line">  -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \</span><br><span class="line">  -p 5775:5775/udp \</span><br><span class="line">  -p 6831:6831/udp \</span><br><span class="line">  -p 6832:6832/udp \</span><br><span class="line">  -p 5778:5778 \</span><br><span class="line">  -p 16686:16686 \</span><br><span class="line">  -p 14268:14268 \</span><br><span class="line">  -p 14250:14250 \</span><br><span class="line">  -p 9411:9411 \</span><br><span class="line">  jaegertracing/all-in-one:1.21</span><br></pre></td></tr></table></figure>
+<img src="https://i.loli.net/2021/06/06/YDf4QyrwBIWjSp8.png"/>
+<h3 id="Hello-World">Hello World</h3>
+<p>trace 是由 span 构成的有向无环图；span 是应用中一些工作的逻辑表示，span 至少包含操作名称、开始时间、结束时间。</p>
+<p>OpenTracing API 特征</p>
+<ul>
+<li><code>tracer</code> 实例通过 <code>start_span</code> 开始新的 span</li>
+<li>每个 span 都有一个操作名称，这里是 <code>say-hello</code>
+<ul>
+<li>操作名称代表了一类的 span ，而不是单一的实例</li>
+<li>Jaeger UI 中可以根据操作名称检索 trace</li>
+</ul>
+</li>
+<li>每个 span 必须通过调用它的 <code>finish()</code> 方法结束
+<ul>
+<li>使用 <code>with</code> 上下文管理器</li>
+</ul>
+</li>
+<li>tracer 将自动捕获 span 的开始时间戳和结束时间戳</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> lib.tracing <span class="keyword">import</span> init_tracer</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hello</span>(<span class="params">hello_to</span>):</span><br><span class="line">    <span class="keyword">with</span> tracer.start_span(<span class="string">&#x27;say-hello&#x27;</span>) <span class="keyword">as</span> span:</span><br><span class="line">        <span class="comment"># 标签 tag，元数据</span></span><br><span class="line">        span.set_tag(<span class="string">&#x27;hello-to&#x27;</span>, hello_to)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 日志 log，包含时间戳和一些数据</span></span><br><span class="line">        hello_str = <span class="string">&#x27;Hello, %s!&#x27;</span> % hello_to</span><br><span class="line">        span.log_kv(&#123;<span class="string">&#x27;event&#x27;</span>: <span class="string">&#x27;string-format&#x27;</span>, <span class="string">&#x27;value&#x27;</span>: hello_str&#125;)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(hello_str)</span><br><span class="line">        span.log_kv(&#123;<span class="string">&#x27;event&#x27;</span>: <span class="string">&#x27;println&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(sys.argv) == <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化全局 trace</span></span><br><span class="line"><span class="comment"># 将 tracer 开始的所有 span 标记为源自 hello-world 服务</span></span><br><span class="line">tracer = init_tracer(<span class="string">&#x27;hello-world&#x27;</span>)</span><br><span class="line"></span><br><span class="line">hello_to = sys.argv[<span class="number">1</span>]</span><br><span class="line">say_hello(hello_to)</span><br><span class="line"></span><br><span class="line"><span class="comment"># span 有内部缓冲区，由后台线程刷新</span></span><br><span class="line"><span class="comment"># yield to IOLoop to flush the spans</span></span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">tracer.close()</span><br></pre></td></tr></table></figure>
+<p>标签（tag）或日志（log）</p>
+<ul>
+<li>标记用于描述应用于整个 span 的属性。</li>
+<li>日志包含时间戳，记录更详细的信息
+<ul>
+<li>规范建议所有日志语句包含一个 <code>event</code> 字段，描述正在记录的整个事件，事件的其他属性作为附加字段</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/opentracing/specification/blob/master/semantic_conventions.md#standard-span-tags-and-log-fields">Standard Span tags and log fields</a></li>
+</ul>
+<p>程序执行结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">env</span>) λ python -m lesson01.solution.hello Bryan</span><br><span class="line">Initializing Jaeger Tracer with UDP reporter</span><br><span class="line">Using proactor: IocpProactor</span><br><span class="line">Using sampler ConstSampler(True)</span><br><span class="line">opentracing.tracer initialized to &lt;jaeger_client.tracer.Tracer object at 0x0000022CFE965BB0&gt;[app_name=hello-world]</span><br><span class="line">Hello, Bryan!</span><br><span class="line">Reporting span 2b9c67de4734ed0d:7dd683971c41ccb4:0:1 hello-world.say-hello</span><br><span class="line">Using proactor: IocpProactor</span><br><span class="line">Span publisher exited</span><br></pre></td></tr></table></figure>
+<h3 id="Context-and-Tracing-Functions">Context and Tracing Functions</h3>
+<p>在一个 trace 中追踪多个 span</p>
+<ul>
+<li><code>SpanReference</code> 表示 Span 之间的关系
+<ul>
+<li><code>SpanContext</code> 可跨进程传播</li>
+<li><code>ReferenceType</code> 表示关系类型
+<ul>
+<li><code>ChildOf</code>：依赖</li>
+<li><code>FollowsFrom</code>：后继</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Scope Manager 机制
+<ul>
+<li><code>start_active_span</code> 激活 Span（active）
+<ul>
+<li>通过 <code>tracer.active_span</code> 访问 Span</li>
+<li>返回 <code>Scope</code>，通过 <code>scope.span</code> 访问 Span</li>
+<li>结束后才能复原先前活跃的 Span</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> lib.tracing <span class="keyword">import</span> init_tracer</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hello</span>(<span class="params">hello_to</span>):</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;say-hello&#x27;</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        scope.span.set_tag(<span class="string">&#x27;hello-to&#x27;</span>, hello_to)</span><br><span class="line">        hello_str = format_string(hello_to)</span><br><span class="line">        print_hello(hello_str)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">format_string</span>(<span class="params">hello_to</span>):</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;format&#x27;</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        hello_str = <span class="string">&#x27;Hello, %s!&#x27;</span> % hello_to</span><br><span class="line">        scope.span.log_kv(&#123;<span class="string">&#x27;event&#x27;</span>: <span class="string">&#x27;string-format&#x27;</span>, <span class="string">&#x27;value&#x27;</span>: hello_str&#125;)</span><br><span class="line">        <span class="keyword">return</span> hello_str</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_hello</span>(<span class="params">hello_str</span>):</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;println&#x27;</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        <span class="built_in">print</span>(hello_str)</span><br><span class="line">        scope.span.log_kv(&#123;<span class="string">&#x27;event&#x27;</span>: <span class="string">&#x27;println&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># main</span></span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(sys.argv) == <span class="number">2</span></span><br><span class="line"></span><br><span class="line">tracer = init_tracer(<span class="string">&#x27;hello-world&#x27;</span>)</span><br><span class="line"></span><br><span class="line">hello_to = sys.argv[<span class="number">1</span>]</span><br><span class="line">say_hello(hello_to)</span><br><span class="line"></span><br><span class="line"><span class="comment"># yield to IOLoop to flush the spans</span></span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">tracer.close()</span><br></pre></td></tr></table></figure>
+<p>程序执行结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">env</span>) λ python -m lesson02.solution.hello Bryan</span><br><span class="line">Initializing Jaeger Tracer with UDP reporter</span><br><span class="line">Using proactor: IocpProactor</span><br><span class="line">Using sampler ConstSampler(True)</span><br><span class="line">opentracing.tracer initialized to &lt;jaeger_client.tracer.Tracer object at 0x000001F907207BE0&gt;[app_name=hello-world]</span><br><span class="line">Reporting span 119103464ff061a1:37c5aad4c3288538:377791e2ada77176:1 hello-world.format</span><br><span class="line">Hello, Bryan!</span><br><span class="line">Reporting span 119103464ff061a1:72841e6ad89fcc14:377791e2ada77176:1 hello-world.println</span><br><span class="line">Reporting span 119103464ff061a1:377791e2ada77176:0:1 hello-world.say-hello</span><br><span class="line">Using proactor: IocpProactor</span><br></pre></td></tr></table></figure>
+<h3 id="Tracing-RPC-Requests">Tracing RPC Requests</h3>
+<p>追踪进程边界和 RPC 调用（进程间上下文传播）</p>
+<ul>
+<li><code>inject(spanContext, format, carrier)</code></li>
+<li><code>extract(format, carrier)</code></li>
+</ul>
+<p><code>format</code> 参数是 OpenTracing API 定义的三种标准编码之一</p>
+<ul>
+<li><code>TEXT_MAP</code>：Span 上下文被编码为键值对的集合</li>
+<li><code>BINARY</code>：Span 上下文被编码为不透明的字节数组</li>
+<li><code>HTTP_HEADERS</code>：和 <code>TEXT_MAP</code> 类似，键必须是安全的才能用于 HTTP 头部字段</li>
+</ul>
+<p><code>carrier</code> 是底层 RPC 框架的抽象</p>
+<ul>
+<li>例如，<code>TEXT_MAP</code> 格式的载体是字典（<code>dictionary</code>），<code>BINARY</code> 格式的载体是字节数组（<code>bytearray</code>）</li>
+</ul>
+<p>客户端，发起 HTTP 请求</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> lib.tracing <span class="keyword">import</span> init_tracer</span><br><span class="line"><span class="keyword">from</span> opentracing.ext <span class="keyword">import</span> tags</span><br><span class="line"><span class="keyword">from</span> opentracing.propagation <span class="keyword">import</span> Format</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hello</span>(<span class="params">hello_to</span>):</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;say-hello&#x27;</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        scope.span.set_tag(<span class="string">&#x27;hello-to&#x27;</span>, hello_to)</span><br><span class="line">        hello_str = format_string(hello_to)</span><br><span class="line">        print_hello(hello_str)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">format_string</span>(<span class="params">hello_to</span>):</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;format&#x27;</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        hello_str = http_get(<span class="number">8081</span>, <span class="string">&#x27;format&#x27;</span>, <span class="string">&#x27;helloTo&#x27;</span>, hello_to)</span><br><span class="line">        scope.span.log_kv(&#123;<span class="string">&#x27;event&#x27;</span>: <span class="string">&#x27;string-format&#x27;</span>, <span class="string">&#x27;value&#x27;</span>: hello_str&#125;)</span><br><span class="line">        <span class="keyword">return</span> hello_str</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_hello</span>(<span class="params">hello_str</span>):</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;println&#x27;</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        http_get(<span class="number">8082</span>, <span class="string">&#x27;publish&#x27;</span>, <span class="string">&#x27;helloStr&#x27;</span>, hello_str)</span><br><span class="line">        scope.span.log_kv(&#123;<span class="string">&#x27;event&#x27;</span>: <span class="string">&#x27;println&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">http_get</span>(<span class="params">port, path, param, value</span>):</span><br><span class="line">    url = <span class="string">&#x27;http://localhost:%s/%s&#x27;</span> % (port, path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 为当前活跃的 Span 附加元数据信息</span></span><br><span class="line">    span = tracer.active_span</span><br><span class="line">    span.set_tag(tags.HTTP_METHOD, <span class="string">&#x27;GET&#x27;</span>)</span><br><span class="line">    span.set_tag(tags.HTTP_URL, url)</span><br><span class="line">    span.set_tag(tags.SPAN_KIND, tags.SPAN_KIND_RPC_CLIENT)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将 Span 注入 HTTP 头部，使用 headers 字典</span></span><br><span class="line">    headers = &#123;&#125;</span><br><span class="line">    tracer.inject(span, Format.HTTP_HEADERS, headers)</span><br><span class="line"></span><br><span class="line">    r = requests.get(url, params=&#123;param: value&#125;, headers=headers)</span><br><span class="line">    <span class="keyword">assert</span> r.status_code == <span class="number">200</span></span><br><span class="line">    <span class="keyword">return</span> r.text</span><br><span class="line"></span><br><span class="line"><span class="comment"># main</span></span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(sys.argv) == <span class="number">2</span></span><br><span class="line"></span><br><span class="line">tracer = init_tracer(<span class="string">&#x27;hello-world&#x27;</span>)</span><br><span class="line"></span><br><span class="line">hello_to = sys.argv[<span class="number">1</span>]</span><br><span class="line">say_hello(hello_to)</span><br><span class="line"></span><br><span class="line"><span class="comment"># yield to IOLoop to flush the spans</span></span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">tracer.close()</span><br></pre></td></tr></table></figure>
+<p>响应请求 <code>GET 'http://localhost:8081/format?helloTo=Bryan'</code> ，返回字符串 <code>Hello, Bryan!</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> request</span><br><span class="line"><span class="keyword">from</span> lib.tracing <span class="keyword">import</span> init_tracer</span><br><span class="line"><span class="keyword">from</span> opentracing.ext <span class="keyword">import</span> tags</span><br><span class="line"><span class="keyword">from</span> opentracing.propagation <span class="keyword">import</span> Format</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">tracer = init_tracer(<span class="string">&#x27;formatter&#x27;</span>) </span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/format&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">format</span>():</span><br><span class="line">    <span class="comment"># 解析传递过来的 Span 上下文</span></span><br><span class="line">    span_ctx = tracer.extract(Format.HTTP_HEADERS, request.headers)</span><br><span class="line">    <span class="comment"># 为当前活跃的 Span 添加元数据信息</span></span><br><span class="line">    span_tags = &#123;tags.SPAN_KIND: tags.SPAN_KIND_RPC_SERVER&#125;</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;format&#x27;</span>, child_of=span_ctx, tags=span_tags):</span><br><span class="line">        hello_to = request.args.get(<span class="string">&#x27;helloTo&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Hello, %s!&#x27;</span> % hello_to</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(port=<span class="number">8081</span>)</span><br></pre></td></tr></table></figure>
+<p>响应请求 <code>GET 'http://localhost:8082/publish?helloStr=hi%20there'</code> ，返回字符串 <code>published</code>，打印字符串 <code>hi there</code> 到标准输出流</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> request</span><br><span class="line"><span class="keyword">from</span> lib.tracing <span class="keyword">import</span> init_tracer</span><br><span class="line"><span class="keyword">from</span> opentracing.ext <span class="keyword">import</span> tags</span><br><span class="line"><span class="keyword">from</span> opentracing.propagation <span class="keyword">import</span> Format</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">tracer = init_tracer(<span class="string">&#x27;publisher&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/publish&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">publish</span>():</span><br><span class="line">    span_ctx = tracer.extract(Format.HTTP_HEADERS, request.headers)</span><br><span class="line">    span_tags = &#123;tags.SPAN_KIND: tags.SPAN_KIND_RPC_SERVER&#125;</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;publish&#x27;</span>, child_of=span_ctx, tags=span_tags):</span><br><span class="line">        hello_str = request.args.get(<span class="string">&#x27;helloStr&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(hello_str)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;published&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(port=<span class="number">8082</span>)</span><br></pre></td></tr></table></figure>
+<p>分别在两个命令行终端启动程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 8081</span></span><br><span class="line">python -m lesson03.solution.formatter</span><br><span class="line"></span><br><span class="line"><span class="comment"># 8082</span></span><br><span class="line">python -m lesson03.solution.publisher</span><br></pre></td></tr></table></figure>
+<p>用 <code>curl</code> 发起请求，查看响应结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ curl -s <span class="string">&#x27;http://localhost:8081/format?helloTo=Bryan&#x27;</span></span><br><span class="line">Hello, Bryan!</span><br><span class="line"></span><br><span class="line">$ curl -s <span class="string">&#x27;http://localhost:8082/publish?helloStr=hi%20there&#x27;</span></span><br><span class="line">published</span><br></pre></td></tr></table></figure>
+<p>使用 Client 程序发起请求</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">env</span>) λ python -m lesson03.solution.hello Bryan</span><br><span class="line">Initializing Jaeger Tracer with UDP reporter</span><br><span class="line">Using proactor: IocpProactor</span><br><span class="line">Using sampler ConstSampler(True)</span><br><span class="line">opentracing.tracer initialized to &lt;jaeger_client.tracer.Tracer object at 0x00000207F6E9C3D0&gt;[app_name=hello-world]</span><br><span class="line">Starting new HTTP connection (1): localhost:8081</span><br><span class="line">http://localhost:8081 <span class="string">&quot;GET /format?helloTo=Bryan HTTP/1.1&quot;</span> 200 13</span><br><span class="line">Reporting span 4235cad8b8ce808d:e54fb451d1a77aba:63d2eb7238731d7d:1 hello-world.format</span><br><span class="line">Starting new HTTP connection (1): localhost:8082</span><br><span class="line">http://localhost:8082 <span class="string">&quot;GET /publish?helloStr=Hello%2C+Bryan%21 HTTP/1.1&quot;</span> 200 9</span><br><span class="line">Reporting span 4235cad8b8ce808d:4f0f035b3e14b3d6:63d2eb7238731d7d:1 hello-world.println</span><br><span class="line">Reporting span 4235cad8b8ce808d:63d2eb7238731d7d:0:1 hello-world.say-hello</span><br><span class="line">Using proactor: IocpProactor</span><br></pre></td></tr></table></figure>
+<p>两个服务的终端信息输出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">env</span>) λ python -m lesson03.solution.formatter</span><br><span class="line">Initializing Jaeger Tracer with UDP reporter</span><br><span class="line">Using proactor: IocpProactor</span><br><span class="line">Using sampler ConstSampler(True)</span><br><span class="line">opentracing.tracer initialized to &lt;jaeger_client.tracer.Tracer object at 0x0000029A03FC2A00&gt;[app_name=formatter]</span><br><span class="line"> * Serving Flask app <span class="string">&quot;formatter&quot;</span> (lazy loading)</span><br><span class="line"> * Environment: production</span><br><span class="line">   WARNING: This is a development server. Do not use it <span class="keyword">in</span> a production deployment.</span><br><span class="line">   Use a production WSGI server instead.</span><br><span class="line"> * Debug mode: off</span><br><span class="line"> * Running on http://127.0.0.1:8081/ (Press CTRL+C to quit)</span><br><span class="line">Reporting span 4235cad8b8ce808d:db684e7b3ed16d97:e54fb451d1a77aba:1 formatter.format</span><br><span class="line">127.0.0.1 - - [06/Jan/2021 14:09:31] <span class="string">&quot;GET /format?helloTo=Bryan HTTP/1.1&quot;</span> 200 -</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(<span class="built_in">env</span>) λ  python -m lesson03.solution.publisher</span><br><span class="line">Initializing Jaeger Tracer with UDP reporter</span><br><span class="line">Using proactor: IocpProactor</span><br><span class="line">Using sampler ConstSampler(True)</span><br><span class="line">opentracing.tracer initialized to &lt;jaeger_client.tracer.Tracer object at 0x000001FF28BC2550&gt;[app_name=publisher]</span><br><span class="line"> * Serving Flask app <span class="string">&quot;publisher&quot;</span> (lazy loading)</span><br><span class="line"> * Environment: production</span><br><span class="line">   WARNING: This is a development server. Do not use it <span class="keyword">in</span> a production deployment.</span><br><span class="line">   Use a production WSGI server instead.</span><br><span class="line"> * Debug mode: off</span><br><span class="line"> * Running on http://127.0.0.1:8082/ (Press CTRL+C to quit)</span><br><span class="line">Hello, Bryan!</span><br><span class="line">Reporting span 4235cad8b8ce808d:d7bf7e691789d425:4f0f035b3e14b3d6:1 publisher.publish</span><br><span class="line">127.0.0.1 - - [06/Jan/2021 14:09:33] <span class="string">&quot;GET /publish?helloStr=Hello%2C+Bryan%21 HTTP/1.1&quot;</span> 200 -</span><br></pre></td></tr></table></figure>
+<h3 id="Baggage">Baggage</h3>
+<p>分布式上下文传播，使用 baggage 在调用图中传递数据</p>
+<ul>
+<li>在多租户系统中传递租期</li>
+<li>传递顶层调用者的身份信息</li>
+<li>为混沌工程传递故障注入指令</li>
+<li>为其他监控的数据传递请求范围的维度，比如分离生产环境与测试环境的流量度量</li>
+<li>由于可能影响系统性能，因此有大小限制</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> lib.tracing <span class="keyword">import</span> init_tracer</span><br><span class="line"><span class="keyword">from</span> opentracing.ext <span class="keyword">import</span> tags</span><br><span class="line"><span class="keyword">from</span> opentracing.propagation <span class="keyword">import</span> Format</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hello</span>(<span class="params">hello_to, greeting</span>):</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;say-hello&#x27;</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        scope.span.set_tag(<span class="string">&#x27;hello-to&#x27;</span>, hello_to)</span><br><span class="line">        <span class="comment"># 设置 baggage</span></span><br><span class="line">        scope.span.set_baggage_item(<span class="string">&#x27;greeting&#x27;</span>, greeting)</span><br><span class="line">        hello_str = format_string(hello_to)</span><br><span class="line">        print_hello(hello_str)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">format_string</span>(<span class="params">hello_to</span>):</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;format&#x27;</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        hello_str = http_get(<span class="number">8081</span>, <span class="string">&#x27;format&#x27;</span>, <span class="string">&#x27;helloTo&#x27;</span>, hello_to)</span><br><span class="line">        scope.span.log_kv(&#123;<span class="string">&#x27;event&#x27;</span>: <span class="string">&#x27;string-format&#x27;</span>, <span class="string">&#x27;value&#x27;</span>: hello_str&#125;)</span><br><span class="line">        <span class="keyword">return</span> hello_str</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_hello</span>(<span class="params">hello_str</span>):</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;println&#x27;</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        http_get(<span class="number">8082</span>, <span class="string">&#x27;publish&#x27;</span>, <span class="string">&#x27;helloStr&#x27;</span>, hello_str)</span><br><span class="line">        scope.span.log_kv(&#123;<span class="string">&#x27;event&#x27;</span>: <span class="string">&#x27;println&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">http_get</span>(<span class="params">port, path, param, value</span>):</span><br><span class="line">    url = <span class="string">&#x27;http://localhost:%s/%s&#x27;</span> % (port, path)</span><br><span class="line"></span><br><span class="line">    span = tracer.active_span</span><br><span class="line">    span.set_tag(tags.HTTP_METHOD, <span class="string">&#x27;GET&#x27;</span>)</span><br><span class="line">    span.set_tag(tags.HTTP_URL, url)</span><br><span class="line">    span.set_tag(tags.SPAN_KIND, tags.SPAN_KIND_RPC_CLIENT)</span><br><span class="line">    headers = &#123;&#125;</span><br><span class="line">    tracer.inject(span, Format.HTTP_HEADERS, headers)</span><br><span class="line"></span><br><span class="line">    r = requests.get(url, params=&#123;param: value&#125;, headers=headers)</span><br><span class="line">    <span class="keyword">assert</span> r.status_code == <span class="number">200</span></span><br><span class="line">    <span class="keyword">return</span> r.text</span><br><span class="line"></span><br><span class="line"><span class="comment"># main</span></span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(sys.argv) == <span class="number">3</span></span><br><span class="line"></span><br><span class="line">tracer = init_tracer(<span class="string">&#x27;hello-world&#x27;</span>)</span><br><span class="line"></span><br><span class="line">hello_to = sys.argv[<span class="number">1</span>]</span><br><span class="line">greeting = sys.argv[<span class="number">2</span>]</span><br><span class="line">say_hello(hello_to, greeting)</span><br><span class="line"></span><br><span class="line"><span class="comment"># yield to IOLoop to flush the spans</span></span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">tracer.close()</span><br></pre></td></tr></table></figure>
+<p>修改 formatter 程序，读取 baggage 中的信息，进行判断和打印；publisher 程序不作改动</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> request</span><br><span class="line"><span class="keyword">from</span> lib.tracing <span class="keyword">import</span> init_tracer</span><br><span class="line"><span class="keyword">from</span> opentracing.ext <span class="keyword">import</span> tags</span><br><span class="line"><span class="keyword">from</span> opentracing.propagation <span class="keyword">import</span> Format</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">tracer = init_tracer(<span class="string">&#x27;formatter&#x27;</span>) </span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/format&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">format</span>():</span><br><span class="line">    span_ctx = tracer.extract(Format.HTTP_HEADERS, request.headers)</span><br><span class="line">    span_tags = &#123;tags.SPAN_KIND: tags.SPAN_KIND_RPC_SERVER&#125;</span><br><span class="line">    <span class="keyword">with</span> tracer.start_active_span(<span class="string">&#x27;format&#x27;</span>, child_of=span_ctx, tags=span_tags) <span class="keyword">as</span> scope:</span><br><span class="line">        <span class="comment"># 读取 baggage</span></span><br><span class="line">        greeting = scope.span.get_baggage_item(<span class="string">&#x27;greeting&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> greeting:</span><br><span class="line">            greeting = <span class="string">&#x27;Hello&#x27;</span></span><br><span class="line">        hello_to = request.args.get(<span class="string">&#x27;helloTo&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;%s, %s!&#x27;</span> % (greeting, hello_to)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(port=<span class="number">8081</span>)</span><br></pre></td></tr></table></figure>
+<p>分别在两个命令行终端启动程序，然后使用 client 程序发起请求</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">env</span>) λ python -m lesson04.solution.hello Bryan Bonjour</span><br><span class="line">Initializing Jaeger Tracer with UDP reporter</span><br><span class="line">Using proactor: IocpProactor</span><br><span class="line">Using sampler ConstSampler(True)</span><br><span class="line">opentracing.tracer initialized to &lt;jaeger_client.tracer.Tracer object at 0x000001B38C03B6D0&gt;[app_name=hello-world]</span><br><span class="line">Starting new HTTP connection (1): localhost:8081</span><br><span class="line">http://localhost:8081 <span class="string">&quot;GET /format?helloTo=Bryan HTTP/1.1&quot;</span> 200 15</span><br><span class="line">Reporting span ea46c463f8e23559:99bab13b82e5316:c1c3826e5703dfb7:1 hello-world.format</span><br><span class="line">Starting new HTTP connection (1): localhost:8082</span><br><span class="line">http://localhost:8082 <span class="string">&quot;GET /publish?helloStr=Bonjour%2C+Bryan%21 HTTP/1.1&quot;</span> 200 9</span><br><span class="line">Reporting span ea46c463f8e23559:8090336103abbed0:c1c3826e5703dfb7:1 hello-world.println</span><br><span class="line">Reporting span ea46c463f8e23559:c1c3826e5703dfb7:0:1 hello-world.say-hello</span><br><span class="line">Using proactor: IocpProactor</span><br></pre></td></tr></table></figure>
+<p>两个服务的终端信息输出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">env</span>) λ python -m lesson04.solution.formatter</span><br><span class="line">Initializing Jaeger Tracer with UDP reporter</span><br><span class="line">Using proactor: IocpProactor</span><br><span class="line">Using sampler ConstSampler(True)</span><br><span class="line">opentracing.tracer initialized to &lt;jaeger_client.tracer.Tracer object at 0x00000239E4D92A00&gt;[app_name=formatter]</span><br><span class="line"> * Serving Flask app <span class="string">&quot;formatter&quot;</span> (lazy loading)</span><br><span class="line"> * Environment: production</span><br><span class="line">   WARNING: This is a development server. Do not use it <span class="keyword">in</span> a production deployment.</span><br><span class="line">   Use a production WSGI server instead.</span><br><span class="line"> * Debug mode: off</span><br><span class="line"> * Running on http://127.0.0.1:8081/ (Press CTRL+C to quit)</span><br><span class="line">Reporting span ea46c463f8e23559:ab54bb753bc2e52b:99bab13b82e5316:1 formatter.format</span><br><span class="line">127.0.0.1 - - [06/Jan/2021 14:26:04] <span class="string">&quot;GET /format?helloTo=Bryan HTTP/1.1&quot;</span> 200 -</span><br><span class="line"></span><br><span class="line">(<span class="built_in">env</span>) λ  python -m lesson04.solution.publisher</span><br><span class="line">Initializing Jaeger Tracer with UDP reporter</span><br><span class="line">Using proactor: IocpProactor</span><br><span class="line">Using sampler ConstSampler(True)</span><br><span class="line">opentracing.tracer initialized to &lt;jaeger_client.tracer.Tracer object at 0x00000152BCA62A00&gt;[app_name=publisher]</span><br><span class="line"> * Serving Flask app <span class="string">&quot;publisher&quot;</span> (lazy loading)</span><br><span class="line"> * Environment: production</span><br><span class="line">   WARNING: This is a development server. Do not use it <span class="keyword">in</span> a production deployment.</span><br><span class="line">   Use a production WSGI server instead.</span><br><span class="line"> * Debug mode: off</span><br><span class="line"> * Running on http://127.0.0.1:8082/ (Press CTRL+C to quit)</span><br><span class="line">Bonjour, Bryan!</span><br><span class="line">Reporting span ea46c463f8e23559:70c8b72c72221e5d:8090336103abbed0:1 publisher.publish</span><br><span class="line">127.0.0.1 - - [06/Jan/2021 14:26:06] <span class="string">&quot;GET /publish?helloStr=Bonjour%2C+Bryan%21 HTTP/1.1&quot;</span> 200 -</span><br></pre></td></tr></table></figure>
+<h1>参阅</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/rossiXYZ/p/13641637.html">[业界方案] 用SOFATracer学习分布式追踪系统Opentracing</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/rossiXYZ/p/13654065.html">[业界方案]用Jaeger来学习分布式追踪系统Opentracing</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jaegertracing.io/docs/1.21/architecture/">Jaeger - Architecture</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/yurishkuro/opentracing-tutorial/tree/master/python">OpenTracing Tutorial - Python</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/ch04.html">Chapter 4. The Three Pillars of Observability</a></li>
+<li><a target="_blank" rel="noopener" href="https://opentelemetry.io/">OpenTelemetry</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/jckling">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/distributed-tracing-jaeger-guide/">https://jckling.github.io/distributed-tracing-jaeger-guide/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/observability/">observability</a><a class="post-meta__tags" href="/tags/jaeger/">jaeger</a><a class="post-meta__tags" href="/tags/tracing/">tracing</a><a class="post-meta__tags" href="/tags/opentracing/">opentracing</a><a class="post-meta__tags" href="/tags/distributed-tracing/">distributed-tracing</a></div><div class="post-share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/opentelemetry-specification/" title="OpenTelemetry 规范阅读"><img class="cover" src="https://i.loli.net/2021/06/14/jlyVMmf1Q4ohsCB.png" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">OpenTelemetry 规范阅读</div></div><div class="info-2"><div class="info-item-1">整理之前的笔(fan)记(yi)</div></div></div></a><a class="pagination-related" href="/openstack-overview/" title="OpenStack 整体介绍"><img class="cover" src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">OpenStack 整体介绍</div></div><div class="info-2"><div class="info-item-1">OpenStack 架构详解及组件交互逻辑</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/jaeger-elasticsearch-kibana/" title="使用 Docker 部署 Jaeger + Elasticsearch + Kibana"><img class="cover" src="https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-10</div><div class="info-item-2">使用 Docker 部署 Jaeger + Elasticsearch + Kibana</div></div><div class="info-2"><div class="info-item-1">使用 Elasticsearch 作为持久化存储，部署 all-in-one 镜像/单独部署 Jaeger 组件；elasticdump 导出数据，Kibana 可视化追踪信息。</div></div></div></a><a class="pagination-related" href="/opentelemetry-specification/" title="OpenTelemetry 规范阅读"><img class="cover" src="https://i.loli.net/2021/06/14/jlyVMmf1Q4ohsCB.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-02</div><div class="info-item-2">OpenTelemetry 规范阅读</div></div><div class="info-2"><div class="info-item-1">整理之前的笔(fan)记(yi)</div></div></div></a><a class="pagination-related" href="/openstack-osprofiler/" title="OSProfiler 源码分析"><img class="cover" src="https://i.loli.net/2021/06/14/NfcmdhT7uUx4pqo.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-25</div><div class="info-item-2">OSProfiler 源码分析</div></div><div class="info-2"><div class="info-item-1">结合 Keystone(Rocky)、Glance(Rocky) 等组件测试</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info-name">Jckling</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请勿重复提交<br/>联系作者：QQ2521390430</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">全链路追踪</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%A7%82%E5%AF%9F%E6%80%A7-Observability"><span class="toc-number">1.1.</span> <span class="toc-text">可观察性 (Observability)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tracing"><span class="toc-number">1.2.</span> <span class="toc-text">Tracing</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">OpenTracing</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenTracing-%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.1.</span> <span class="toc-text">OpenTracing 数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Span"><span class="toc-number">2.1.1.</span> <span class="toc-text">Span</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tracer"><span class="toc-number">2.1.2.</span> <span class="toc-text">Tracer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#References"><span class="toc-number">2.1.3.</span> <span class="toc-text">References</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpanContext"><span class="toc-number">2.1.4.</span> <span class="toc-text">SpanContext</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Carrier"><span class="toc-number">2.1.5.</span> <span class="toc-text">Carrier</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Formatter"><span class="toc-number">2.1.6.</span> <span class="toc-text">Formatter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ScopeManager"><span class="toc-number">2.1.7.</span> <span class="toc-text">ScopeManager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reporter"><span class="toc-number">2.1.8.</span> <span class="toc-text">Reporter</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">开源分布式追踪系统</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">Jaeger</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AF%E8%AF%AD"><span class="toc-number">4.1.</span> <span class="toc-text">术语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jaeger-Client%EF%BC%88%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%89"><span class="toc-number">4.2.1.</span> <span class="toc-text">Jaeger Client（客户端）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Agent%EF%BC%88%E4%BB%A3%E7%90%86%EF%BC%89"><span class="toc-number">4.2.2.</span> <span class="toc-text">Agent（代理）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Collector%EF%BC%88%E6%94%B6%E9%9B%86%E5%99%A8%EF%BC%89"><span class="toc-number">4.2.3.</span> <span class="toc-text">Collector（收集器）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Query"><span class="toc-number">4.2.4.</span> <span class="toc-text">Query</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ingester"><span class="toc-number">4.2.5.</span> <span class="toc-text">Ingester</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">4.3.</span> <span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hello-World"><span class="toc-number">4.3.1.</span> <span class="toc-text">Hello World</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Context-and-Tracing-Functions"><span class="toc-number">4.3.2.</span> <span class="toc-text">Context and Tracing Functions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tracing-RPC-Requests"><span class="toc-number">4.3.3.</span> <span class="toc-text">Tracing RPC Requests</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Baggage"><span class="toc-number">4.3.4.</span> <span class="toc-text">Baggage</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">参阅</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/text-generation/" title="文本生成"><img src="https://s2.loli.net/2025/09/10/KeRdvSwc5mBZTJI.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成"/></a><div class="content"><a class="title" href="/text-generation/" title="文本生成">文本生成</a><time datetime="2025-09-10T07:24:00.000Z" title="发表于 2025-09-10 15:24:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/text-to-image-generation/" title="文本生成图片"><img src="https://s2.loli.net/2025/09/10/gQ3MbUJctelzBam.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成图片"/></a><div class="content"><a class="title" href="/text-to-image-generation/" title="文本生成图片">文本生成图片</a><time datetime="2025-09-10T05:57:00.000Z" title="发表于 2025-09-10 13:57:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型"><img src="https://s2.loli.net/2025/08/29/EaAOJKSNWt4Tiw8.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本/图片生成 3D 模型"/></a><div class="content"><a class="title" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型">文本/图片生成 3D 模型</a><time datetime="2025-08-28T08:48:00.000Z" title="发表于 2025-08-28 16:48:00">2025-08-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code"><img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-Coder/qwen3-coder-main.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Qwen3-Coder 接入 VS Code"/></a><div class="content"><a class="title" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code">Qwen3-Coder 接入 VS Code</a><time datetime="2025-08-03T13:35:43.000Z" title="发表于 2025-08-03 21:35:43">2025-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen"><img src="https://s2.loli.net/2025/07/15/XnLZaMF9gipcfGQ.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="本地部署 Open WebUI 使用 DeepSeek/Qwen"/></a><div class="content"><a class="title" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen">本地部署 Open WebUI 使用 DeepSeek/Qwen</a><time datetime="2025-07-15T06:28:50.000Z" title="发表于 2025-07-15 14:28:50">2025-07-15</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url(https://i.loli.net/2021/06/14/bk5UlhqE4DZJfYu.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Jckling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"emoji":["https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"]}
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

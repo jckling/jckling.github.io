@@ -1,0 +1,1456 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>RFC 草案 The OAuth 2.1 Authorization Framework 翻译 | Jckling's Blog</title><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程作业，RFC 草案 OAuth 2.1 身份认证框架翻译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RFC 草案 The OAuth 2.1 Authorization Framework 翻译">
+<meta property="og:url" content="https://jckling.github.io/oauth-v2-1-draft/">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="课程作业，RFC 草案 OAuth 2.1 身份认证框架翻译">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/Akr6osDLPtO4hjS.jpg">
+<meta property="article:published_time" content="2020-11-06T07:08:57.000Z">
+<meta property="article:modified_time" content="2025-10-01T07:36:00.000Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="security">
+<meta property="article:tag" content="authentication">
+<meta property="article:tag" content="protocol">
+<meta property="article:tag" content="oauth">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/Akr6osDLPtO4hjS.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RFC 草案 The OAuth 2.1 Authorization Framework 翻译",
+  "url": "https://jckling.github.io/oauth-v2-1-draft/",
+  "image": "https://i.loli.net/2021/06/14/Akr6osDLPtO4hjS.jpg",
+  "datePublished": "2020-11-06T07:08:57.000Z",
+  "dateModified": "2025-10-01T07:36:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jckling",
+      "url": "https://github.com/jckling"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/oauth-v2-1-draft/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="lfjhmONZuO834dnjVuGulU6croTwfNMGSgNV5vNkf60"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'UA-164555720-1')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'UA-164555720-1', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":600,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RFC 草案 The OAuth 2.1 Authorization Framework 翻译',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Jckling's Blog" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2021/06/14/Akr6osDLPtO4hjS.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jckling's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">RFC 草案 The OAuth 2.1 Authorization Framework 翻译</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">RFC 草案 The OAuth 2.1 Authorization Framework 翻译</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-11-06T07:08:57.000Z" title="发表于 2020-11-06 15:08:57">2020-11-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tech/">tech</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/oauth-v2-1-draft/#post-comment"><span class="waline-comment-count" data-path="/oauth-v2-1-draft/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>The OAuth 2.1 Authorization Framework</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-00">draft-ietf-oauth-v2-1-00</a></li>
+</ul>
+<h2 id="摘要">摘要</h2>
+<p>The OAuth 2.1 authorization framework enables a third-party<br>
+application to obtain limited access to an HTTP service, either on<br>
+behalf of a resource owner by orchestrating an approval interaction<br>
+between the resource owner and the HTTP service, or by allowing the<br>
+third-party application to obtain access on its own behalf.  This<br>
+specification replaces and obsoletes the OAuth 2.0 Authorization<br>
+Framework described in RFC 6749.</p>
+<p>OAuth 2.1 认证框架允许第三方应用获得有限的 HTTP 服务访问，通过资源所有者和 HTTP 服务提供方交互协调批准，或者允许第三方应用自己获得访问。本规范替代并淘汰了 RFC 6749 中描述的 OAuth2.0 授权框架。</p>
+<h2 id="草案状态">草案状态</h2>
+<p>This Internet-Draft is submitted in full conformance with the<br>
+provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering<br>
+Task Force (IETF).  Note that other groups may also distribute<br>
+working documents as Internet-Drafts.  The list of current Internet-<br>
+Drafts is at <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a>.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months<br>
+and may be updated, replaced, or obsoleted by other documents at any<br>
+time.  It is inappropriate to use Internet-Drafts as reference<br>
+material or to cite them other than as “work in progress.”</p>
+<p>This Internet-Draft will expire on 31 January 2021.</p>
+<h2 id="版权声明">版权声明</h2>
+<p>Copyright © 2020 IETF Trust and the persons identified as the<br>
+document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust’s Legal<br>
+Provisions Relating to IETF Documents (<a target="_blank" rel="noopener" href="https://trustee.ietf.org/">https://trustee.ietf.org/</a><br>
+license-info) in effect on the date of publication of this document.<br>
+Please review these documents carefully, as they describe your rights<br>
+and restrictions with respect to this document.  Code Components<br>
+extracted from this document must include Simplified BSD License text<br>
+as described in Section 4.e of the Trust Legal Provisions and are<br>
+provided without warranty as described in the Simplified BSD License.</p>
+<h2 id="1-介绍">1.  介绍</h2>
+<p>在传统的客户端-服务器认证模型中，客户端通过使用资源所有者的凭据在服务器上进行身份验证，从而请求服务器上的访问受限资源（受保护资源）。资源所有者为了给第三方应用提供受限资源的访问，需要与第三方共享凭据。这带来了一些问题和局限：</p>
+<ul>
+<li>
+<p>为了便于将来使用，第三方应用需要存储资源所有者的凭据，而且通常是明文形式的密码。</p>
+</li>
+<li>
+<p>即使密码存在安全漏洞，服务器也需要支持密码验证。</p>
+</li>
+<li>
+<p>第三方应用获得了对资源所有者的受保护资源的访问权，导致资源所有者无法限制其访问时间或访问的资源范围。</p>
+</li>
+<li>
+<p>资源所有者无法撤销单个第三方的访问权限，只能撤销所有第三方的访问权限，而且必须通过更改第三方的密码来实现。</p>
+</li>
+<li>
+<p>任何对第三方应用遭到破坏，最终都会波及终端用户的密码和所有受该密码保护的数据。</p>
+</li>
+</ul>
+<p>OAuth 通过引入授权层将客户端的角色与资源所有者分离，以此解决上述问题。在 OAuth 中，客户端请求访问由资源所有者控制，且由资源服务器托管的资源，同时，客户端拥有一组与资源所有者不同的凭据。</p>
+<p>客户端通过获取访问令牌来访问受保护资源，而不是使用资源所有者的凭据。访问令牌是一个标识了特定范围、生命周期和其他访问属性的字符串。访问令牌通过资源所有者的批准，由授权服务器颁发给第三方客户端。客户端使用访问令牌来访问资源服务器托管的受保护资源。</p>
+<p>例如，一个终端用户（资源所有者）能够授予打印服务（客户端）访问权限，以访问存储在照片共享服务（资源服务器）中的受保护照片，并且无需与打印服务共享其用户名和密码。相反地，直接通过照片共享服务信任的服务器（授权服务器）进行身份认证，该服务器向打印服务颁发特定的凭据（访问令牌）。</p>
+<p>本规范旨在与 HTTP （[RFC7230]） 一起使用。在 HTTP 以外的任何协议上使用 OAuth 都超出了本规范的范围。</p>
+<p>自 2012 年 10 月 OAuth 2.0 认证框架（[RFC6749]）发布以来，已经根据适用于原生应用程序的 OAuth（[RFC8252]）、OAuth 安全最佳实践（[I-D.ietf-oauth-security-topics]）、适用于基于浏览器应用程序的 OAuth（[I-D.ietf-oauth-browser-based-apps]）进行了更新。OAuth 2.0 认证框架：承载令牌使用方式（[RFC6750]）根据（[I-D.ietf-oauth-security-topics]）更新。该标准跟踪规范将所有这些文档中的信息合并在一起，并移除了在 [I-D.ietf-oauth-security-topics] 中发现的不安全的功能特性。</p>
+<h3 id="1-1-角色">1.1 角色</h3>
+<p>OAuth 定义了四种角色：</p>
+<p>“资源所有者”（resource owner）：能够授予对受保护资源的访问权限的实体。当资源所有者是一个人时，它被称为终端用户。有时缩写为“RO”。</p>
+<p>“资源服务器”（resource server）：托管受保护资源的服务器，能够接收和响应通过访问令牌对受保护资源的请求。有时缩写为“RO”。</p>
+<p>“客户端”（client）：代表资源所有者请求受保护资源的应用程序。术语“客户端”并不指定任何特定的实现特征（例如，应用程序是在一台服务器、台式机或其他设备上运行）。</p>
+<p>“授权服务器”（authorization server）：成功认证资源所有者并获得授权后，为客户端颁发访问令牌的服务器。有时缩写为“AS”。</p>
+<p>授权服务器和资源服务器之间的交互超出了本规范的范围，但是定义了几个扩展，提供资源服务器和认证服务器之间的互操作选项。授权服务器和资源服务器可以是同一个服务器，也可以是单独的实体。单个授权服务器可以颁发被多个资源服务器接受的访问令牌。</p>
+<h3 id="1-2-协议流程">1.2 协议流程</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">+--------+                               +---------------+</span><br><span class="line">|        |--(1)- Authorization Request -&gt;|   Resource    |</span><br><span class="line">|        |                               |     Owner     |</span><br><span class="line">|        |&lt;-(2)-- Authorization Grant ---|               |</span><br><span class="line">|        |                               +---------------+</span><br><span class="line">|        |</span><br><span class="line">|        |                               +---------------+</span><br><span class="line">|        |--(3)-- Authorization Grant --&gt;| Authorization |</span><br><span class="line">| Client |                               |     Server    |</span><br><span class="line">|        |&lt;-(4)----- Access Token -------|               |</span><br><span class="line">|        |                               +---------------+</span><br><span class="line">|        |</span><br><span class="line">|        |                               +---------------+</span><br><span class="line">|        |--(5)----- Access Token ------&gt;|    Resource   |</span><br><span class="line">|        |                               |     Server    |</span><br><span class="line">|        |&lt;-(6)--- Protected Resource ---|               |</span><br><span class="line">+--------+                               +---------------+</span><br><span class="line"></span><br><span class="line">              Figure 1: Abstract Protocol Flow</span><br><span class="line">              图 1：抽象协议流程</span><br></pre></td></tr></table></figure>
+<p>图 1 所示的抽象的 OAuth 2.1 流程描述了四个角色之间的交互，包括以下步骤：</p>
+<ol>
+<li>
+<p>客户端请求资源所有者授权。可以直接向资源所有者发出授权请求（如图所示），或者最好由授权服务器作为中介间接地授权。</p>
+</li>
+<li>
+<p>客户端收到授权许可，该许可是一个代表了资源所有者授权的凭据，使用本规范定义的两种许可类型之一表示，或使用扩展的许可类型表示。授权许可类型取决于客户端请求授权的方法以及授权服务器支持的类型。</p>
+</li>
+<li>
+<p>客户端使用授权许可向授权服务器进行身份认证，以请求访问令牌。</p>
+</li>
+<li>
+<p>授权服务器对客户端进行身份认证并验证授权许可，如果有效，则向客户端颁发访问令牌。</p>
+</li>
+<li>
+<p>客户端请求资源服务器上的受保护资源，并使用访问令牌进行身份认证。</p>
+</li>
+<li>
+<p>资源服务器验证访问令牌，如果有效，则处理请求。</p>
+</li>
+</ol>
+<p>客户端从资源所有者获得授权许可的首选方法（在步骤(1)和步骤(2)中进行了描述）是使用授权服务器作为中介，如第 4.1 节的图 3 所示。</p>
+<h3 id="1-3-授权许可">1.3 授权许可</h3>
+<p>授权许可是客户端用于获得访问令牌的凭据，代表了资源所有者（对访问其受保护资源）的授权。本规范定义了两种许可类型 —— 授权码和客户端凭据，以及用于定义其他类型的扩展机制。</p>
+<h4 id="1-3-1-授权码">1.3.1 授权码</h4>
+<p>授权码可以从授权服务器获得，授权服务器是客户端和资源所有者之间的中介。客户端不是直接向资源所有者请求授权，而是将资源所有者定向到授权服务器（通过 [RFC7231] 中定义的用户代理），然后授权服务器再将资源所有者定向回客户端，同时返回授权码。</p>
+<p>在将资源管理者和授权码重定向到客户端之前，授权服务器对资源所有者进行身份认证并获得授权。由于资源所有者仅通过授权服务器进行身份认证，资源所有者的凭据永远不会和客户端共享。</p>
+<p>授权码提供了一系列重要的安全性，例如认证客户端身份的能力，直接将访问令牌发送给客户端而无需传递给资源所有者的用户代理，传递可能导致令牌泄露给其他人，包括资源所有者。</p>
+<h4 id="1-3-2-客户端凭据">1.3.2 客户端凭据</h4>
+<p>当授权范围仅限于受客户端控制的受保护资源，或之前由授权服务器安排的受保护资源时，客户端凭据（或其他形式的客户端身份认证）可以被用作授权许可。通常在以下两种情况时将客户端凭据用作授权许可，当客户端本身是资源所有者，或请求之前已经通过授权并由授权服务器安排的受保护资源。</p>
+<h3 id="1-4-访问令牌">1.4 访问令牌</h3>
+<p>访问令牌是用于访问受保护资源的凭据。访问令牌是代表颁发给客户端的授权的字符串。该字符串对客户端是不透明的，依赖于授权服务器，可以由资源服务器解析。</p>
+<p>令牌代表了特定的访问范围和有效访问时间，由资源所有者许可，并由资源服务器和授权服务器强制执行。</p>
+<p>令牌可以表示用作检索授权信息的标识符，或者以可验证的方式自包含授权信息（即，由一些数据和签名组成的令牌字符串）。结构化令牌格式的一个示例是 [I-D.ietf-oauth-access-token-jwt]，这是一种将访问令牌数据编码为 JSON Web Token [RFC7519] 的方法。</p>
+<p>客户端为了使用令牌，可能需要其他身份认证凭据（超出了本规范的范围）。这通常称为限制发送方的访问令牌，例如双向 TLS 访问令牌 [RFC8705]。</p>
+<p>访问令牌提供了一个抽象层，用资源服务器可以解析的单个令牌替代了不同的授权结构（例如，用户名和密码）。这种抽象使得授权服务器能够颁发比授权许可中的限制更加受限的访问令牌，并且资源服务器不再需要了解各种授权方法。</p>
+<p>根据资源服务器的安全性需求，访问令牌可以具有不同的格式、结构和使用方法（例如，密码属性）。访问令牌的属性和用于访问受保护资源的方法可能会超出本规范中的描述。</p>
+<h3 id="1-5-刷新令牌">1.5 刷新令牌</h3>
+<p>刷新令牌是用于获取访问令牌的凭据。刷新令牌由授权服务器向客户端颁发，用于在当前访问令牌失效或过期时获取新的访问令牌，或用于获取相同访问范围或更小访问范围的其他访问令牌（访问令牌可能具有更短的生存期和比资源所有者授权的更少的权限）。授权服务器可以决定是否颁发刷新令牌。如果授权服务器决定颁发刷新令牌，则在颁发访问令牌时将其包括在内（即，图 2 中的步骤(4)）。</p>
+<p>刷新令牌是一个字符串，表示资源管理者对客户端的授权许可。该字符串通常对客户端是不透明的。令牌表示用于检索授权信息的标识符。与访问令牌不同的是，刷新令牌的使用仅涉及授权服务器，永远不会发送给资源服务器。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">+--------+                                           +---------------+</span><br><span class="line">|        |--(1)------- Authorization Grant ---------&gt;|               |</span><br><span class="line">|        |                                           |               |</span><br><span class="line">|        |&lt;-(2)----------- Access Token -------------|               |</span><br><span class="line">|        |               &amp; Refresh Token             |               |</span><br><span class="line">|        |                                           |               |</span><br><span class="line">|        |                            +----------+   |               |</span><br><span class="line">|        |--(3)---- Access Token ----&gt;|          |   |               |</span><br><span class="line">|        |                            |          |   |               |</span><br><span class="line">|        |&lt;-(4)- Protected Resource --| Resource |   | Authorization |</span><br><span class="line">| Client |                            |  Server  |   |     Server    |</span><br><span class="line">|        |--(5)---- Access Token ----&gt;|          |   |               |</span><br><span class="line">|        |                            |          |   |               |</span><br><span class="line">|        |&lt;-(6)- Invalid Token Error -|          |   |               |</span><br><span class="line">|        |                            +----------+   |               |</span><br><span class="line">|        |                                           |               |</span><br><span class="line">|        |--(7)----------- Refresh Token -----------&gt;|               |</span><br><span class="line">|        |                                           |               |</span><br><span class="line">|        |&lt;-(8)----------- Access Token -------------|               |</span><br><span class="line">+--------+           &amp; Optional Refresh Token        +---------------+</span><br><span class="line"></span><br><span class="line">             Figure 2: Refreshing an Expired Access Token</span><br><span class="line">             图 2：更新一个过期的访问令牌</span><br></pre></td></tr></table></figure>
+<p>图 2 所示的流程包括以下步骤：</p>
+<ol>
+<li>
+<p>客户端通过向授权服务器进行身份认证，然后提供授权许可来请求访问令牌。</p>
+</li>
+<li>
+<p>授权服务器认证客户端身份，并验证授权许可，如果有效，则颁发访问令牌和可选的刷新令牌。</p>
+</li>
+<li>
+<p>客户端使用访问令牌向资源服务器请求受保护资源。</p>
+</li>
+</ol>
+<p>资源服务器验证访问令牌，如果有效，则处理该请求。</p>
+<ol start="5">
+<li>
+<p>重复步骤(3)和步骤(4)，直到访问令牌过期。如果客户端知道访问令牌已过期，则直接跳转到步骤(7)；否则，它将继续请求受保护资源。</p>
+</li>
+<li>
+<p>由于访问令牌无效，资源服务器返回无效令牌错误。</p>
+</li>
+<li>
+<p>客户端通过使用刷新令牌和提供客户端身份认证（如果已颁发凭据），请求新的访问令牌。客户端身份认证的要求基于客户端类型和授权服务器策略。</p>
+</li>
+<li>
+<p>授权服务器认证客户端身份并验证刷新令牌，如果有效，则颁发新的访问令牌（以及可选的新的刷新令牌）。</p>
+</li>
+</ol>
+<h3 id="1-6-TLS-版本">1.6 TLS 版本</h3>
+<p>每当本规范使用传输层安全协议（TLS）时，合适的版本都会根据广泛部署和已知安全漏洞随时间变化。在撰写本规范时，TLS 1.3 [RFC8466] 是最新版本。</p>
+<p>实现也可以支持其他传输层安全性机制，以满足安全性要求。</p>
+<h3 id="1-7-HTTP-重定向">1.7 HTTP 重定向</h3>
+<p>本规范广泛使用了 HTTP 重定向，其中，客户端或授权服务器将资源所有者的用户代理重定向到另一个目标。尽管本规范中的示例显示了 HTTP 302 状态码的使用，但是除了 HTTP 307 之外，还可以通过用户代理使用任何其他方式来完成重定向，这些方法均被视为实现细节。详见第 9.7.2 节。</p>
+<h3 id="1-8-互操作性">1.8 互操作性</h3>
+<p>OAuth 2.1 提供了一个具有明确定义的安全属性的授权框架。</p>
+<p>本规范保留了一些部分或全部未定义的组件（例如，客户端注册、授权服务器功能、终端发现）。其中一些行为是在可选扩展中定义的，具体的实现可以选择使用这些扩展。</p>
+<p>请参阅附录 C，以获得本规范发布前的当前已知扩展列表。</p>
+<h3 id="1-9-符号约定">1.9 符号约定</h3>
+<p>本文档中的关键字“必须”、“不能”、“需要”、“应该”、“不应该”、“建议”、“不建议”、“可以”和“可选”，如此处所示，当且仅当它们以大写字母出现时，才应该按照 BCP 14 [RFC2119] [RFC8174] 中的描述解释。</p>
+<p>本规范使用扩展的巴科斯范式（Augmented Backus-Naur Form, ABNF）表示法。此外，URI 引用的规则包含在“统一资源标识符（Uniform Resource Identifier, URI）：通用语法” [RFC3986] 中。</p>
+<p>某些安全相关的术语需要根据 [RFC4949] 中的定义进行理解。这些属于包括但不限于：“攻击”、“身份认证”、“授权”、“证书”、“机密性”、“凭据”、“加密”、“身份”、“签名（sign）”、“签名（signature）”、“信任”、“验证”和“确认”。</p>
+<p>除非有额外的说明，否则协议中所有的参数名称和值均区分大小写。</p>
+<h2 id="2-客户端注册">2. 客户端注册</h2>
+<p>在启动协议之前，客户端向授权服务器进行注册。客户端在授权服务器上进行注册的方法超出了本规范的范围，但通常涉及终端用户与 HTML 表单的交互，或使用动态客户端注册（[RFC7591]）。</p>
+<p>客户端的注册不需要客户端与授权服务器直接进行交互。如果授权服务器支持，注册可以依靠其他方式建立信任并获得所需的客户端属性（例如，重定向 URI、客户端类型）。例如，可以使用自签或第三方签发的声明来完成注册，也可以使用受信任的通道执行客户端发现来完成注册。</p>
+<p>当注册一个客户端时，建议客户端开发人员：</p>
+<ul>
+<li>
+<p>按照第 2.1 节所述指定客户端类型；</p>
+</li>
+<li>
+<p>提供第 3.1.2 节所述的客户端重定向 URI；</p>
+</li>
+<li>
+<p>包括授权服务器所需的任何其他信息（例如，应用程序名称、网站、说明、标志图片、法律条款的接受）。</p>
+</li>
+</ul>
+<p>动态客户端注册（[RFC7591]）为客户端定义了一个通用数据模型，也可以用于手动客户端注册。</p>
+<h3 id="2-1-客户端类型">2.1 客户端类型</h3>
+<p>客户端在授权服务器上由 client_id 标识。例如，授权服务器使用它来确定对应的客户端是否可以使用重定向 URI 集合。</p>
+<p>授权服务器要求客户端提供更高级别的身份信任，客户端使用凭据向授权服务器进行身份认证。此类凭据由授权服务器颁发或由客户端的开发人员向授权服务器注册。</p>
+<p>OAuth 2.1 定义了三种客户端类型：</p>
+<p>“机密的”（confidential）：拥有凭据且身份已经由 AS 确认的客户端被定义为“机密的客户端”</p>
+<p>“有凭据的”（credentialed）：拥有凭据但身份未被 AS 确认的客户端被定义为“有凭据的客户端”</p>
+<p>“公开的”（public）：没有凭据的客户端被称为“公开的客户端”</p>
+<p>任何拥有凭据的客户端必须采取预防措施，防止凭据的泄露和滥用。</p>
+<p>授权服务器在决定是否允许客户端访问更加关键的功能（例如，客户端凭据许可类型）时，应该考虑对客户端身份的信任程度。</p>
+<p>一个单独的 client_id 不能被视为多个类型的客户端。</p>
+<p>本规范是围绕以下客户端配置设计的：</p>
+<p>“Web 应用程序”（web application）：Web 应用程序是在 Web 服务器上运行的机密的客户端。资源所有者通过使用设备的用户代理中渲染的 HTML 用户界面来访问客户端。客户端凭据和颁发给客户的任何访问令牌都存储在 Web 服务器上，并且资源所有者无法访问。</p>
+<p>“基于浏览器的应用程序”（browser-based application）：基于浏览器的应用程序是一个公开的客户端，其中客户端代码从 Web 服务器上下载，并在资源所有者使用的设备上的用户代理（例如 Web 浏览器）中执行。协议数据和凭据很容易被资源所有者访问（经常是可见的）。由于此类应用程序驻留在用户代理中，因此它们在请求授权时可以使用用户代理的功能。</p>
+<p>“原生应用程序”（native application）：原生应用程序是在资源所有者使用的设备上安装并执行的公开的客户端。资源所有者可以访问协议数据和凭据。假定可以提取应用程序中任何客户端的身份认证凭据。另一方面，动态颁发的凭据（例如访问令牌或刷新令牌）可以得到可接受的保护级别。至少，应该保护这些凭据不受应用程序可能交互的恶意服务器的攻击。在某些平台上，可以保护这些凭据免受驻留在同一设备上的其他应用程序的攻击。</p>
+<h3 id="2-2-客户端标识">2.2 客户端标识</h3>
+<p>授权服务器向已注册的客户端颁发客户端标识 —— 代表客户端提供的注册信息的唯一字符串。客户端标识符不是秘密；它暴露给资源所有者并且不能单独用于客户端的身份认证。客户端标识对授权服务器来说是唯一的。</p>
+<p>客户端标识符字符串的大小未在本规范中定义。客户端应该避免假设标识符的大小。授权服务器应该记录其颁发的任何标识符的大小。</p>
+<p>授权服务器不应该允许客户端选择或影响其 client_id。详细信息请参阅第 9.6 节。</p>
+<h3 id="2-3-客户端认证">2.3 客户端认证</h3>
+<p>如果客户端拥有凭据（机密的客户端或拥有凭据的客户端），客户端和授权服务器将确立满足授权服务器安全性要求的客户端身份认证方法。授权服务器可以接受满足其安全性要求的任何形式的客户端认身份认证。</p>
+<p>通常。机密的或拥有凭据的客户端拥有一系列客户端凭据（例如，密码、公私钥对），用于与授权服务器进行身份认证。</p>
+<p>授权服务器应该尽可能使用客户端身份认证。</p>
+<p>推荐使用非对称（基于公钥）的方法进行客户端身份认证，例如 mTLS [RFC8705] 或 private_key_jwt [OpenID]。当使用非对称方法进行客户端身份认证时，认证服务器无需存储敏感的对称密钥，从而使得这些方法面对多种攻击具有更强的健壮性。</p>
+<p>授权服务器可以与公开的客户端确立客户端身份仍正方法，该方法将公开的客户端转换为拥有凭证的客户端。然而，授权服务器不能为了认证客户端而依赖拥有凭据的客户端的身份认证。</p>
+<p>客户端在每次请求中不能使用多种身份认证方法。</p>
+<h4 id="2-3-1-客户端密码">2.3.1 客户端密码</h4>
+<p>拥有客户端密码（也称为客户端秘密）的客户端，可以使用 [RFC2617] 中定义的 HTTP 基本身份认证方案来向授权服务器进行身份认证。根据附录 B，使用 application/x-www-form-urlencoded 编码算法对客户端标识进行编码，并将编码后的值用作用户名；客户端秘密使用相同的算法进行编码，并用作密码。为了验证拥有密码的客户端，授权服务器必须支持 HTTP 基本身份认证方案。</p>
+<p>例如（额外换行符仅用于显示目的）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3</span><br></pre></td></tr></table></figure>
+<p>或者，授权服务器可以使用以下参数支持在请求体中包含客户端凭据：</p>
+<p>client_id：必须。第 2.2 节所述的注册过程中向客户端颁发的客户端标识符。</p>
+<p>client_secret：必须。客户端秘密。</p>
+<p>不建议使用两个参数在请求体中包含客户端凭据，并且，这种方法应该仅限于对无法直接使用 HTTP 基本身份认证方案（或其他基于密码的 HTTP 身份认证方案）的客户端使用。参数只能在请求体中传输，不能包含在请求 URI 中。</p>
+<p>例如，使用请求体参数（额外换行符仅用于显示目的）更新访问令牌（第 6 节）的请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /token HTTP/1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA</span><br><span class="line">&amp;client_id=s6BhdRkqt3&amp;client_secret=7Fjfp0ZBr1KtDRbnfVdmIw</span><br></pre></td></tr></table></figure>
+<p>在发送使用密码进行身份认证的请求时，授权服务器必须使用第 1.6 节所述的 TLS。</p>
+<p>由于客户端的身份认证方法涉及密码，因此授权服务器必须保护任何使用该方法的终端不受到暴力攻击。</p>
+<h4 id="2-3-2-其他认证方法">2.3.2 其他认证方法</h4>
+<p>授权服务器可以支持满足其安全请要求的任何合适的认证方案。当使用其他认证方法时，授权服务器必须定义客户端标识（注册记录）和认证方案之间的映射。</p>
+<p>在“OAuth 令牌终端身份验证方法(<a target="_blank" rel="noopener" href="https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#token-endpoint-auth-method">https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#token-endpoint-auth-method</a>)”的注册表中定义了一些其他的身份认证方法，并且除了用于保护令牌终端的特定用途之外，还可以用作通用的客户端身份认证方法。</p>
+<h3 id="2-4-未注册的客户端">2.4 未注册的客户端</h3>
+<p>本规范不排除使用未注册的客户端。但是，这类客户端的使用超出了本规范的范围，并且需要进行额外的安全分析和互操作性影响检查。</p>
+<h2 id="3-协议终端">3. 协议终端</h2>
+<p>授权过程涉及两个授权服务服务器终端（HTTP 资源）：</p>
+<ul>
+<li>
+<p>授权终端 —— 客户端通过用户代理重定向从资源所有者获取授权。</p>
+</li>
+<li>
+<p>令牌终端 —— 客户端用授权许可交换访问令牌，通常和客户端身份认证一起。</p>
+</li>
+</ul>
+<p>以及一个客户端终端：</p>
+<ul>
+<li>重定向终端 —— 授权服务器通过资源所有者的用户代理向用户返回包含授权凭据的响应。</li>
+</ul>
+<p>并非所有授权许可类型都同时使用两个终端。<br>
+扩展许可类型可能定义所需的其他终端。</p>
+<h3 id="3-1-授权终端">3.1 授权终端</h3>
+<p>授权终端用于与资源所有者交互，并获得授权许可。授权服务器必须首先验证资源所有者的身份。授权服务器对资源所有者进行身份验证的方式（例如，用户名和密码登录、会话 cookie）超出了本规范的范围。</p>
+<p>客户端获取授权终端的位置的方法超出了本规范的范围，但是通常该位置在服务文档或授权服务器元数据文档（[RFC 8414]）中提供。</p>
+<p>终端 URI 可以包括一个（按附录 B）格式为 application/x-www-form-urlencoded 的查询组件（[RFC3986] 第 3.4 节），在添加附加查询参数时必须保留该组件。终端 URI 不能包含片段组件。</p>
+<p>由于对授权终端的请求会产生用户身份认证和明文凭据的传输（在 HTTP 响应中），因此，在向授权终端发送请求时，授权服务器必须要求使用第 1.6 节所述的 TLS。</p>
+<p>授权服务器必须支持对授权终端使用 HTTP GET 方法 [RFC7231]，并且可以支持使用 POST 方法。</p>
+<p>发送的没有值的参数必须被视为在请求中已被省略。授权服务器必须忽略无法识别的请求参数。本规范定义的请求和响应参数不能被包含超过一次。</p>
+<h4 id="3-1-1-响应类型">3.1.1 响应类型</h4>
+<p>授权终端由授权码流使用。客户端使用以下参数告知授权服务器其所需的响应类型：</p>
+<p>response_type：必须。该值必须是第 4.1.1 节所述的用于请求授权码的“代码”，或者是第 8.4 节所述的注册扩展值。</p>
+<p>扩展响应类型可以包含以空格分隔（%x20）的值的列表，其中值的顺序无关紧要（例如，响应类型“a b” 和响应类型“b a”是相同的）。这种复合响应类型的含义由它们各自的规范定义。</p>
+<p>如果授权请求缺少 response_type 参数，或者无法识别响应类型，授权服务器必须返回一个错误响应，如第 4.1.2.1 节所述。</p>
+<h4 id="3-1-2-重定向终端">3.1.2 重定向终端</h4>
+<p>与资源所有者完成交互之后，授权服务器将资源所有者的用户代理定向回客户端。授权服务器将用户代理重定向到客户端的重定向终端，该终端在客户端注册过程中与授权服务器建立。</p>
+<p>授权服务器必须使用 [RFC3986] 第 6.2.1 节中定义的简单字符串来比较两个 URI。</p>
+<p>重定向 URI 必须是 [RFC3986] 第 4.3 节定义的绝对 URI。终端 URI 可以包括一个（按附录 B）格式为 application/x-www-form-urlencoded 的查询组件（[RFC3956] 第 3.4 节），在添加附加查询参数时必须保留该组件。终端 URI 不能包含片段组件。</p>
+<h5 id="3-1-2-1-终端请求机密性">3.1.2.1 终端请求机密性</h5>
+<p>当请求的响应类型为“代码”时，或重定向请求将导致在开放网络上传输敏感的凭据时，重定向终端应该按第 1.6 节所述要求使用 TLS。如果 TLS 不可用，授权服务器应该在重定向之前警告资源所有者有关不安全终端的信息（例如，在授权请求期间显示一条消息）。</p>
+<p>缺乏传输层安全可能严重影响客户端的安全性和授权访问的受保护资源。当授权过程用作客户端委托的终端用户身份认证的一种形式时，传输层安全的保障尤其重要（例如，第三方登录服务）。</p>
+<h5 id="3-1-2-2-注册要求">3.1.2.2 注册要求</h5>
+<p>授权服务器必须要求所有客户端在授权终端前注册一个或多个完整的重定向 URI。如果需要，客户端可以使用 state 参数来定制每个请求。</p>
+<p>授权服务器可以允许客户端注册多个重定向 URI。</p>
+<p>如果不要求注册重定向 URI，攻击者就可以按照第 9.18 节所述将授权终端用于开放式重定向。</p>
+<h5 id="3-1-2-3-动态配置">3.1.2.3 动态配置</h5>
+<p>如果已经注册了许多重定向 URI ，则客户端必须在授权请求中包含一个重定向 URI，使用 redirect_uri 请求参数。</p>
+<h5 id="3-1-2-4-无效终端">3.1.2.4 无效终端</h5>
+<p>如果授权请求由于重定向 URI 丢失、无效或不匹配而失败，授权服务器应该将错误告知资源所有者，并且不能将用户代理自动重定向到无效的重定向 URI。</p>
+<h5 id="3-1-2-5-终端内容">3.1.2.5 终端内容</h5>
+<p>重定向到客户端的终端的请求通常会得到 HTML 文档响应，并由用户代理处理。如果直接将 HTML 响应作为重定向请求的结果，HTML 文档中包含的任何脚本都将被执行，并且拥有对重定向 URI 和凭据（例如授权码）的完全访问权限。</p>
+<p>客户端不应该在重定向终端响应中包含任何第三方脚本（例如，第三方分析、社交插件、广告网络）、相反，应该从 URI 中提取凭证，并再次将用户代理重定向到另一个终端，而不泄露凭证（在 URI 或其他地方）。如果包含第三方脚本，那么客户端必须确保自己的脚本（用于从 URI 中提取和删除凭据）首先执行。</p>
+<h3 id="3-2-令牌终端">3.2 令牌终端</h3>
+<p>客户端使用授权许可或刷新令牌向令牌终端获取访问令牌。</p>
+<p>客户端获取令牌终端的位置的方法超出了本规范的范围，但是通常该位置在服务文档或授权服务器元数据文档（[RFC 8414]）中提供。</p>
+<p>终端 URI 可以包括一个（按附录 B）格式为 application/x-www-form-urlencoded 的查询组件（[RFC3986] 第 3.4 节），在添加附加查询参数时必须保留该组件。终端 URI 不能包含片段组件。</p>
+<p>由于对令牌终端的请求会产生明文凭据的传输（在 HTTP 请求和响应中），因此，在向令牌终端发送请求时，授权服务器必须要求使用第 1.6 节所述的 TLS。</p>
+<p>客户端在发出访问令牌请求时必须使用授 HTTP POST 方法。</p>
+<p>发送的没有值的参数必须被视为在请求中已被省略。授权服务器必须忽略无法识别的请求参数。本规范定义的请求和响应参数不能被包含超过一次。</p>
+<h4 id="3-2-1-客户端认证">3.2.1 客户端认证</h4>
+<p>向令牌终端发出请求时，机密的或拥有凭据的客户端必须按照第 2.3 节中所述，与授权服务器进行身份认证。客户端身份认证用于：</p>
+<ul>
+<li>
+<p>强制将刷新令牌和授权码绑定到客户端。当授权码通过不安全的通道传输到重定向终端时，客户端身份认证至关重要。</p>
+</li>
+<li>
+<p>通过禁用客户端或更改凭据，从受攻击的客户端中恢复，从而防止攻击者滥用被盗的刷新令牌。更改一组客户端凭据比撤销整个刷新令牌集合要快得多。</p>
+</li>
+<li>
+<p>实施身份认证管理最佳实践，需要定期进行凭据更换。更换整个刷新令牌集合具有挑战性，而更换一组客户端凭据要容易得多。</p>
+</li>
+</ul>
+<h3 id="3-3-访问令牌范围">3.3 访问令牌范围</h3>
+<p>授权终端和令牌终端允许客户端使用“范围（scope）”请求参数指定访问请求的范围。反过来，授权服务器使用“范围（scope）”响应参数通知客户端的访问令牌的范围。</p>
+<p>scope 参数的值表示为以空格分隔的区分大小写的字符串列表。字符串由授权服务器定义。如果值包含多个以空格分隔的字符串，则它们的顺序无关紧要，并且每个字符串都会向请求的范围添加一个附加的访问范围。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scope       = scope-token *( SP scope-token )</span><br><span class="line">scope-token = 1*( %x21 / %x23-5B / %x5D-7E )</span><br></pre></td></tr></table></figure>
+<p>根据授权服务器策略或资源所有者要求，授权服务器可以完全或部分忽略客户端请求的范围。如果颁发的访问令牌范围和客户端请求的范围不同，则授权服务器必须包含“范围（scope）”响应参数，以将实际许可的范围通知给客户端。</p>
+<p>如果客户端在请求授权时忽略了 scope 参数，则授权服务器必须使用预定义的默认值处理请求，或返回请求失败并指示范围无效。授权服务器应该记录其范围要求和默认值（如果已经定义）。</p>
+<h2 id="4-获得授权">4. 获得授权</h2>
+<p>为了请求访问令牌，客户端从资源所有者那里获得授权。授权以授权许可的形式表示，客户端使用该授权许可请求访问令牌。OAuth 定义了两种许可类型：授权码和客户端凭据。还提供了用于定义其他许可类型的扩展机制。</p>
+<h3 id="4-1-授权码许可">4.1 授权码许可</h3>
+<p>授权码许可能够用于获取访问令牌和刷新令牌。</p>
+<p>由于这是基于重定向的流程，因此客户端必须能够与资源所有者的用户代理（通常是 Web 浏览器）进行交互，并且能够（通过重定向）接收来自授权服务器的传入请求。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">+----------+</span><br><span class="line">| Resource |</span><br><span class="line">|   Owner  |</span><br><span class="line">|          |</span><br><span class="line">+----------+</span><br><span class="line">     ^</span><br><span class="line">     |</span><br><span class="line">    (2)</span><br><span class="line">+----|-----+          Client Identifier      +---------------+</span><br><span class="line">|         -+----(1)-- &amp; Redirect URI    ----&gt;|               |</span><br><span class="line">|  User-   |                                 | Authorization |</span><br><span class="line">|  Agent  -+----(2)-- User authenticates ---&gt;|     Server    |</span><br><span class="line">|          |                                 |               |</span><br><span class="line">|         -+----(3)-- Authorization Code ---&lt;|               |</span><br><span class="line">+-|----|---+                                 +---------------+</span><br><span class="line">  |    |                                         ^      v</span><br><span class="line"> (1)  (3)                                        |      |</span><br><span class="line">  |    |                                         |      |</span><br><span class="line">  ^    v                                         |      |</span><br><span class="line">+---------+                                      |      |</span><br><span class="line">|         |&gt;---(4)-- Authorization Code ---------&#x27;      |</span><br><span class="line">|  Client |          &amp; Redirect URI                     |</span><br><span class="line">|         |                                             |</span><br><span class="line">|         |&lt;---(5)----- Access Token -------------------&#x27;</span><br><span class="line">+---------+       (w/ Optional Refresh Token)</span><br><span class="line"></span><br><span class="line">Note: The lines illustrating steps (1), (2), and (3) are broken into</span><br><span class="line">two parts as they pass through the user-agent.</span><br><span class="line">注意：说明步骤 (1)、(2)、(3) 的行在通过用户代理时被分为两个部分。</span><br><span class="line">                  </span><br><span class="line">                  Figure 3: Authorization Code Flow</span><br><span class="line">                  图 3：授权码流程</span><br></pre></td></tr></table></figure>
+<p>图 3 所示的流程包含以下步骤：</p>
+<p>(1) 客户端通过将资源所有者的用户代理定向到授权终端来启动流程。客户端包括其客户端标识、代码挑战（从生成的代码验证中派生）、可选的请求范围、可选的本地状态以及重定向 URI，一旦授予（或拒绝）访问，授权服务器就将用户代理定向到该 URI。</p>
+<p>(2) 授权服务器（通过用户代理）对资源所有者进行身份认证，并确定资源所有者授予还是拒绝客户端的访问请求。</p>
+<p>(3) 假设资源所有者授予访问权限，授权服务器使用先前（在请求中或在用户注册期间）提供的重定向 URI 将用户代理定向回客户端。重定向 URI 包括授权码和客户端先前提供的任何本地状态。</p>
+<p>(4) 客户端使用上一步收到的授权码和代码验证，向授权服务器的令牌终端请求访问令牌。发出请求时，客户端可以向授权服务器进行身份认证。客户端使用用于获取授权码的重定向 URI 进行认证。</p>
+<p>(5) 授权服务器尽可能对客户端进行身份认证，验证授权码和代码验证，并确保收到的重定向 URI 与步骤 (3) 中用于重定向客户端的 URI 匹配。如果有效，授权服务器将向客户端返回访问令牌和可选的刷新令牌作为响应。</p>
+<h4 id="4-1-1-授权请求">4.1.1 授权请求</h4>
+<p>为了开始授权请求，客户端通过向授权服务器的授权终端 URI 添加参数，来构建授权请求 URI。</p>
+<p>客户端针对每个授权请求使用唯一的秘密，以防止代码注入和 CSRF 攻击。客户端首先生成秘密，之后可以将其与授权码一起使用，以证明使用该授权码的应用程序与请求授权码的应用程序是同一个应用程序。属性 code_challenge 和 code_verifier 来自 OAuth 2.0 的扩展，以最初开发此技术的 Proof-Key for Code Exchange(PKCE)（[RFC7636]）而著称。</p>
+<p>客户端必须使用 code_challenge 和 code_verifier ，并且授权服务器必须强制其使用，除了在第 9.8 节所述的条件下。在这种情况下，仍然建议强制使用 code_challenge 和 code_verifier。</p>
+<h5 id="4-1-1-1-客户端生成代码验证">4.1.1.1 客户端生成代码验证</h5>
+<p>客户端首先以下述方式为每个授权请求创建代码验证 code_verifier：</p>
+<p>code_verifier = 使用保留字符 [A-Z] / [a-z] / [0-9] / “-” / “.” / “_” / “~”（[RFC3986] 2.3节）的高熵密码学随机字符串，最小长度为 43 个字符，最大程度为 128 个字符。</p>
+<p>code_verifier 的扩展的巴科斯范式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">code-verifier = 43*128unreserved</span><br><span class="line">unreserved = ALPHA / DIGIT / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;</span><br><span class="line">ALPHA = %x41-5A / %x61-7A</span><br><span class="line">DIGIT = %x30-39</span><br></pre></td></tr></table></figure>
+<p>注意：代码验证应该具有足够的熵，使其值难以被猜出。建议使用合适的随机数生成器的输出来创建 32 字节的序列。然后对八位组序列进行 base64url 编码，以生成一个 43 个八位长的、URL 安全的字符串，用作代码验证。</p>
+<h5 id="4-1-1-2-客户端生成代码挑战">4.1.1.2 客户端生成代码挑战</h5>
+<p>然后，客户端对代码验证使用以下一种转换方式，从代码验证派生代码挑战。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">plain</span><br><span class="line">  code_challenge = code_verifier</span><br><span class="line"></span><br><span class="line">S256</span><br><span class="line">  code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))</span><br></pre></td></tr></table></figure>
+<p>如果客户端能够使用 S256 ，则必须使用 S256，服务器上强制实施 S256（MTI）。仅当客户端因为某些技术原因不支持 S256 ，并通过带外配置或授权服务器元数据（[RFC5414]）直到服务器支持明文时，客户端才允许使用明文。</p>
+<p>明文传输是为了与现有部署以及不支持 S256 传输的受限环境兼容。</p>
+<p>code_challenge 的扩展的巴科斯范式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">code-challenge = 43*128unreserved</span><br><span class="line">unreserved = ALPHA / DIGIT / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;</span><br><span class="line">ALPHA = %x41-5A / %x61-7A</span><br><span class="line">DIGIT = %x30-39</span><br></pre></td></tr></table></figure>
+<h5 id="4-1-1-3-客户端初始化授权请求">4.1.1.3 客户端初始化授权请求</h5>
+<p>客户端构造请求 URI，使用（按附录 B） application/x-www-form-urlencoded 编码将以下参数添加到授权终端 URI 的查询组件中：</p>
+<p>response_type：必须。值必须设置为代码（code）。</p>
+<p>client_id：必须。客户端标识，如第 2.2 节所述。</p>
+<p>code_challenge：必须或建议（参见 9.8节）。代码挑战。</p>
+<p>code_challenge_method：可选，缺省值为明文（plain）。代码验证的转换方法为 S256 或明文。</p>
+<p>redirect_uri：可选。如第 3.1.2 节所述。</p>
+<p>scope：可选。访问请求的范围，如第 3.3 节所述。</p>
+<p>state：可选。客户端用于维持请求和回调之间的状态的一个不透明值。当授权服务器将用户代理定向回用户时将包括该值。</p>
+<p>客户端使用 HTTP 重定向响应或通过用户代理的其他可用方式，将资源所有者定向到构造的 URI。</p>
+<p>例如，客户端通过用户代理使用 TLS 发送以下 HTTP 请求（额外换行符仅用于显示目的）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /authorize?response_type=code&amp;client_id=s6BhdRkqt3&amp;state=xyz</span><br><span class="line">    &amp;redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb</span><br><span class="line">    &amp;code_challenge=6fdkQaPm51l13DSukcAH3Mdx7_ntecHYd1vi3n0hMZY</span><br><span class="line">    &amp;code_challenge_method=S256 HTTP/1.1</span><br><span class="line">Host: server.example.com</span><br></pre></td></tr></table></figure>
+<p>授权服务器验证请求，确保所有必须参数都存在并且有效。如果请求有效，授权服务器对资源所有者进行身份认证，并获得授权决定（通过询问资源所有者或通过其他方式确立）。</p>
+<p>当确立决定后，授权服务器使用 HTTP 重定向响应或通过其他可用的方式将用户代理重定向到客户端提供的重定向 URI。</p>
+<h4 id="4-1-2-授权响应">4.1.2 授权响应</h4>
+<p>如果资源所有者许可了访问请求，授权服务器使用（按附录 B）application/x-www-form-urlencoded 编码将以下参数添加到重定向 URI 的查询组件中，以颁发授权码和返回给客户端：</p>
+<p>code：必须。授权服务器生成的授权码。授权码必须在颁发后不就过期，以减少泄露的风险。建议授权码最常的生命周期为 10 分钟。客户端不能多次使用授权码。如果一个授权码被多次使用，授权服务器必须拒绝该请求，并且应该撤回（如果可能）所有先前所有基于该授权码颁发的令牌。授权码和客户端标识、重定向 URI 绑定。</p>
+<p>state：如果客户端授权请求中存在该参数，则必须有此参数。从客户端接收到的值。</p>
+<p>例如，授权服务器通过发送以下 HTTP 响应重定向用户代理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 302 Found</span><br><span class="line">Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">          &amp;state=xyz</span><br></pre></td></tr></table></figure>
+<p>客户端必须忽略无法识别的响应参数。本规范未定义授权码字符串的大小。客户端应该避免对授权码的大小进行假设。授权服务器应该记录其颁发的任何值的大小。</p>
+<p>当服务器在授权响应中颁发授权码时，必须将 code_challenge 和 code_challenge_method 与授权码关联，以便稍后进行验证。</p>
+<p>可以将 code_challenge 和 code_challenge_method 的值以加密的形式存储在代码（code）本身中，但是也可以将其值存储在与代码（code）相关联的服务器上。服务器不能以其他实体可以提取的方式在客户端请求中包含 code_challenge 的值。</p>
+<p>服务器将 code_challenge 与颁发的代码（code）关联的确切方法超出了本规范的范围。</p>
+<h5 id="4-1-2-1-错误响应">4.1.2.1 错误响应</h5>
+<p>如果由于丢失、无效、不匹配重定向 URI，或者客户端标识符丢失、无效，而导致请求失败，授权服务器应该将错误告知资源所有者，并且不能将用户代理自动重定向到无效的重定向 URI。</p>
+<p>AS 必须拒绝来自公开客户端的不带 code_challenge 的请求，并且必须拒绝来自其他客户端的此类请求，除非可以合理地确保客户端以其他方式减轻了代码注入的风险。详细信息请参阅第 9.8 节。</p>
+<p>如果服务器不支持请求的 code_challenge_method 转换，授权终端必须返回授权失败响应，并将错误（error）值设置为无效请求（invalid_request）。错误描述（error_description）或错误 URI（error_uri）响应应该对错误进行说明，例如，不支持转换算法。</p>
+<p>如果资源所有者拒绝访问请求，或者请求由于重定向 URI 丢失或无效以外的原因失败，授权服务器使用（按附录 B） application/x-www-form-urlencoded 编码将以下参数添加到重定向 URI 的请求组件：</p>
+<p>error：必须。单个 ASCII [USASCII] 错误代码，以下之一：</p>
+<p>invalid_request：请求缺少必须的参数，包括无效的参数值、多次包括一个参数，或格式错误。</p>
+<p>unauthorized_client：客户端无权使用该方法请求授权码。</p>
+<p>access_denied：资源所有者或授权服务器拒绝了该请求。</p>
+<p>unsupported_response_type：授权服务器不支持使用该方法获取授权码。</p>
+<p>invalid_scope：请求的范围无效、未知或格式错误。</p>
+<p>server_error：授权服务器遇到意外情况导致其无法处理请求。（此错误代码是必须的，因为不能通过 HTTP 重定向将 500 服务器内部错误 HTTP 状态码返回给客户端。）</p>
+<p>temporarily_unavailable：由于暂时过载或维护，授权服务器当前无法处理请求。（此错误代码是必须的，因为不能通过 HTTP 重定向将 503 服务不可用 HTTP 状态码返回给客户端。）</p>
+<p>error 参数的值不能包含 %x20-21 / %x23-5B / %x5D-7E 集合之外的字符。</p>
+<p>error_description：可选。人类可读的 ASCII [USASCII] 文本，提供了其他信息，用于帮助客户端开发人员了解所发生的错误。error_description 的参数值不能包含 %x20-21 / %x23-5B / %x5D-7E 集合之外的字符。</p>
+<p>error_uri：可选。一个 URI，标识人类可读的网页以及有关该错误的信息，用于向客户端开发人员提供有关该错误的其他信息。error_uri 的参数值必须符合 URI 引用语法，不能包含 %x21 / %x23-5B / %x5D-7E 集合之外的字符。</p>
+<p>state：如果客户端的授权请求中包含 state 参数，则是必须的。从客户端接收到的确切值。</p>
+<p>例如，授权服务器通过发送以下 HTTP 响应重定向用户代理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 302 Found</span><br><span class="line">Location: https://client.example.com/cb?error=access_denied&amp;state=xyz</span><br></pre></td></tr></table></figure>
+<h4 id="4-1-3-访问令牌请求">4.1.3 访问令牌请求</h4>
+<p>客户端通过使用（按附录 B） application/x-www-form-urlencoded 编码以下参数，并以 UTF-8 编码形式添加到 HTTP 请求实体中，然后向令牌终端发送请求：</p>
+<p>grant_type：必须。值必须设置为 authorization_code 。</p>
+<p>code：必须。从授权服务器收到的授权码。</p>
+<p>redirect_uri：必须。如果授权请求中包含第 4.1.1 节所述的 redirect_uri 参数，其值必须相同。</p>
+<p>client_id：如果客户端未按照第 3.2.1 节中所述向授权服务器进行身份认证，则该值必须。</p>
+<p>code_verifier：如果授权请求中包含 code_challenge 参数，则该值必须，否则不能使用。原始的代码验证字符串。</p>
+<p>机密的或拥有凭据的客户端必须按照第 3.2.1 节所述向授权服务器进行身份认证。</p>
+<p>例如，客户端使用 TLS 发送以下 HTTP 请求（额外换行符仅用于显示目的）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">POST /token HTTP/1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">grant_type=authorization_code&amp;code=SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">&amp;redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb</span><br><span class="line">&amp;code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed</span><br></pre></td></tr></table></figure>
+<p>授权服务器必须：</p>
+<ul>
+<li>
+<p>要求对机密的客户端和拥有凭据的客户端（或具有其他身份验证要求的客户端）进行客户端身份认证；</p>
+</li>
+<li>
+<p>如果包含客户端身份认证，则对客户端进行身份认证；</p>
+</li>
+<li>
+<p>确保已经将授权码颁发给授权的机密客户端或拥有凭据的客户端，如果客户端是公开的，那么确保已将授权码并入请求中的 client_id ；</p>
+</li>
+<li>
+<p>验证授权码是否有效；</p>
+</li>
+<li>
+<p>仅当授权请求中存在 code_challenge 参数时，验证 code_verifier 参数存在；</p>
+</li>
+<li>
+<p>如果存在 code_verifier 参数，先计算收到的 code_verifier 中的 code_challenge，然后将先前关联的 code_challenge 以 code_verifier 中指定的 code_challenge_method 进行转换，最后比较两者进行验证；</p>
+</li>
+<li>
+<p>如第 4.1.1.3 节所述，当 redirect_uri 参数包含在初始的认证请求中时，确保 redirect_uri 参数存在，并且值与初始认证请求中的相同。</p>
+</li>
+</ul>
+<h4 id="4-1-4-访问令牌响应">4.1.4 访问令牌响应</h4>
+<p>如果访问令牌请求有效并且经过授权，授权服务器将颁发访问令牌和可选的刷新令牌，如第 5.1 节所述。如果请求客户端身份认证失败或无效，授权服务器将返回错误响应，如第 5.2 节所述。</p>
+<p>成功响应示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Cache-Control: no-store</span><br><span class="line">Pragma: no-cache</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;access_token&quot;: &quot;2YotnFZFEjr1zCsicMWpAA&quot;,</span><br><span class="line">  &quot;token_type&quot;: &quot;Bearer&quot;,</span><br><span class="line">  &quot;expires_in&quot;: 3600,</span><br><span class="line">  &quot;refresh_token&quot;: &quot;tGzv3JOkF0XG5Qx2TlKWIA&quot;,</span><br><span class="line">  &quot;example_parameter&quot;: &quot;example_value&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-客户端凭据许可">4.2 客户端凭据许可</h3>
+<p>当客户端请求访问受其控制的受保护资源，或之前由授权服务器安排的受保护资源时（该方法超出了本规范的范围），客户端可以只使用其客户端凭据（或其他受支持的身份认证方式）请求访问令牌。</p>
+<p>客户端凭据许可类型必须只能由机密的客户端或拥有凭据的客户端使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+---------+                                  +---------------+</span><br><span class="line">|         |                                  |               |</span><br><span class="line">|         |&gt;--(1)- Client Authentication ---&gt;| Authorization |</span><br><span class="line">| Client  |                                  |     Server    |</span><br><span class="line">|         |&lt;--(2)---- Access Token ---------&lt;|               |</span><br><span class="line">|         |                                  |               |</span><br><span class="line">+---------+                                  +---------------+</span><br><span class="line">    </span><br><span class="line">             Figure 4: Client Credentials Flow</span><br><span class="line">             图 4：客户端凭据流程</span><br></pre></td></tr></table></figure>
+<p>图 4 所示的流程包含以下步骤：</p>
+<p>(1) 客户端向授权服务器进行身份认证，并向令牌终端请求访问令牌。</p>
+<p>(2) 授权服务器对客户端进行身份认证，如果有效，则颁发访问令牌。</p>
+<h4 id="4-2-1-授权请求和响应">4.2.1 授权请求和响应</h4>
+<p>由于客户端身份认证用作权限许可，因此不需要其他的授权请求。</p>
+<h4 id="4-2-2-访问令牌请求">4.2.2 访问令牌请求</h4>
+<p>客户端使用（按附录 B） application/x-www-form-urlencoded 编码，并在 HTTP 请求实体中使用 UTF-8 字符编码，添加以下参数来向令牌终端发送请求：</p>
+<p>grant_type：必须。值必须设置为 client_credentials 。</p>
+<p>scope：可选。访问请求的范围，如第 3.3 节所述。</p>
+<p>客户端必须按照第 3.2.1 节中所述，向授权服务器进行身份认证。</p>
+<p>例如，客户端使用传输层安全发送以下 HTTP 请求（额外换行符仅用于显示目的）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /token HTTP/1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">grant_type=client_credentials</span><br></pre></td></tr></table></figure>
+<p>授权服务器必须验证客户端身份。</p>
+<h4 id="4-2-3-访问令牌响应">4.2.3 访问令牌响应</h4>
+<p>如果访问令牌请求有效并且经过授权，授权服务器颁发访问令牌，如第 5.1 节所述。如果请求客户端身份认证失败或无效，授权服务器返回错误响应，如第 5.2 节所述。</p>
+<p>成功响应示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Cache-Control: no-store</span><br><span class="line">Pragma: no-cache</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;access_token&quot;: &quot;2YotnFZFEjr1zCsicMWpAA&quot;,</span><br><span class="line">  &quot;token_type&quot;: &quot;Bearer&quot;,</span><br><span class="line">  &quot;expires_in&quot;: 3600,</span><br><span class="line">  &quot;example_parameter&quot;: &quot;example_value&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-3-扩展许可">4.3 扩展许可</h3>
+<p>客户端使用扩展许可类型，通过使用绝对 URI （由授权服务器定义）指定授权类型作为令牌终端的 grant_type 参数值，并添加任何必要的附加参数。</p>
+<p>例如，用户已经在单独的设备上授权客户端之后，使用 [RFC8628] 定义的设备授权许可来请求访问令牌，客户端使用 TLS 发送以下 HTTP 请求（额外换行符仅用于显示目的）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST /token HTTP/1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">    </span><br><span class="line">grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code</span><br><span class="line">&amp;device_code=GmRhmhcxhwEzkoEqiMEg_DnyEysNkuNhszIySk9eS</span><br><span class="line">&amp;client_id=C409020731</span><br></pre></td></tr></table></figure>
+<p>如果访问令牌请求有效并且经过授权，授权服务器颁发访问令牌和可选的刷新令牌，如第 5.1 节所述。如果请求客户端身份认证失败或无效，授权服务器返回错误响应，如第 5.2 节所述。</p>
+<h2 id="5-颁发访问令牌">5. 颁发访问令牌</h2>
+<p>如果访问令牌请求有效并且经过授权，授权服务器颁发访问令牌和可选的刷新令牌，如第 5.1 节所述、如果请求客户端身份认证失败或无效，授权服务器返回错误响应，如第 5.2 节所述。</p>
+<h3 id="5-1-成功响应">5.1 成功响应</h3>
+<p>授权服务器颁发访问令牌和可选的刷新令牌，并通过将以下参数添加到 HTTP 响应的实体主体（响应状态码为 200 (OK)）中来构造响应：</p>
+<p>access_token：必须。授权服务器颁发的访问令牌。</p>
+<p>token_type：必须。如第 7.1 节所述，颁发的令牌的类型。其值不区分大小写。</p>
+<p>expires_in：建议。访问令牌的生存周期，以秒为单位。例如，值“3600”表示访问令牌将在响应生成的一小时后过期。如果省略，授权服务器应该通过其他方法提供过期时间或记录默认值。</p>
+<p>refresh_token：可选。刷新令牌，可以用相同的授权许可获取新的访问令牌，如第 6 节所述。</p>
+<p>scope：如果和客户端请求的范围相同，则该值可选；否则，该值是必须的。访问令牌的范围如第 3.3 节所述。</p>
+<p>参数使用 [RFC7159] 定义的 application/json 媒体类型编码包含在 HTTP 响应的实体中。通过将每个参数添加到结构中的最高级别，可以将参数序列化为 JSON(JavaScript Object Notation) 结构。参数名称和参数值作为 JSON 字符串包含在内。数值作为 JSON 数字包含在内。参数的顺序无关紧要，可以变化。</p>
+<p>授权服务器必须在任何包含令牌、凭据或其他敏感信息的响应头中包含 HTTP Cache-Control 响应头字段 [RC7234]，其值为 no-store，以及 Pragma 响应头字段，其值为 no-cache 。</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Cache-Control: no-store</span><br><span class="line">Pragma: no-cache</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;access_token&quot;:&quot;2YotnFZFEjr1zCsicMWpAA&quot;,</span><br><span class="line">  &quot;token_type&quot;:&quot;Bearer&quot;,</span><br><span class="line">  &quot;expires_in&quot;:3600,</span><br><span class="line">  &quot;refresh_token&quot;:&quot;tGzv3JOkF0XG5Qx2TlKWIA&quot;,</span><br><span class="line">  &quot;example_parameter&quot;:&quot;example_value&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>客户端必须忽略响应中无法识别的值名称。从授权服务器收到的令牌和其他值的大小均未定义。客户端应避免对值的大小做出假设。授权服务器应该记录其颁发的任何值的大小。</p>
+<h3 id="5-2-错误响应">5.2 错误响应</h3>
+<p>授权服务器以 HTTP 400 (Bad Request) 状态码响应（除非另行指定），并在响应中包含以下参数：</p>
+<p>error：必须。单个 ASCII [USASCII] 错误代码，以下之一：</p>
+<p>invalid_request：请求缺少必要的参数，包括不受支持的参数值（许可类型除外）、重复参数、包括多个凭据、对客户端使用多个身份认证机制，授权请求中包含 code_verifier 但没有 code_challenge ，或格式错误。</p>
+<p>invalid_client：客户端身份认证失败（例如，未知的客户端，没有包括客户端身份认证，或不支持的认证方法）。授权服务器可以返回 HTTP 401 (Unauthorized) 状态码，以指名支持哪些 HTTP 认证方案。如果客户端尝试使用请求头字段 Authorization 进行身份认证，则授权服务器必须返回 HTTP 401 (Unauthorized) 状态码，并在响应头中包含 WWW-Authenticate 字段匹配客户端使用的身份认证方案。</p>
+<p>invalid_grant：提供的授权许可（例如，授权码，资源所有者凭据）或刷新令牌无效、过期、被撤销、不匹配授权请求中使用的重定向 URI，或已颁发给另一个客户端。</p>
+<p>unauthorized_client：未授权的已认证客户端使用这个授权许可类型。</p>
+<p>unsupported_grant_type：授权服务器不支持授权许可类型。</p>
+<p>invalid_scope：请求的范围无效、未知、格式错误、或超出资源所有者许可的范围。</p>
+<p>error 参数的值不能包含 %x20-21 / %x23-5B / %x5D-7E 集合之外的字符。</p>
+<p>error_description：可选。人类可读的 ASCII [USASCII] 文本，提供了其他信息，用于帮助客户端开发人员了解所发生的错误。error_description 的参数值不能包含 %x20-21 / %x23-5B / %x5D-7E 集合之外的字符。</p>
+<p>error_uri：可选。一个 URI，标识人类可读的网页以及有关该错误的信息，用于向客户端开发人员提供有关该错误的其他信息。error_uri 的参数值必须符合 URI 引用语法，不能包含 %x21 / %x23-5B / %x5D-7E 集合之外的字符。</p>
+<p>参数使用 [RFC7159] 定义的 application/json 媒体类型编码包含在 HTTP 响应的实体中。通过将每个参数添加到结构中的最高级别，可以将参数序列化为 JSON 结构。参数名称和参数值作为 JSON 字符串包含在内。数值作为 JSON 数字包含在内。参数的顺序无关紧要，可以变化。</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 400 Bad Request</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Cache-Control: no-store</span><br><span class="line">Pragma: no-cache</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"> &quot;error&quot;:&quot;invalid_request&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-更新访问令牌">6. 更新访问令牌</h2>
+<p>授权服务器应该基于风险评估决定是否向特定客户端颁发刷新令牌。如果授权服务器决定不颁发刷新令牌，则客户端可以通过使用其他许可类型，例如授权码许可类型，来更新访问令牌。在这种情况下，授权服务器可以使用 cookie 和持久的许可来优化用户体验。</p>
+<p>如果颁发了刷新令牌，这些刷新令牌必须跟据资源所有者的许可绑定到资源服务器。这是为了防止合法客户端的权限提升，并减小刷新令牌泄露的影响。</p>
+<p>如果授权服务器向客户端颁发了刷新令牌，客户端使用（按附录 B） application/x-www-form-urlencoded 编码，并在 HTTP 请求实体中使用 UTF-8 字符编码，添加以下参数向令牌终端发送刷新请求：</p>
+<p>grant_type：必须。值必须设置为 refresh_token。</p>
+<p>refresh_token：必须。颁发给客户端的刷新令牌。</p>
+<p>scope：可选。访问请求的范围如第 3.3 节所述。请求的范围不能包含任何资源所有者最初未许可的范围，如果省略，则默认视为资源所有者最初许可的范围。</p>
+<p>因为刷新令牌通常是用于请求其他访问令牌的持久凭证，所以刷新令牌将绑定到被颁发该令牌的客户端。机密的客户端或拥有凭证的客户端必须向授权服务器进行身份认证，如第 3.2.1 节所述。</p>
+<p>例如，客户端使用传输层安全发送以下 HTTP 请求（额外换行符仅用于显示目的）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /token HTTP/1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA</span><br></pre></td></tr></table></figure>
+<p>授权服务器必须：</p>
+<ul>
+<li>
+<p>要求对机密的客户端或拥有凭据的客户端进行身份认证；</p>
+</li>
+<li>
+<p>如果包括客户端身份认证，则对客户端进行身份认证，并确保刷新令牌颁发给了认证的客户端；</p>
+</li>
+<li>
+<p>验证刷新令牌。</p>
+</li>
+</ul>
+<h3 id="6-1-更新令牌保护">6.1 更新令牌保护</h3>
+<p>授权服务器应该使用以下方法之一来检测恶意攻击者对公开的客户端的刷新令牌的重放：</p>
+<ul>
+<li>
+<p>发送者受限的刷新令牌：授权服务器使用 [I-D.ietf-oauth-token-binding]、 [RFC8705]、[I-D.ietf-oauth-dpop] 或其他合适的加密方法将刷新令牌绑定到某个特定的客户端实例。</p>
+</li>
+<li>
+<p>刷新令牌轮换：授权服务器在每次访问令牌更新响应中都颁发一个新的刷新令牌。之前的刷新令牌无效，但是授权服务器仍然保留关系。如果刷新令牌泄露，并同时被攻击者和合法客户端使用，则攻击者和合法客户端之一将提供无效的刷新令牌，这将警告授权服务器。授权服务器无法确定哪一方提交了无效的刷新令牌，但是将撤销活动的刷新令牌。以强制合法客户端获得新的授权许可的方式阻止了攻击。</p>
+</li>
+</ul>
+<p>实现说明：刷新令牌获得的许可可以编码到刷新令牌中。使得授权服务器可以有效地确定刷新令牌的许可，并通过扩展确定所有需要被撤销的刷新令牌。在这种情况下，授权服务器必须确保刷新令牌的完整性。</p>
+<p>如果有效并且经过授权，授权服务器颁发访问令牌，如第 5.1 节所述。如果请求身份认证失败或无效，授权服务器返回错误响应，如第 5.2 节所述。</p>
+<p>授权服务器可以颁发一个新的刷新令牌，在这种情况下，客户端必须丢弃旧的刷新令牌，并使用新的刷新令牌替换。授权服务器可以在颁发新的刷新令牌后撤销旧的刷新令牌。如果颁发了新的刷新令牌，则刷新令牌的范围必须和客户端请求中的刷新令牌的范围相同。</p>
+<p>如果发生安全事件，授权服务器可以自动撤销刷新令牌，例如：</p>
+<ul>
+<li>
+<p>密码更改</p>
+</li>
+<li>
+<p>在授权服务器上注销</p>
+</li>
+</ul>
+<p>如果客户端在一段时间内处于非活跃状态（即，一段时间内刷新令牌没有被用于请求新的访问令牌），则刷新令牌应该过期。过期时间由授权服务器决定。可以是全局的值，也可以基于客户端策略决定，或者由刷新令牌关联的许可（及其敏感性）确定。</p>
+<h2 id="7-访问受保护资源">7. 访问受保护资源</h2>
+<p>客户端通过向资源服务器提供访问令牌来访问受保护资源。资源服务器必须验证访问令牌，并确保没有过期，所请求的资源在范围之内。资源服务器用来验证访问令牌（以及错误响应）的方法超出了本规范的范围，但是通常涉及资源服务器与授权服务器之间的交互或协调，例如使用令牌自省 [RFC7662] 或结构化的访问令牌格式（例如 JWT [I-D.ietf-oauth-access-token-jwt]）。</p>
+<p>客户端使用访问令牌向资源服务器进行身份认证的方法取决于授权服务器颁发的访问令牌类型。通常，涉及将 HTTP 请求头的 Authorization [RFC2617] 字段与使用的访问令牌类型的规范中定义的认证方案一起使用。</p>
+<h3 id="7-1-访问令牌类型">7.1 访问令牌类型</h3>
+<p>访问令牌类型为客户端提供了使用访问令牌请求受保护资源所需的信息（以及类型特定的属性）。客户端不能在不了解令牌类型的情况下使用访问令牌。</p>
+<p>例如，通过简单地在请求中包括访问令牌字符串来使用本规范中定义的承载（Bearer）令牌类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /resource/1 HTTP/1.1</span><br><span class="line">Host: example.com</span><br><span class="line">Authorization: Bearer mF_9.B5f-4.1JqM</span><br></pre></td></tr></table></figure>
+<p>以上示例仅用于说明。</p>
+<p>每个访问令牌类型定义都制定了发送给客户端的额外属性（如果有），以及 access_token 响应参数。它还定义了 HTTP 认证方法，用于在对受保护资源的请求中包括访问令牌。</p>
+<h3 id="7-2-承载令牌">7.2 承载令牌</h3>
+<p>承载令牌是表明所有权的安全令牌，拥有令牌的任意一方（承载者）可以和拥有该令牌的其他方用同样的方式使用令牌。使用承载令牌不需要承载者证明拥有密钥（所有权证明）。</p>
+<p>承载令牌可以通过其他规范扩展，进而包括所有权证明技术。</p>
+<h4 id="7-2-1-已认证的请求">7.2.1 已认证的请求</h4>
+<p>本节定义了两种在资源请求中向资源服务器发送承载令牌的方法。客户端在每个请求中不能使用多种方式传输令牌。</p>
+<h5 id="7-2-1-1-授权请求头字段">7.2.1.1 授权请求头字段</h5>
+<p>当在 HTTP/1.1 [RFC2617] 中定义的请求头字段 Authorization 中发送访问令牌时，客户端使用 Bearer 身份认证方案来传输访问令牌</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /resource HTTP/1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Authorization: Bearer mF_9.B5f-4.1JqM</span><br></pre></td></tr></table></figure>
+<p>本方案的 Authorization 头字段语法遵循 [RFC2617] 第 2 节定义的基本方案的用法。注意，尽管遵循基本方案，但并不遵循 [RFC2617] 第 1.2 节定义的通用语法，此外，它与 HTTP 1.1 身份认证 [RFC7235] 中的通用身份认证框架兼容，为了能够响应现有部署，它并不遵循其中概述的首选方式。承载凭据的语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">b64token    = 1*( ALPHA / DIGIT /</span><br><span class="line">                 &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot; / &quot;+&quot; / &quot;/&quot; ) *&quot;=&quot;</span><br><span class="line">credentials = &quot;Bearer&quot; 1*SP b64token</span><br></pre></td></tr></table></figure>
+<p>客户端应该使用承载令牌发出已经过身份认证的请求，使用 HTTP 身份认证框架中的 Authorization 请求头字段，并填充为 Bearer 。资源服务器必须支持这种方式。</p>
+<h5 id="7-2-1-2-表单编码的主体参数">7.2.1.2 表单编码的主体参数</h5>
+<p>当在 HTTP 请求主体中发送访问令牌时，客户端使用 access_token 参数将访问令牌添加到请求体中。除非满足以下条件，否则客户端不能使用该方法：</p>
+<ul>
+<li>
+<p>HTTP 请求实体头包含设置为 application/x-www-form-urlencoded 的 Content-Type 字段。</p>
+</li>
+<li>
+<p>实体遵循 HTML 4.01 [W3C.REC-html401-19991224] 定义的 application/x-www-form-urlencoded 内容类型的编码要求。</p>
+</li>
+<li>
+<p>HTTP 请求主体只包含单一部分。</p>
+</li>
+<li>
+<p>实体中编码的内容必须完全由 ASCII [USASCII] 字符组成。</p>
+</li>
+<li>
+<p>HTTP 请求方法是为定义了语义的请求主体而使用的。特别地，这意味着不能使用 GET 方法。</p>
+</li>
+</ul>
+<p>实体可以包含其他特定的的请求参数，在这种情况下，access_token 参数必须使用 &amp; 字符（ASCII 码为 38）与特定的请求参数正确地区分。</p>
+<p>例如，客户端使用传输层安全发送以下 HTTP 请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">POST /resource HTTP/1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">access_token=mF_9.B5f-4.1JqM</span><br></pre></td></tr></table></figure>
+<p>除非客户端在应用程序的上下文中无法访问 Authorization 请求头字段，否则不应该使用 application/x-www-form-urlencoded 方法。资源服务器可以支持这种方法。</p>
+<h4 id="7-2-2-WWW-Authenticate-响应头字段">7.2.2 WWW-Authenticate 响应头字段</h4>
+<p>如果对受保护资源的请求中不包括身份认证凭据，或不包含允许访问受保护资源的访问令牌，资源服务器必须在 HTTP 响应头字段中包含 WWW-Authenticate，资源服务器也可以在别的情况下将其包含在响应头中。WWW-Authenticate 头字段使用 HTTP/1.1 [RFC2617] 定义的框架。</p>
+<p>本规范定义的挑战必须使用 auth-scheme 值 Bearer。该方案必须跟随一个或多个 auth-param 参数值。本规范使用或定义的 auth-param 属性如下。也可以使用其他 auth-param 值。</p>
+<p>可以包括一个 realm 属性，以 HTTP/1.1 [RFC2617] 中描述的方式指示保护的范围。realm 属性不能多次出现。</p>
+<p>scope 属性已经在第 3.3 节中定义。scope 属性是由空格分隔的、区分大小写的范围值列表，用于指明访问令牌所需的用于请求资源的范围。scope 值是根据实现定义的，没有针对它们的集中式注册表；允许的值由授权服务器定义。scope 属性中的值的顺序无关紧要。在某些情况下，当具有足够访问范围请求新的访问令牌访问受保护资源时，scope 的值将会被使用。scope 属性的使用是可选的。scope 属性不能多次出现。scope 值仅用于编程，并不意味着要展示给终端用户。</p>
+<p>以下是两个 scope 值的示例；分别来自 OpenID Connect [OpenID.Messages] 和开放认证技术委员会（Open Authentication Technology Committee, OATC）在线多媒体授权协议 [OMAP] 中 OAuth 2.0 的用例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scope=&quot;openid profile email&quot;</span><br><span class="line">scope=&quot;urn:example:channel=HBO&amp;urn:example:rating=G,PG-13&quot;</span><br></pre></td></tr></table></figure>
+<p>如果对受保护资源的请求包含访问令牌但身份认证失败，资源服务器应该包含 error 属性，向客户端提供拒绝访问请求的原因。参数值在第 7.2.3 节中描述。另外，资源服务器可以包含 error_description 属性，向开发人员提供人类可读的解释，但不意味着要展示给终端用户。也可以包含 error_uri 属性和一个绝对 URI 标识解释该错误的人类可读的网页。error、error_description、error_uri 属性不能重复出现。</p>
+<p>scope 属性的值（按照附录 A.4）不能包含 %x21 / %x23-5B / %x5D-7E 集合之外的字符，%x20 用于分隔 scope 属性的值。error、error_description 属性的值（按照附录 A.7 和 A.8）不能包含 %x20-21 / %x23-5B / %x5D-7E 集合之外的字符。error_uri 属性（按照附录 A.9 中）必须符合 URI 引用语法，因此不能包含 %x21 / %x23-5B / %x5D-7E 集合之外的字符。</p>
+<p>例如，响应未经身份认证的受保护资源请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 401 Unauthorized</span><br><span class="line">WWW-Authenticate: Bearer realm=&quot;example&quot;</span><br></pre></td></tr></table></figure>
+<p>响应使用过期的访问令牌尝试进行身份认证的受保护资源请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 401 Unauthorized</span><br><span class="line">WWW-Authenticate: Bearer realm=&quot;example&quot;,</span><br><span class="line">                  error=&quot;invalid_token&quot;,</span><br><span class="line">                  error_description=&quot;The access token expired&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="7-2-3-错误代码">7.2.3 错误代码</h4>
+<p>当请求失败时，资源服务器使用适当的 HTTP 状态码（通常为 400、401、403、405）响应，并在响应中包括以下错误代码之一：</p>
+<p>invalid_request：请求缺少必要的参数，包括不受支持的参数值，重复参数，使用多种方法包括访问令牌，或格式错误。资源服务器应该以 HTTP 400 (Bad Request) 状态码响应。</p>
+<p>invalid_token：提供的访问令牌已经过期、被撤回、格式错误或因为其他原因无效。资源服务器应该以 HTTP 401 (Unauthorized) 状态码响应。客户端应该请求一个新的访问令牌并重试请求受保护资源。</p>
+<p>insufficient_scope：请求需要比访问令牌提供的更高的权限。资源管理器应该以 HTTP 403 (Forbidden) 状态码响应，并且可以在 scope 属性中包含访问受保护资源所需的范围。</p>
+<p>如果请求中缺少任何身份认证信息（例如，客户端未意识到身份认证是必须的，或尝试使用不支持的身份认证方法），资源服务器不应该包含错误代码或其他错误信息。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 401 Unauthorized</span><br><span class="line">WWW-Authenticate: Bearer realm=&quot;example&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="7-3-错误响应">7.3 错误响应</h3>
+<p>如果资源访问请求失败，资源服务器应该告知客户端错误。资源管理器使用的方法由特定的令牌类型决定，例如在第 7.2.3 节中描述的承载令牌。</p>
+<h4 id="7-3-1-扩展令牌类型">7.3.1 扩展令牌类型</h4>
+<p>[RFC6750] 在第 11.4 节 (<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc6749#section-11.4">https://tools.ietf.org/html/rfc6749#section-11.4</a>) 中建立了一个通用注册表，用于在 OAuth 令牌认证方案之间共享错误值。</p>
+<p>主要为 OAuth 令牌身份认证设计的新的身份认证方案应该定义一种机制，向客户端提供错误状态码，允许在本规范建立的错误注册表中进行错误值的注册。</p>
+<p>这样的方案可以将有效错误代码的集合限制为注册值的子集。如果使用命名参数返回错误代码，则该参数名称应该是 error 。</p>
+<p>能够用于 OAuth 令牌身份认证的其他方案，但不是为该目的而设计，可以使用相同的方式将错误值绑定到注册表。</p>
+<p>新的认证方案也可以选择指定使用 error_description 和 error_uri 参数返回错误信息，与本规范中的用法相同。</p>
+<h3 id="7-4-访问令牌安全">7.4 访问令牌安全</h3>
+<h4 id="7-4-1-安全威胁">7.4.1 安全威胁</h4>
+<p>下表列出了针对使用某些形式的令牌的协议的几种常见威胁。该威胁列表基于 NIST 特别出版物 800-63 [NIST800-63] 。</p>
+<h5 id="7-4-1-1-令牌伪造-篡改">7.4.1.1 令牌伪造/篡改</h5>
+<p>攻击者可能会生成伪造的令牌，或修改现有令牌的内容（例如认证或属性声明），从而导致资源服务器向客户端授予不恰当的访问权限。例如，攻击者可以修改令牌延长有效期；恶意客户端可以修改声明，从而访问本来无权查看的信息。</p>
+<h5 id="7-4-1-2-令牌泄露">7.4.1.2 令牌泄露</h5>
+<p>令牌可能包含认证信息和包含敏感信息的属性声明。</p>
+<h5 id="7-4-1-3-令牌重定向">7.4.1.3 令牌重定向</h5>
+<p>攻击者使用一台资源服务器颁发的令牌来访问另一台不同的资源服务器，使其误以为该令牌适用。</p>
+<h5 id="7-4-1-4-令牌重放">7.4.1.4 令牌重放</h5>
+<p>攻击者尝试使用已经在资源服务器上使用过的令牌。</p>
+<h4 id="7-4-2-威胁缓解">7.4.2 威胁缓解</h4>
+<p>通过数字签名保护令牌的内容，可以缓解很大一部分的威胁。或者，承载令牌可以包含身份认证信息的引用，而不是直接编码该信息。这样的引用对攻击者来说必须是不可实现的；使用引用可能需要服务器和令牌颁发者之间进行额外的交互才能将引用解析为授权信息。本规范未定义交互的机制。</p>
+<p>本文未指定令牌的编码或内容；因此，有关保护令牌完整性的方法的建议超出了本文的范围。令牌完整性的保护必须能够防止令牌被篡改。</p>
+<p>为了处理令牌重定向，授权服务器最好在令牌中包含目标接收者（受众）的身份，通常是单个资源服务器（或源服务器列表）。建议将令牌的使用限制在特定范围内。</p>
+<p>授权服务器必须实现 TLS。应该实现哪个版本随着时间的变化而变化，并且还取决于广泛部署和已知的安全漏洞。</p>
+<p>为了防止令牌泄露，必须使用 TLS 和密码套件提供机密性和完整性保护。要求客户端和授权服务器之间的交互、客户端和资源服务器之间的交互都需要机密性和完整性保护。本规范强制要求实现和使用 TLS，因此是防止令牌从信道泄露的首选方法。在某些情况下需要阻止客户端查看令牌内容，除了使用 TLS 之外，还必须使用令牌加密。为了进一步防止令牌泄露，客户端在请求受保护资源时必须验证 TLS 证书链，并检查证书吊销列表（CRL[RFC5280]）。</p>
+<p>Cookie 通常以明文的形式传输。其中的任何信息都有泄露的风险。因此，承载令牌不能存储在以明文发送的 Cookie 中，其中的任何信息都有可能泄露。有关 Cookie 的安全注意事项，请参阅 HTTP 状态管理机制 [RFC6265]。</p>
+<p>在某些部署中，包括使用负载平衡的部署，与资源服务器的 TLS 连接在实际提供资源的服务器之前终止。这可能会使在 TLS 连接终止的前端服务器和提供资源的后端服务器之间的令牌不受保护。在这样的部署中，必须采取足够的措施保证前端服务器和后端服务器之间的令牌的机密性；令牌加密就是可能的一种措施。</p>
+<p>为了处理令牌捕获和重放，提出以下建议：首先，必须限制令牌的生存周期；实现该目的的一种方法是将有效时间字段放在令牌的受保护部分内。请注意，使用短生命周期的令牌（一小时或更短）可以减少令牌泄露带来的影响。其次，客户端和授权服务器以及客户端和资源服务器之间的信息交换必须进行保护。结果才能让通信信道上的任何窃听者都无法窃听到令牌交换。而且无法在该信道上进行令牌重放。此外，当将令牌提供给资源服务器时，客户端必须验证资源服务器的身份，如第 3.1 节 HTTP Over TLS [RFC2818] 中所述。注意，请求受保护资源时，客户端必须验证 TLS 证书链。将令牌提供给未经身份认证和未授权的资源服务器、或无法验证证书链，都将使得攻击者窃取令牌并获得对受保护资源的授权访问。</p>
+<h4 id="7-4-3-总结建议">7.4.3 总结建议</h4>
+<h5 id="7-4-3-1-保护承载令牌">7.4.3.1 保护承载令牌</h5>
+<p>客户端实现必须确保承载令牌没有泄露给意外的第三方，因为他们可以使用承载令牌来访问受保护资源。这是使用承载令牌的首要安全注意事项，并且是接下来提出的建议的基础。</p>
+<h5 id="7-4-3-2-验证-TLS-证书链">7.4.3.2 验证 TLS 证书链</h5>
+<p>当请求受保护资源时，客户端必须验证 TLS 证书链。不这么做可能会使得攻击者可以利用 DNS 劫持攻击窃取令牌，并获得访问权限。</p>
+<h5 id="7-4-3-3-一律使用-TLS-https">7.4.3.3 一律使用 TLS (https)</h5>
+<p>带有承载令牌进行请求时，客户端必须始终使用 TLS (https) 或等效传输安全。否则，令牌可能会遭受大量攻击，使得攻击者获得访问权限。</p>
+<h5 id="7-4-3-4-不要将承载令牌存储在-HTTP-Cookie-中">7.4.3.4 不要将承载令牌存储在 HTTP Cookie 中</h5>
+<p>实现不能将承载令牌存储在以明文传输的 Cookie 中（Cookie 的默认传输模式）。非要将承载令牌存储在 Cookie 中的实现必须采取预防措施，防止跨站请求伪造。</p>
+<h5 id="7-4-3-5-颁发短生命周期的承载令牌">7.4.3.5 颁发短生命周期的承载令牌</h5>
+<p>令牌服务器应该颁发短生命周期（一小时或更短）的承载令牌，尤其当向运行在 Web 浏览器或其他可能发生信息泄露的环境中的客户端颁发令牌时。使用短生命周期的承载令牌可以减少泄露的风险。</p>
+<h5 id="7-4-3-6-颁发限定范围的承载令牌">7.4.3.6 颁发限定范围的承载令牌</h5>
+<p>令牌服务器应该颁发包含范围限制的承载令牌，将其适用范围限定给预期的依赖方或一组依赖方。</p>
+<h5 id="7-4-3-7-不要在页面-URL-中传递承载令牌">7.4.3.7 不要在页面 URL 中传递承载令牌</h5>
+<p>承载令牌不能在页面 URL 中传递（例如，作为查询的字符串参数）。相反，承载令牌应该在采取保密措施的 HTTP 消息头或消息体重传递。浏览器、Web 服务器和其他软件可能无法充分保护浏览器历史记录、Web 服务器日志和其他数据结构中的 URL。如果在页面 URL 中传递承载令牌，攻击者可能能够从历史数据、日志或其他不安全的位置窃取令牌。</p>
+<h4 id="7-4-4-防止令牌重放">7.4.4 防止令牌重放</h4>
+<p>发送方受限的访问令牌的范围限定于特定的发送方。该发送方需要证明对特定的秘密的了解，以作为接收者（例如，资源服务器）接收该令牌的前提。</p>
+<p>授权服务器和资源服务器应该使用发送方受限的访问令牌机制，以防止令牌重放，如第 4.8.1.1.2 节 [I-D.ietf-oauth-security-topics] 中所述。建议在 OAuth 2.0 [RFC8705] 中使用双向 TLS 。</p>
+<p>建议使用端到端的 TLS。如果 TLS 流量需要在中介处终止，请参阅 [I-D.ietf-oauth-security-topics] 的第 4.11 节以获取更多安全建议。</p>
+<h4 id="7-4-5-限制访问令牌权限">7.4.5 限制访问令牌权限</h4>
+<p>与访问令牌关联的权限应该限制为特定应用程序或使用的最低限度。这样可以防止客户端使用超出资源管理者授权的权限。还可以防止用户使用超出各自安全策略授权的权限。限制权限还有助于减少令牌泄露的影响。</p>
+<p>特别是，访问令牌应该限制在特定资源服务器上（受众限制），最好限制在单个资源服务器上。为此，授权服务器将访问令牌与特定资源服务器关联，每个资源服务器都需要针对每个请求进行验证，验证与该请求一起发送的访问令牌是否适用。如果不适用，资源服务器必须拒绝处理响应的请求。客户端和授权服务器可以分别使用本文和 [RFC8707] 中定义的 scope 或 resource 参数，来确定要访问的资源服务器。</p>
+<p>另外，访问令牌应该限制于某些资源，并限制其在资源服务器或资源上的操作。为此，授权服务器将访问令牌与相应的资源和操作关联，每个资源服务器都需要针对每个请求进行验证，验证与该请求一起发送的访问令牌是否有对特定资源的特定操作权限。如果没有，资源服务器必须拒绝处理响应的请求。客户端和授权服务器可以使用 [I-D.ietf-oauth-rar] 中定义的 scope 或 authorization_details 参数，来确定资源和操作。</p>
+<h2 id="8-扩展">8. 扩展</h2>
+<h3 id="8-1-定义访问令牌类型">8.1 定义访问令牌类型</h3>
+<p>可以通过以下两种方式之一定义访问令牌类型：在访问令牌类型注册表中注册（遵循 [RFC6749] 第 11.1 节中的过程），或者使用唯一的绝对 URI 作为其名称。</p>
+<p>使用 URI 名称的类型应该仅限于供应商特定的实现，通常是不通用的，并且应该特定于使用它们的资源服务器的实现细节。</p>
+<p>所有其他类型必须注册。类型名称必须符合类型名称的 ABNF 。如果类型定义包含新的 HTTP 身份认证方案，则类型名称应该与 HTTP 身份认证方案名称相同（由 [RFC2617] 定义）。令牌类型 example 保留作示例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type-name  = 1*name-char</span><br><span class="line">name-char  = &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / DIGIT / ALPHA</span><br></pre></td></tr></table></figure>
+<h3 id="8-2-定义新的终端参数">8.2 定义新的终端参数</h3>
+<p>用于授权终端或令牌终端的新请求或响应参数，按照 [RFC6749] 第 11.2 节中的过程，在 OAuth 参数注册表中定义和注册。</p>
+<p>参数名称必须符合参数名称的 ABNF ，并且参数值语法必须明确定义（例如，使用 ABNF 或引用现有参数语法）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">param-name  = 1*name-char</span><br><span class="line">name-char   = &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / DIGIT / ALPHA</span><br></pre></td></tr></table></figure>
+<p>未注册的供应商特定的参数扩展名，通常是不通用的，并且特定于使用它们的资源服务器的实现细节，使用这些参数扩展名应该使用供应商特定的前缀，而且不应与其他注册值冲突（例如，“公司名_” (companyname_)）。</p>
+<h3 id="8-3-定义新的授权许可类型">8.3 定义新的授权许可类型</h3>
+<p>可以通过为新的授权许可类型分配一个唯一的绝对 URI 来定义，并与 grant_type 参数一起使用。如果扩展许可类型需要其他的令牌终端参数，则必须在 OAuth 参数注册表中注册，如 [RFC6749] 第 11.2 节所述。</p>
+<h3 id="8-4-定义新的授权终端响应类型">8.4 定义新的授权终端响应类型</h3>
+<p>授权终端使用的新的响应类型，按照 [RFC6749] 第 11.3 节中所述的过程，在授权终端响应类型注册表中进行注册。响应类型名必须符合响应类型的 ABNF 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">response-type  = response-name *( SP response-name )</span><br><span class="line">response-name  = 1*response-char</span><br><span class="line">response-char  = &quot;_&quot; / DIGIT / ALPHA</span><br></pre></td></tr></table></figure>
+<p>如果响应类型包含一个或多个空格字符（%x20），则将其作为空格分隔的值列表进行处理，其中顺序无关紧要。只能注册一个顺序的值，该顺序涵盖同一组值的所有其他排列。</p>
+<p>例如，一个扩展可以定义和注册 code other_token 响应类型。一旦注册，相同的组合就不能注册为 other_token code ，但是两个值都可以用来表示相同的响应类型。</p>
+<h3 id="8-5-定义额外的错误代码">8.5 定义额外的错误代码</h3>
+<p>如果协议扩展（例如，访问令牌类型、扩展参数、扩展许可类型）要求将其他错误代码与授权码许可错误响应（第 4.1.2.1 节）一起使用，则可以定义令牌错误响应（第 5.2 节）或资源访问错误响应（第 7.3 节）等错误代码。</p>
+<p>如果扩展错误代码和注册的访问令牌类型、终端参数或扩展许可类型一起使用，则必须按照 [RFC6749] 第 11.4 节中的过程进行注册。使用未注册扩展的错误类型可以被注册。</p>
+<p>错误代码必须符合错误代码的 ABNF ，并且应该尽可能以标识名作为前缀。例如，表示设置为扩展参数 example 的无效值的错误应该命名为 example_invalid 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error      = 1*error-char</span><br><span class="line">error-char = %x20-21 / %x23-5B / %x5D-7E</span><br></pre></td></tr></table></figure>
+<h2 id="9-安全注意事项">9. 安全注意事项</h2>
+<p>作为一种灵活且可扩展的框架，OAuth 的安全注意事项取决于许多因素。以下各节为实现者提供了针对第 2.1 节中描述的三个客户端配置文件的安全准则：Web 应用程序、基于浏览器的应用程序、原生应用程序。</p>
+<p>[RFC6819] 和 [I-D.ietf-oauth-security-topics] 提供了全面的 OAuth 安全模型和分析，以及协议设计的背景。</p>
+<h3 id="9-1-客户端身份认证">9.1 客户端身份认证</h3>
+<p>授权服务器应该尽可能对客户端进行身份认证。</p>
+<p>建议使用非对称（基于公钥）的方法进行客户端身份认证，例如 mTLS [RFC8705] 或 private_key_jwt [OpenID]。当使用非对称方法进行客户端身份认证时，授权服务器不需要存储敏感的对称密钥，使得这些方法在抵御多种攻击时更加健壮。</p>
+<p>如果基础证书的颁发/注册和分发过程能够确保机密性，则授权服务器必须仅依赖客户端身份认证。</p>
+<p>当无法对客户端进行身份认证时，授权服务器应该采用其他方式来认证客户端的身份，例如，通过要求客户端注册重定向 URI 或要求资源所有者来确认客户端的身份。在请求资源所有者授权时，有效的重定向 URI 不足以认证客户端的身份，但可用于防止在获得资源所有者授权之后将凭据发送给伪造的客户端。</p>
+<p>授权服务器必须考虑与未经身份认证的客户端进行交互的安全风险，并采取措施减小发给此类客户端的其他凭据（例如，刷新令牌）的泄露风险。</p>
+<p>授权服务器与某个特定客户端身份关联的权限必须取决于对客户端的认证过程和客户端凭据的生命周期管理的整体评估。例如，对动态注册的客户端的身份认证只能确保授权服务器再次与同一个客户端通信。相反，如果存在一个 Web 应用程序，该 Web 应用程序的开发人员的身份已经通过认证，签署了协议并被授予了仅在安全后端服务中使用的客户端机密，那么授权服务器可能允许该客户端访问可用服务或使用客户端凭据许可类型。</p>
+<h4 id="9-1-1-原生应用程序的客户端身份认证">9.1.1 原生应用程序的客户端身份认证</h4>
+<p>被静态包含在分发给多个用户的应用程序之中的秘密不应该作为机密秘密，因为用户可以检查拷贝并知晓共享秘密。因此，不建议授权服务器要求使用共享密钥对公开的原生应用程序进行客户端身份认证，因为除了客户端在请求中提供的 client_id 参数之外，其他的都对客户端身份认证没什么价值。</p>
+<p>对原生应用程序客户端仍然要求包含静态的共享秘密的授权服务器必须将客户端视为公开的客户端（如第 2.1 节所述），并且不接受该机密作为客户端身份的证明。如果没有其他措施，此类客户端将有可能被假冒（请参阅第 9.3.1 节）。</p>
+<h3 id="9-2-原生应用程序客户端的注册">9.2 原生应用程序客户端的注册</h3>
+<p>除了使用动态客户端注册 [RFC7591] 之类的机制来设置每个实例的秘密，原生应用程序按第 2.1 节中的定义被归类为公开的客户端；它们必须在这样的授权服务器上进行注册。授权服务器必须在客户端注册详细信息中记录客户端类型，以便认证和处理相应的请求。</p>
+<p>授权服务器必须要求客户端注册完整的重定向 URI （包括路径部分），并拒绝请求中指定的重定向 URI 与注册 URI 不匹配的请求；回环重定向除外，需要完全匹配，除了 URI 组成部分的端口。</p>
+<p>对于基于私有 URI 方案的重定向，授权服务器应该强制执行第 10.3.1 节中的要求，让客户端使用基于反向域名的方案。至少，任何不包含句点字符（.）的私有 URI 方案都应该被拒绝。</p>
+<p>当两个应用程序声明了相同的私用 URI 方案时（其中一个是恶意的），除了具有抗冲突的属性之外，要求基于受应用程序控制的域名的 URI 方案有助于证明所有权。例如，如果两个应用程序声明 com.example.app ，则 <a target="_blank" rel="noopener" href="http://example.com">example.com</a> 的所有者可以向应用程序商店运营商要求删除伪造的应用程序。这种要求在使用了通用 URI 方案的情况下很难进行验证。</p>
+<p>授权服务器可以要求包含其他平台特定的信息，例如应用程序包或捆绑包的名称，或其他信息，这些信息可能在支持验证应用程序调用者身份的操作系统上有用。</p>
+<h3 id="9-3-客户端假冒">9.3 客户端假冒</h3>
+<p>如果客户端无法保证其客户端凭据的机密性，则恶意客户端可以假冒它，并获得对受保护资源的访问。</p>
+<p>授权服务器必须尽可能对客户端进行身份认证。如果授权服务器由于客户端本身的原因无法认证，授权服务器必须要求其注册用于接收授权响应的重定向 URI ，并且应该使用其他方式保护资源所有者免受此类潜在恶意客户端的攻击。例如，授权服务器可以要求资源所有者协助认证客户端的身份及其来源。</p>
+<p>授权服务器应该强制执行显式的资源所有者协助的身份认证，并向资源所有者提供有关客户端以及请求的授权范围和生命周期的信息。资源所有者可以在当前客户端的上下文中查看信息并授权或拒绝请求。</p>
+<p>在没有对客户端进行身份认证或依靠其他方式确保重复请求来自原始客户端而不是假冒的客户端时，授权服务器不应该自动处理重复的授权请求（在没有与资源所有者交互的情况下）。</p>
+<h4 id="9-3-1-假冒原生应用程序">9.3.1 假冒原生应用程序</h4>
+<p>和上述的情况相同，授权服务器不应该在没有用户确认或交互的情况下自动处理授权请求，除非可以确保客户端的身份。这包括用户之前已经批准了针对给定客户端 ID 的授权请求的情况，除非可以认证客户端的身份，否则应该像之前没有请求被批准一样处理该请求。</p>
+<p>授权服务器可以接受诸如声称 https 方案重定向之类的措施作为身份证明。一些操作系统可能会提供适当的特定于平台的认证功能。</p>
+<h3 id="9-4-访问令牌">9.4 访问令牌</h3>
+<p>访问令牌凭据（以及任何机密的访问令牌属性）在传输和存储的过程中必须保持机密，并且只能在授权服务器、访问令牌对其有效的资源服务器及向其颁发访问令牌的客户端之间共享。访问令牌凭据必须使用 [RFC2818] 定义的服务器认证以及第 1.6 节所述的 TLS 进行传输。</p>
+<p>授权服务器必须确保访问令牌不能被生成、修改、猜测，防止未经授权的第三方生成有效的访问令牌。</p>
+<h4 id="9-4-1-访问令牌权限限制">9.4.1 访问令牌权限限制</h4>
+<p>客户端应该以必需的最小的范围请求访问令牌。当选择如何确定请求的范围时，授权服务器应该考虑客户端的身份，并且可以颁发小于请求范围的访问令牌。</p>
+<p>与访问令牌相关的权限应该被限制为与特定应用程序或使用场景所需的最低限度。这样可以防止客户端获得超出资源所有者授予的权限。还可以防止用户获得超出各自安全策略授予的权限。权限限制还有助于减小访问令牌泄露的影响。</p>
+<p>特别是，访问令牌应该限制于某些资源服务器上（受众限制），最好限制在单个资源服务器上。为此，授权服务器将访问令牌与某些资源服务器相关联，并且每个资源服务器都要验证每个请求中发送的访问令牌是否适用。如果不适用，资源服务器必须拒绝处理请求。客户端和授权服务器可以使用 [RFC8707] 中规定的 scope 或 resource 参数来确定要访问的资源服务器。</p>
+<h4 id="9-4-2-防止访问令牌重放">9.4.2 防止访问令牌重放</h4>
+<p>另外，访问令牌应该限制于特定的资源以及对资源服务器或资源的操作。为此，授权服务器将访问令牌与相应的资源和操作相关联，并且每个资源服务器都要验证每个请求中要求对特定资源执行的特定操作是否在访问令牌中被说明允许。如果不是，资源服务器必须拒绝处理请求。客户端和授权服务器可以使用 [I-D.ietf-oauth-rar] 中规定的 scope 或 authorization_details 参数来确定资源和操作。</p>
+<p>授权服务器和资源服务器应该对发送方受限的访问令牌使用某些机制，以防止 #pop_tokens 中所述的令牌重放。发送方受限的访问令牌将访问令牌的可用范围限制于特定的发送方。发送方要证明对特定秘密的了解，作为接收者（例如，资源服务器）接受其令牌的前提。建议使用适用于 OAuth 2.0 的双向 TLS [RFC8705] 。</p>
+<h3 id="9-5-刷新令牌">9.5 刷新令牌</h3>
+<p>授权服务器可以向客户端颁发刷新令牌。</p>
+<p>刷新令牌必须在传输和存储中保持机密，并且只能在授权服务器和被颁发了刷新令牌的客户端之间共享。授权服务器必须维护刷新令牌和被颁发了刷新令牌的客户端之间的绑定。刷新令牌必须使用 [RFC2818] 定义的服务器认证以及第 1.6 节所述的 TLS 进行传输。</p>
+<p>只要客户端的身份可以被认证，授权服务器就必须验证刷新令牌和客户端身份之间的绑定。如果无法进行客户端身份认证，授权服务器应该按 #refresh_token_protection 中所述颁发发送方受限的刷新令牌，或使用刷新令牌轮换。</p>
+<p>授权服务器必须确保刷新令牌不能被生成、修改、猜测，防止未经授权的第三方生成有效的刷新令牌。</p>
+<h3 id="9-6-客户端假冒资源所有者">9.6 客户端假冒资源所有者</h3>
+<p>授权服务器在令牌自省响应 [RFC7662] 或其他机制中返回资源所有者身份的 sub 声明，资源服务器可以根据该声明决定访问控制策略。如果客户端能够在向授权服务器注册的过程中选择自己的 client_id，那么就有可能使用和特权用户相同的 sub 值。如果资源服务器没有进行其他的检查，那么之后可能会错误地给客户端颁发特权用户的访问令牌。</p>
+<p>授权服务器不应该允许用户影响其 client_id 或 sub 的值，或其他任何声明，因为可能导致与资源所有者的身份混淆。在无法避免的情况下，授权服务器必须提供其他方式，以区分资源所有者授权的访问令牌和客户端自身授权的访问令牌。</p>
+<h3 id="9-7-保护基于重定向的流">9.7 保护基于重定向的流</h3>
+<p>在将客户端重定向 URI 和预注册的 URI 进行比较时，授权服务器必须使用精确的字符串匹配。该措施有助于防止授权码和访问令牌的泄露（参阅 (#insufficient_uri_validation)）。还可以帮助检测混淆攻击（参阅 (#mix_up)）。</p>
+<p>客户端不能将请求参数（开放重定向）中的 URL 暴露，该 URL 用于将用户浏览器定向至任意 URI。开放重定向能够泄露授权码和访问令牌，参阅 (#open_redirector_on_client)。</p>
+<p>客户端必须防止跨站请求伪造（Cross-Site Request Forgery, CSRF）。在这种情况下，CSRF 指的是对重定向终端的请求，请求不是来自授权服务器，而是来自恶意的第三方（详细信息请参阅 [RFC6819] 第 4.4.1.8 节）。确保授权服务器支持 code_challenge 参数的客户端，可以依靠该机制提供 CSRF 保护。否则，必须将 nonce 参数中携带的一次性 CSRF 令牌安全地绑定到用户代理上，用于 CSRF 保护（参阅 (#csrf_countermeasures)）。</p>
+<p>为了防止混淆攻击（参阅 (#mix_up)），客户端必须只处理与同一个用户代理交互的授权服务器的重定向响应。客户端必须存储向其发送授权请求的授权服务器，并且将该信息绑定到用户代理，检查是否从正确的授权服务器收到了授权请求。客户端必须确保后续的令牌请求发送到同一个授权服务器。客户端应该为每个授权服务器设置不同的重定向 URI ，以便识别来自特定授权服务器的响应。</p>
+<p>重定向可能包含用户凭据，因此 AS 必须避免意外转发这些用户凭据（有关详细信息，请参阅第 9.7.2 节）。</p>
+<h4 id="9-7-1-原生应用程序中回环重定向的注意事项">9.7.1 原生应用程序中回环重定向的注意事项</h4>
+<p>回环接口使用 http 方案重定向 URI （即，不使用传输层安全协议（TLS））。回环接口重定向 URI 可以接受这种方案，因为 HTTP 请求永远不会离开设备。</p>
+<p>客户端应该仅在启动授权请求时打开网络端口，并在响应返回后将其关闭。</p>
+<p>客户端应该仅监听回环网络接口，以免受到其他网络参与者的干扰。</p>
+<p>尽管使用 localhost （即， <code>http://localhost:&#123;port&#125;/&#123;path&#125;</code>）的重定向 URI 的功能类似于第 10.3.3 节所述的回环 IP 重定向，但不建议使用 localhost 。使用回环 IP 而不是 localhost 指定重定向 URI 可以避免意外监听其他网络接口。它还不太容易受到客户端防火墙和用户设备上配置错误的主机名称解析的影响。</p>
+<h4 id="9-7-2-HTTP-307-重定向">9.7.2 HTTP 307 重定向</h4>
+<p>对于可能包含用户凭据的请求，AS 不能使用 307 状态码将其进行重定向。如果将 HTTP 重定向（而不是 JavaScript）用于此类请求，AS 应该使用 HTTP 状态码 303 (See Other&quot;)。</p>
+<p>在授权终端，典型的协议流程是 AS 提示用户以一种形式提交凭据，然后再将其提交（使用 HTTP POST 方法）至授权服务器。AS 检查凭据，如果成功，则将用户代理重定向到客户端的重定向 URI。</p>
+<p>如果状态码 307 用于重定向，则用户代理通过 HTTP POST 将用户凭据发送到客户端。</p>
+<p>使用这种方式将敏感的凭据暴露给客户端。如果依赖方是恶意的，则可以使用凭据向 AS 假冒客户端。</p>
+<p>这种方式对开发人员而言可能是意料之外的，但已经在 [RFC7231] 第 6.4.7 节中定义。此状态码不需要用户代理将 POST 请求重写为 GET 请求，就可以将 POST 请求体中的表单数据删除。</p>
+<p>在 HTTP 标准 [RFC7231] 中，仅 303 状态码明确地强制将 HTTP POST 请求重写为 HTTP GET 请求。对于所有其他的状态码，包括常见的 302 ，用户代理可以选择不将请求从 POST 重写到 GET，因此可以向客户端显示用户凭据。（但实际上，许多用户代理仅对 307 重定向执行此操作）</p>
+<p>因此，推荐的 HTTP 重定向状态码是 303 。</p>
+<h3 id="9-8-授权码">9.8 授权码</h3>
+<p>授权码必须在安全信道上进行传输，如果 URI 标识了网络资源，那么客户端必须要求在 TLS 的基础上使用重定向 URI。由于授权码是通过用户代理重定向传输的，因此有可能通过用户代理的历史记录和 HTTP 引用头显示。</p>
+<p>授权码的生命周期必须是短暂的，并且只能使用一次。如果授权服务器观察到多次尝试使用授权码交换访问令牌，授权服务器应该根据泄露的授权码，尝试撤销所有已经许可的刷新令牌和访问令牌。</p>
+<p>如果可以对客户端进行身份认证，授权服务器必须认证客户端的身份并且确保授权码颁发给同一个客户端。</p>
+<p>客户端必须防止攻击者将授权码注入（重放）到授权响应中。为此，客户端需要使用 code_challenge 和 code_verifier ，并且授权服务器必须强制使用它们，除了满足以下两个条件的情况：</p>
+<ul>
+<li>
+<p>客户端是机密的或拥有凭据的。</p>
+</li>
+<li>
+<p>在特定的部署和特定的请求中，授权服务器可以合理地确保客户端正确地实现了 OpenID 连接的 nonce 机制。</p>
+</li>
+</ul>
+<p>在这种情况下，仍然建议强制使用 code_challenge 和 code_verifier 。</p>
+<p>code_challenge 或 OpenID 连接的 nonce 值必须是特定于事务的，并且安全地绑定到客户端和启动事务的用户代理。如果事务导致错误，则必须重新选择 code_challenge 或 nonce 的值。</p>
+<p>历史注释：尽管 PKCE [RFC7636] 最初是作为保护原生应用程序的机制而设计的机制，但该建议适用于各种 OAuth 客户端，包括 Web 应用程序和其他机密的客户端。</p>
+<p>客户端应该使用不会在授权请求的 code_verifier 参数中公开的代码挑战。否则，可以读取授权请求的攻击者（请参阅 (#secmodel) 中的攻击者 A4）可能会破坏该机制的安全性。当前，S256 是唯一的方法。</p>
+<p>当授权码到达令牌终端时，授权服务器必须进行以下检查：</p>
+<ol>
+<li>
+<p>如果在发出授权码的请求中存在 code_challenge ，则令牌请求中必须存在 code_verifier ，并且必须根据第 4.1.3 节中的步骤进行验证。（与 [RFC7636] 中行为相同）。</p>
+</li>
+<li>
+<p>如果授权请求中没有 code_challenge ，必须拒绝任何对令牌终端发送的包含 code_verifier 的请求。</p>
+</li>
+</ol>
+<p>授权服务器必须支持 code_challenge 和 code_verifier 参数。</p>
+<p>授权服务器必须提供一种方法来检测对 code_challenge 机制的支持。为此，它们必须 (a) 在其 AS 的元数据（metadata）中发布 code_challenge_methods_supported 元素，其中包含支持的代码挑战方法（code_challenge_method），或 (b) 提供一个确保或确定 AS 支持的特定于部署的方式。</p>
+<h3 id="9-9-请求机密性">9.9 请求机密性</h3>
+<p>访问令牌、刷新令牌、授权码和客户端凭据不能以明文形式传输。</p>
+<p>state 和 scope 参数不应该以明文形式包含敏感的客户端信息或资源所有者信息，因为可能通过不安全的信道传输或不安全地存储。</p>
+<h3 id="9-10-确保终端真实性">9.10 确保终端真实性</h3>
+<p>为了防止中间人攻击，对于任何发送给授权终端和令牌终端的请求，授权服务器必须要求使用 [RFC2818] 定义的 TLS 进行客户端身份认证。客户端必须根据 [RFC6125] 的定义及其对服务器身份认证的要求，验证授权服务器的 TLS 证书。</p>
+<h3 id="9-11-凭据猜测攻击">9.11 凭据猜测攻击</h3>
+<p>授权服务器必须防止攻击者猜测访问令牌、授权码、刷新令牌、资源所有者密码、客户端凭据。</p>
+<p>攻击者猜测生成的令牌（以及终端用户不打算使用的其他凭据）的可能性必须小于或等于 2^(-128) ，并且应该小于或等于 2^(-160) 。</p>
+<p>授权服务器必须使用其他方式来保护终端用户使用的凭据。</p>
+<h3 id="9-12-钓鱼攻击">9.12 钓鱼攻击</h3>
+<p>此协议和类似协议的广泛部署可能导致终端用户对被重定向到网站要求输入密码的做法感到困惑。如果终端用户在网站上输入凭据时不仔细验证网站的真实性，攻击者就有可能利用钓鱼攻击窃取资源所有者的密码。</p>
+<p>服务提供商应该尝试告知终端用户有关网络钓鱼的风险，并且应该提供让终端用户验证网站真实性的机制。客户端开发人员应该考虑与用户代理（例如，外部、嵌入式）交互的安全性，以及终端用户验证授权服务器真实性的功能。</p>
+<p>为了减少钓鱼攻击的风险，授权服务器必须要求每个与终端用户进行交互的终端使用 TLS 。</p>
+<h3 id="9-13-在原生应用程序中伪造外部用户代理">9.13 在原生应用程序中伪造外部用户代理</h3>
+<p>发起授权请求的原生应用程序对用户接口拥有很大程度的控制权，并可能显示一个伪造的用户代理，即，嵌入式的用户代理被显示为外部用户代理。</p>
+<p>当所有正常参与者都在使用外部用户代理，优点是安全专家可以检测到恶意参与者，因为任何伪造外部用户代理的人都被认为是恶意的。另一方面，如果正常用户和恶意用户都在使用嵌入式用户代理，恶意用户不需要进行伪造，这使得他们更难被检测出来，一旦检测到恶意的应用程序，就有可能使用先验知识将应用程序的签名加入恶意软件扫面软件的黑名单中，并采取删除操作（对于由应用程序商店分发的应用程序）和其他步骤，以减少恶意软件的影响和传播。</p>
+<p>授权服务器还可以通过要求仅对真正的外部用户代理要求提供身份认证因素，以防止假冒的外部用户代理。</p>
+<p>与大多数应用内置浏览器的实现相同，特别关注安全的用户在使用应用内置浏览器选项卡时也可以采取其他步骤，从应用内置浏览器选项卡到完整浏览器中打开请求，并在此完成身份认证。</p>
+<h3 id="9-14-原生应用程序中的恶意外部用户代理">9.14 原生应用程序中的恶意外部用户代理</h3>
+<p>如果恶意应用程序能够将其配置为操作系统中 https 方案 URI 的默认处理程序，则它将能够拦截使用默认浏览器的授权请求，并滥用此信任进行恶意攻击，例如使用钓鱼攻击。</p>
+<p>这种攻击并不仅限于 OAuth；除了原生应用程序使用 OAuth 之外，以这种方式配置的恶意应用程序会对用户带来一般性和持续性的风险。</p>
+<h3 id="9-15-跨站请求伪造">9.15 跨站请求伪造</h3>
+<p>攻击者可能试图向受害者设备上的合法客户端的重定向 URI 注入请求，例如，导致客户端在攻击者的控制下访问资源。这是跨站请求伪造（Cross-Site Request Forgery, CSRF）的一种变体攻击。</p>
+<p>传统的对策是使用 CSRF 令牌，这些令牌已绑定到用户代理，并按照 [RFC6819] 中的描述将 state 参数传递给授权服务器。code_verifier 参数或 OpenID 连接的 nonce 值提供相同的保护。</p>
+<p>当使用 code_verifier 代替 state 或 nonce 进行 CSRF 保护时，请注意以下几点：</p>
+<ul>
+<li>
+<p>客户端必须确保 AS 支持客户端打算使用的 code_challenge_method 。如果授权服务器不支持请求的方法，必须将 state 或 nonce 用于 CSRF 保护。</p>
+</li>
+<li>
+<p>如果 state 用于承载应用程序状态，考虑到其内容的完整性，客户端必须保护 state 以防篡改和替换。这可以通过将 state 绑定到浏览器会话或签名/加密 state 的值 [I-D.bradley-oauth-jwt-encoded-state]。</p>
+</li>
+</ul>
+<p>因此，AS 必须提供一种方法来检测其支持的代码挑战方法，通过 [RFC8414] 定义的 AS 元数据或者提供一种特定于部署方式的方法来确保或确定是否支持。</p>
+<h3 id="9-16-点击劫持">9.16 点击劫持</h3>
+<p>如 [RFC6819] 第 4.4.1.9 节所述，授权服务器请求容易受到点击劫持的影响。攻击者可以使用此攻击向量获得用户的身份认证凭据，更改许可给用户的访问范围，并可能访问用户资源。</p>
+<p>授权服务器必须防止点击劫持攻击。[RFC6819] 中描述了多种对策，包括使用 HTTP 响应头中的 X-Frame-Options 字段和 JavaScript 的 frame-busting 。除此之外，授权服务器应该使用第二级别或更高的内容安全策略（Content Security Policy, CSP）。</p>
+<p>为了使其生效，必须在授权终端上使用 CSP，如果可以，还必须在用于对用户进行身份认证和对客户端进行身份认证的终端上使用（例如，设备授权终端、登录页面、错误页面等）。这样可以防止未经授权的来源在支持 CSP 的用户代理中使用 CSP 。客户端可以允许被重定向终端中使用的来源以外的来源框定。因此，授权服务器应该允许管理员为（特性的）客户端配置允许的来源，以动态注册这些来源。</p>
+<p>使用 CSP 允许授权服务器在单个响应头字段中制定多个来源，并使用灵活的模式来约束这些来源（有关详细信息，请参阅 [CSP-2]）。该标准的第二个级别提供了一种健壮的机制，可以通过使用策略来限制框架来源（使用 frame-ancestors），并允许限制来源在 HTML 页面上执行的脚本（使用 script-src）。下面显示了这种策略的非规范实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;HTTP/1.1 200 OK Content-Security-Policy: frame-ancestors</span><br><span class="line">https://ext.example.org:8000 Content-Security-Policy: script-src</span><br><span class="line">&#x27;self&#x27; X-Frame-Options: ALLOW-FROM https://ext.example.org:8000 ...&quot;</span><br></pre></td></tr></table></figure>
+<p>因为某些用户代理不支持 [CSP-2]，所以这种技术应该和其它技术结合使用，包括 [RFC6819] 中描述的那些技术，除非授权服务器明确不支持此类传统的用户代理。即使在这种情况下，也应该采取其他对策。</p>
+<h3 id="9-17-代码注入和输入验证">9.17 代码注入和输入验证</h3>
+<p>当输入或其他外部变量未经序列化就被应用程序使用，并导致应用程序逻辑的更改时，就产生了代码注入攻击。</p>
+<p>授权服务器和客户端必须序列化（并尽可能验证）任何收到的值，尤其是 state 和 redirect_uri 参数的值。</p>
+<h3 id="9-18-开放式重定向">9.18 开放式重定向</h3>
+<p>当 AS 或客户端具有开放式重定向时，可能会产生以下攻击。开放式重定向是指终端将用户浏览器定向到从请求参数中获得的任意 URI。</p>
+<h4 id="9-18-1-客户端作为开放式重定向器">9.18.1 客户端作为开放式重定向器</h4>
+<p>客户端不能公开开放式重定向器。攻击者可能使用开放式重定向来生成指向客户端的 URL ，并利用它们重定向授权码和访问令牌，如 (#redir_uri_open_redir) 中所述。另一个滥用情况是生成看起来是指向客户端的 URL 。这可能会诱使用户信任 URL 并在其浏览器中访问它。可以将其用于钓鱼攻击。</p>
+<p>为了防止开放式重定向，客户端只有在目标 URL 属于白名单或能够对请求的来源和完整性进行身份认证时，才可以重定向。OWASP [owasp_redir] 描述了针对开放重定向的对策。</p>
+<h4 id="9-18-2-授权服务器作为开放式重定向器">9.18.2 授权服务器作为开放式重定向器</h4>
+<p>和客户端一样，攻击者可能试图利用用户对授权服务器（尤其是 URL）的信任来进行钓鱼攻击。OAuth 授权服务器会定期将用户重定向到其他网站（客户端），但必须以安全的方式实现。</p>
+<p>第 4.1.2.1 节已经声明 AS 在 client_id 和 redirect_uri 的组合无效时，不能自动将用户代理进行重定向，防止了开放式重定向。</p>
+<p>然而，攻击者可以利用正确注册的重定向 URI 实施钓鱼攻击。攻击者可以通过动态客户端注册 [RFC7591] 注册客户端，并故意发送错误的授权请求（例如，使用无效的 scope ），以指示 AS 将用户代理重定向到其钓鱼网站。</p>
+<p>AS 必须采取预防措施来防止这种威胁。根据其风险评估，AS 需要确定其是否可以信任重定向 URI，并且应该只在信任重定向 URI 的情况下自动重定向用户代理。如果 URI 不可信，则 AS 可以告知用户并依赖用户做决定。</p>
+<h3 id="9-19-原生应用程序中授权服务器混淆的缓解">9.19 原生应用程序中授权服务器混淆的缓解</h3>
+<p>（待办：引入时，将其与混淆攻击的章节合并）</p>
+<p>为了防止受到攻击的或恶意的授权服务器攻击同一应用程序使用的另一个授权服务器，要求为应用程序使用的每个授权服务器使用唯一的重定向 URI （例如，通过更改路径组成部分），同时，如果收到的重定向 URI 与授权请求中的重定向 URI 不匹配时，则拒绝授权响应。</p>
+<p>原生应用程序必须存储授权请求中使用的重定向 URI 和授权会话数据（ state 和其他相关数据），并且必须验证收到授权响应的 URI 与其完全匹配。</p>
+<p>为了防止此类攻击，按照第 9.2 节所述，特别地要求授权服务器拒绝包含与注册的 URI 不匹配的 URI 的请求。</p>
+<h3 id="9-20-原生应用程序中的嵌入式用户代理">9.20 原生应用程序中的嵌入式用户代理</h3>
+<p>嵌入式用户代理是授权原生应用程序的可行技术方法。根据定义，第三方使用这些嵌入式用户代理和授权服务器进行交互，因为托管嵌入式用户代理的应用程序可以访问用户的身份认证凭据，而并不仅仅是 OAuth 给予应用程序的授权许可。</p>
+<p>使用典型的基于 Web 视图实现的嵌入式用户代理中，应用程序宿主可以记录其登录表单中输入的每个按键，以捕获用户名和密码，自动提交以绕过用户同意，并且会复制会话并使用它们执行经身份认证的用户的操作。</p>
+<p>即使被与授权服务器属于同一方的受信任的应用程序使用，嵌入式用户代理也可以违反最小权限原则，访问比其所需功能权限更大的凭据，因此可能增加攻击面。</p>
+<p>如果没有通常的地址栏和浏览器具有的可见的证书认证功能，而鼓励用户在嵌入式用户代理中输入凭据，这让用户无法知道是否登录了合法站点。即使登录的是合法站点，这也会导致用户习惯于不验证网站就输入凭据。</p>
+<p>除了安全问题之外，嵌入式用户代理不与其他应用程序或浏览器共享身份认证的状态，要求用户针对每个授权请求进行登录，这通常被认为是一种较差的用户体验。</p>
+<h3 id="9-21-其他建议">9.21 其他建议</h3>
+<p>如果可能导致与真实的资源所有者混淆，授权服务器不应该允许客户端影响他们的 client_id 或 sub 或其他任何声明的值（请参阅 (#client_impersonating)）。</p>
+<h2 id="10-原生应用程序">10. 原生应用程序</h2>
+<p>原生应用程序是在资源所有者使用的设备上安装并运行的客户端（即，桌面应用程序、原生移动程序）。原生应用程序需要对安全性、平台功能和总体的终端用户体验进行特殊的考虑。</p>
+<p>授权终端要求与客户端和资源所有者的用户代理交互。当前的最佳实现是在外部用户代理（通常是浏览器）中执行 OAuth 授权请求，而不是使用嵌入式用户代理（例如使用 Web 视图实现的代理）。</p>
+<p>原生应用程序可以使用重定向 URI 捕获来自授权服务器的响应，该重定向 URI 带有在操作系统中注册的方案，以调用客户端作为处理程序，手动复制粘贴凭据，运行本地 Web 服务器，安装用户代理扩展，或通过提供重定向 URI 来标识客户端控制的托管在服务器上的资源，这又使原生应用程序可以接收响应。</p>
+<p>以前，原生应用程序通常使用嵌入式用户代理（通常使用 Web 视图实现）来处理 OAuth 授权请求。这种方法有很多缺点，包括宿主应用程序够复制用户凭据和会话，以及用户需要在每个应用程序中重新进行身份认证。有关在嵌入式用户代理中使用 OAuth 的弊端的深入分析请参阅第 9.20 节。</p>
+<p>原生应用程序使用浏览器处理授权请求会更加安全，并且可以使用用户的身份认证状态。在浏览器中使用已有的身份认证会话可以支持单点登录，这样一来，用户就没有必要在他们每次使用一个新的应用程序时进行身份认证（除非授权服务器的策略要求重新进行身份认证）。</p>
+<p>在不更改 OAuth 协议本身的情况下，就可以在原生应用程序和浏览器之间支持授权流，因为 OAuth 授权请求和响应已经在 URI 中定义。这包括可用于应用程序间通信的 URI 。一些 OAuth 服务器的实现假设所有客户端都是机密的 Web 客户端，为了支持最佳实现方案，它们需要了解公开的应用程序客户端，及其所使用的重定向 URI 。</p>
+<h3 id="10-1-在原生应用程序中使用应用程序间-URI-通信实现-OAuth">10.1 在原生应用程序中使用应用程序间 URI 通信实现 OAuth</h3>
+<p>就像在网络上实现的 OAuth 中的 URI 一样，用户发起授权请求并将授权响应返回给请求网站，原生应用程序也可以使用 URI 在设备浏览器中发起授权请求并将响应返回给发起请求的原生应用程序。</p>
+<p>通过采用与网络上实现的 OAuth 相同的方法，可以在原生应用程序中获得与网络上下文中相同的好处，例如可以使用单点登录会话、安全地分离身份认证的上下文。重复使用相同的方法可以减少实现的复杂性，还可以通过不特定于平台的基于标准的 Web 流来提高互操作性。</p>
+<p>原生应用程序必须使用外部用户代理来执行 OAuth 授权请求。通过在浏览器中打开授权请求（详见第 10.2 节）并使用重定向 URI 将授权响应返回给原生应用程序（在第 10.3 节中定义）来实现。</p>
+<h3 id="10-2-在原生应用程序中发起授权请求">10.2 在原生应用程序中发起授权请求</h3>
+<p>原生应用程序需要用户的授权来生成授权请求 URI 和授权码许可类型，根据第 4.1 节使用应用程序能够接收的重定向 URI 。</p>
+<p>用于原生应用程序授权请求的重定向 URI 的功能类似于基于 Web 的授权请求。原生应用程序使用的重定向 URI 会将授权响应返回给应用程序，而不是将其返回给 OAuth 客户端的服务器。第 10.3 节中描述了重定向 URI 的一些选项，将授权响应返回给不同平台上的原生应用程序。任何允许应用程序接收 URI 和检查其参数的重定向 URI 都是可用的。</p>
+<p>构建授权请求 URI 之后，应用程序使用平台特定的 API 在外部用户代理中打开 URI。通常，使用的外部用户代理是默认浏览器，即系统中配置为处理 http 和 https 方案 URI 的应用程序；但是，可以使用不同的浏览器选择标准和其他类别的外部用户代理。</p>
+<p>最佳做法是将浏览器作为原生应用程序建议的外部用户代理。也可以使用专门为用户授权设计的外部用户代理，能够像浏览器一样处理授权请求和响应。其他外部用户代理，例如授权服务器提供的原生应用程序，可能满足最佳实践中提出的条件要求，包括使用相同的重定向 URI 属性，关于如何使用的说明超出了本规范的范围。</p>
+<p>某些平台支持所谓的“应用程序内浏览器选项卡”的浏览器功能，可以在不切换应用程序的情况下，在应用程序的上下文中显示浏览器选项卡，但仍然保留了浏览器的关键优势，例如，共享身份认证状态和安全的上下文。在支持该功能的平台上，出于可用性的原因，建议应用程序使用应用程序内浏览器选项卡处理授权请求。</p>
+<h3 id="10-3-在原生应用程序中接收授权响应">10.3 在原生应用程序中接收授权响应</h3>
+<p>原生应用程序有几个重定向 URI 选项可以用于从浏览器接收授权响应，其可用性和用户体验因平台而异。</p>
+<p>为了完全支持原生应用程序，授权服务器必须至少提供三种原生应用程序的重定向 URI 选项，在以下小节中描述。原生应用程序可以考虑特定平台的实现细节，使用最适合其需求的重定向选项。</p>
+<h4 id="10-3-1-私用-URI-方案重定向">10.3.1 私用 URI 方案重定向</h4>
+<p>许多移动和桌面计算平台允许应用程序注册私用 URI 方案（有时通俗地称为“自定义 URL 方案”），例如 com.example.app，以支持应用程序间通信。当浏览器或其他应用程序尝试使用私用 URI 方案加载 URI 时，启动注册该 URI 的应用程序来处理请求。</p>
+<p>为了执行带有私用 URI 方案重定向的授权请求，原生应用程序使用标准授权请求启动浏览器，除了重定向 URI 使用它在操作系统中注册的私用 URI 方案。</p>
+<p>当选择一个 URI 方案与应用程序关联时，应用程序必须基于它们可控的域名选择 URI 方案，以相反的顺序表示，正如 [RFC7595] 第 3.8 节中建议的私用 URI 方案。</p>
+<p>例如，应用程序控制 <a target="_blank" rel="noopener" href="http://app.example.com">app.example.com</a> 的域名可以使用 com.example.app 作为其方案。一些授权服务器根据域名向客户端分配标识符，例如，以相同方式反转的 <a target="_blank" rel="noopener" href="http://client1234.usercontent.example.net">client1234.usercontent.example.net</a> 也可以用作方案的域名。但是 myapp 之类的方案不能满足需求，因为它不是基于域名的。</p>
+<p>当同一发布者拥有多个应用程序时，必须注意每个方案在组中都是唯一的。在使用基于反向域名的应用程序标识符的平台上，可以将这些标识符重新用作 OAuth 重定向的私用 URI 方案，以帮助避免此问题。</p>
+<p>按照 [RFC3986] 第 3.2 节的要求，由于没有给私用 URI 方案重定向命名的权威机构，所以仅在方案组成部分后使用斜杠（/）。使用私用 URI 方案的重定向 URI 的一个完整示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.example.app:/oauth2redirect/example-provider</span><br></pre></td></tr></table></figure>
+<p>授权服务器完成请求后，将像往常一样重定向到客户端的重定向 URI 。由于重定向 URI 使用私用 URI 方案，因此会导致操作系统启动原生应用程序，并传入 URI 作为启动参数，然后原生应用程序对授权响应进行常规处理。</p>
+<h4 id="10-3-2-声明-https-方案-URI-重定向">10.3.2 声明 https 方案 URI 重定向</h4>
+<p>一些操作系统允许应用程序在其控制的域中声明 https 方案 [RFC7230] URI 。当浏览器遇到声明的 URI 时，将使用提供的 URI 作为参数启动原生应用程序，而不是在浏览器的页面中加载。</p>
+<p>此类 URI 可以被原生应用程序用作重定向 URI 。对于授权服务器来说，无法将它们与基于 Web 的客户端重定向 URI 区分。一个例子是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://app.example.com/oauth2redirect/example-provider</span><br></pre></td></tr></table></figure>
+<p>由于重定向 URI 不足以区分公开的原生应用程序和机密的 Web 客户端，因此在第 9.2 节要求在客户端注册时记录客户端类型，使得服务器能够确定客户端类型并采取相应的措施。</p>
+<p>与其他原生应用程序重定向选项相比，声明使用 https 方案重定向 URI 的应用程序具有一些优势，因为操作系统向授权服务器确保目标应用程序的身份。因此，原生应用程序应该尽可能使用它们而不是其他选项。</p>
+<h4 id="10-3-3-回环接口重定向">10.3.3 回环接口重定向</h4>
+<p>无需特殊权限就能够在回环网络接口上打开端口的原生应用程序（通常是台式操作系统上的应用）可以使用回环接口接收 OAuth 重定向。</p>
+<p>回环重定向 URI 使用 http 方案，并且由回环 IP 和客户端正在监听的端口组成。</p>
+<p>即，对于 IPv4 来说是 <code>http://127.0.0.1:&#123;port&#125;/&#123;path&#125;</code> ，对 IPv6 来说是 <code>http://[::1]:&#123;port&#125;/&#123;path&#125;</code> 。 IPv4 回环接口的重定向 URI 示例，带有随机分配的端口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:51004/oauth2redirect/example-provider</span><br></pre></td></tr></table></figure>
+<p>IPv6 回环接口的重定向 URI 示例，带有随机分配的端口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://[::1]:61023/oauth2redirect/example-provider</span><br></pre></td></tr></table></figure>
+<p>授权服务器必须允许在请求回环 IP 重定向 URI 时指定任何端口，以兼容在请求时从操作系统获得临时端口的客户端。</p>
+<p>客户端不应该假定设备支持某种特定版本的 Internet 协议。建议客户端尝试使用 IPv4 和 IPv6 绑定到回环接口，并使用任一可用的协议。</p>
+<h2 id="11-基于浏览器的应用程序">11. 基于浏览器的应用程序</h2>
+<p>基于浏览器的应用程序是指运行在 Web 浏览器中的客户端，通常用 JavaScript 编写，也称为“单页面应用程序”。这些类型的应用程序和原生应用程序的安全注意事项类似。</p>
+<p>待办：引入基于浏览器的应用程序 BCP 的规范文本。</p>
+<h2 id="12-与-OAuth-2-0-的区别">12. 与 OAuth 2.0 的区别</h2>
+<p>本草案合并了以下功能：OAuth 2.0 [RFC6749]、适用于原生应用程序的 OAuth 2.0 [RFC8252]、用于代码交换的证明密钥 [RFC7636]、适用于基于浏览器的应用程序的 OAuth 2.0 [I-D.ietf-oauth-browser-based-apps]、OAuth 安全最新最佳安全实践 [I-D.ietf-oauth-security-topics]、承载令牌使用 [RFC6750] 。</p>
+<p>如果更高版本的草案更新或废弃了 [RFC6749] 中的功能，则该草案中的功能将使用更高版本的草案所描述的规范进行更新，或完全删除。</p>
+<p>下面列出了 OAuth 2.0 的非规范性更改列表：</p>
+<ul>
+<li>
+<p>授权码许可使用 PKCE [RFC7636] 中的功能进行扩展，因此根据本规范使用授权码许可的默认方法需要添加 PKCE 参数。</p>
+</li>
+<li>
+<p>必须根据 [I-D.ietf-oauth-security-topics] 第 4.1.3 节所述，使用精确的字符串匹配来比较重定向 URI 。</p>
+</li>
+<li>
+<p>根据 [I-D.ietf-oauth-security-topics] 第 2.1.2 节，本规范中省略了隐式许可 response_type=token 。</p>
+</li>
+<li>
+<p>根据 [I-D.ietf-oauth-security-topics] 第 2.4 节，本规范中省略了资源所有者密码凭据许可。</p>
+</li>
+<li>
+<p>根据 [I-D.ietf-oauth-security-topics] 第 4.3.2 节，使用承载令牌会忽略 URI 查询字符串中的承载令牌。</p>
+</li>
+<li>
+<p>根据 [I-D.ietf-oauth-security-topics] 第 4.12.2 节，刷新令牌应该是发送方受限的或一次性的。</p>
+</li>
+</ul>
+<h2 id="13-IANA-考量">13. IANA 考量</h2>
+<p>本文档不需要任何 IANA 行动。</p>
+<p>所有引用的注册表均由 RFC6749 及其相关文档定义。本规范无需更改注册表。</p>
+<h2 id="14-参考文献">14. 参考文献</h2>
+<h3 id="14-1-规范性文献">14.1 规范性文献</h3>
+<p>[I-D.ietf-oauth-security-topics]<br>
+Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett,<br>
+“OAuth 2.0 Security Best Current Practice”, Work in<br>
+Progress, Internet-Draft, draft-ietf-oauth-security-<br>
+topics-15, 5 April 2020, &lt;<a target="_blank" rel="noopener" href="http://www.ietf.org/internet-">http://www.ietf.org/internet-</a><br>
+drafts/draft-ietf-oauth-security-topics-15.txt&gt;.</p>
+<p>[RFC2119]  Bradner, S., “Key words for use in RFCs to Indicate<br>
+Requirement Levels”, BCP 14, RFC 2119,<br>
+DOI 10.17487/RFC2119, March 1997,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>.</p>
+<p>[RFC2617]  Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S.,<br>
+Leach, P., Luotonen, A., and L. Stewart, “HTTP<br>
+Authentication: Basic and Digest Access Authentication”,<br>
+RFC 2617, DOI 10.17487/RFC2617, June 1999,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc2617">https://www.rfc-editor.org/info/rfc2617</a>.</p>
+<p>[RFC2818]  Rescorla, E., “HTTP Over TLS”, RFC 2818,<br>
+DOI 10.17487/RFC2818, May 2000,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc2818">https://www.rfc-editor.org/info/rfc2818</a>.</p>
+<p>[RFC3629]  Yergeau, F., “UTF-8, a transformation format of ISO<br>
+10646”, STD 63, RFC 3629, DOI 10.17487/RFC3629, November<br>
+2003, <a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc3629">https://www.rfc-editor.org/info/rfc3629</a>.</p>
+<p>[RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, “Uniform<br>
+Resource Identifier (URI): Generic Syntax”, STD 66,<br>
+RFC 3986, DOI 10.17487/RFC3986, January 2005,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc3986">https://www.rfc-editor.org/info/rfc3986</a>.</p>
+<p>[RFC4949]  Shirey, R., “Internet Security Glossary, Version 2”,<br>
+FYI 36, RFC 4949, DOI 10.17487/RFC4949, August 2007,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc4949">https://www.rfc-editor.org/info/rfc4949</a>.</p>
+<p>[RFC5234]  Crocker, D., Ed. and P. Overell, “Augmented BNF for Syntax<br>
+Specifications: ABNF”, STD 68, RFC 5234,<br>
+DOI 10.17487/RFC5234, January 2008,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc5234">https://www.rfc-editor.org/info/rfc5234</a>.</p>
+<p>[RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,<br>
+Housley, R., and W. Polk, “Internet X.509 Public Key<br>
+Infrastructure Certificate and Certificate Revocation List<br>
+(CRL) Profile”, RFC 5280, DOI 10.17487/RFC5280, May 2008,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc5280">https://www.rfc-editor.org/info/rfc5280</a>.</p>
+<p>[RFC6125]  Saint-Andre, P. and J. Hodges, “Representation and<br>
+Verification of Domain-Based Application Service Identity<br>
+within Internet Public Key Infrastructure Using X.509<br>
+(PKIX) Certificates in the Context of Transport Layer<br>
+Security (TLS)”, RFC 6125, DOI 10.17487/RFC6125, March<br>
+2011, <a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc6125">https://www.rfc-editor.org/info/rfc6125</a>.</p>
+<p>[RFC6749]  Hardt, D., Ed., “The OAuth 2.0 Authorization Framework”,<br>
+RFC 6749, DOI 10.17487/RFC6749, October 2012,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc6749">https://www.rfc-editor.org/info/rfc6749</a>.</p>
+<p>[RFC6750]  Jones, M. and D. Hardt, “The OAuth 2.0 Authorization<br>
+Framework: Bearer Token Usage”, RFC 6750,<br>
+DOI 10.17487/RFC6750, October 2012,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc6750">https://www.rfc-editor.org/info/rfc6750</a>.</p>
+<p>[RFC7159]  Bray, T., Ed., “The JavaScript Object Notation (JSON) Data<br>
+Interchange Format”, RFC 7159, DOI 10.17487/RFC7159, March<br>
+2014, <a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7159">https://www.rfc-editor.org/info/rfc7159</a>.</p>
+<p>[RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer<br>
+Protocol (HTTP/1.1): Semantics and Content”, RFC 7231,<br>
+DOI 10.17487/RFC7231, June 2014,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7231">https://www.rfc-editor.org/info/rfc7231</a>.</p>
+<p>[RFC7234]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,<br>
+Ed., “Hypertext Transfer Protocol (HTTP/1.1): Caching”,<br>
+RFC 7234, DOI 10.17487/RFC7234, June 2014,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7234">https://www.rfc-editor.org/info/rfc7234</a>.</p>
+<p>[RFC7595]  Thaler, D., Ed., Hansen, T., and T. Hardie, “Guidelines<br>
+and Registration Procedures for URI Schemes”, BCP 35,<br>
+RFC 7595, DOI 10.17487/RFC7595, June 2015,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7595">https://www.rfc-editor.org/info/rfc7595</a>.</p>
+<p>[RFC8174]  Leiba, B., “Ambiguity of Uppercase vs Lowercase in RFC<br>
+2119 Key Words”, BCP 14, RFC 8174, DOI 10.17487/RFC8174,<br>
+May 2017, <a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>.</p>
+<p>[RFC8252]  Denniss, W. and J. Bradley, “OAuth 2.0 for Native Apps”,<br>
+BCP 212, RFC 8252, DOI 10.17487/RFC8252, October 2017,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc8252">https://www.rfc-editor.org/info/rfc8252</a>.</p>
+<p>[RFC8446]  Rescorla, E., “The Transport Layer Security (TLS) Protocol<br>
+Version 1.3”, RFC 8446, DOI 10.17487/RFC8446, August 2018,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc8446">https://www.rfc-editor.org/info/rfc8446</a>.</p>
+<p>[USASCII]  Institute, A.N.S., “Coded Character Set – 7-bit American<br>
+Standard Code for Information Interchange, ANSI X3.4”,<br>
+1986.</p>
+<p>[W3C.REC-html401-19991224]<br>
+Raggett, D., Hors, A., and I. Jacobs, “HTML 4.01<br>
+Specification”, World Wide Web Consortium Recommendation<br>
+REC-html401-19991224, 24 December 1999,<br>
+<a target="_blank" rel="noopener" href="http://www.w3.org/TR/1999/REC-html401-19991224">http://www.w3.org/TR/1999/REC-html401-19991224</a>.</p>
+<p>[W3C.REC-xml-20081126]<br>
+Bray, T., Paoli, J., Sperberg-McQueen, M., Maler, E., and<br>
+F. Yergeau, “Extensible Markup Language (XML) 1.0 (Fifth<br>
+Edition)”, World Wide Web Consortium Recommendation REC-<br>
+xml-20081126, 26 November 2008,<br>
+<a target="_blank" rel="noopener" href="http://www.w3.org/TR/2008/REC-xml-20081126">http://www.w3.org/TR/2008/REC-xml-20081126</a>.</p>
+<h3 id="14-2-参考性文献">14.2 参考性文献</h3>
+<p>[CSP-2]    “Content Security Policy Level 2”, December 2016,<br>
+<a target="_blank" rel="noopener" href="https://www.w3.org/TR/CSP2">https://www.w3.org/TR/CSP2</a>.</p>
+<p>[I-D.bradley-oauth-jwt-encoded-state]<br>
+Bradley, J., Lodderstedt, T., and H. Zandbelt, “Encoding<br>
+claims in the OAuth 2 state parameter using a JWT”, Work<br>
+in Progress, Internet-Draft, draft-bradley-oauth-jwt-<br>
+encoded-state-09, 4 November 2018, &lt;<a target="_blank" rel="noopener" href="http://www.ietf.org/">http://www.ietf.org/</a><br>
+internet-drafts/draft-bradley-oauth-jwt-encoded-state-<br>
+09.txt&gt;.</p>
+<p>[I-D.ietf-oauth-access-token-jwt]<br>
+Bertocci, V., “JSON Web Token (JWT) Profile for OAuth 2.0<br>
+Access Tokens”, Work in Progress, Internet-Draft, draft-<br>
+ietf-oauth-access-token-jwt-07, 27 April 2020,<br>
+&lt;<a target="_blank" rel="noopener" href="http://www.ietf.org/internet-drafts/draft-ietf-oauth-">http://www.ietf.org/internet-drafts/draft-ietf-oauth-</a><br>
+access-token-jwt-07.txt&gt;.</p>
+<p>[I-D.ietf-oauth-browser-based-apps]<br>
+Parecki, A. and D. Waite, “OAuth 2.0 for Browser-Based<br>
+Apps”, Work in Progress, Internet-Draft, draft-ietf-oauth-<br>
+browser-based-apps-06, 5 April 2020, &lt;<a target="_blank" rel="noopener" href="http://www.ietf.org/">http://www.ietf.org/</a><br>
+internet-drafts/draft-ietf-oauth-browser-based-apps-<br>
+06.txt&gt;.</p>
+<p>[I-D.ietf-oauth-dpop]<br>
+Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,<br>
+Jones, M., and D. Waite, “OAuth 2.0 Demonstration of<br>
+Proof-of-Possession at the Application Layer (DPoP)”, Work<br>
+in Progress, Internet-Draft, draft-ietf-oauth-dpop-01, 1<br>
+May 2020, &lt;<a target="_blank" rel="noopener" href="http://www.ietf.org/internet-drafts/draft-ietf-">http://www.ietf.org/internet-drafts/draft-ietf-</a><br>
+oauth-dpop-01.txt&gt;.</p>
+<p>[I-D.ietf-oauth-par]<br>
+Lodderstedt, T., Campbell, B., Sakimura, N., Tonge, D.,<br>
+and F. Skokan, “OAuth 2.0 Pushed Authorization Requests”,<br>
+Work in Progress, Internet-Draft, draft-ietf-oauth-par-02,<br>
+10 July 2020, &lt;<a target="_blank" rel="noopener" href="http://www.ietf.org/internet-drafts/draft-">http://www.ietf.org/internet-drafts/draft-</a><br>
+ietf-oauth-par-02.txt&gt;.</p>
+<p>[I-D.ietf-oauth-rar]<br>
+Lodderstedt, T., Richer, J., and B. Campbell, “OAuth 2.0<br>
+Rich Authorization Requests”, Work in Progress, Internet-<br>
+Draft, draft-ietf-oauth-rar-01, 19 February 2020,<br>
+&lt;<a target="_blank" rel="noopener" href="http://www.ietf.org/internet-drafts/draft-ietf-oauth-rar-">http://www.ietf.org/internet-drafts/draft-ietf-oauth-rar-</a><br>
+01.txt&gt;.</p>
+<p>[I-D.ietf-oauth-token-binding]<br>
+Jones, M., Campbell, B., Bradley, J., and W. Denniss,<br>
+“OAuth 2.0 Token Binding”, Work in Progress, Internet-<br>
+Draft, draft-ietf-oauth-token-binding-08, 19 October 2018,<br>
+&lt;<a target="_blank" rel="noopener" href="http://www.ietf.org/internet-drafts/draft-ietf-oauth-">http://www.ietf.org/internet-drafts/draft-ietf-oauth-</a><br>
+token-binding-08.txt&gt;.</p>
+<p>[NIST800-63]<br>
+Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,<br>
+Gupta, S., and E. Nabbus, “NIST Special Publication<br>
+800-63-1, INFORMATION SECURITY”, December 2011,<br>
+<a target="_blank" rel="noopener" href="http://csrc.nist.gov/publications/">http://csrc.nist.gov/publications/</a>.</p>
+<p>[OMAP]     Huff, J., Schlacht, D., Nadalin, A., Simmons, J.,<br>
+Rosenberg, P., Madsen, P., Ace, T., Rickelton-Abdi, C.,<br>
+and B. Boyer, “Online Multimedia Authorization Protocol:<br>
+An Industry Standard for Authorized Access to Internet<br>
+Multimedia Resources”, April 2012,<br>
+<a target="_blank" rel="noopener" href="https://www.oatc.us/Standards/Download-Standards">https://www.oatc.us/Standards/Download-Standards</a>.</p>
+<p>[OpenID]   Sakimora, N., Bradley, J., Jones, M., de Medeiros, B., and<br>
+C. Mortimore, “OpenID Connect Core 1.0”, November 2014,<br>
+<a target="_blank" rel="noopener" href="https://openiD.net/specs/openiD-connect-core-1_0.html">https://openiD.net/specs/openiD-connect-core-1_0.html</a>.</p>
+<p>[OpenID.Messages]<br>
+Sakimura, N., Bradley, J., Jones, M., de Medeiros, B.,<br>
+Mortimore, C., and E. Jay, “OpenID Connect Messages 1.0”,<br>
+June 2012, &lt;<a target="_blank" rel="noopener" href="http://openid.net/specs/openid-connect-">http://openid.net/specs/openid-connect-</a><br>
+messages-1_0.html&gt;.</p>
+<p>[owasp_redir]<br>
+“OWASP Cheat Sheet Series - Unvalidated Redirects and<br>
+Forwards”, 2020,<br>
+&lt;<a target="_blank" rel="noopener" href="https://cheatsheetseries.owasp.org/cheatsheets/">https://cheatsheetseries.owasp.org/cheatsheets/</a><br>
+Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html&gt;.</p>
+<p>[RFC6265]  Barth, A., “HTTP State Management Mechanism”, RFC 6265,<br>
+DOI 10.17487/RFC6265, April 2011,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc6265">https://www.rfc-editor.org/info/rfc6265</a>.</p>
+<p>[RFC6819]  Lodderstedt, T., Ed., McGloin, M., and P. Hunt, “OAuth 2.0<br>
+Threat Model and Security Considerations”, RFC 6819,<br>
+DOI 10.17487/RFC6819, January 2013,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc6819">https://www.rfc-editor.org/info/rfc6819</a>.</p>
+<p>[RFC7009]  Lodderstedt, T., Ed., Dronia, S., and M. Scurtescu, “OAuth<br>
+2.0 Token Revocation”, RFC 7009, DOI 10.17487/RFC7009,<br>
+August 2013, <a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7009">https://www.rfc-editor.org/info/rfc7009</a>.</p>
+<p>[RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer<br>
+Protocol (HTTP/1.1): Message Syntax and Routing”,<br>
+RFC 7230, DOI 10.17487/RFC7230, June 2014,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7230">https://www.rfc-editor.org/info/rfc7230</a>.</p>
+<p>[RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer<br>
+Protocol (HTTP/1.1): Authentication”, RFC 7235,<br>
+DOI 10.17487/RFC7235, June 2014,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7235">https://www.rfc-editor.org/info/rfc7235</a>.</p>
+<p>[RFC7519]  Jones, M., Bradley, J., and N. Sakimura, “JSON Web Token<br>
+(JWT)”, RFC 7519, DOI 10.17487/RFC7519, May 2015,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7519">https://www.rfc-editor.org/info/rfc7519</a>.</p>
+<p>[RFC7591]  Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and<br>
+P. Hunt, “OAuth 2.0 Dynamic Client Registration Protocol”,<br>
+RFC 7591, DOI 10.17487/RFC7591, July 2015,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7591">https://www.rfc-editor.org/info/rfc7591</a>.</p>
+<p>[RFC7592]  Richer, J., Ed., Jones, M., Bradley, J., and M. Machulak,<br>
+“OAuth 2.0 Dynamic Client Registration Management<br>
+Protocol”, RFC 7592, DOI 10.17487/RFC7592, July 2015,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7592">https://www.rfc-editor.org/info/rfc7592</a>.</p>
+<p>[RFC7636]  Sakimura, N., Ed., Bradley, J., and N. Agarwal, “Proof Key<br>
+for Code Exchange by OAuth Public Clients”, RFC 7636,<br>
+DOI 10.17487/RFC7636, September 2015,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7636">https://www.rfc-editor.org/info/rfc7636</a>.</p>
+<p>[RFC7662]  Richer, J., Ed., “OAuth 2.0 Token Introspection”,<br>
+RFC 7662, DOI 10.17487/RFC7662, October 2015,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc7662">https://www.rfc-editor.org/info/rfc7662</a>.</p>
+<p>[RFC8414]  Jones, M., Sakimura, N., and J. Bradley, “OAuth 2.0<br>
+Authorization Server Metadata”, RFC 8414,<br>
+DOI 10.17487/RFC8414, June 2018,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc8414">https://www.rfc-editor.org/info/rfc8414</a>.</p>
+<p>[RFC8628]  Denniss, W., Bradley, J., Jones, M., and H. Tschofenig,<br>
+“OAuth 2.0 Device Authorization Grant”, RFC 8628,<br>
+DOI 10.17487/RFC8628, August 2019,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc8628">https://www.rfc-editor.org/info/rfc8628</a>.</p>
+<p>[RFC8705]  Campbell, B., Bradley, J., Sakimura, N., and T.<br>
+Lodderstedt, “OAuth 2.0 Mutual-TLS Client Authentication<br>
+and Certificate-Bound Access Tokens”, RFC 8705,<br>
+DOI 10.17487/RFC8705, February 2020,<br>
+<a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc8705">https://www.rfc-editor.org/info/rfc8705</a>.</p>
+<p>[RFC8707]  Campbell, B., Bradley, J., and H. Tschofenig, “Resource<br>
+Indicators for OAuth 2.0”, RFC 8707, DOI 10.17487/RFC8707,<br>
+February 2020, <a target="_blank" rel="noopener" href="https://www.rfc-editor.org/info/rfc8707">https://www.rfc-editor.org/info/rfc8707</a>.</p>
+<h2 id="附录A-扩展的巴科斯范式（Augmented-Backus-Naur-Form-ABNF）语法">附录A. 扩展的巴科斯范式（Augmented Backus-Naur Form, ABNF）语法</h2>
+<p>本节提供了对本规范中定义的元素的 ABNF 描述，使用 [RFC5234] 记法。以下 ABNF 定义使用 Unicode  [W3C.REC-xml-20081126] ；这些字符通常以 UTF-8 格式编码。元素以出现的顺序定义。</p>
+<p>以下的一些定义使用 [RFC3986] 中的“URI 引用”定义。</p>
+<p>一些使用通用定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">VSCHAR     = %x20-7E</span><br><span class="line">NQCHAR     = %x21 / %x23-5B / %x5D-7E</span><br><span class="line">NQSCHAR    = %x20-21 / %x23-5B / %x5D-7E</span><br><span class="line">UNICODECHARNOCRLF = %x09 /%x20-7E / %x80-D7FF /</span><br><span class="line">                    %xE000-FFFD / %x10000-10FFFF</span><br></pre></td></tr></table></figure>
+<p>（UNICODECHARNOCRLF 定义基于 [W3C.REC-xml-20081126] 第 2.2 节中定义的字符，但忽略了回车符和换行符。）</p>
+<p>A.1 client_id 语法<br>
+client_id 元素在第 2.3.1 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client-id     = *VSCHAR</span><br></pre></td></tr></table></figure>
+<p>A.2 client_secret 语法<br>
+client_secret 元素在第 2.3.1 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client-secret = *VSCHAR</span><br></pre></td></tr></table></figure>
+<p>A.3 response_type 语法<br>
+response_type 元素在第 3.1.1 节和第 8.4 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">response-type = response-name *( SP response-name )</span><br><span class="line">response-name = 1*response-char</span><br><span class="line">response-char = &quot;_&quot; / DIGIT / ALPHA</span><br></pre></td></tr></table></figure>
+<p>A.4 scope 语法<br>
+scope 元素在第 3.3 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scope       = scope-token *( SP scope-token )</span><br><span class="line">scope-token = 1*NQCHAR</span><br></pre></td></tr></table></figure>
+<p>A.5 state 语法<br>
+state 元素在第 4.1.1 节、第 4.1.2 节、第 4.1.2.1 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">state      = 1*VSCHAR</span><br></pre></td></tr></table></figure>
+<p>A.6 redirect_uri 语法<br>
+redirect_uri 元素在第 4.1.1 节、第 4.1.3 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redirect-uri      = URI-reference</span><br></pre></td></tr></table></figure>
+<p>A.7 error 语法<br>
+error 元素在第 4.1.2.1 节、第 5.2 节、第 7.2 节、第 8.5 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error             = 1*NQSCHAR</span><br></pre></td></tr></table></figure>
+<p>A.8 error_description 语法<br>
+error_description 元素在第 4.1.2.1 节、第 5.2 节、第 7.3 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error-description = 1*NQSCHAR</span><br></pre></td></tr></table></figure>
+<p>A.9 error_uri 语法<br>
+error_uri 元素在第 4.1.2.1 节、第 5.2 节、第 7.2 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error-uri         = URI-reference</span><br></pre></td></tr></table></figure>
+<p>A.10 grant_type 语法<br>
+grant_type 元素在第 4.1.3 节、第 4.2.3 节、第 4.2.2 节、第 4.3 节、第 6 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grant-type = grant-name / URI-reference</span><br><span class="line">grant-name = 1*name-char</span><br><span class="line">name-char  = &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / DIGIT / ALPHA</span><br></pre></td></tr></table></figure>
+<p>A.11 code 语法<br>
+code 元素在第 4.1.3 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code       = 1*VSCHAR</span><br></pre></td></tr></table></figure>
+<p>A.12 access_token 语法<br>
+access_token 元素在第 4.2.3 节、第 5.1 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">access-token = 1*VSCHAR</span><br></pre></td></tr></table></figure>
+<p>A.13 token_type 语法<br>
+token_type 元素在第 5.1 节、第 8.1 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">token-type = type-name / URI-reference</span><br><span class="line">type-name  = 1*name-char</span><br><span class="line">name-char  = &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / DIGIT / ALPHA</span><br></pre></td></tr></table></figure>
+<p>A.14 expires_in 语法<br>
+expires_in 元素在第 5.1 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expires-in = 1*DIGIT</span><br></pre></td></tr></table></figure>
+<p>A.15 refresh_token 语法<br>
+refresh_token 元素在第 5.1 节、第 6 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">refresh-token = 1*VSCHAR</span><br></pre></td></tr></table></figure>
+<p>A.16 终端参数语法<br>
+新的终端参数在第 8.2 节定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">param-name = 1*name-char</span><br><span class="line">name-char  = &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / DIGIT / ALPHA</span><br></pre></td></tr></table></figure>
+<p>A.17 code_verifier 语法<br>
+code_verifier 的扩展的巴科斯范式定义如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">code-verifier = 43*128unreserved</span><br><span class="line">unreserved = ALPHA / DIGIT / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;</span><br><span class="line">ALPHA = %x41-5A / %x61-7A</span><br><span class="line">DIGIT = %x30-39</span><br></pre></td></tr></table></figure>
+<p>A.18 code_challenge 语法<br>
+code_challenge 的扩展的巴科斯范式定义如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">code-challenge = 43*128unreserved</span><br><span class="line">unreserved = ALPHA / DIGIT / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;</span><br><span class="line">ALPHA = %x41-5A / %x61-7A</span><br><span class="line">DIGIT = %x30-39</span><br></pre></td></tr></table></figure>
+<h2 id="附录-B-application-x-www-form-urlencoded-媒体类型的使用">附录 B. application/x-www-form-urlencoded 媒体类型的使用</h2>
+<p>在本规范发布时，application/x-www-form-urlencoded 媒体类型在 [W3C.REC-html401-19991224] 第 17.13.4 节中定义，但未在 IANA MIME 媒体类型注册表中注册 (<a target="_blank" rel="noopener" href="http://www.iana.org/assignments/media-types(http://www.iana.org/assignments/media-types)">http://www.iana.org/assignments/media-types(http://www.iana.org/assignments/media-types)</a>) 。此外，该定义并不完整，因为没有考虑到非 US-ASCII 字符。</p>
+<p>为了解决使用这种媒体类型生成有效载荷时的缺点，必须首先使用 UTF-8 字符编码方案 [RFC3629] 对名称和值进行编码；然后使用 [W3C.REC-html401-19991224] 中定义的转义规则，对八位组序列进行进一步编码。</p>
+<p>从使用此媒体类型的有效载荷解析数据时，名称和值需要相应地解码为八位组，并使用 UTF-8 字符编码方案进行解码。</p>
+<p>例如，由六个 Unicode 码点组成的值 (1)U+0020 (SPACE)，(2) U+0025 (PERCENT SIGN)，(3) U+0026 (AMPERSAND)，(4) U+002B (PLUS SIGN)，(5) U+00A3 (POUND SIGN)，(6) U+20AC (EURO SIGN) 将被编码为以下八位字节序列（使用十六进制表示法）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20 25 26 2B C2 A3 E2 82 AC</span><br></pre></td></tr></table></figure>
+<p>然后在有效载荷中表示为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+%25%26%2B%C2%A3%E2%82%AC</span><br></pre></td></tr></table></figure>
+<h2 id="附录-C-扩展">附录 C. 扩展</h2>
+<p>以下是发布时完善的扩展列表：</p>
+<ul>
+<li>
+<p>[RFC8628]：OAuth 2.0 设备授权许可</p>
+<ul>
+<li>设备授权许可（以前称为设备流）是对没有浏览器或输入受限的设备的访问令牌的扩展。智能电视应用程序或可以将视频流式传输到流视频服务的硬件视频编码器之类的设备经常使用此功能。</li>
+</ul>
+</li>
+<li>
+<p>[RFC8414]：授权服务器元数据</p>
+<ul>
+<li>授权服务器元数据（也称为 OAuth 发现）定义了一个终端，客户端可以使用该终端查找与特定 OAuth 服务器交互时所需的信息，例如授权终端和令牌终端的位置以及支持的许可类型。</li>
+</ul>
+</li>
+<li>
+<p>[RFC8707]：资源指示</p>
+<ul>
+<li>为客户端提供了一种显式地向授权服务器发送信号的方式，指明其打算将请求的访问令牌用于何处。</li>
+</ul>
+</li>
+<li>
+<p>[RFC7591]：动态客户端注册</p>
+<ul>
+<li>动态客户端注册提供了一种以编程方式向授权服务器注册客户端的机制。</li>
+</ul>
+</li>
+<li>
+<p>[RFC7592]：动态客户端管理</p>
+<ul>
+<li>动态客户端管理提供了一种用于更新动态注册的客户端的信息的机制。</li>
+</ul>
+</li>
+<li>
+<p>[I-D.ietf-oauth-access-token-jwt]：OAuth 2.0 访问令牌的 JWT（JSON Web Token）配置文件</p>
+<ul>
+<li>本规范定义了用于颁发 JWT 格式的 OAuth 访问令牌的配置文件。</li>
+</ul>
+</li>
+<li>
+<p>[RFC8705]：双向 TLS</p>
+<ul>
+<li>双向 TLS 描述了一种将访问令牌和刷新令牌颁发给客户端的机制，以及通过 TLS 证书认证的客户端身份认证机制。</li>
+</ul>
+</li>
+<li>
+<p>[RFC7662]：令牌自省</p>
+<ul>
+<li>令牌自省扩展定义了一种资源服务器获得有关访问令牌信息的机制。</li>
+</ul>
+</li>
+<li>
+<p>[RFC7009]：令牌撤销</p>
+<ul>
+<li>令牌撤销扩展定义了一种让客户端可以向授权服务器指明不再需要访问令牌的机制。</li>
+</ul>
+</li>
+<li>
+<p>[I-D.ietf-oauth-par]：推送授权请求</p>
+<ul>
+<li>推送授权请求扩展描述了一种从反向信道启动 OAuth 流的技术，为构建复杂的授权请求提供了更好的安全性和更多的灵活性。</li>
+</ul>
+</li>
+<li>
+<p>[I-D.ietf-oauth-rar]：富授权请求</p>
+<ul>
+<li>富授权请求定义了一个新的参数 authorization_details ，用于在 OAuth 授权请求中携带细粒度的授权数据。</li>
+</ul>
+</li>
+</ul>
+<h2 id="附录-D-致谢">附录 D. 致谢</h2>
+<p>TBD</p>
+<p>Authors’ Addresses</p>
+<p>Dick Hardt<br>
+<a target="_blank" rel="noopener" href="http://SignIn.Org">SignIn.Org</a></p>
+<p>Email: <a href="mailto:dick.hardt@gmail.com">dick.hardt@gmail.com</a></p>
+<p>Aaron Parecki<br>
+Okta</p>
+<p>Email: <a href="mailto:aaron@parecki.com">aaron@parecki.com</a><br>
+URI:   <a target="_blank" rel="noopener" href="https://aaronparecki.com">https://aaronparecki.com</a></p>
+<p>Torsten Lodderstedt<br>
+<a target="_blank" rel="noopener" href="http://yes.com">yes.com</a></p>
+<p>Email: <a href="mailto:torsten@lodderstedt.net">torsten@lodderstedt.net</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/jckling">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/oauth-v2-1-draft/">https://jckling.github.io/oauth-v2-1-draft/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/security/">security</a><a class="post-meta__tags" href="/tags/authentication/">authentication</a><a class="post-meta__tags" href="/tags/protocol/">protocol</a><a class="post-meta__tags" href="/tags/oauth/">oauth</a></div><div class="post-share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/Akr6osDLPtO4hjS.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/win10-virtualbox-docker-machine/" title="如何在 Windows 10 家庭版上使用 Docker"><img class="cover" src="https://i.loli.net/2021/06/14/aKl57xkrPEVzvGA.png" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">如何在 Windows 10 家庭版上使用 Docker</div></div><div class="info-2"><div class="info-item-1">安装 VirtualBox 和 Docker Machine 在 Windows 10 家庭中文版上使用 Docker，不使用 Toolbox 或者 WSL 。</div></div></div></a><a class="pagination-related" href="/x509-certificate-ssl-tls/" title="X.509 数字证书与 SSL/TLS"><img class="cover" src="https://i.loli.net/2021/06/14/jcdZBHXx9TskmrM.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">X.509 数字证书与 SSL/TLS</div></div><div class="info-2"><div class="info-item-1">X.509 数字证书常见格式，国密数字证书模板；TLS/SSL 原理，国密 TLS 双向认证；FISCO BCOS 与 Fabric 中的数字证书，典型 PKI 架构。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/dvwa-weak-session-ids/" title="DVWA Writeup Part VIII (Weak Session IDs)"><img class="cover" src="https://i.loli.net/2021/06/14/aAsUJkFMvVpl4ro.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-25</div><div class="info-item-2">DVWA Writeup Part VIII (Weak Session IDs)</div></div><div class="info-2"><div class="info-item-1">Damn Vulnerable Web Application (DVWA) 弱会话 ID</div></div></div></a><a class="pagination-related" href="/dvwa-brute-force/" title="DVWA Writeup Part I (Brute Force)"><img class="cover" src="https://i.loli.net/2021/06/14/aAsUJkFMvVpl4ro.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-22</div><div class="info-item-2">DVWA Writeup Part I (Brute Force)</div></div><div class="info-2"><div class="info-item-1">Damn Vulnerable Web Application (DVWA) 暴力破解</div></div></div></a><a class="pagination-related" href="/dvwa-xss-reflected/" title="DVWA Writeup Part X (XSS (Reflected))"><img class="cover" src="https://i.loli.net/2021/06/14/aAsUJkFMvVpl4ro.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-25</div><div class="info-item-2">DVWA Writeup Part X (XSS (Reflected))</div></div><div class="info-2"><div class="info-item-1">Damn Vulnerable Web Application (DVWA) 反射型 XSS</div></div></div></a><a class="pagination-related" href="/dvwa-xss-stored/" title="DVWA Writeup Part XI (XSS (Stored))"><img class="cover" src="https://i.loli.net/2021/06/14/aAsUJkFMvVpl4ro.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-26</div><div class="info-item-2">DVWA Writeup Part XI (XSS (Stored))</div></div><div class="info-2"><div class="info-item-1">Damn Vulnerable Web Application (DVWA) 存储型 XSS</div></div></div></a><a class="pagination-related" href="/dvwa-csp-bypass/" title="DVWA Writeup Part XII (CSP Bypass)"><img class="cover" src="https://i.loli.net/2021/06/14/aAsUJkFMvVpl4ro.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-26</div><div class="info-item-2">DVWA Writeup Part XII (CSP Bypass)</div></div><div class="info-2"><div class="info-item-1">Damn Vulnerable Web Application (DVWA) CSP 绕过</div></div></div></a><a class="pagination-related" href="/dvwa-javascript-security/" title="DVWA Writeup Part XIII (JavaScript)"><img class="cover" src="https://i.loli.net/2021/06/14/aAsUJkFMvVpl4ro.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-26</div><div class="info-item-2">DVWA Writeup Part XIII (JavaScript)</div></div><div class="info-2"><div class="info-item-1">Damn Vulnerable Web Application (DVWA) JavaScript 脚本攻击</div></div></div></a><a class="pagination-related" href="/dvwa-command-injection/" title="DVWA Writeup Part II (Command Injection)"><img class="cover" src="https://i.loli.net/2021/06/14/aAsUJkFMvVpl4ro.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-23</div><div class="info-item-2">DVWA Writeup Part II (Command Injection)</div></div><div class="info-2"><div class="info-item-1">Damn Vulnerable Web Application (DVWA) 命令注入</div></div></div></a><a class="pagination-related" href="/dvwa-csrf/" title="DVWA Writeup Part III (CSRF)"><img class="cover" src="https://i.loli.net/2021/06/14/aAsUJkFMvVpl4ro.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-23</div><div class="info-item-2">DVWA Writeup Part III (CSRF)</div></div><div class="info-2"><div class="info-item-1">Damn Vulnerable Web Application (DVWA) 跨站请求伪造（Cross-Site Request Forgery, CSRF）</div></div></div></a><a class="pagination-related" href="/dvwa-file-inclusion/" title="DVWA Writeup Part IV (File Inclusion)"><img class="cover" src="https://i.loli.net/2021/06/14/aAsUJkFMvVpl4ro.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-23</div><div class="info-item-2">DVWA Writeup Part IV (File Inclusion)</div></div><div class="info-2"><div class="info-item-1">Damn Vulnerable Web Application (DVWA) 文件包含</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info-name">Jckling</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请勿重复提交<br/>联系作者：QQ2521390430</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">The OAuth 2.1 Authorization Framework</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8D%89%E6%A1%88%E7%8A%B6%E6%80%81"><span class="toc-text">草案状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E"><span class="toc-text">版权声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%8B%E7%BB%8D"><span class="toc-text">1.  介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%A7%92%E8%89%B2"><span class="toc-text">1.1 角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%8D%8F%E8%AE%AE%E6%B5%81%E7%A8%8B"><span class="toc-text">1.2 协议流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%8E%88%E6%9D%83%E8%AE%B8%E5%8F%AF"><span class="toc-text">1.3 授权许可</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-%E6%8E%88%E6%9D%83%E7%A0%81"><span class="toc-text">1.3.1 授权码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%87%AD%E6%8D%AE"><span class="toc-text">1.3.2 客户端凭据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C"><span class="toc-text">1.4 访问令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E5%88%B7%E6%96%B0%E4%BB%A4%E7%89%8C"><span class="toc-text">1.5 刷新令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-TLS-%E7%89%88%E6%9C%AC"><span class="toc-text">1.6 TLS 版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-HTTP-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">1.7 HTTP 重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7"><span class="toc-text">1.8 互操作性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-9-%E7%AC%A6%E5%8F%B7%E7%BA%A6%E5%AE%9A"><span class="toc-text">1.9 符号约定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B3%A8%E5%86%8C"><span class="toc-text">2. 客户端注册</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%B1%BB%E5%9E%8B"><span class="toc-text">2.1 客户端类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A0%87%E8%AF%86"><span class="toc-text">2.2 客户端标识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%A4%E8%AF%81"><span class="toc-text">2.3 客户端认证</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%86%E7%A0%81"><span class="toc-text">2.3.1 客户端密码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E5%85%B6%E4%BB%96%E8%AE%A4%E8%AF%81%E6%96%B9%E6%B3%95"><span class="toc-text">2.3.2 其他认证方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E6%9C%AA%E6%B3%A8%E5%86%8C%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-text">2.4 未注册的客户端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8D%8F%E8%AE%AE%E7%BB%88%E7%AB%AF"><span class="toc-text">3. 协议终端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%8E%88%E6%9D%83%E7%BB%88%E7%AB%AF"><span class="toc-text">3.1 授权终端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-%E5%93%8D%E5%BA%94%E7%B1%BB%E5%9E%8B"><span class="toc-text">3.1.1 响应类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-%E9%87%8D%E5%AE%9A%E5%90%91%E7%BB%88%E7%AB%AF"><span class="toc-text">3.1.2 重定向终端</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-2-1-%E7%BB%88%E7%AB%AF%E8%AF%B7%E6%B1%82%E6%9C%BA%E5%AF%86%E6%80%A7"><span class="toc-text">3.1.2.1 终端请求机密性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-2-2-%E6%B3%A8%E5%86%8C%E8%A6%81%E6%B1%82"><span class="toc-text">3.1.2.2 注册要求</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-2-3-%E5%8A%A8%E6%80%81%E9%85%8D%E7%BD%AE"><span class="toc-text">3.1.2.3 动态配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-2-4-%E6%97%A0%E6%95%88%E7%BB%88%E7%AB%AF"><span class="toc-text">3.1.2.4 无效终端</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-2-5-%E7%BB%88%E7%AB%AF%E5%86%85%E5%AE%B9"><span class="toc-text">3.1.2.5 终端内容</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%BB%A4%E7%89%8C%E7%BB%88%E7%AB%AF"><span class="toc-text">3.2 令牌终端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%A4%E8%AF%81"><span class="toc-text">3.2.1 客户端认证</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E8%8C%83%E5%9B%B4"><span class="toc-text">3.3 访问令牌范围</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%8E%B7%E5%BE%97%E6%8E%88%E6%9D%83"><span class="toc-text">4. 获得授权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%8E%88%E6%9D%83%E7%A0%81%E8%AE%B8%E5%8F%AF"><span class="toc-text">4.1 授权码许可</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-1-%E6%8E%88%E6%9D%83%E8%AF%B7%E6%B1%82"><span class="toc-text">4.1.1 授权请求</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E9%AA%8C%E8%AF%81"><span class="toc-text">4.1.1.1 客户端生成代码验证</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-2-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E6%8C%91%E6%88%98"><span class="toc-text">4.1.1.2 客户端生成代码挑战</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8E%88%E6%9D%83%E8%AF%B7%E6%B1%82"><span class="toc-text">4.1.1.3 客户端初始化授权请求</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-2-%E6%8E%88%E6%9D%83%E5%93%8D%E5%BA%94"><span class="toc-text">4.1.2 授权响应</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-2-1-%E9%94%99%E8%AF%AF%E5%93%8D%E5%BA%94"><span class="toc-text">4.1.2.1 错误响应</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-3-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E8%AF%B7%E6%B1%82"><span class="toc-text">4.1.3 访问令牌请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-4-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E5%93%8D%E5%BA%94"><span class="toc-text">4.1.4 访问令牌响应</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%87%AD%E6%8D%AE%E8%AE%B8%E5%8F%AF"><span class="toc-text">4.2 客户端凭据许可</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-1-%E6%8E%88%E6%9D%83%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94"><span class="toc-text">4.2.1 授权请求和响应</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-2-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E8%AF%B7%E6%B1%82"><span class="toc-text">4.2.2 访问令牌请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-3-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E5%93%8D%E5%BA%94"><span class="toc-text">4.2.3 访问令牌响应</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E6%89%A9%E5%B1%95%E8%AE%B8%E5%8F%AF"><span class="toc-text">4.3 扩展许可</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%A2%81%E5%8F%91%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C"><span class="toc-text">5. 颁发访问令牌</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%88%90%E5%8A%9F%E5%93%8D%E5%BA%94"><span class="toc-text">5.1 成功响应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E9%94%99%E8%AF%AF%E5%93%8D%E5%BA%94"><span class="toc-text">5.2 错误响应</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%9B%B4%E6%96%B0%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C"><span class="toc-text">6. 更新访问令牌</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%9B%B4%E6%96%B0%E4%BB%A4%E7%89%8C%E4%BF%9D%E6%8A%A4"><span class="toc-text">6.1 更新令牌保护</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%AE%BF%E9%97%AE%E5%8F%97%E4%BF%9D%E6%8A%A4%E8%B5%84%E6%BA%90"><span class="toc-text">7. 访问受保护资源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E7%B1%BB%E5%9E%8B"><span class="toc-text">7.1 访问令牌类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E6%89%BF%E8%BD%BD%E4%BB%A4%E7%89%8C"><span class="toc-text">7.2 承载令牌</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-1-%E5%B7%B2%E8%AE%A4%E8%AF%81%E7%9A%84%E8%AF%B7%E6%B1%82"><span class="toc-text">7.2.1 已认证的请求</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#7-2-1-1-%E6%8E%88%E6%9D%83%E8%AF%B7%E6%B1%82%E5%A4%B4%E5%AD%97%E6%AE%B5"><span class="toc-text">7.2.1.1 授权请求头字段</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-2-1-2-%E8%A1%A8%E5%8D%95%E7%BC%96%E7%A0%81%E7%9A%84%E4%B8%BB%E4%BD%93%E5%8F%82%E6%95%B0"><span class="toc-text">7.2.1.2 表单编码的主体参数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-2-WWW-Authenticate-%E5%93%8D%E5%BA%94%E5%A4%B4%E5%AD%97%E6%AE%B5"><span class="toc-text">7.2.2 WWW-Authenticate 响应头字段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-3-%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81"><span class="toc-text">7.2.3 错误代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E9%94%99%E8%AF%AF%E5%93%8D%E5%BA%94"><span class="toc-text">7.3 错误响应</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#7-3-1-%E6%89%A9%E5%B1%95%E4%BB%A4%E7%89%8C%E7%B1%BB%E5%9E%8B"><span class="toc-text">7.3.1 扩展令牌类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E5%AE%89%E5%85%A8"><span class="toc-text">7.4 访问令牌安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#7-4-1-%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81"><span class="toc-text">7.4.1 安全威胁</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-1-1-%E4%BB%A4%E7%89%8C%E4%BC%AA%E9%80%A0-%E7%AF%A1%E6%94%B9"><span class="toc-text">7.4.1.1 令牌伪造&#x2F;篡改</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-1-2-%E4%BB%A4%E7%89%8C%E6%B3%84%E9%9C%B2"><span class="toc-text">7.4.1.2 令牌泄露</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-1-3-%E4%BB%A4%E7%89%8C%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">7.4.1.3 令牌重定向</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-1-4-%E4%BB%A4%E7%89%8C%E9%87%8D%E6%94%BE"><span class="toc-text">7.4.1.4 令牌重放</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-4-2-%E5%A8%81%E8%83%81%E7%BC%93%E8%A7%A3"><span class="toc-text">7.4.2 威胁缓解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-4-3-%E6%80%BB%E7%BB%93%E5%BB%BA%E8%AE%AE"><span class="toc-text">7.4.3 总结建议</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-3-1-%E4%BF%9D%E6%8A%A4%E6%89%BF%E8%BD%BD%E4%BB%A4%E7%89%8C"><span class="toc-text">7.4.3.1 保护承载令牌</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-3-2-%E9%AA%8C%E8%AF%81-TLS-%E8%AF%81%E4%B9%A6%E9%93%BE"><span class="toc-text">7.4.3.2 验证 TLS 证书链</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-3-3-%E4%B8%80%E5%BE%8B%E4%BD%BF%E7%94%A8-TLS-https"><span class="toc-text">7.4.3.3 一律使用 TLS (https)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-3-4-%E4%B8%8D%E8%A6%81%E5%B0%86%E6%89%BF%E8%BD%BD%E4%BB%A4%E7%89%8C%E5%AD%98%E5%82%A8%E5%9C%A8-HTTP-Cookie-%E4%B8%AD"><span class="toc-text">7.4.3.4 不要将承载令牌存储在 HTTP Cookie 中</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-3-5-%E9%A2%81%E5%8F%91%E7%9F%AD%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%E6%89%BF%E8%BD%BD%E4%BB%A4%E7%89%8C"><span class="toc-text">7.4.3.5 颁发短生命周期的承载令牌</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-3-6-%E9%A2%81%E5%8F%91%E9%99%90%E5%AE%9A%E8%8C%83%E5%9B%B4%E7%9A%84%E6%89%BF%E8%BD%BD%E4%BB%A4%E7%89%8C"><span class="toc-text">7.4.3.6 颁发限定范围的承载令牌</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-3-7-%E4%B8%8D%E8%A6%81%E5%9C%A8%E9%A1%B5%E9%9D%A2-URL-%E4%B8%AD%E4%BC%A0%E9%80%92%E6%89%BF%E8%BD%BD%E4%BB%A4%E7%89%8C"><span class="toc-text">7.4.3.7 不要在页面 URL 中传递承载令牌</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-4-4-%E9%98%B2%E6%AD%A2%E4%BB%A4%E7%89%8C%E9%87%8D%E6%94%BE"><span class="toc-text">7.4.4 防止令牌重放</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-4-5-%E9%99%90%E5%88%B6%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E6%9D%83%E9%99%90"><span class="toc-text">7.4.5 限制访问令牌权限</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%89%A9%E5%B1%95"><span class="toc-text">8. 扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E5%AE%9A%E4%B9%89%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E7%B1%BB%E5%9E%8B"><span class="toc-text">8.1 定义访问令牌类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E5%AE%9A%E4%B9%89%E6%96%B0%E7%9A%84%E7%BB%88%E7%AB%AF%E5%8F%82%E6%95%B0"><span class="toc-text">8.2 定义新的终端参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E5%AE%9A%E4%B9%89%E6%96%B0%E7%9A%84%E6%8E%88%E6%9D%83%E8%AE%B8%E5%8F%AF%E7%B1%BB%E5%9E%8B"><span class="toc-text">8.3 定义新的授权许可类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-%E5%AE%9A%E4%B9%89%E6%96%B0%E7%9A%84%E6%8E%88%E6%9D%83%E7%BB%88%E7%AB%AF%E5%93%8D%E5%BA%94%E7%B1%BB%E5%9E%8B"><span class="toc-text">8.4 定义新的授权终端响应类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-5-%E5%AE%9A%E4%B9%89%E9%A2%9D%E5%A4%96%E7%9A%84%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81"><span class="toc-text">8.5 定义额外的错误代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%AE%89%E5%85%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">9. 安全注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="toc-text">9.1 客户端身份认证</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#9-1-1-%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="toc-text">9.1.1 原生应用程序的客户端身份认证</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E6%B3%A8%E5%86%8C"><span class="toc-text">9.2 原生应用程序客户端的注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%81%87%E5%86%92"><span class="toc-text">9.3 客户端假冒</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#9-3-1-%E5%81%87%E5%86%92%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">9.3.1 假冒原生应用程序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C"><span class="toc-text">9.4 访问令牌</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#9-4-1-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E6%9D%83%E9%99%90%E9%99%90%E5%88%B6"><span class="toc-text">9.4.1 访问令牌权限限制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-4-2-%E9%98%B2%E6%AD%A2%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C%E9%87%8D%E6%94%BE"><span class="toc-text">9.4.2 防止访问令牌重放</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-5-%E5%88%B7%E6%96%B0%E4%BB%A4%E7%89%8C"><span class="toc-text">9.5 刷新令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-6-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%81%87%E5%86%92%E8%B5%84%E6%BA%90%E6%89%80%E6%9C%89%E8%80%85"><span class="toc-text">9.6 客户端假冒资源所有者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-7-%E4%BF%9D%E6%8A%A4%E5%9F%BA%E4%BA%8E%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E6%B5%81"><span class="toc-text">9.7 保护基于重定向的流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#9-7-1-%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%9B%9E%E7%8E%AF%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">9.7.1 原生应用程序中回环重定向的注意事项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-7-2-HTTP-307-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">9.7.2 HTTP 307 重定向</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-8-%E6%8E%88%E6%9D%83%E7%A0%81"><span class="toc-text">9.8 授权码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-9-%E8%AF%B7%E6%B1%82%E6%9C%BA%E5%AF%86%E6%80%A7"><span class="toc-text">9.9 请求机密性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-10-%E7%A1%AE%E4%BF%9D%E7%BB%88%E7%AB%AF%E7%9C%9F%E5%AE%9E%E6%80%A7"><span class="toc-text">9.10 确保终端真实性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-11-%E5%87%AD%E6%8D%AE%E7%8C%9C%E6%B5%8B%E6%94%BB%E5%87%BB"><span class="toc-text">9.11 凭据猜测攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-12-%E9%92%93%E9%B1%BC%E6%94%BB%E5%87%BB"><span class="toc-text">9.12 钓鱼攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-13-%E5%9C%A8%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E4%BC%AA%E9%80%A0%E5%A4%96%E9%83%A8%E7%94%A8%E6%88%B7%E4%BB%A3%E7%90%86"><span class="toc-text">9.13 在原生应用程序中伪造外部用户代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-14-%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E6%81%B6%E6%84%8F%E5%A4%96%E9%83%A8%E7%94%A8%E6%88%B7%E4%BB%A3%E7%90%86"><span class="toc-text">9.14 原生应用程序中的恶意外部用户代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-15-%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0"><span class="toc-text">9.15 跨站请求伪造</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-16-%E7%82%B9%E5%87%BB%E5%8A%AB%E6%8C%81"><span class="toc-text">9.16 点击劫持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-17-%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E5%92%8C%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81"><span class="toc-text">9.17 代码注入和输入验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-18-%E5%BC%80%E6%94%BE%E5%BC%8F%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">9.18 开放式重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#9-18-1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%9C%E4%B8%BA%E5%BC%80%E6%94%BE%E5%BC%8F%E9%87%8D%E5%AE%9A%E5%90%91%E5%99%A8"><span class="toc-text">9.18.1 客户端作为开放式重定向器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-18-2-%E6%8E%88%E6%9D%83%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%9C%E4%B8%BA%E5%BC%80%E6%94%BE%E5%BC%8F%E9%87%8D%E5%AE%9A%E5%90%91%E5%99%A8"><span class="toc-text">9.18.2 授权服务器作为开放式重定向器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-19-%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E6%8E%88%E6%9D%83%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B7%B7%E6%B7%86%E7%9A%84%E7%BC%93%E8%A7%A3"><span class="toc-text">9.19 原生应用程序中授权服务器混淆的缓解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-20-%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%94%A8%E6%88%B7%E4%BB%A3%E7%90%86"><span class="toc-text">9.20 原生应用程序中的嵌入式用户代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-21-%E5%85%B6%E4%BB%96%E5%BB%BA%E8%AE%AE"><span class="toc-text">9.21 其他建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">10. 原生应用程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-%E5%9C%A8%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E9%97%B4-URI-%E9%80%9A%E4%BF%A1%E5%AE%9E%E7%8E%B0-OAuth"><span class="toc-text">10.1 在原生应用程序中使用应用程序间 URI 通信实现 OAuth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E5%9C%A8%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%8F%91%E8%B5%B7%E6%8E%88%E6%9D%83%E8%AF%B7%E6%B1%82"><span class="toc-text">10.2 在原生应用程序中发起授权请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E5%9C%A8%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E6%8E%A5%E6%94%B6%E6%8E%88%E6%9D%83%E5%93%8D%E5%BA%94"><span class="toc-text">10.3 在原生应用程序中接收授权响应</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#10-3-1-%E7%A7%81%E7%94%A8-URI-%E6%96%B9%E6%A1%88%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">10.3.1 私用 URI 方案重定向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-3-2-%E5%A3%B0%E6%98%8E-https-%E6%96%B9%E6%A1%88-URI-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">10.3.2 声明 https 方案 URI 重定向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-3-3-%E5%9B%9E%E7%8E%AF%E6%8E%A5%E5%8F%A3%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">10.3.3 回环接口重定向</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E5%9F%BA%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">11. 基于浏览器的应用程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E4%B8%8E-OAuth-2-0-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">12. 与 OAuth 2.0 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-IANA-%E8%80%83%E9%87%8F"><span class="toc-text">13. IANA 考量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-text">14. 参考文献</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#14-1-%E8%A7%84%E8%8C%83%E6%80%A7%E6%96%87%E7%8C%AE"><span class="toc-text">14.1 规范性文献</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-2-%E5%8F%82%E8%80%83%E6%80%A7%E6%96%87%E7%8C%AE"><span class="toc-text">14.2 参考性文献</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%BD%95A-%E6%89%A9%E5%B1%95%E7%9A%84%E5%B7%B4%E7%A7%91%E6%96%AF%E8%8C%83%E5%BC%8F%EF%BC%88Augmented-Backus-Naur-Form-ABNF%EF%BC%89%E8%AF%AD%E6%B3%95"><span class="toc-text">附录A. 扩展的巴科斯范式（Augmented Backus-Naur Form, ABNF）语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%BD%95-B-application-x-www-form-urlencoded-%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">附录 B. application&#x2F;x-www-form-urlencoded 媒体类型的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%BD%95-C-%E6%89%A9%E5%B1%95"><span class="toc-text">附录 C. 扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%BD%95-D-%E8%87%B4%E8%B0%A2"><span class="toc-text">附录 D. 致谢</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/text-generation/" title="文本生成"><img src="https://s2.loli.net/2025/09/10/KeRdvSwc5mBZTJI.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成"/></a><div class="content"><a class="title" href="/text-generation/" title="文本生成">文本生成</a><time datetime="2025-09-10T07:24:00.000Z" title="发表于 2025-09-10 15:24:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/text-to-image-generation/" title="文本生成图片"><img src="https://s2.loli.net/2025/09/10/gQ3MbUJctelzBam.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成图片"/></a><div class="content"><a class="title" href="/text-to-image-generation/" title="文本生成图片">文本生成图片</a><time datetime="2025-09-10T05:57:00.000Z" title="发表于 2025-09-10 13:57:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型"><img src="https://s2.loli.net/2025/08/29/EaAOJKSNWt4Tiw8.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本/图片生成 3D 模型"/></a><div class="content"><a class="title" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型">文本/图片生成 3D 模型</a><time datetime="2025-08-28T08:48:00.000Z" title="发表于 2025-08-28 16:48:00">2025-08-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code"><img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-Coder/qwen3-coder-main.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Qwen3-Coder 接入 VS Code"/></a><div class="content"><a class="title" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code">Qwen3-Coder 接入 VS Code</a><time datetime="2025-08-03T13:35:43.000Z" title="发表于 2025-08-03 21:35:43">2025-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen"><img src="https://s2.loli.net/2025/07/15/XnLZaMF9gipcfGQ.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="本地部署 Open WebUI 使用 DeepSeek/Qwen"/></a><div class="content"><a class="title" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen">本地部署 Open WebUI 使用 DeepSeek/Qwen</a><time datetime="2025-07-15T06:28:50.000Z" title="发表于 2025-07-15 14:28:50">2025-07-15</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url(https://i.loli.net/2021/06/14/Akr6osDLPtO4hjS.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Jckling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"emoji":["https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"]}
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

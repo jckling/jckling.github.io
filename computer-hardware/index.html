@@ -1,0 +1,566 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;zh-HK&quot;,&quot;zh-TW&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>了解自己的电脑硬件 | Jckling's Blog</title><meta name="author" content="Jckling"><meta name="copyright" content="Jckling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="了解我自己的笔记本电脑（Y7000P-2019）的硬件配置，高级操作系统的课让我意识到我并不了解自己的电脑，而且还把计算机组成原理的知识忘得差不多了xd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="了解自己的电脑硬件">
+<meta property="og:url" content="https://jckling.github.io/computer-hardware/">
+<meta property="og:site_name" content="Jckling&#39;s Blog">
+<meta property="og:description" content="了解我自己的笔记本电脑（Y7000P-2019）的硬件配置，高级操作系统的课让我意识到我并不了解自己的电脑，而且还把计算机组成原理的知识忘得差不多了xd">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png">
+<meta property="article:published_time" content="2020-09-18T06:53:02.000Z">
+<meta property="article:modified_time" content="2025-10-01T06:22:00.000Z">
+<meta property="article:author" content="Jckling">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="tools">
+<meta property="article:tag" content="hardware">
+<meta property="article:tag" content="pc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "了解自己的电脑硬件",
+  "url": "https://jckling.github.io/computer-hardware/",
+  "image": "https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png",
+  "datePublished": "2020-09-18T06:53:02.000Z",
+  "dateModified": "2025-10-01T06:22:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jckling",
+      "url": "https://github.com/jckling"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/jckling/favicon.ico"><link rel="canonical" href="https://jckling.github.io/computer-hardware/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="lfjhmONZuO834dnjVuGulU6croTwfNMGSgNV5vNkf60"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-164555720-1"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'UA-164555720-1')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'UA-164555720-1', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":600,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '了解自己的电脑硬件',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Jckling's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Jckling's Blog" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jckling's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">了解自己的电脑硬件</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">了解自己的电脑硬件</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-09-18T06:53:02.000Z" title="发表于 2020-09-18 14:53:02">2020-09-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tech/">tech</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/computer-hardware/#post-comment"><span class="waline-comment-count" data-path="/computer-hardware/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>课堂趣事</h1>
+<p>高级操作系统的授课老师真的是全程在讲相声，不过从他的话语中可以知道他写过书、做过小型操作系统、参加顶级会议等等，经历非常丰富。个人感觉老师非常厉害而且也很会讲“相声”，还有就是知识储备丰富，问个问题问倒了大片学生。</p>
+<p>上课的时候说到电脑数据备份，然后又提到班上同学拿着电脑，就开始问大家的电脑配置，内存、RAM、ROM、显存、硬盘、寻址空间、CPU 等等。说实话我还真的不了解，拿着我的联想 Y7000P-2019 ，只知道是 <code>i7 + 16G + 1T SSD + RTX 2060</code> ，然后是 1080p 分辨率还有 144 Hz 刷新率…</p>
+<p>老师说他硕士毕业创业开发软件，结果因为软件开发行业不景气就把电脑给卖了，顺便给人开发软件，赚的是卖电脑的钱。边说边笑大家都不了解电脑，这怎么卖电脑。</p>
+<p>虽然这些仿佛与操作系统无关，但确实，我不了解我的电脑，计算机组成原理的知识也基本都还给老师了。我还时常羡慕 MBP 那么好看，但是我连自己的笔记本都不了解，用得也不深入，这还换个啥子【确信</p>
+<p>那么接下来就该好好学习使用自己的 Windows 电脑，先从了解自己的电脑硬件配置开始吧。</p>
+<h1>硬件</h1>
+<p>我的笔记本是联想 Y7000P-2019 ，2019 年底刚换，之前用的是联想小新 Air13 Pro ，记得是 256G 固态和 8G 内存。就那破电脑我还用了三年多，最后闲鱼出掉了:)</p>
+<p>可以根据型号直接在网上查找硬件信息，在 <a target="_blank" rel="noopener" href="http://detail.zol.com.cn/1289/1288316/param.shtml">中关村在线</a> 查看配置参数；</p>
+<p>Windows 自带的 <strong>系统信息</strong> 和 <strong>设备管理器</strong> 可以查看硬件配置信息；</p>
+<p>使用第三方工具 <a target="_blank" rel="noopener" href="https://www.ccleaner.com/speccy">Speccy</a> 可以查看硬件信息。</p>
+<img src="https://i.loli.net/2021/06/06/ZeUMgczwEtVDL95.png" width="90%">
+<h2 id="主板">主板</h2>
+<ul>
+<li>制造商：LENOVO</li>
+<li>模型：LNVNB161216 (U3E1)</li>
+<li>芯片组：Intel HM370</li>
+<li>功耗：3 W</li>
+</ul>
+<p>芯片组的各种信息直接看 Intel 官方给出的产品规范 <a target="_blank" rel="noopener" href="https://ark.intel.com/content/www/cn/zh/ark/products/135101/mobile-intel-hm370-chipset.html">Mobile Intel® HM370 Chipset</a> 就好（摊手</p>
+<h2 id="处理器（CPU）">处理器（CPU）</h2>
+<p>Intel 酷睿 i7-9750H</p>
+<ul>
+<li>主频：2.60 GHz
+<ul>
+<li>即，处理器基本频率</li>
+<li>表示处理器晶体管打开和关闭的速率</li>
+<li>处理器基本频率是 TDP 定义的操作点</li>
+</ul>
+</li>
+<li>最高睿频：4.50 GHz
+<ul>
+<li>最大睿频频率是处理器在采用英特尔® 睿频加速技术，以及英特尔® Thermal Velocity Boost（如果存在）时所能达到的最大单核频率。</li>
+</ul>
+</li>
+<li>核心/线程数：六核心/十二线程
+<ul>
+<li>6 个内核，12 个逻辑处理器</li>
+<li>内核数是一个硬件术语，它表示单个计算组件（裸芯片或芯片）中的独立中央处理器的数量</li>
+<li>线程或执行线程是一个软件术语，指代那些可由单核 CPU 传递或处理的基本有序指令序列</li>
+</ul>
+</li>
+<li>三级缓存：12 MB
+<ul>
+<li>即，CPU 高速缓存</li>
+</ul>
+</li>
+<li>总线规格：DMI 8GT/s
+<ul>
+<li>即，总线速度</li>
+<li>总线是在计算机组件之间或计算机之间传输数据的子系统
+<ul>
+<li>前端总线（FSB）：它在 CPU 和内存控制器中枢之间传输数据</li>
+<li>直接媒体接口（DMI）：这是计算机主板上英特尔集成内存控制器和英特尔 I/O 控制器中枢之间的点对点互联</li>
+<li>快速通道互联（QPI）：这是 CPU 和集成内存控制器之间的点对点互联。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>核心架构：Coffee Lake
+<ul>
+<li>代号名称</li>
+</ul>
+</li>
+<li>制程工艺：14 nm
+<ul>
+<li>光刻是指用于生产集成电路的半导体技术，采用纳米 (nm) 为计算单位，可表示半导体上设计的功能的大小</li>
+</ul>
+</li>
+<li>功耗：45 W
+<ul>
+<li>热设计功耗 (TDP) 以瓦特为单位</li>
+<li>表示所有活动内核在英特尔定义的高复杂性工作负载下，以基本频率运行时消耗的平均功率</li>
+</ul>
+</li>
+<li>指令集：64 bit
+<ul>
+<li>指令集即为微处理器理解并能执行的一套基本命令和指令</li>
+</ul>
+</li>
+</ul>
+<p>频率以千兆赫兹 (GHz) 或每秒十亿次循环计。</p>
+<p>处理器信息也直接上 Intel 官方查看规范 <a target="_blank" rel="noopener" href="https://ark.intel.com/content/www/cn/zh/ark/products/191045/intel-core-i7-9750h-processor-12m-cache-up-to-4-50-ghz.html">英特尔® 酷睿™ i7-9750H 处理器</a> 。</p>
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/CPU%E7%BC%93%E5%AD%98">CPU 缓存</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.intel.cn/content/www/cn/zh/gaming/resources/cpu-clock-speed.html">睿频是什么意思？</a></li>
+</ul>
+<h2 id="存储设备">存储设备</h2>
+<p>内存</p>
+<ul>
+<li>Samsung DDR4-2666 (1333 MHz)</li>
+<li>容量：16 GB</li>
+<li>类型： DDR4 2666 MHz
+<ul>
+<li>DDR4 四代双倍数据率同步动态随机存储器</li>
+<li>内存频率 2666 MHz</li>
+</ul>
+</li>
+</ul>
+<p>硬盘</p>
+<ul>
+<li>SAMSUNG MZVLB1T0HBLR-000L2</li>
+<li>容量：1 T
+<ul>
+<li>实际容量：953.9 GB</li>
+</ul>
+</li>
+<li>类型：SSD 固态硬盘</li>
+</ul>
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.samsung.com/semiconductor/cn/dram/module/M471A1K43DB1-CTD/">M471A1K43DB1-CTD</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.harddrivebenchmark.net/hdd.php?hdd=SAMSUNG%20MZVLB1T0HBLR-000L2&amp;id=24115">SAMSUNG MZVLB1T0HBLR-000L2</a></li>
+<li><a target="_blank" rel="noopener" href="https://ranker.sisoftware.co.uk/show_run.php?q=c2ffc8f0d6b7d6ebd9e8d9e8dcfa88b585a3c6a39eae88fbc6f6&amp;l=en">Details for Result ID SAMSUNG MZVLB1T0HBLR-000L2</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/DDR4_SDRAM">DDR4 SDRAM</a></li>
+</ul>
+<h2 id="显示屏">显示屏</h2>
+<p>屏幕：Generic PnP Monitor</p>
+<ul>
+<li>颜色：32 bit</li>
+<li>尺寸：15.6 inch</li>
+<li>比例：16:9</li>
+<li>分辨率：1920 x 1080
+<ul>
+<li>全高清屏（FHD，即 Full HD）</li>
+</ul>
+</li>
+<li>屏幕技术：
+<ul>
+<li>LED 背光
+<ul>
+<li>使用发光二极管（LED）作为背光源的液晶显示器</li>
+</ul>
+</li>
+<li>IPS 屏
+<ul>
+<li>横向电场效应显示技术</li>
+</ul>
+</li>
+<li>84% 屏占比
+<ul>
+<li>屏幕与面板面积的比值</li>
+</ul>
+</li>
+<li>72% NTSC
+<ul>
+<li>色域</li>
+</ul>
+</li>
+<li>6.7 mm 窄边框</li>
+</ul>
+</li>
+<li>刷新率：144 Hz</li>
+</ul>
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/LED-backlit_LCD">LED-backlit LCD</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/IPS_panel">IPS panel</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.viewsonic.com/library/photography/what-is-an-ips-monitor-panel/">What is an IPS Monitor? Monitor Panel Types Explained</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.eizo.be/en/knowledge/monitor-expertise/understanding-color-gamut/">Understanding the Colour Gamut of an LCD Monitor</a></li>
+</ul>
+<h2 id="显卡（RAM）">显卡（RAM）</h2>
+<p>NVIDIA GeForce RTX 2060</p>
+<ul>
+<li>显存容量：6 GB</li>
+<li>显存类型：GDDR 6
+<ul>
+<li>第六版图形用双倍资料传输率</li>
+</ul>
+</li>
+<li>最大数字分辨率：7680x4320</li>
+</ul>
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/geforce/graphics-cards/rtx-2060/">GEFORCE RTX 2060</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/GDDR6">GDDR6</a></li>
+</ul>
+<h2 id="多媒体设备">多媒体设备</h2>
+<p>摄像头</p>
+<ul>
+<li>720p HD 摄像头</li>
+</ul>
+<p>声卡（扬声器/麦克风）</p>
+<ul>
+<li>Realtek High Definition Audio</li>
+</ul>
+<h2 id="网络通信">网络通信</h2>
+<p>无线网卡</p>
+<ul>
+<li>Intel Wireless-AC 9560 160MHz
+<ul>
+<li>2*2 AC 无线局域网卡</li>
+<li>频带：2.4Ghz, 5Ghz (160Mhz)</li>
+<li>Wi-Fi 标准：802.11ac</li>
+<li>蓝牙版本：5.1</li>
+</ul>
+</li>
+</ul>
+<p>有线网卡</p>
+<ul>
+<li>1000 Mbps 以太网卡</li>
+</ul>
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.intel.cn/content/www/cn/zh/products/wireless/wireless-products/dual-band-wireless-ac-9560.html">英特尔® Wireless-AC 9560</a></li>
+</ul>
+<h2 id="I-O-接口">I/O 接口</h2>
+<p>数据接口</p>
+<ul>
+<li>USB 3.1 接口（x3）</li>
+<li>Type-C 接口</li>
+<li>mDP 接口</li>
+</ul>
+<p>视频接口</p>
+<ul>
+<li>HDMI 2.0</li>
+</ul>
+<p>音频接口</p>
+<ul>
+<li>耳机/麦克风二合一接口</li>
+</ul>
+<p>网络接口</p>
+<ul>
+<li>RJ45</li>
+</ul>
+<p>电源接口</p>
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/RJ45">RJ45</a></li>
+</ul>
+<h2 id="输入设备">输入设备</h2>
+<p>指取设备</p>
+<ul>
+<li>触摸板</li>
+</ul>
+<p>键盘</p>
+<ul>
+<li>全尺寸白色背光键盘</li>
+</ul>
+<h2 id="电源描述">电源描述</h2>
+<ul>
+<li>电池类型：57 Wh</li>
+<li>电源适配器：100 V - 240 V 自适应交流电源适配器</li>
+</ul>
+<h2 id="外观">外观</h2>
+<ul>
+<li>重量：2.35 kg</li>
+<li>长度：361 mm</li>
+<li>宽度：267 mm</li>
+<li>厚度：26.9 mm</li>
+<li>外壳材质：复合材质</li>
+<li>外壳颜色：黑色</li>
+</ul>
+<h2 id="其他">其他</h2>
+<p>安全性能</p>
+<ul>
+<li>安全锁孔
+<ul>
+<li>一般不会有人用吧…</li>
+</ul>
+</li>
+</ul>
+<p>散热系统</p>
+<ul>
+<li>散热模组：一体化</li>
+<li>散热鳍片：纯铜</li>
+<li>复合式热管：3*8 mm</li>
+<li>热管效率提升：29%</li>
+<li>噪音降低：10%</li>
+<li>满载核心温度降低：4℃</li>
+<li>双模增强显示（DDG 显卡增强）
+<ul>
+<li>联想独创</li>
+</ul>
+</li>
+<li>TSI 霜刃散热（实现了 78% 热管导热面积增加）
+<ul>
+<li>联想独创</li>
+</ul>
+</li>
+<li>Fn + Q 智能系统模式
+<ul>
+<li>联想独创</li>
+</ul>
+</li>
+</ul>
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.kensington.com/zh-cn/solutions/product-category/security/kensington-security-slot-specs/">Kensington 安全锁孔规格</a></li>
+<li><a target="_blank" rel="noopener" href="https://item.lenovo.com.cn/product/1005165.html">拯救者 Y7000P 英特尔酷睿i7 15.6英寸专业电竞本 黑色</a></li>
+</ul>
+<h2 id="补充">补充</h2>
+<h3 id="虚拟内存">虚拟内存</h3>
+<p>将硬盘的一部分空间作为内存使用，这部分空间即为虚拟内存。</p>
+<blockquote>
+<p>分页文件是硬盘上的一块区域，Windiows 当作 RAM 使用。</p>
+</blockquote>
+<p>所有驱动器总分页文件大小：3416 MB</p>
+<ul>
+<li>右键此电脑-属性-高级系统设置-性能设置-高级-虚拟内存更改</li>
+</ul>
+<p>因为我选择了 <strong>自动管理所有驱动器的分页文件大小</strong> ，因此虚拟内存的大小是动态变化的，允许的最小值为 16 MB 。</p>
+<img src="https://i.loli.net/2021/06/06/dTvam3oZ51nxBpU.png" width="90%">
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98">虚拟内存</a></li>
+</ul>
+<h3 id="寻址空间">寻址空间</h3>
+<blockquote>
+<p>64 位架构下，地址线是 46 个，所以最大的物理地址是 2^46 B ，折合 64 TB</p>
+</blockquote>
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Address_space">Address space</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%AF%BB%E5%9D%80%E6%A8%A1%E5%BC%8F">寻址模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/29962475">32位系统只能寻址4G空间，64位则是128G，这些是怎么算出来的？</a></li>
+</ul>
+<h3 id="总线">总线</h3>
+<p>根据关于寻址空间的知乎问题回答中得知，地址总线 46 位，需要参考 <a target="_blank" rel="noopener" href="https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html">Intel® 64 and IA-32 Architectures Software Developer Manuals</a> 。</p>
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Bus_(computing)">Bus (computing)</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/64-bit_computing">64-bit computing</a></li>
+</ul>
+<h3 id="时钟周期-时钟频率">时钟周期 / 时钟频率</h3>
+<p>时钟频率（时钟速度） 2.60 GHz ，即每秒钟执行 2600,000,000 个时钟周期，时钟周期为时钟频率的倒数。</p>
+<p>参阅</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Clock_rate">Clock rate</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/43651954/what-is-a-clock-cycle-and-clock-speed">What is a clock cycle and clock speed?</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.intel.cn/content/www/cn/zh/gaming/resources/cpu-clock-speed.html">什么是时钟速度？</a></li>
+</ul>
+<h1>总结</h1>
+<p>捋一捋才发现，哇，原来这么多硬件，这么多参数，然后看得我眼花缭乱，满脑子“这是啥？”的想法。也算是稍微了解了一些电脑硬件配置，不过每个硬件的参数对电脑什么方面的性能有影响，这个倒是没有弄清楚。</p>
+<p>看到英特尔架构手册就让我想起了当年上逆向工程的时候，感谢范大让我早早知道和稍微翻阅了一下，内容真的是超级多（然后也没记住）。</p>
+<p>计算机组成原理的知识大部分归还给了克敏，个人感觉自己学知识非常“应试”，学完考完就忘，而且我本来就觉得自己健忘，也有可能是心理作用？这可相当不行，老懒熊要开始改坏习惯了【确信</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/jckling">Jckling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jckling.github.io/computer-hardware/">https://jckling.github.io/computer-hardware/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jckling.github.io" target="_blank">Jckling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/windows/">windows</a><a class="post-meta__tags" href="/tags/tools/">tools</a><a class="post-meta__tags" href="/tags/hardware/">hardware</a><a class="post-meta__tags" href="/tags/pc/">pc</a></div><div class="post-share"><div class="social-share" data-image="https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="3100725659" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/effective-communication-skills-course/" title="《有效沟通技巧》 2020秋 北京联合大学"><img class="cover" src="https://i.loli.net/2021/06/14/L4xDaeAP6sOCi3g.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">《有效沟通技巧》 2020秋 北京联合大学</div></div><div class="info-2"><div class="info-item-1">章节测验答案整理，包含部分期末答案</div></div></div></a><a class="pagination-related" href="/sm3-algorithm/" title="SM3 密码杂凑算法原理"><img class="cover" src="https://i.loli.net/2021/06/14/oKxFG62yjhqRrJ9.jpg" onerror="onerror=null;src='/img/jckling/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">SM3 密码杂凑算法原理</div></div><div class="info-2"><div class="info-item-1">国密算法 SM3 流程分析</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/docker-desktop-stopped-troubleshooting/" title="Docker Desktop stopped 问题解决"><img class="cover" src="https://i.loli.net/2021/06/14/aKl57xkrPEVzvGA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-05</div><div class="info-item-2">Docker Desktop stopped 问题解决</div></div><div class="info-2"><div class="info-item-1">Docker Desktop 4.7.1</div></div></div></a><a class="pagination-related" href="/win10-virtualbox-docker-machine/" title="如何在 Windows 10 家庭版上使用 Docker"><img class="cover" src="https://i.loli.net/2021/06/14/aKl57xkrPEVzvGA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-21</div><div class="info-item-2">如何在 Windows 10 家庭版上使用 Docker</div></div><div class="info-2"><div class="info-item-1">安装 VirtualBox 和 Docker Machine 在 Windows 10 家庭中文版上使用 Docker，不使用 Toolbox 或者 WSL 。</div></div></div></a><a class="pagination-related" href="/win10-wsl2-docker-desktop/" title="Windows 10 家庭版 + WSL 2 + Docker Desktop"><img class="cover" src="https://i.loli.net/2021/06/14/aKl57xkrPEVzvGA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-23</div><div class="info-item-2">Windows 10 家庭版 + WSL 2 + Docker Desktop</div></div><div class="info-2"><div class="info-item-1">在 Windows 10 家庭中文版中使用 WSL 2 和 Docker ，Docker Desktop 真香。</div></div></div></a><a class="pagination-related" href="/windows-software/" title="Windows 平台软件推荐"><img class="cover" src="https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-08</div><div class="info-item-2">Windows 平台软件推荐</div></div><div class="info-2"><div class="info-item-1">Windows 平台使用频率较高的软件推荐，包含系统优化、开发工具、办公软件等分类推荐</div></div></div></a><a class="pagination-related" href="/tagspaces-guide/" title="文件标签工具 TagSpaces 使用"><img class="cover" src="https://cdn.jsdelivr.net/gh/tagspaces/documentation/static/media/v3/tagspaces-v3-themes.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-09</div><div class="info-item-2">文件标签工具 TagSpaces 使用</div></div><div class="info-2"><div class="info-item-1">给文件和文件夹打标签进行管理</div></div></div></a><a class="pagination-related" href="/python-static-analysis-tools/" title="Python 程序分析工具调研"><img class="cover" src="https://i.loli.net/2021/06/14/f3EiKbmVUTQyPSc.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-30</div><div class="info-item-2">Python 程序分析工具调研</div></div><div class="info-2"><div class="info-item-1">Python 程序分析工具调研，包含一些开源和闭源工具的详细对比分析</div></div></div></a><a class="pagination-related" href="/nvidia-omniverse-audio-tools/" title="NVIDIA Omniverse Audio 系列工具使用"><img class="cover" src="https://www.nvidia.cn/content/dam/en-zz/Solutions/about-nvidia/logo-and-brand/02-nvidia-logo-color-blk-500x200-4c25-p@2x.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-24</div><div class="info-item-2">NVIDIA Omniverse Audio 系列工具使用</div></div><div class="info-2"><div class="info-item-1">Audio2Face / Audio2Gesture / Audio2Emotion</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/jckling/avatar.jpg" onerror="this.onerror=null;this.src='/img/jckling/avatar_404.png'" alt="avatar"/></div><div class="author-info-name">Jckling</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">252</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/jckling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问本站 🥳 <br/>评论需要审核，请勿重复提交<br/>联系作者：QQ2521390430</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">课堂趣事</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">硬件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E6%9D%BF"><span class="toc-number">2.1.</span> <span class="toc-text">主板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%EF%BC%88CPU%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">处理器（CPU）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87"><span class="toc-number">2.3.</span> <span class="toc-text">存储设备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E5%B1%8F"><span class="toc-number">2.4.</span> <span class="toc-text">显示屏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E5%8D%A1%EF%BC%88RAM%EF%BC%89"><span class="toc-number">2.5.</span> <span class="toc-text">显卡（RAM）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%AA%92%E4%BD%93%E8%AE%BE%E5%A4%87"><span class="toc-number">2.6.</span> <span class="toc-text">多媒体设备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1"><span class="toc-number">2.7.</span> <span class="toc-text">网络通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I-O-%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.8.</span> <span class="toc-text">I&#x2F;O 接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%AE%BE%E5%A4%87"><span class="toc-number">2.9.</span> <span class="toc-text">输入设备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B5%E6%BA%90%E6%8F%8F%E8%BF%B0"><span class="toc-number">2.10.</span> <span class="toc-text">电源描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E8%A7%82"><span class="toc-number">2.11.</span> <span class="toc-text">外观</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">2.12.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-number">2.13.</span> <span class="toc-text">补充</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">2.13.1.</span> <span class="toc-text">虚拟内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BB%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="toc-number">2.13.2.</span> <span class="toc-text">寻址空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BA%BF"><span class="toc-number">2.13.3.</span> <span class="toc-text">总线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%92%9F%E5%91%A8%E6%9C%9F-%E6%97%B6%E9%92%9F%E9%A2%91%E7%8E%87"><span class="toc-number">2.13.4.</span> <span class="toc-text">时钟周期 &#x2F; 时钟频率</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/text-generation/" title="文本生成"><img src="https://s2.loli.net/2025/09/10/KeRdvSwc5mBZTJI.png" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成"/></a><div class="content"><a class="title" href="/text-generation/" title="文本生成">文本生成</a><time datetime="2025-09-10T07:24:00.000Z" title="发表于 2025-09-10 15:24:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/text-to-image-generation/" title="文本生成图片"><img src="https://s2.loli.net/2025/09/10/gQ3MbUJctelzBam.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本生成图片"/></a><div class="content"><a class="title" href="/text-to-image-generation/" title="文本生成图片">文本生成图片</a><time datetime="2025-09-10T05:57:00.000Z" title="发表于 2025-09-10 13:57:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型"><img src="https://s2.loli.net/2025/08/29/EaAOJKSNWt4Tiw8.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="文本/图片生成 3D 模型"/></a><div class="content"><a class="title" href="/image-to-3d-generation/" title="文本/图片生成 3D 模型">文本/图片生成 3D 模型</a><time datetime="2025-08-28T08:48:00.000Z" title="发表于 2025-08-28 16:48:00">2025-08-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code"><img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-Coder/qwen3-coder-main.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="Qwen3-Coder 接入 VS Code"/></a><div class="content"><a class="title" href="/qwen-vscode-integration/" title="Qwen3-Coder 接入 VS Code">Qwen3-Coder 接入 VS Code</a><time datetime="2025-08-03T13:35:43.000Z" title="发表于 2025-08-03 21:35:43">2025-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen"><img src="https://s2.loli.net/2025/07/15/XnLZaMF9gipcfGQ.jpg" onerror="this.onerror=null;this.src='/img/jckling/404.jpg'" alt="本地部署 Open WebUI 使用 DeepSeek/Qwen"/></a><div class="content"><a class="title" href="/deepseek-qwen-openwebui-integration/" title="本地部署 Open WebUI 使用 DeepSeek/Qwen">本地部署 Open WebUI 使用 DeepSeek/Qwen</a><time datetime="2025-07-15T06:28:50.000Z" title="发表于 2025-07-15 14:28:50">2025-07-15</time></div></div></div></div><div class="card-widget ads-wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1035234274961147" data-ad-slot="8787224657" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></main><footer id="footer" style="background-image: url(https://i.loli.net/2021/06/14/jURcwTiFCbne4my.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Jckling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"emoji":["https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"]}
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://blog-comments-puce.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
