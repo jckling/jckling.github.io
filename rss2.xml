@@ -207,13 +207,13 @@
       
       <category domain="https://jckling.github.io/tags/unity/">unity</category>
       
-      <category domain="https://jckling.github.io/tags/tools/">tools</category>
-      
       <category domain="https://jckling.github.io/tags/nvidia/">nvidia</category>
       
       <category domain="https://jckling.github.io/tags/omniverse/">omniverse</category>
       
       <category domain="https://jckling.github.io/tags/audio/">audio</category>
+      
+      <category domain="https://jckling.github.io/tags/tools/">tools</category>
       
       
       <comments>https://jckling.github.io/nvidia-omniverse-audio-tools/#disqus_thread</comments>
@@ -613,9 +613,9 @@
       
       <category domain="https://jckling.github.io/tags/static-analysis/">static-analysis</category>
       
-      <category domain="https://jckling.github.io/tags/python/">python</category>
-      
       <category domain="https://jckling.github.io/tags/tools/">tools</category>
+      
+      <category domain="https://jckling.github.io/tags/python/">python</category>
       
       
       <comments>https://jckling.github.io/python-static-analysis-tools/#disqus_thread</comments>

@@ -202,13 +202,13 @@
     
     <category term="unity" scheme="https://jckling.github.io/tags/unity/"/>
     
-    <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
-    
     <category term="nvidia" scheme="https://jckling.github.io/tags/nvidia/"/>
     
     <category term="omniverse" scheme="https://jckling.github.io/tags/omniverse/"/>
     
     <category term="audio" scheme="https://jckling.github.io/tags/audio/"/>
+    
+    <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
     
   </entry>
   
@@ -580,9 +580,9 @@
     
     <category term="static-analysis" scheme="https://jckling.github.io/tags/static-analysis/"/>
     
-    <category term="python" scheme="https://jckling.github.io/tags/python/"/>
-    
     <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
+    
+    <category term="python" scheme="https://jckling.github.io/tags/python/"/>
     
   </entry>
   
