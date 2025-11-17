@@ -256,9 +256,9 @@
     <category term="notes" scheme="https://jckling.github.io/categories/notes/"/>
     
     
-    <category term="work" scheme="https://jckling.github.io/tags/work/"/>
-    
     <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
+    
+    <category term="work" scheme="https://jckling.github.io/tags/work/"/>
     
     <category term="unity" scheme="https://jckling.github.io/tags/unity/"/>
     
@@ -376,9 +376,9 @@
     <category term="notes" scheme="https://jckling.github.io/categories/notes/"/>
     
     
-    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
-    
     <category term="interview" scheme="https://jckling.github.io/tags/interview/"/>
+    
+    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
     
     <category term="career" scheme="https://jckling.github.io/tags/career/"/>
     
@@ -428,13 +428,13 @@
     <category term="notes" scheme="https://jckling.github.io/categories/notes/"/>
     
     
-    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
-    
     <category term="interview" scheme="https://jckling.github.io/tags/interview/"/>
     
-    <category term="career" scheme="https://jckling.github.io/tags/career/"/>
+    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
     
     <category term="internship" scheme="https://jckling.github.io/tags/internship/"/>
+    
+    <category term="career" scheme="https://jckling.github.io/tags/career/"/>
     
   </entry>
   
@@ -594,9 +594,9 @@
     <category term="tech" scheme="https://jckling.github.io/categories/tech/"/>
     
     
-    <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
-    
     <category term="python" scheme="https://jckling.github.io/tags/python/"/>
+    
+    <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
     
     <category term="security" scheme="https://jckling.github.io/tags/security/"/>
     
