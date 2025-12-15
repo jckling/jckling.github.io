@@ -432,9 +432,9 @@
     
     <category term="interview" scheme="https://jckling.github.io/tags/interview/"/>
     
-    <category term="career" scheme="https://jckling.github.io/tags/career/"/>
-    
     <category term="internship" scheme="https://jckling.github.io/tags/internship/"/>
+    
+    <category term="career" scheme="https://jckling.github.io/tags/career/"/>
     
   </entry>
   
@@ -594,9 +594,9 @@
     <category term="tech" scheme="https://jckling.github.io/categories/tech/"/>
     
     
-    <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
-    
     <category term="python" scheme="https://jckling.github.io/tags/python/"/>
+    
+    <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
     
     <category term="security" scheme="https://jckling.github.io/tags/security/"/>
     

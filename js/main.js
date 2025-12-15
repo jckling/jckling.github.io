@@ -84,10 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const buttonRect = ele.getBoundingClientRect()
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop
         const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
-        const finalTop = buttonRect.top + scrollTop - 40
-        const finalLeft = buttonRect.left + scrollLeft + buttonRect.width / 2
 
-        const topValue = ele.closest('figure.highlight').classList.contains('code-fullpage') ? finalTop + 60 : finalTop
+        // X-axis boundary check
+        const halfWidth = newEle.offsetWidth / 2
+        const centerLeft = buttonRect.left + scrollLeft + buttonRect.width / 2
+        const finalLeft = Math.max(halfWidth + 10, Math.min(window.innerWidth - halfWidth - 10, centerLeft))
+
+        // Show tooltip below button if too close to top
+        const normalTop = buttonRect.top + scrollTop - 40
+        const shouldShowBelow = buttonRect.top < 60 || normalTop < 10
+
+        const topValue = shouldShowBelow ? buttonRect.top + scrollTop + buttonRect.height + 10 : normalTop
 
         newEle.style.cssText = `
       top: ${topValue + 10}px;
@@ -111,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 800)
       }
     }
+
     const copy = async (text, ctx) => {
       try {
         await navigator.clipboard.writeText(text)
@@ -155,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 獲取隱藏狀態下元素的真實高度
     const getActualHeight = item => {
+      if (item.offsetHeight > 0) return item.offsetHeight
       const hiddenElements = new Map()
 
       const fix = () => {
@@ -541,17 +550,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const $articleList = $article.querySelectorAll('h1,h2,h3,h4,h5,h6')
     let detectItem = ''
 
+    // Optimization: Cache header positions
+    let headerList = []
+    const updateHeaderPositions = () => {
+      headerList = Array.from($articleList).map(ele => ({
+        ele,
+        top: btf.getEleTop(ele),
+        id: ele.id
+      }))
+    }
+
+    updateHeaderPositions()
+    btf.addEventListenerPjax(window, 'resize', btf.throttle(updateHeaderPositions, 200))
+
     const findHeadPosition = top => {
       if (top === 0) return false
 
       let currentId = ''
       let currentIndex = ''
 
-      for (let i = 0; i < $articleList.length; i++) {
-        const ele = $articleList[i]
-        if (top > btf.getEleTop(ele) - 80) {
-          const id = ele.id
-          currentId = id ? '#' + encodeURI(id) : ''
+      for (let i = 0; i < headerList.length; i++) {
+        const item = headerList[i]
+        if (top > item.top - 80) {
+          currentId = item.id ? '#' + encodeURI(item.id) : ''
           currentIndex = i
         } else {
           break
@@ -629,7 +650,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       $body.classList.add('read-mode')
       newEle.type = 'button'
-      newEle.className = 'fas fa-sign-out-alt exit-readmode'
+      newEle.className = 'exit-readmode'
+      newEle.innerHTML = '<i class="fas fa-sign-out-alt"></i>'
       newEle.addEventListener('click', exitReadMode)
       $body.appendChild(newEle)
     },
