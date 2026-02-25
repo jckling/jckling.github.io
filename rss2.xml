@@ -240,13 +240,13 @@
       
       <category domain="https://jckling.github.io/tags/unity/">unity</category>
       
+      <category domain="https://jckling.github.io/tags/tools/">tools</category>
+      
       <category domain="https://jckling.github.io/tags/nvidia/">nvidia</category>
       
       <category domain="https://jckling.github.io/tags/omniverse/">omniverse</category>
       
       <category domain="https://jckling.github.io/tags/audio/">audio</category>
-      
-      <category domain="https://jckling.github.io/tags/tools/">tools</category>
       
       
       <comments>https://jckling.github.io/nvidia-omniverse-audio-tools/#disqus_thread</comments>
@@ -395,6 +395,8 @@
       <category domain="https://jckling.github.io/categories/tech/">tech</category>
       
       
+      <category domain="https://jckling.github.io/tags/deployment/">deployment</category>
+      
       <category domain="https://jckling.github.io/tags/blog/">blog</category>
       
       <category domain="https://jckling.github.io/tags/hexo/">hexo</category>
@@ -402,8 +404,6 @@
       <category domain="https://jckling.github.io/tags/cicd/">cicd</category>
       
       <category domain="https://jckling.github.io/tags/github-actions/">github-actions</category>
-      
-      <category domain="https://jckling.github.io/tags/deployment/">deployment</category>
       
       
       <comments>https://jckling.github.io/github-action-hexo-deploy/#disqus_thread</comments>
@@ -486,9 +486,9 @@
       
       <category domain="https://jckling.github.io/tags/experience/">experience</category>
       
-      <category domain="https://jckling.github.io/tags/career/">career</category>
-      
       <category domain="https://jckling.github.io/tags/internship/">internship</category>
+      
+      <category domain="https://jckling.github.io/tags/career/">career</category>
       
       
       <comments>https://jckling.github.io/2023-summer-interview/#disqus_thread</comments>

@@ -233,13 +233,13 @@
     
     <category term="unity" scheme="https://jckling.github.io/tags/unity/"/>
     
+    <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
+    
     <category term="nvidia" scheme="https://jckling.github.io/tags/nvidia/"/>
     
     <category term="omniverse" scheme="https://jckling.github.io/tags/omniverse/"/>
     
     <category term="audio" scheme="https://jckling.github.io/tags/audio/"/>
-    
-    <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
     
   </entry>
   
@@ -378,6 +378,8 @@
     <category term="tech" scheme="https://jckling.github.io/categories/tech/"/>
     
     
+    <category term="deployment" scheme="https://jckling.github.io/tags/deployment/"/>
+    
     <category term="blog" scheme="https://jckling.github.io/tags/blog/"/>
     
     <category term="hexo" scheme="https://jckling.github.io/tags/hexo/"/>
@@ -385,8 +387,6 @@
     <category term="cicd" scheme="https://jckling.github.io/tags/cicd/"/>
     
     <category term="github-actions" scheme="https://jckling.github.io/tags/github-actions/"/>
-    
-    <category term="deployment" scheme="https://jckling.github.io/tags/deployment/"/>
     
   </entry>
   
@@ -463,9 +463,9 @@
     
     <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
     
-    <category term="career" scheme="https://jckling.github.io/tags/career/"/>
-    
     <category term="internship" scheme="https://jckling.github.io/tags/internship/"/>
+    
+    <category term="career" scheme="https://jckling.github.io/tags/career/"/>
     
   </entry>
   
