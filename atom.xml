@@ -287,9 +287,9 @@
     <category term="notes" scheme="https://jckling.github.io/categories/notes/"/>
     
     
-    <category term="work" scheme="https://jckling.github.io/tags/work/"/>
-    
     <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
+    
+    <category term="work" scheme="https://jckling.github.io/tags/work/"/>
     
     <category term="unity" scheme="https://jckling.github.io/tags/unity/"/>
     
@@ -407,9 +407,9 @@
     <category term="notes" scheme="https://jckling.github.io/categories/notes/"/>
     
     
-    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
-    
     <category term="interview" scheme="https://jckling.github.io/tags/interview/"/>
+    
+    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
     
     <category term="career" scheme="https://jckling.github.io/tags/career/"/>
     
@@ -459,9 +459,9 @@
     <category term="notes" scheme="https://jckling.github.io/categories/notes/"/>
     
     
-    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
-    
     <category term="interview" scheme="https://jckling.github.io/tags/interview/"/>
+    
+    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
     
     <category term="internship" scheme="https://jckling.github.io/tags/internship/"/>
     
@@ -513,11 +513,11 @@
     <category term="tech" scheme="https://jckling.github.io/categories/tech/"/>
     
     
+    <category term="java" scheme="https://jckling.github.io/tags/java/"/>
+    
     <category term="testing" scheme="https://jckling.github.io/tags/testing/"/>
     
     <category term="unit-testing" scheme="https://jckling.github.io/tags/unit-testing/"/>
-    
-    <category term="java" scheme="https://jckling.github.io/tags/java/"/>
     
     <category term="automation" scheme="https://jckling.github.io/tags/automation/"/>
     
