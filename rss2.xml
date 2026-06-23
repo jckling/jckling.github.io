@@ -240,13 +240,13 @@
       
       <category domain="https://jckling.github.io/tags/unity/">unity</category>
       
+      <category domain="https://jckling.github.io/tags/tools/">tools</category>
+      
       <category domain="https://jckling.github.io/tags/nvidia/">nvidia</category>
       
       <category domain="https://jckling.github.io/tags/omniverse/">omniverse</category>
       
       <category domain="https://jckling.github.io/tags/audio/">audio</category>
-      
-      <category domain="https://jckling.github.io/tags/tools/">tools</category>
       
       
       <comments>https://jckling.github.io/nvidia-omniverse-audio-tools/#disqus_thread</comments>
@@ -298,9 +298,9 @@
       <category domain="https://jckling.github.io/categories/notes/">notes</category>
       
       
-      <category domain="https://jckling.github.io/tags/work/">work</category>
-      
       <category domain="https://jckling.github.io/tags/experience/">experience</category>
+      
+      <category domain="https://jckling.github.io/tags/work/">work</category>
       
       <category domain="https://jckling.github.io/tags/unity/">unity</category>
       
@@ -354,7 +354,7 @@
       
       
       
-      <content:encoded><![CDATA[<div class="note warning flat"><ol><li><p>7.4 可以使用 <a href="https://reshade.me/downloads/ReShade_Setup_6.6.2_Addon.exe">ReShade 6.6.2</a>。</p></li><li><p>ReShade 支持 DX9、DX10、DX11、DX12、OpenGL、Vulkan；支持 Win7 SP1、Win8.1、Win10、Win11；需要安装 .NET Framework 4.6.2 及以上的运行时。</p></li><li><p>无法访问/下载请尝试挂梯子。</p></li></ol><p><em>PS：评论审核需要时间，不要重复刷评论</em> 🆘</p></div><h1>前言</h1><p>ReShade 不是针对 FFXIV 的专门工具，而是适用于各种电子游戏的工具，支持的游戏可以查阅 <a href="https://www.pcgamingwiki.com/wiki/ReShade#Compatibility_list">Compatibility list</a>，也有网游明确禁止使用 ReShade，详见 <a href="https://www.pcgamingwiki.com/wiki/ReShade#Online_games_to_avoid">Online games to avoid</a>。</p><h1>下载安装程序</h1><p>从 <a href="https://reshade.me/">ReShade</a> 下载安装程序，选择 <code>with full add-on support</code> 的下载，双击运行。</p><img src="https://s2.loli.net/2023/08/29/3ZmNXyYWg6OE5Cb.jpg" width="80%" /><h1>具体安装步骤</h1><ol><li><p>选择 ffxiv 可执行文件</p><p>定位到游戏安装目录下的 <code>ffxiv_dx11.exe</code></p> <img src="https://s2.loli.net/2023/08/29/stZyrA7wl5oFQ4c.jpg" /></li><li><p>选择 API</p><p>默认选择 DX12</p> <img src="https://s2.loli.net/2023/08/29/yULJWuna3IBKwXD.jpg" /></li><li><p>配置文件</p><p>跳过，使用 ReShade 默认的即可</p> <img src="https://s2.loli.net/2023/08/29/Dj4pibJoPyZlmqT.png" /></li><li><p>效果</p><p>可以先 <code>Uncheck all</code> 然后就可以 <code>Check all</code>，点击 Next 下载（可能需要代理）</p> <img src="https://s2.loli.net/2023/08/29/qbjBiWMP1NJUFZx.png"/></li><li><p>安装完毕</p><p>点击 Finish 退出安装程序</p> <img src="https://s2.loli.net/2023/08/29/UHamx38RherF1wP.png" /></li></ol><h1>设置</h1><p>进入游戏后会自动进行脚本编译，编译完成后就可以开始使用了。</p><img src="https://s2.loli.net/2023/08/29/wFLT1YxnD2ISWGK.jpg" ><p>默认使用按键 <code>Home</code> 打开 ReShade 主界面（首页），如果键盘没有这个按键搜一下怎么用组合键按。打开主界面后建议在 <code>Settings</code> 中修改以下几项：</p><ul><li>主界面快捷键</li><li>截图快捷键</li><li>截图存放路径</li><li>截图名称</li></ul><img src="https://s2.loli.net/2023/08/29/euxiGdglKtTp46c.png" ><h1>滤镜</h1><p>打开主界面选择滤镜：</p><img src="https://s2.loli.net/2023/08/30/xeEgqmiBujzhwyR.png" ><p>安装时下载的滤镜和 Shader 分别在这两个文件夹中：</p><img src="https://s2.loli.net/2023/08/30/jO2XCgW8y6wdsno.png" ><p>滤镜可以在 FF 中使用，但是效果比较残念，感觉 GShade 是针对 FFXIV 做了定制的🤔</p><h1>GShade 滤镜</h1><h2 id="方法一：手动替换">方法一：手动替换</h2><p>从 <a href="https://drive.google.com/file/d/1Nq5oM7VNgRyKXbX6IRE6Ib9ezWjvolN3/view?usp=sharing">谷歌云盘</a> 下载并替换 reshade-shaders 和 reshade-presets 两个文件夹。</p><p>如果遇到 Shader 编译错误，右键打开报错的 Shader，参照 <a href="https://www.pcgamingwiki.com/wiki/ReShade#List_of_known_shader_repositories">List of known shader repositories</a> 查找来源，下载新的 Shader 并替换。</p><img src="https://s2.loli.net/2023/08/30/x1rD7HwTpQchVuI.png" ><p>或者可以试试从 <a href="https://github.com/Mortalitas/GShade">Mortalitas/GShade</a> 下载图中所示的三个文件夹，覆盖游戏安装路径下 Shaders 文件夹中的同名文件夹（记得备份原来的），千万别在这里下载 GShade 安装程序！</p><img src="https://s2.loli.net/2023/09/09/8hsxvji9AZ3fFSp.jpg" ><h2 id="方法二：安装旧版-GShade">方法二：安装旧版 GShade</h2><p>注意：ReShade 和 GShade 应该不能同时使用，所以请保证在卸载干净之后再安装。</p><p>可以从以下链接下载 Gshade v4.0.3，分别是中文版和英文版</p><ul><li><a href="https://docs.qq.com/doc/DVWFuQnVCT256eG1a?u=c3f9abfabbf74fc586f3ca142aa3c48a">GShade保姆级教程（适用4.x.x版本）</a></li><li><a href="https://twitter.com/miss_forma/status/1623928907266400263">GShade 4.0.3 Forever no update version, no malware, no forceconnect, no bullshit</a></li><li>也可以从 <a href="https://pan.baidu.com/s/1qIrelIy2zd4b3QU95CkXTw?pwd=zlyp">百度网盘</a> 下载</li></ul><p>下载完毕后拖放置 game 文件夹：</p><img src="https://s2.loli.net/2023/08/31/9JFsSHjZNLyquYh.png" width="80%" /><p>打开游戏：</p><img src="https://s2.loli.net/2023/08/31/Pcvj1wOIGNBW3yg.jpg" ><p>使用提示的快捷键打开界面，建议修改 <code>Settings</code> 中的这几项：</p><img src="https://s2.loli.net/2023/08/31/iMYTr9oRFPHIy68.jpg" width="50%" /><p>如果遇到 Shader 编译错误，同样可以从 <a href="https://github.com/Mortalitas/GShade">Mortalitas/GShade</a> 下载文件夹进行覆盖。</p><h1>卸载</h1><p>再次运行 ReShade 安装程序，选择 ffxiv 可执行文件与 API，然后就可以选择 <code>Uninstall</code> 卸载了</p><img src="https://s2.loli.net/2023/08/31/pbl6NILaWx4XKB2.png" ><p>卸载完成之后还需要手动删除 reshade-presets 文件夹</p><img src="https://s2.loli.net/2023/08/31/eEQHL1Ciz8rDajf.png" ><h1>相关链接</h1><ul><li><a href="https://www.reddit.com/r/ffxiv/comments/10vya2j/switching_to_reshade_from_gshade_for_those_having/">Switching to Reshade from GShade for those having trouble, 2023 Reshade Installing</a></li><li><a href="https://www.reddit.com/r/ReShade/comments/15i440f/some_effects_failed_to_compile_after_updating_to/">Some Effects ‘Failed to Compile’ After Updating to 5.9.0</a></li><li><a href="https://reshade.me/forum/shader-troubleshooting/9006-ffxiv-reshade-5-9-1-failed-to-compile-solved">FFXIV - ReShade 5.9.1 Failed To Compile (SOLVED)</a></li></ul>]]></content:encoded>
+      <content:encoded><![CDATA[<div class="note warning flat"><ol><li><p>国服可以使用 <a href="https://reshade.me/downloads/ReShade_Setup_6.7.3_Addon.exe">ReShade 6.7.3</a>。</p></li><li><p>ReShade 支持 DX9、DX10、DX11、DX12、OpenGL、Vulkan；支持 Win7 SP1、Win8.1、Win10、Win11；需要安装 .NET Framework 4.6.2 及以上的运行时。</p></li><li><p>无法访问/下载请尝试挂梯子。</p></li></ol><p><em>PS：评论审核需要时间，请勿重复评论</em> 🆘</p></div><h1>前言</h1><p>ReShade 不是针对 FFXIV 的专门工具，而是适用于各种电子游戏的工具，支持的游戏可以查阅 <a href="https://www.pcgamingwiki.com/wiki/ReShade#Compatibility_list">Compatibility list</a>，也有网游明确禁止使用 ReShade，详见 <a href="https://www.pcgamingwiki.com/wiki/ReShade#Online_games_to_avoid">Online games to avoid</a>。</p><h1>下载安装程序</h1><p>从 <a href="https://reshade.me/">ReShade</a> 下载安装程序，选择 <code>with full add-on support</code> 的下载，双击运行。</p><img src="https://s2.loli.net/2023/08/29/3ZmNXyYWg6OE5Cb.jpg" width="80%" /><h1>具体安装步骤</h1><ol><li><p>选择 ffxiv 可执行文件</p><p>定位到游戏安装目录下的 <code>ffxiv_dx11.exe</code></p> <img src="https://s2.loli.net/2023/08/29/stZyrA7wl5oFQ4c.jpg" /></li><li><p>选择 API</p><p>默认选择 DX12</p> <img src="https://s2.loli.net/2023/08/29/yULJWuna3IBKwXD.jpg" /></li><li><p>配置文件</p><p>跳过，使用 ReShade 默认的即可</p> <img src="https://s2.loli.net/2023/08/29/Dj4pibJoPyZlmqT.png" /></li><li><p>效果</p><p>可以先 <code>Uncheck all</code> 然后就可以 <code>Check all</code>，点击 Next 下载（可能需要代理）</p> <img src="https://s2.loli.net/2023/08/29/qbjBiWMP1NJUFZx.png"/></li><li><p>安装完毕</p><p>点击 Finish 退出安装程序</p> <img src="https://s2.loli.net/2023/08/29/UHamx38RherF1wP.png" /></li></ol><h1>设置</h1><p>进入游戏后会自动进行脚本编译，编译完成后就可以开始使用了。</p><img src="https://s2.loli.net/2023/08/29/wFLT1YxnD2ISWGK.jpg" ><p>默认使用按键 <code>Home</code> 打开 ReShade 主界面（首页），如果键盘没有这个按键搜一下怎么用组合键按。打开主界面后建议在 <code>Settings</code> 中修改以下几项：</p><ul><li>主界面快捷键</li><li>截图快捷键</li><li>截图存放路径</li><li>截图名称</li></ul><img src="https://s2.loli.net/2023/08/29/euxiGdglKtTp46c.png" ><h1>滤镜</h1><p>打开主界面选择滤镜：</p><img src="https://s2.loli.net/2023/08/30/xeEgqmiBujzhwyR.png" ><p>安装时下载的滤镜和 Shader 分别在这两个文件夹中：</p><img src="https://s2.loli.net/2023/08/30/jO2XCgW8y6wdsno.png" ><p>滤镜可以在 FF 中使用，但是效果比较残念，感觉 GShade 是针对 FFXIV 做了定制的🤔</p><h1>GShade 滤镜</h1><h2 id="方法一：手动替换">方法一：手动替换</h2><p>从 <a href="https://drive.google.com/file/d/1Nq5oM7VNgRyKXbX6IRE6Ib9ezWjvolN3/view?usp=sharing">谷歌云盘</a> 下载并替换 reshade-shaders 和 reshade-presets 两个文件夹。</p><p>如果遇到 Shader 编译错误，右键打开报错的 Shader，参照 <a href="https://www.pcgamingwiki.com/wiki/ReShade#List_of_known_shader_repositories">List of known shader repositories</a> 查找来源，下载新的 Shader 并替换。</p><img src="https://s2.loli.net/2023/08/30/x1rD7HwTpQchVuI.png" ><p>或者可以试试从 <a href="https://github.com/Mortalitas/GShade">Mortalitas/GShade</a> 下载图中所示的三个文件夹，覆盖游戏安装路径下 Shaders 文件夹中的同名文件夹（记得备份原来的），千万别在这里下载 GShade 安装程序！</p><img src="https://s2.loli.net/2023/09/09/8hsxvji9AZ3fFSp.jpg" ><h2 id="方法二：安装旧版-GShade">方法二：安装旧版 GShade</h2><p>注意：ReShade 和 GShade 应该不能同时使用，所以请保证在卸载干净之后再安装。</p><p>可以从以下链接下载 Gshade v4.0.3，分别是中文版和英文版</p><ul><li><a href="https://docs.qq.com/doc/DVWFuQnVCT256eG1a?u=c3f9abfabbf74fc586f3ca142aa3c48a">GShade保姆级教程（适用4.x.x版本）</a></li><li><a href="https://twitter.com/miss_forma/status/1623928907266400263">GShade 4.0.3 Forever no update version, no malware, no forceconnect, no bullshit</a></li><li>也可以从 <a href="https://pan.baidu.com/s/1qIrelIy2zd4b3QU95CkXTw?pwd=zlyp">百度网盘</a> 下载</li></ul><p>下载完毕后拖放置 game 文件夹：</p><img src="https://s2.loli.net/2023/08/31/9JFsSHjZNLyquYh.png" width="80%" /><p>打开游戏：</p><img src="https://s2.loli.net/2023/08/31/Pcvj1wOIGNBW3yg.jpg" ><p>使用提示的快捷键打开界面，建议修改 <code>Settings</code> 中的这几项：</p><img src="https://s2.loli.net/2023/08/31/iMYTr9oRFPHIy68.jpg" width="50%" /><p>如果遇到 Shader 编译错误，同样可以从 <a href="https://github.com/Mortalitas/GShade">Mortalitas/GShade</a> 下载文件夹进行覆盖。</p><h1>卸载</h1><p>再次运行 ReShade 安装程序，选择 ffxiv 可执行文件与 API，然后就可以选择 <code>Uninstall</code> 卸载了</p><img src="https://s2.loli.net/2023/08/31/pbl6NILaWx4XKB2.png" ><p>卸载完成之后还需要手动删除 reshade-presets 文件夹</p><img src="https://s2.loli.net/2023/08/31/eEQHL1Ciz8rDajf.png" ><h1>相关链接</h1><ul><li><a href="https://www.reddit.com/r/ffxiv/comments/10vya2j/switching_to_reshade_from_gshade_for_those_having/">Switching to Reshade from GShade for those having trouble, 2023 Reshade Installing</a></li><li><a href="https://www.reddit.com/r/ReShade/comments/15i440f/some_effects_failed_to_compile_after_updating_to/">Some Effects ‘Failed to Compile’ After Updating to 5.9.0</a></li><li><a href="https://reshade.me/forum/shader-troubleshooting/9006-ffxiv-reshade-5-9-1-failed-to-compile-solved">FFXIV - ReShade 5.9.1 Failed To Compile (SOLVED)</a></li></ul>]]></content:encoded>
       
       
       <category domain="https://jckling.github.io/categories/game/">game</category>
@@ -395,6 +395,8 @@
       <category domain="https://jckling.github.io/categories/tech/">tech</category>
       
       
+      <category domain="https://jckling.github.io/tags/deployment/">deployment</category>
+      
       <category domain="https://jckling.github.io/tags/blog/">blog</category>
       
       <category domain="https://jckling.github.io/tags/hexo/">hexo</category>
@@ -402,8 +404,6 @@
       <category domain="https://jckling.github.io/tags/cicd/">cicd</category>
       
       <category domain="https://jckling.github.io/tags/github-actions/">github-actions</category>
-      
-      <category domain="https://jckling.github.io/tags/deployment/">deployment</category>
       
       
       <comments>https://jckling.github.io/github-action-hexo-deploy/#disqus_thread</comments>
@@ -426,9 +426,9 @@
       <category domain="https://jckling.github.io/categories/notes/">notes</category>
       
       
-      <category domain="https://jckling.github.io/tags/experience/">experience</category>
-      
       <category domain="https://jckling.github.io/tags/interview/">interview</category>
+      
+      <category domain="https://jckling.github.io/tags/experience/">experience</category>
       
       <category domain="https://jckling.github.io/tags/career/">career</category>
       
@@ -482,9 +482,9 @@
       <category domain="https://jckling.github.io/categories/notes/">notes</category>
       
       
-      <category domain="https://jckling.github.io/tags/experience/">experience</category>
-      
       <category domain="https://jckling.github.io/tags/interview/">interview</category>
+      
+      <category domain="https://jckling.github.io/tags/experience/">experience</category>
       
       <category domain="https://jckling.github.io/tags/internship/">internship</category>
       
@@ -513,9 +513,9 @@
       
       <category domain="https://jckling.github.io/tags/docker/">docker</category>
       
-      <category domain="https://jckling.github.io/tags/docker-desktop/">docker-desktop</category>
-      
       <category domain="https://jckling.github.io/tags/troubleshooting/">troubleshooting</category>
+      
+      <category domain="https://jckling.github.io/tags/docker-desktop/">docker-desktop</category>
       
       <category domain="https://jckling.github.io/tags/windows/">windows</category>
       
