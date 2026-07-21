@@ -9,13 +9,13 @@
     <atom:link href="https://jckling.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Tue, 21 Jul 2026 07:50:32 GMT</pubDate>
+    <pubDate>Tue, 21 Jul 2026 07:51:00 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title>GitHub Actions 自动签到</title>
-      <link>https://jckling.github.io/github-action-daily-bouns/</link>
-      <guid>https://jckling.github.io/github-action-daily-bouns/</guid>
+      <link>https://jckling.github.io/github-action-checkin/</link>
+      <guid>https://jckling.github.io/github-action-checkin/</guid>
       <pubDate>Tue, 21 Jul 2026 07:10:00 GMT</pubDate>
       
       <description>使用 GitHub Actions 实现 V2EX、Bilibili、百合会等平台的自动签到，支持 Telegram 推送</description>
@@ -39,7 +39,7 @@
       <category domain="https://jckling.github.io/tags/checkin/">checkin</category>
       
       
-      <comments>https://jckling.github.io/github-action-daily-bouns/#disqus_thread</comments>
+      <comments>https://jckling.github.io/github-action-checkin/#disqus_thread</comments>
       
     </item>
     
