@@ -9,8 +9,39 @@
     <atom:link href="https://jckling.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Tue, 10 Feb 2026 03:05:00 GMT</pubDate>
+    <pubDate>Tue, 21 Jul 2026 07:50:32 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>GitHub Actions 自动签到</title>
+      <link>https://jckling.github.io/github-action-daily-bouns/</link>
+      <guid>https://jckling.github.io/github-action-daily-bouns/</guid>
+      <pubDate>Tue, 21 Jul 2026 07:10:00 GMT</pubDate>
+      
+      <description>使用 GitHub Actions 实现 V2EX、Bilibili、百合会等平台的自动签到，支持 Telegram 推送</description>
+      
+      
+      
+      <content:encoded><![CDATA[<h2 id="项目介绍">项目介绍</h2><p><a href="https://github.com/jckling/Daily-Bonus">Daily-Bonus</a> 自动签到脚本，通过 GitHub Actions 定时执行，支持 Telegram 推送签到结果。</p><blockquote><p>如果觉得有用，右上角点个 ⭐ Star 支持一下，感谢！</p></blockquote><h2 id="功能">功能</h2><table><thead><tr><th>站点</th><th>方式</th><th>奖励</th></tr></thead><tbody><tr><td>V2EX</td><td>Cookie</td><td>铜币</td></tr><tr><td>Bilibili</td><td>Cookie</td><td>硬币</td></tr><tr><td>Yamibo（百合会 / 300）</td><td>Cookie</td><td>对象</td></tr><tr><td>Yurifans</td><td>账号密码</td><td>积分</td></tr><tr><td>赛马娘</td><td>Cookie</td><td>游戏内道具 + 积分</td></tr><tr><td>哔咔漫画</td><td>账号密码</td><td>经验</td></tr><tr><td><s>FF14 商城</s></td><td><s>账号密码</s></td><td><s>积分</s></td></tr></tbody></table><blockquote><p>⚠️ <strong>FF14 商城签到已废弃</strong>。SDO 登录接口接入了 Geetest 风控，脚本登录会触发滑块验证码，无法自动绕过。</p></blockquote><p>Telegram 推送：</p><p><img src="https://raw.githubusercontent.com/jckling/Daily-Bonus/master/screenshots/telegram.jpeg" alt=""></p><h2 id="快速开始">快速开始</h2><ol><li><strong>Fork</strong> 本仓库</li><li>添加环境变量：Settings → Secrets and variables → Actions → New repository secret</li><li>默认使用 GitHub-hosted runner（<code>ubuntu-latest</code>），北京时间每天 07:30 自动运行</li></ol><p>更新：打开自己 fork 的仓库，点击 <code>Sync fork → Update branch</code> 即可同步</p><p><img src="https://raw.githubusercontent.com/jckling/Daily-Bonus/master/screenshots/update.jpg" alt=""></p><p>签到结果示例：</p><table><thead><tr><th>GitHub-hosted</th><th>Self-hosted</th></tr></thead><tbody><tr><td><img src="https://raw.githubusercontent.com/jckling/Daily-Bonus/master/screenshots/ubuntu.jpeg" alt=""></td><td><img src="https://raw.githubusercontent.com/jckling/Daily-Bonus/master/screenshots/self-hosted.jpeg" alt=""></td></tr></tbody></table><h2 id="Runner-说明">Runner 说明</h2><p>项目提供两个 workflow 文件：</p><table><thead><tr><th>文件</th><th>Runner</th><th>说明</th></tr></thead><tbody><tr><td><code>checkin.yml</code></td><td><code>ubuntu-latest</code></td><td>fork 直接使用，无需额外配置</td></tr><tr><td><code>checkin-self-hosted.yml</code></td><td><code>self-hosted</code></td><td>需自建 runner，纯 shell 步骤不依赖 action 下载</td></tr></tbody></table><h3 id="GitHub-hosted（ubuntu-latest）">GitHub-hosted（<code>ubuntu-latest</code>）</h3><p>Fork 后开箱即用。Yamibo 论坛有 Cloudflare 防护，GitHub 数据中心 IP 会被 WAF 拦截，建议自建 runner 或本地定时运行。</p><h3 id="Self-hosted">Self-hosted</h3><p>适合需要本地网络环境的场景（例如 Yamibo 签到），使用 <a href="https://github.com/myoung34/docker-github-actions-runner">myoung34/docker-github-actions-runner</a> 在本地启动 runner：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name github-runner \</span><br><span class="line">  --net=host \</span><br><span class="line">  --platform linux/amd64 \</span><br><span class="line">  --restart unless-stopped \</span><br><span class="line">  -e ACCESS_TOKEN=<span class="string">&quot;&lt;PAT&gt;&quot;</span> \</span><br><span class="line">  -e DEBUG_OUTPUT=<span class="string">&quot;true&quot;</span> \</span><br><span class="line">  -e LABELS=<span class="string">&quot;self-hosted,linux&quot;</span> \</span><br><span class="line">  -e REPO_URL=<span class="string">&quot;https://github.com/jckling/Daily-Bonus&quot;</span> \</span><br><span class="line">  -e RUN_AS_ROOT=<span class="string">&quot;true&quot;</span> \</span><br><span class="line">  -e RUNNER_NAME=<span class="string">&quot;local-runner&quot;</span> \</span><br><span class="line">  -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">  -v runner_work:/_work \</span><br><span class="line">  myoung34/github-runner:latest</span><br></pre></td></tr></table></figure><p>需要修改的参数：</p><ul><li><code>ACCESS_TOKEN</code>：GitHub Personal Access Token</li><li><code>REPO_URL</code>：fork 的仓库地址</li></ul><h3 id="问题排查">问题排查</h3><p><strong>Self-hosted runner 卡住没有日志</strong></p><p>检查容器能否连接 <code>launch.actions.githubusercontent.com</code>，国内网络可能无法直连。<code>checkin-self-hosted.yml</code> 已改为纯 shell 步骤（<code>git clone</code> + <code>curl</code>），不依赖 external action 下载。如仍有问题，给容器配置代理或使用 <code>--net=host</code>。</p><p><strong>Yamibo 签到提示「页面被拦截」</strong></p><p>Yamibo 启用了 Cloudflare JS Challenge，检测 TLS 指纹。GitHub-hosted runner（美国 IP）和 ARM64 self-hosted runner 均会被拦截。解决方案：使用 x86_64 模式的 self-hosted runner，或本地 crontab 运行。</p><p><strong>签到失败</strong></p><p>在 Actions 页面点击 <code>Re-run</code> 重新运行即可。Cookie 可能过期，重新获取后更新 Secrets。</p><h2 id="配置">配置</h2><p>在仓库 Settings → Secrets → Actions 中添加以下环境变量，按需配置：</p><h3 id="Telegram-推送">Telegram 推送</h3><table><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>TG_BOT_TOKEN</td><td>Bot Token，参考 <a href="https://core.telegram.org/bots#how-do-i-create-a-bot">How Do I Create a Bot?</a></td></tr><tr><td>TG_USER_ID</td><td>用户 ID，参考 <a href="https://stackoverflow.com/questions/41664810">How can I send a message to someone with my telegram bot using their Username</a></td></tr></tbody></table><h3 id="赛马娘网页签到">赛马娘网页签到</h3><p>使用 Cookie 登录，需要 <code>site</code>、<code>joy_jct</code>、<code>DedeUserID</code>、<code>SESSDATA</code></p><table><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>UMA_COOKIES</td><td>Cookie</td></tr></tbody></table><h3 id="V2EX">V2EX</h3><p>使用 Cookie 登录，需要 <code>PB3_SESSION</code>、<code>A2</code>、<code>V2EX_LANG</code>、<code>V2EX_TAB</code></p><table><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>V2EX_COOKIES</td><td>Cookie</td></tr></tbody></table><h3 id="Yamibo">Yamibo</h3><p>使用 Cookie 登录，需要 <code>EeqY_2132_auth</code>、<code>EeqY_2132_saltkey</code></p><table><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>YAMIBO_COOKIES</td><td>Cookie</td></tr></tbody></table><h3 id="Yurifans">Yurifans</h3><table><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>YURIFANS_EMAIL</td><td>邮箱</td></tr><tr><td>YURIFANS_PASSWORD</td><td>密码</td></tr></tbody></table><h3 id="Bilibili">Bilibili</h3><p>使用 Cookie 登录，需要 <code>SESSDATA</code>、<code>DedeUserID</code></p><table><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>BILIBILI_COOKIES</td><td>Cookie</td></tr></tbody></table><h3 id="哔咔漫画">哔咔漫画</h3><table><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>PICA_USERNAME</td><td>用户名或邮箱</td></tr><tr><td>PICA_PASSWORD</td><td>密码</td></tr></tbody></table><h2 id="开发环境">开发环境</h2><ul><li>macOS (Apple Silicon, ARM64)</li><li>Python 3.13</li><li><a href="https://github.com/lexiforest/curl_cffi">curl_cffi</a>（TLS 指纹伪装）</li><li>Chrome DevTools / HAR 抓包</li></ul>]]></content:encoded>
+      
+      
+      <category domain="https://jckling.github.io/categories/tech/">tech</category>
+      
+      
+      <category domain="https://jckling.github.io/tags/docker/">docker</category>
+      
+      <category domain="https://jckling.github.io/tags/github-actions/">github-actions</category>
+      
+      <category domain="https://jckling.github.io/tags/python/">python</category>
+      
+      <category domain="https://jckling.github.io/tags/automation/">automation</category>
+      
+      <category domain="https://jckling.github.io/tags/checkin/">checkin</category>
+      
+      
+      <comments>https://jckling.github.io/github-action-daily-bouns/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>Qwen3-ASR 本地部署</title>
@@ -240,13 +271,13 @@
       
       <category domain="https://jckling.github.io/tags/unity/">unity</category>
       
+      <category domain="https://jckling.github.io/tags/tools/">tools</category>
+      
       <category domain="https://jckling.github.io/tags/nvidia/">nvidia</category>
       
       <category domain="https://jckling.github.io/tags/omniverse/">omniverse</category>
       
       <category domain="https://jckling.github.io/tags/audio/">audio</category>
-      
-      <category domain="https://jckling.github.io/tags/tools/">tools</category>
       
       
       <comments>https://jckling.github.io/nvidia-omniverse-audio-tools/#disqus_thread</comments>
@@ -399,9 +430,9 @@
       
       <category domain="https://jckling.github.io/tags/hexo/">hexo</category>
       
-      <category domain="https://jckling.github.io/tags/cicd/">cicd</category>
-      
       <category domain="https://jckling.github.io/tags/github-actions/">github-actions</category>
+      
+      <category domain="https://jckling.github.io/tags/cicd/">cicd</category>
       
       <category domain="https://jckling.github.io/tags/deployment/">deployment</category>
       
@@ -486,9 +517,9 @@
       
       <category domain="https://jckling.github.io/tags/experience/">experience</category>
       
-      <category domain="https://jckling.github.io/tags/internship/">internship</category>
-      
       <category domain="https://jckling.github.io/tags/career/">career</category>
+      
+      <category domain="https://jckling.github.io/tags/internship/">internship</category>
       
       
       <comments>https://jckling.github.io/2023-summer-interview/#disqus_thread</comments>
@@ -540,13 +571,13 @@
       <category domain="https://jckling.github.io/categories/tech/">tech</category>
       
       
+      <category domain="https://jckling.github.io/tags/automation/">automation</category>
+      
       <category domain="https://jckling.github.io/tags/java/">java</category>
       
       <category domain="https://jckling.github.io/tags/testing/">testing</category>
       
       <category domain="https://jckling.github.io/tags/unit-testing/">unit-testing</category>
-      
-      <category domain="https://jckling.github.io/tags/automation/">automation</category>
       
       
       <comments>https://jckling.github.io/java-auto-unit-testing-framework/#disqus_thread</comments>
@@ -608,39 +639,6 @@
       
       
       <comments>https://jckling.github.io/soot-guide/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>FF14 MakePlace 使用教程</title>
-      <link>https://jckling.github.io/ffxiv-makeplace-guide/</link>
-      <guid>https://jckling.github.io/ffxiv-makeplace-guide/</guid>
-      <pubDate>Wed, 09 Feb 2022 02:15:39 GMT</pubDate>
-      
-      <description>本地装修模拟器</description>
-      
-      
-      
-      <content:encoded><![CDATA[<h1>前言</h1><p>之前太久没上游戏 S 房炸了，现在买了个公寓想试试装修成摄影棚，预览了半天家具，然后搜索到一个装修神器 —— <a href="https://jawslouis.itch.io/makeplace">MakePlace</a>。该工具可以让你在本地进行装修设计，并包含国际服家具（支持过滤），而且支持中文，如果有使用 XIVLauncher 的话可以安装 MakePlace 插件（<a href="https://github.com/jawslouis/MakePlacePlugin">国际服</a> / <a href="https://github.com/Bluefissure/MakePlacePlugin">国服</a>）在游戏内进行导入与导出。</p><h1>安装</h1><h2 id="手动安装">手动安装</h2><p>国服建议手动安装，不用翻墙，只是需要手动进行更新。</p><p><a href="https://jawslouis.itch.io/makeplace">MakePlace 官网</a> 拉到网页中间左右有个下载按钮，约 1GB 左右的压缩包，官网访问困难的也可以从 <a href="https://pan.baidu.com/s/1qIrelIy2zd4b3QU95CkXTw?pwd=zlyp">百度网盘</a> 下载（可能不是最新的）。</p><img src="https://s2.loli.net/2023/09/02/1Wmeh8zQ3Z7PUAD.png" ><p>建议解压到 MakePlace 文件夹（自己新建），双击 MakePlace.exe 即可启动程序。</p><img src="https://s2.loli.net/2023/09/02/1jJTldwPhnUfDgR.png" ><h2 id="使用-itch-安装">使用 itch 安装</h2><p>国际服可以用 itch 安装（需要翻墙），支持自动更新。</p><p>下载 <a href="https://itch.io/app">itch app</a> 并执行安装</p><div class="gallery-container" data-type="data" data-button="" data-limit="10" data-first="10">    <div class="gallery-items">[{"url":"https://s2.loli.net/2023/09/02/GiI9qDONZnzMtjx.png","alt":"","title":""},{"url":"https://s2.loli.net/2023/09/02/U4A5hIysrgx3MWv.png","alt":"","title":""}]</div>  </div><p>安装完毕后启动 itch app，需要登录 <a href="https://itch.io/">itch</a> 账号</p><div class="gallery-container" data-type="data" data-button="" data-limit="10" data-first="10">    <div class="gallery-items">[{"url":"https://s2.loli.net/2023/09/02/y7gs9tmIzV5FWLP.png","alt":"","title":""},{"url":"https://s2.loli.net/2023/09/02/tWQdAI9z5aJqHlE.png","alt":"","title":""}]</div>  </div><p>然后使用搜索栏搜索并安装 MakePlace</p><div class="gallery-container" data-type="data" data-button="" data-limit="10" data-first="10">    <div class="gallery-items">[{"url":"https://s2.loli.net/2023/09/02/IbZy6RA75SCUmes.jpg","alt":"","title":""},{"url":"https://s2.loli.net/2023/09/02/IJQijagtr3ANlnW.jpg","alt":"","title":""}]</div>  </div><p>可以在 <code>资源库</code> 中查看所有已安装的 app，点击 MakePlace 运行（圈出的两个都行），首次运行时会先下载必要的依赖</p><div class="gallery-container" data-type="data" data-button="" data-limit="10" data-first="10">    <div class="gallery-items">[{"url":"https://s2.loli.net/2023/09/02/RKdCuy4jUfATre6.jpg","alt":"","title":""},{"url":"https://s2.loli.net/2023/09/02/DNG5FAg26wSR8iY.jpg","alt":"","title":""}]</div>  </div><p>右键 MakePlace 可以检查更新（同样圈出的两个都行）</p><img src="https://s2.loli.net/2023/09/02/J3GQ9l4wOK6BkoT.jpg" ><h1>功能</h1><p>每次打开都会进入默认场景：</p><img src="https://s2.loli.net/2023/09/02/49nEV36IBK72hpt.jpg" ><h2 id="右上工具栏">右上工具栏</h2><h3 id="Settings">Settings</h3><p>点击齿轮图标（<code>Settings</code>）打开设置面板，可以看到右下角显示版本 <code>v121</code> （比官网显示的 Version 122 小，可能是从版本 0 开始计数）。</p><p>在其他选项（<code>Others</code>）中将语言设置为中文，默认隐藏国际服家具</p><img src="https://s2.loli.net/2023/09/02/QKGDJnaHRgte4wB.jpg" ><p>控制选项（<code>Controls</code>）用于设置快捷键</p><img src="https://s2.loli.net/2023/09/02/k8TQ9dCSANuz4HI.jpg" ><p>画面选项（<code>Graphics</code>）设置画面的大小与质量，第一次运行时可能是全屏模式，可以改为窗口模式</p><img src="https://s2.loli.net/2023/09/02/PQV2ihljzTc1dg9.jpg" ><h3 id="Layout">Layout</h3><p>加载与保存</p><img src="https://s2.loli.net/2023/09/02/JFg2EV3KtSudpIT.jpg" ><p>MakePlace 中保存与加载的文件称为 Layout，实际是 json 文件</p><img src="https://s2.loli.net/2023/09/02/ut8WwISm5gDqlax.png" ><p>双击加载示例文件 <code>Clair de Lune</code></p><img src="https://s2.loli.net/2023/09/02/Xjia2c3hnEJVy4x.jpg" ><h3 id="House-Options">House Options</h3><p>房屋选项</p><ul><li>房屋大小：公寓、小型房、中型房、大型房、无人岛（真服了这翻译😅）</li><li>照明调整：室内灯光、环境光</li></ul><img src="https://s2.loli.net/2023/09/02/OKUa65BymuoF8he.jpg" ><h3 id="Furniture-List">Furniture List</h3><p>显示当前已布置的家具</p><h3 id="Fixture-List">Fixture List</h3><p>显示当前设置的装潢配件</p><img src="https://s2.loli.net/2023/09/02/L36akMPWTDfB7vd.jpg" ><h3 id="Go-Outside-Go-Inside">Go Outside / Go Inside</h3><p>除公寓和无人岛之外，都可以进入庭院，或从庭院进入房屋，在庭院可以看到额外的房屋设置</p><img src="https://s2.loli.net/2023/09/02/gNL6O5b8UEowjRv.jpg" ><h3 id="Online-Houses">Online Houses</h3><p>查看大家分享的房屋设计，选中之后可以点击 <code>Visit</code> 进行参观，也可以将当前房屋设计保存到本地 Layout 中。</p><img src="https://s2.loli.net/2023/09/02/OEpaADhF2Hdolcy.jpg" ><img src="https://s2.loli.net/2023/09/02/pSAwzUhfC6sa9FX.jpg" ><h3 id="Online-Catalog">Online Catalog</h3><p>查看大家分享的设计，可以直接加载到当前 Layout 中，而不用替换整个房屋。</p><img src="https://s2.loli.net/2023/09/02/yoCm2WwUqksj6Ng.jpg" ><h3 id="Rate-Places">Rate Places</h3><p>随机参观并进行评分。</p><img src="https://s2.loli.net/2023/09/02/Avr9GYI5eKzSiuE.jpg" ><h2 id="左上工具栏">左上工具栏</h2><h3 id="View-Move-Options">View &amp; Move Options</h3><p>默认第一人称 + 飞行模式，如果在高处从飞行模式切换为行走模式会直接落到地面</p><ul><li>视角：第一人称 / 第三人称</li><li>移动：行走模式 / 飞行模式</li></ul><img src="https://s2.loli.net/2023/09/02/DimgFKeP7qkTJEa.jpg" ><h3 id="Move-Mode-Rotation-Mode">Move Mode / Rotation Mode</h3><p>移动距离，拖动家具时会按照这个距离移动</p><img src="https://s2.loli.net/2023/09/02/8RfarOwvSqiMQLH.jpg" /><p>旋转角度，拖动家具时会按照这个角度旋转</p><img src="https://s2.loli.net/2023/09/02/hfUay1PNTjMI4n3.jpg" /><h3 id="Copy-Delete">Copy / Delete</h3><p>复制 / 删除</p><h3 id="Undo-Redo">Undo / Redo</h3><p>撤销 / 重做</p><h2 id="左下工具栏">左下工具栏</h2><p>右下角显示一个选项框，可以过滤 <code>Market Prohibited</code>（禁止交易） 和 <code>Cash Shop only</code>（商城出售）</p><img src="https://s2.loli.net/2023/09/02/UWNZCPwkvQrSKMA.jpg" ><h3 id="Fixture">Fixture</h3><p>装潢配件</p><img src="https://s2.loli.net/2023/09/02/YE8yqvaNgo6rdOm.jpg" ><h3 id="Lighting">Lighting</h3><p>照明</p><img src="https://s2.loli.net/2023/09/02/lhetgmE9cfMKbXa.jpg" ><h3 id="Furniture">Furniture</h3><p>家具，包含以下分类</p><ul><li>Cabinet / 橱柜</li><li>Chair / 椅子</li><li>Rug / 地毯</li><li>Shelf / 柜子</li><li>Table / 桌子</li><li>Wall-Mounted / 壁挂</li><li>Others / 其他</li></ul><img src="https://s2.loli.net/2023/09/02/m6YujcMaKQkA71w.jpg" ><h3 id="Item">Item</h3><p>物品，包含以下分类</p><ul><li>Food / 食物</li><li>Printed / 壁画</li><li>Replica / 模型</li><li>Stuffed / 玩偶</li><li>Trophy / 奖杯</li><li>Others / 其他</li></ul><img src="https://s2.loli.net/2023/09/02/ZrkSfyugAhE18PC.jpg" ><h3 id="Greenery">Greenery</h3><p>植物，包含以下分类</p><ul><li>Potted / 盆栽</li><li>Others / 其他</li></ul><img src="https://s2.loli.net/2023/09/02/zVgZJXihuEea7HM.jpg" ><h3 id="Interative">Interative</h3><p>互动家具</p><img src="https://s2.loli.net/2023/09/02/Hx2FDoUi4dwAY7W.jpg" width="80%" /><h3 id="Custom-Design">Custom Design</h3><p>自定义设计</p><img src="https://s2.loli.net/2023/09/02/eqOQYCM3UAb8TPd.jpg" ><h3 id="Search">Search</h3><p>搜索</p><img src="https://s2.loli.net/2023/09/02/sRyoOIKrMH4dXui.jpg" ><h1>问题与解决</h1><ol><li><p>没有隐藏国际服家具的选项</p><p>请将语言设置为中文，如果还是没有就重启 MakePlace</p></li><li><p>报错 <code>OodleData</code> 相关插件未安装</p><p>旧版本的 MakePlace 没有清理干净，建议使用 <a href="https://www.voidtools.com/zh-cn/">Everything</a> 删除所有 MakePlace 相关文件夹后再重新安装。</p></li></ol><h1>相关链接</h1><ul><li><a href="https://jawslouis.itch.io/makeplace">MakePlace</a></li><li><a href="https://github.com/itchio/itch">itchio/itch</a></li></ul>]]></content:encoded>
-      
-      
-      <category domain="https://jckling.github.io/categories/game/">game</category>
-      
-      
-      <category domain="https://jckling.github.io/tags/game/">game</category>
-      
-      <category domain="https://jckling.github.io/tags/ffxiv/">ffxiv</category>
-      
-      <category domain="https://jckling.github.io/tags/ff14/">ff14</category>
-      
-      <category domain="https://jckling.github.io/tags/%E6%9C%80%E7%BB%88%E5%B9%BB%E6%83%B314/">最终幻想14</category>
-      
-      <category domain="https://jckling.github.io/tags/makeplace/">makeplace</category>
-      
-      <category domain="https://jckling.github.io/tags/housing/">housing</category>
-      
-      
-      <comments>https://jckling.github.io/ffxiv-makeplace-guide/#disqus_thread</comments>
       
     </item>
     
