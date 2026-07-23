@@ -35,11 +35,11 @@
     
     <category term="docker" scheme="https://jckling.github.io/tags/docker/"/>
     
-    <category term="github-actions" scheme="https://jckling.github.io/tags/github-actions/"/>
+    <category term="automation" scheme="https://jckling.github.io/tags/automation/"/>
     
     <category term="python" scheme="https://jckling.github.io/tags/python/"/>
     
-    <category term="automation" scheme="https://jckling.github.io/tags/automation/"/>
+    <category term="github-actions" scheme="https://jckling.github.io/tags/github-actions/"/>
     
     <category term="checkin" scheme="https://jckling.github.io/tags/checkin/"/>
     
@@ -407,6 +407,8 @@
     <category term="tech" scheme="https://jckling.github.io/categories/tech/"/>
     
     
+    <category term="deployment" scheme="https://jckling.github.io/tags/deployment/"/>
+    
     <category term="blog" scheme="https://jckling.github.io/tags/blog/"/>
     
     <category term="hexo" scheme="https://jckling.github.io/tags/hexo/"/>
@@ -414,8 +416,6 @@
     <category term="github-actions" scheme="https://jckling.github.io/tags/github-actions/"/>
     
     <category term="cicd" scheme="https://jckling.github.io/tags/cicd/"/>
-    
-    <category term="deployment" scheme="https://jckling.github.io/tags/deployment/"/>
     
   </entry>
   
@@ -492,9 +492,9 @@
     
     <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
     
-    <category term="career" scheme="https://jckling.github.io/tags/career/"/>
-    
     <category term="internship" scheme="https://jckling.github.io/tags/internship/"/>
+    
+    <category term="career" scheme="https://jckling.github.io/tags/career/"/>
     
   </entry>
   
@@ -517,9 +517,9 @@
     
     <category term="docker" scheme="https://jckling.github.io/tags/docker/"/>
     
-    <category term="docker-desktop" scheme="https://jckling.github.io/tags/docker-desktop/"/>
-    
     <category term="troubleshooting" scheme="https://jckling.github.io/tags/troubleshooting/"/>
+    
+    <category term="docker-desktop" scheme="https://jckling.github.io/tags/docker-desktop/"/>
     
     <category term="windows" scheme="https://jckling.github.io/tags/windows/"/>
     
@@ -542,13 +542,13 @@
     <category term="tech" scheme="https://jckling.github.io/categories/tech/"/>
     
     
-    <category term="automation" scheme="https://jckling.github.io/tags/automation/"/>
-    
     <category term="java" scheme="https://jckling.github.io/tags/java/"/>
     
     <category term="testing" scheme="https://jckling.github.io/tags/testing/"/>
     
     <category term="unit-testing" scheme="https://jckling.github.io/tags/unit-testing/"/>
+    
+    <category term="automation" scheme="https://jckling.github.io/tags/automation/"/>
     
   </entry>
   

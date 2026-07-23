@@ -30,11 +30,11 @@
       
       <category domain="https://jckling.github.io/tags/docker/">docker</category>
       
-      <category domain="https://jckling.github.io/tags/github-actions/">github-actions</category>
+      <category domain="https://jckling.github.io/tags/automation/">automation</category>
       
       <category domain="https://jckling.github.io/tags/python/">python</category>
       
-      <category domain="https://jckling.github.io/tags/automation/">automation</category>
+      <category domain="https://jckling.github.io/tags/github-actions/">github-actions</category>
       
       <category domain="https://jckling.github.io/tags/checkin/">checkin</category>
       
@@ -426,6 +426,8 @@
       <category domain="https://jckling.github.io/categories/tech/">tech</category>
       
       
+      <category domain="https://jckling.github.io/tags/deployment/">deployment</category>
+      
       <category domain="https://jckling.github.io/tags/blog/">blog</category>
       
       <category domain="https://jckling.github.io/tags/hexo/">hexo</category>
@@ -433,8 +435,6 @@
       <category domain="https://jckling.github.io/tags/github-actions/">github-actions</category>
       
       <category domain="https://jckling.github.io/tags/cicd/">cicd</category>
-      
-      <category domain="https://jckling.github.io/tags/deployment/">deployment</category>
       
       
       <comments>https://jckling.github.io/github-action-hexo-deploy/#disqus_thread</comments>
@@ -517,9 +517,9 @@
       
       <category domain="https://jckling.github.io/tags/experience/">experience</category>
       
-      <category domain="https://jckling.github.io/tags/career/">career</category>
-      
       <category domain="https://jckling.github.io/tags/internship/">internship</category>
+      
+      <category domain="https://jckling.github.io/tags/career/">career</category>
       
       
       <comments>https://jckling.github.io/2023-summer-interview/#disqus_thread</comments>
@@ -544,9 +544,9 @@
       
       <category domain="https://jckling.github.io/tags/docker/">docker</category>
       
-      <category domain="https://jckling.github.io/tags/docker-desktop/">docker-desktop</category>
-      
       <category domain="https://jckling.github.io/tags/troubleshooting/">troubleshooting</category>
+      
+      <category domain="https://jckling.github.io/tags/docker-desktop/">docker-desktop</category>
       
       <category domain="https://jckling.github.io/tags/windows/">windows</category>
       
@@ -571,13 +571,13 @@
       <category domain="https://jckling.github.io/categories/tech/">tech</category>
       
       
-      <category domain="https://jckling.github.io/tags/automation/">automation</category>
-      
       <category domain="https://jckling.github.io/tags/java/">java</category>
       
       <category domain="https://jckling.github.io/tags/testing/">testing</category>
       
       <category domain="https://jckling.github.io/tags/unit-testing/">unit-testing</category>
+      
+      <category domain="https://jckling.github.io/tags/automation/">automation</category>
       
       
       <comments>https://jckling.github.io/java-auto-unit-testing-framework/#disqus_thread</comments>
