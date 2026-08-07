@@ -407,11 +407,11 @@
     <category term="tech" scheme="https://jckling.github.io/categories/tech/"/>
     
     
-    <category term="github-actions" scheme="https://jckling.github.io/tags/github-actions/"/>
-    
     <category term="blog" scheme="https://jckling.github.io/tags/blog/"/>
     
     <category term="hexo" scheme="https://jckling.github.io/tags/hexo/"/>
+    
+    <category term="github-actions" scheme="https://jckling.github.io/tags/github-actions/"/>
     
     <category term="cicd" scheme="https://jckling.github.io/tags/cicd/"/>
     
