@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/</loc>
+    <loc>https://jckling.github.io/link/</loc>
     
     <lastmod>2026-10-07</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/link/</loc>
+    <loc>https://jckling.github.io/tags/</loc>
     
     <lastmod>2026-10-07</lastmod>
     
@@ -209,6 +209,24 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/2023-summer-interview/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/2023-fall-interview/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/work-summary/</loc>
     
     <lastmod>2025-10-01</lastmod>
@@ -228,6 +246,24 @@
   
   <url>
     <loc>https://jckling.github.io/image-to-3d-generation/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/text-to-image-generation/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/computer-networks-medium-access-control-sublayer/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -263,15 +299,6 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/text-to-image-generation/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://jckling.github.io/computer-networks-physical-layer/</loc>
     
     <lastmod>2025-10-01</lastmod>
@@ -281,25 +308,16 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/computer-networks-network-layer/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/computer-networks-transport-layer/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/computer-networks-medium-access-control-sublayer/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/2023-fall-interview/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -318,24 +336,6 @@
   
   <url>
     <loc>https://jckling.github.io/qwen-vscode-integration/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/2023-summer-interview/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/computer-networks-network-layer/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -389,16 +389,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/sqli-to-shell-part2/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/sqli-to-shell-part1/</loc>
+    <loc>https://jckling.github.io/php-include-post-exploitation/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -416,7 +407,16 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/php-include-post-exploitation/</loc>
+    <loc>https://jckling.github.io/sqli-to-shell-part2/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/sqli-to-shell-part1/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -461,15 +461,6 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/cve-2012-182023/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://jckling.github.io/cve-2014-4511/</loc>
     
     <lastmod>2025-10-01</lastmod>
@@ -480,6 +471,15 @@
   
   <url>
     <loc>https://jckling.github.io/cve-2014-6271/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/cve-2012-182023/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -506,6 +506,15 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/dvwa-xss-reflected/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/dvwa-brute-force/</loc>
     
     <lastmod>2025-10-01</lastmod>
@@ -515,7 +524,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/dvwa-xss-reflected/</loc>
+    <loc>https://jckling.github.io/dvwa-csp-bypass/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -569,6 +578,15 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/dvwa-javascript-security/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/dvwa-sql-injection/</loc>
     
     <lastmod>2025-10-01</lastmod>
@@ -587,15 +605,6 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/dvwa-blind-sql-injection/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://jckling.github.io/dvwa-xss-dom/</loc>
     
     <lastmod>2025-10-01</lastmod>
@@ -605,7 +614,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/dvwa-csp-bypass/</loc>
+    <loc>https://jckling.github.io/dvwa-blind-sql-injection/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -615,6 +624,24 @@
   
   <url>
     <loc>https://jckling.github.io/java-deserialization-guide/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/gadget-inspector/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/pyre-pysa-guide/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -642,42 +669,6 @@
   
   <url>
     <loc>https://jckling.github.io/baidu-openrasp-architecture/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/dvwa-javascript-security/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/gadget-inspector/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/pyre-pysa-guide/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/first-day-school/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -722,7 +713,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/python-package-private-pypi/</loc>
+    <loc>https://jckling.github.io/first-day-school/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -732,6 +723,24 @@
   
   <url>
     <loc>https://jckling.github.io/python-scrape-twitter/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/python-package-private-pypi/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/nvidia-omniverse-audio-tools/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -812,6 +821,15 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/gitea-actions-local-setup/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/computer-hardware/</loc>
     
     <lastmod>2025-10-01</lastmod>
@@ -822,24 +840,6 @@
   
   <url>
     <loc>https://jckling.github.io/tagspaces-guide/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/gitea-actions-local-setup/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/nvidia-omniverse-audio-tools/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -875,7 +875,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/python-unit-testing-framework/</loc>
+    <loc>https://jckling.github.io/python-ast-module/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -884,7 +884,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/python-ast-module/</loc>
+    <loc>https://jckling.github.io/python-unit-testing-framework/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -929,6 +929,15 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/aes-implementation/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/des-implementation/</loc>
     
     <lastmod>2025-10-01</lastmod>
@@ -939,15 +948,6 @@
   
   <url>
     <loc>https://jckling.github.io/rc4-implementation/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/aes-implementation/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -974,7 +974,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/fabric-test-network/</loc>
+    <loc>https://jckling.github.io/fabric-ca-network-setup/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -983,7 +983,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/fabric-ca-network-setup/</loc>
+    <loc>https://jckling.github.io/fabric-test-network/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -1046,7 +1046,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/centos7-openstack-nova-placement-deployment/</loc>
+    <loc>https://jckling.github.io/centos7-openstack-neutron-deployment/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -1055,7 +1055,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/centos7-openstack-neutron-deployment/</loc>
+    <loc>https://jckling.github.io/centos7-openstack-nova-placement-deployment/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -1082,15 +1082,6 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/centos7-openstack-instance-creation/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://jckling.github.io/centos7-openstack-horizon-deployment/</loc>
     
     <lastmod>2025-10-01</lastmod>
@@ -1101,6 +1092,24 @@
   
   <url>
     <loc>https://jckling.github.io/openstack-kolla-ansible-multi-node-deployment/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/openstack-kolla-ansible-local-deployment/</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/centos7-openstack-instance-creation/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -1154,7 +1163,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/openstack-overview/</loc>
+    <loc>https://jckling.github.io/openstack-packstack-deployment/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -1163,7 +1172,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/openstack-packstack-deployment/</loc>
+    <loc>https://jckling.github.io/openstack-overview/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -1218,15 +1227,6 @@
   
   <url>
     <loc>https://jckling.github.io/openstack-nova-compute-source-installation/</loc>
-    
-    <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/openstack-kolla-ansible-local-deployment/</loc>
     
     <lastmod>2025-10-01</lastmod>
     
@@ -1342,13 +1342,6 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/screenshot/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jckling.github.io/tags/xivlauncher/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1364,6 +1357,13 @@
   
   <url>
     <loc>https://jckling.github.io/tags/plugins/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/screenshot/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1398,7 +1398,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/work/</loc>
+    <loc>https://jckling.github.io/tags/interview/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1406,6 +1406,27 @@
   
   <url>
     <loc>https://jckling.github.io/tags/experience/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/internship/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/career/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/work/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1496,7 +1517,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/des/</loc>
+    <loc>https://jckling.github.io/tags/aes/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1524,7 +1545,28 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/tags/des/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/tags/legacy/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/rc4/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/stream-cipher/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1560,20 +1602,6 @@
   
   <url>
     <loc>https://jckling.github.io/tags/butterfly/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/rc4/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/stream-cipher/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1664,13 +1692,6 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/aes/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jckling.github.io/tags/cicd/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1679,6 +1700,41 @@
   
   <url>
     <loc>https://jckling.github.io/tags/deployment/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/mysql/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/twitter/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/scraping/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/crawling/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/data-mining/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1839,69 +1895,6 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/twitter/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/scraping/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/crawling/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/data-mining/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/computer-networks/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/networking/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/protocol/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/application-layer/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/data-link-layer/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jckling.github.io/tags/text-to-image/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1944,7 +1937,70 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/mysql/</loc>
+    <loc>https://jckling.github.io/tags/nvidia/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/omniverse/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/audio/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/tools/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/computer-networks/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/networking/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/protocol/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/medium-access-control-sublayer/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/application-layer/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/data-link-layer/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1952,6 +2008,13 @@
   
   <url>
     <loc>https://jckling.github.io/tags/physical-layer/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/network-layer/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2015,27 +2078,6 @@
   
   <url>
     <loc>https://jckling.github.io/tags/software/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/medium-access-control-sublayer/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/interview/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/career/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2140,6 +2182,20 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/tags/devops/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/gitea/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/tags/hardware/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -2148,27 +2204,6 @@
   
   <url>
     <loc>https://jckling.github.io/tags/pc/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/tools/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/internship/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/network-layer/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2217,6 +2252,13 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/tags/neutron/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/tags/nova/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -2231,13 +2273,6 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/neutron/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jckling.github.io/tags/swift/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -2246,13 +2281,6 @@
   
   <url>
     <loc>https://jckling.github.io/tags/cinder/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/instance/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2280,14 +2308,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/devops/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/gitea/</loc>
+    <loc>https://jckling.github.io/tags/instance/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2309,34 +2330,6 @@
   
   <url>
     <loc>https://jckling.github.io/tags/tracing/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/observability/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/opentelemetry/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/metrics/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/specification/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2371,6 +2364,34 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/tags/observability/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/opentelemetry/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/metrics/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/specification/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/tags/nova-compute/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -2392,13 +2413,6 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/brute-force/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jckling.github.io/tags/xss/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -2407,6 +2421,34 @@
   
   <url>
     <loc>https://jckling.github.io/tags/reflected-xss/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/brute-force/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/csp/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/bypass/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/csp-bypass/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2476,6 +2518,20 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/tags/javascript/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/client-side/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/tags/sql-injection/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -2505,20 +2561,6 @@
   
   <url>
     <loc>https://jckling.github.io/tags/authentication/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/blind-sql-injection/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/blind-sqli/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2567,14 +2609,14 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/cve-2012-182023/</loc>
+    <loc>https://jckling.github.io/tags/blind-sql-injection/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/php-cgi/</loc>
+    <loc>https://jckling.github.io/tags/blind-sqli/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2602,6 +2644,20 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/tags/cve-2012-182023/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/php-cgi/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/tags/cve-2018-10933/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -2623,42 +2679,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/nvidia/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/omniverse/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/audio/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/csp/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/bypass/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/csp-bypass/</loc>
+    <loc>https://jckling.github.io/tags/dsvw/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2749,7 +2770,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/dsvw/</loc>
+    <loc>https://jckling.github.io/tags/post-exploitation/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2757,13 +2778,6 @@
   
   <url>
     <loc>https://jckling.github.io/tags/postgresql/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/post-exploitation/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2798,7 +2812,28 @@
   </url>
   
   <url>
+    <loc>https://jckling.github.io/tags/java-security/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jckling.github.io/tags/java/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/deserialization/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/ysoserial/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2813,6 +2848,13 @@
   
   <url>
     <loc>https://jckling.github.io/tags/unit-testing/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/gadget-inspector/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2882,21 +2924,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/java-security/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/deserialization/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/ysoserial/</loc>
+    <loc>https://jckling.github.io/tags/ast/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2917,7 +2945,21 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/ast/</loc>
+    <loc>https://jckling.github.io/tags/pyre/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/pysa/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jckling.github.io/tags/python-security/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2953,13 +2995,6 @@
   
   <url>
     <loc>https://jckling.github.io/tags/soot/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/oauth/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3022,42 +3057,7 @@
   </url>
   
   <url>
-    <loc>https://jckling.github.io/tags/javascript/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/client-side/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/gadget-inspector/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/pyre/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/pysa/</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jckling.github.io/tags/python-security/</loc>
+    <loc>https://jckling.github.io/tags/oauth/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

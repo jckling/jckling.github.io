@@ -262,13 +262,13 @@
     
     <category term="unity" scheme="https://jckling.github.io/tags/unity/"/>
     
-    <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
-    
     <category term="nvidia" scheme="https://jckling.github.io/tags/nvidia/"/>
     
     <category term="omniverse" scheme="https://jckling.github.io/tags/omniverse/"/>
     
     <category term="audio" scheme="https://jckling.github.io/tags/audio/"/>
+    
+    <category term="tools" scheme="https://jckling.github.io/tags/tools/"/>
     
   </entry>
   
@@ -316,9 +316,9 @@
     <category term="notes" scheme="https://jckling.github.io/categories/notes/"/>
     
     
-    <category term="work" scheme="https://jckling.github.io/tags/work/"/>
-    
     <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
+    
+    <category term="work" scheme="https://jckling.github.io/tags/work/"/>
     
     <category term="unity" scheme="https://jckling.github.io/tags/unity/"/>
     
@@ -436,9 +436,9 @@
     <category term="notes" scheme="https://jckling.github.io/categories/notes/"/>
     
     
-    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
-    
     <category term="interview" scheme="https://jckling.github.io/tags/interview/"/>
+    
+    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
     
     <category term="career" scheme="https://jckling.github.io/tags/career/"/>
     
@@ -488,13 +488,13 @@
     <category term="notes" scheme="https://jckling.github.io/categories/notes/"/>
     
     
-    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
-    
     <category term="interview" scheme="https://jckling.github.io/tags/interview/"/>
     
-    <category term="career" scheme="https://jckling.github.io/tags/career/"/>
+    <category term="experience" scheme="https://jckling.github.io/tags/experience/"/>
     
     <category term="internship" scheme="https://jckling.github.io/tags/internship/"/>
+    
+    <category term="career" scheme="https://jckling.github.io/tags/career/"/>
     
   </entry>
   
